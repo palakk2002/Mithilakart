@@ -1,0 +1,38 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import MarketRoutes from './routes/MarketRoutes';
+import SellerRoutes from './routes/SellerRoutes';
+import AdminRoutes from './routes/AdminRoutes';
+import DeliveryRoutes from './routes/DeliveryRoutes';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Toaster position="bottom-center" toastOptions={{
+        style: {
+          background: '#121212',
+          color: '#e2a750',
+          border: '1px solid rgba(226, 167, 80, 0.2)',
+          fontSize: '12px',
+          fontWeight: 'black',
+          textTransform: 'uppercase',
+          letterSpacing: '1px'
+        }
+      }} />
+      <Routes>
+        {/* Delivery Agent Portal */}
+        <Route path="/delivery/*" element={<DeliveryRoutes />} />
+
+        {/* Unified Admin Management Panel */}
+        <Route path="/admin/*" element={<AdminRoutes />} />
+
+        {/* Marketplace App (Restored to root and /vendor) */}
+        <Route path="/vendor/*" element={<MarketRoutes />} />
+        <Route path="/*" element={<MarketRoutes />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
