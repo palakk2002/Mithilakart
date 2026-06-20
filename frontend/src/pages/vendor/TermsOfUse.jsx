@@ -9,7 +9,7 @@ const TermsOfUse = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-[#2874F0] px-4 py-4 flex items-center gap-3 shadow-md">
+      <div className="sticky top-0 z-50 bg-[#084224] px-4 py-4 flex items-center gap-3 shadow-md">
         <button 
           onClick={() => navigate(-1)}
           className="text-white active:scale-90 transition-transform"
@@ -174,3 +174,4 @@ const TermsOfUse = () => {
 };
 
 export default TermsOfUse;
+

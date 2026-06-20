@@ -27,9 +27,9 @@ const Auth = () => {
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center mb-4">
             <img 
-              src="/Logo (4).png" 
-              alt="Cocio Logo" 
-              className="h-12 w-auto object-contain"
+              src="/mithilakartbglogo.png" 
+              alt="Mithilakart Logo" 
+              className="h-16 w-auto object-contain"
               onError={(e) => {
                 e.target.style.display = 'none';
                 e.target.nextSibling.style.display = 'flex';
@@ -40,7 +40,7 @@ const Auth = () => {
             </div>
           </div>
           <h1 className="text-2xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">
-            Cocio<span className="text-blue-600">.</span> Admin
+            Mithilakart<span className="text-blue-600">.</span> Admin
           </h1>
           <p className="text-slate-400 font-bold uppercase tracking-[2px] text-[9px] mt-1">Verified Management Session</p>
         </div>
@@ -62,7 +62,7 @@ const Auth = () => {
                   type="email" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@cocio.com"
+                  placeholder="admin@mithilakart.com"
                   className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3.5 pl-14 pr-6 text-slate-900 font-bold placeholder:text-slate-300 focus:outline-none focus:ring-4 focus:ring-blue-50 focus:border-blue-500 transition-all text-sm"
                 />
               </div>

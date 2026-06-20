@@ -45,16 +45,16 @@ const VendorProfile = () => {
   };
 
   const quickActions = [
-    { label: 'Orders', icon: <ShoppingBag size={20} className="text-blue-600" />, path: '/vendor/profile/orders' },
-    { label: 'Wishlist', icon: <Heart size={20} className="text-blue-600" />, path: '/vendor/profile/wishlist' },
-    { label: 'Coupons', icon: <Zap size={20} className="text-blue-600" />, path: '/vendor/profile/coupons' },
-    { label: 'Help Center', icon: <HelpCircle size={20} className="text-blue-600" />, path: '/vendor/profile/help-center' }
+    { label: 'Orders', icon: <ShoppingBag size={20} className="text-primary-dark" />, path: '/vendor/profile/orders' },
+    { label: 'Wishlist', icon: <Heart size={20} className="text-primary-dark" />, path: '/vendor/profile/wishlist' },
+    { label: 'Coupons', icon: <Zap size={20} className="text-primary-dark" />, path: '/vendor/profile/coupons' },
+    { label: 'Help Center', icon: <HelpCircle size={20} className="text-primary-dark" />, path: '/vendor/profile/help-center' }
   ];
 
   const financeOptions = [
-    { title: 'Mithilakart Personal Loan', sub: 'Instant Cash upto ₹10,00,000', icon: <Smartphone size={20} className="text-blue-600" /> },
-    { title: 'Mithilakart EMI', sub: 'No Cost EMI* | Unlock ₹1 lakh', icon: <CreditCard size={20} className="text-blue-600" /> },
-    { title: 'Apply Now for Mithilakart SBI Credit Card', sub: 'ZERO JOINING FEE | 5% Cashback', icon: <Wallet size={20} className="text-blue-600" /> }
+    { title: 'Mithilakart Personal Loan', sub: 'Instant Cash upto ₹10,00,000', icon: <Smartphone size={20} className="text-primary-dark" /> },
+    { title: 'Mithilakart EMI', sub: 'No Cost EMI* | Unlock ₹1 lakh', icon: <CreditCard size={20} className="text-primary-dark" /> },
+    { title: 'Apply Now for Mithilakart SBI Credit Card', sub: 'ZERO JOINING FEE | 5% Cashback', icon: <Wallet size={20} className="text-primary-dark" /> }
   ];
 
   const recentlyViewed = [
@@ -131,7 +131,7 @@ const VendorProfile = () => {
                   <p className="text-[11px] text-gray-500 font-bold mt-1">Get latest updates of your orders</p>
                </div>
             </div>
-            <button className="bg-blue-600 text-white px-5 py-2 rounded-lg text-[13px] font-black shadow-lg shadow-blue-100">
+            <button className="bg-primary-dark text-white px-5 py-2 rounded-lg text-[13px] font-black shadow-lg shadow-blue-100">
                Update
             </button>
          </div>
@@ -146,7 +146,7 @@ const VendorProfile = () => {
             {financeOptions.map((opt, idx) => (
                <div key={idx} className="px-4 py-4 flex items-center justify-between active:bg-gray-50 cursor-pointer">
                   <div className="flex items-center gap-4">
-                     <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center text-blue-600">
+                     <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center text-primary-dark">
                         {opt.icon}
                      </div>
                      <div>
@@ -164,7 +164,7 @@ const VendorProfile = () => {
       <div className="bg-white mt-3 border-t border-b border-gray-100">
          <div className="px-4 py-4 flex items-center justify-between active:bg-gray-50 cursor-pointer">
             <div className="flex items-center gap-4">
-               <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center text-blue-600">
+               <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center text-primary-dark">
                   <Smartphone size={20} />
                </div>
                <div>
@@ -228,11 +228,11 @@ const VendorProfile = () => {
          <h2 className="text-[16px] font-black text-slate-900 mb-4">Try Mithilakart in your language</h2>
          <div className="flex gap-3 overflow-x-auto no-scrollbar">
             {['हिंदी', 'தமிழ்', 'తెలుగు', 'ಕನ್ನಡ'].map((lang, idx) => (
-               <button key={idx} className="px-6 py-2 rounded-full border border-gray-200 text-[13px] font-bold text-slate-700 active:bg-blue-50 active:border-blue-200 transition-colors">
+               <button key={idx} className="px-6 py-2 rounded-full border border-gray-200 text-[13px] font-bold text-slate-700 active:bg-primary-light active:border-blue-200 transition-colors">
                   {lang}
                </button>
             ))}
-            <button className="text-blue-600 font-black text-[13px] whitespace-nowrap ml-2">+8 more</button>
+            <button className="text-primary-dark font-black text-[13px] whitespace-nowrap ml-2">+8 more</button>
          </div>
       </div>
 
@@ -243,10 +243,10 @@ const VendorProfile = () => {
          </div>
          <div className="divide-y divide-gray-50">
             {[
-               { title: 'Mithilakart Plus', icon: <Zap size={18} className="text-blue-600" /> },
-               { title: 'Edit Profile', icon: <Mail size={18} className="text-blue-600" /> },
-               { title: 'Saved Addresses', icon: <Store size={18} className="text-blue-600" /> },
-               { title: 'Notification Settings', icon: <Bell size={18} className="text-blue-600" /> }
+               { title: 'Mithilakart Plus', icon: <Zap size={18} className="text-primary-dark" /> },
+               { title: 'Edit Profile', icon: <Mail size={18} className="text-primary-dark" /> },
+               { title: 'Saved Addresses', icon: <Store size={18} className="text-primary-dark" /> },
+               { title: 'Notification Settings', icon: <Bell size={18} className="text-primary-dark" /> }
             ].map((setting, idx) => (
                <div key={idx} className="px-4 py-4 flex items-center justify-between active:bg-gray-50 cursor-pointer">
                   <div className="flex items-center gap-4">
@@ -264,7 +264,7 @@ const VendorProfile = () => {
          <motion.button
             onClick={handleLogout}
             whileTap={{ scale: 0.95 }}
-            className="w-full bg-white border-2 border-[#2874F0] text-[#2874F0] py-4 rounded-xl font-black text-[15px] uppercase tracking-wider shadow-sm hover:bg-blue-50 active:bg-blue-100 transition-colors flex items-center justify-center gap-3"
+            className="w-full bg-white border-2 border-[#084224] text-[#084224] py-4 rounded-xl font-black text-[15px] uppercase tracking-wider shadow-sm hover:bg-primary-light active:bg-primary-green/20 transition-colors flex items-center justify-center gap-3"
          >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -279,3 +279,5 @@ const VendorProfile = () => {
 };
 
 export default VendorProfile;
+
+

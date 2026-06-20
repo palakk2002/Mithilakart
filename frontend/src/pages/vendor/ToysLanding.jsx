@@ -41,7 +41,7 @@ const ToysLanding = () => {
   const subNav = [
     { label: 'Home', icon: <LayoutGrid size={18} /> },
     { label: 'Appliances', icon: <Zap size={18} /> },
-    { label: 'Toys, baby..', icon: <div className="w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center"><img src={ToysTab} className="w-4 h-4 object-contain" /></div> },
+    { label: 'Toys, baby..', icon: <div className="w-5 h-5 bg-primary-green/20 rounded-full flex items-center justify-center"><img src={ToysTab} className="w-4 h-4 object-contain" /></div> },
     { label: 'Food & He..', icon: <Bell size={18} /> },
     { label: 'Auto Acce..', icon: <Scan size={18} /> }
   ];
@@ -122,7 +122,7 @@ const ToysLanding = () => {
          </div>
          <button 
            onClick={() => navigate('/vendor/cart')}
-           className="bg-[#2874f0] text-white px-8 py-3.5 rounded-xl font-black text-[13px] uppercase tracking-wider shadow-lg shadow-blue-200 active:scale-95 transition-transform"
+           className="bg-[#084224] text-white px-8 py-3.5 rounded-xl font-black text-[13px] uppercase tracking-wider shadow-lg shadow-emerald-100 active:scale-95 transition-transform"
          >
             Go to Cart
          </button>
@@ -132,3 +132,5 @@ const ToysLanding = () => {
 };
 
 export default ToysLanding;
+
+

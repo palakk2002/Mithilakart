@@ -65,7 +65,7 @@ const Cart = () => {
   return (
     <div className="bg-gray-100 min-h-screen pb-32 font-sans">
       {/* Top Header */}
-      <div className="sticky top-0 z-[100] bg-[#2874f0] text-white px-4 py-3.5 flex items-center gap-4 shadow-md">
+      <div className="sticky top-0 z-[100] bg-[#084224] text-white px-4 py-3.5 flex items-center gap-4 shadow-md">
         <button onClick={() => navigate(-1)} className="active:scale-95 transition-transform">
           <ArrowLeft size={24} />
         </button>
@@ -81,7 +81,7 @@ const Cart = () => {
           </div>
           <p className="text-[12px] text-gray-500 truncate">83 kishan pura mataji mandir, sector no. 5 new ...</p>
         </div>
-        <button className="text-[#2874f0] text-[13px] font-bold border border-gray-200 px-4 py-1.5 rounded-sm active:bg-gray-50">
+        <button className="text-[#084224] text-[13px] font-bold border border-gray-200 px-4 py-1.5 rounded-sm active:bg-gray-50">
           Change
         </button>
       </div>
@@ -95,7 +95,7 @@ const Cart = () => {
             </div>
             <h2 className="text-[16px] font-bold text-slate-800 mb-1">Your cart is empty!</h2>
             <p className="text-[13px] text-gray-500 mb-6">Add items to it now.</p>
-            <Link to="/vendor/home" className="bg-[#2874f0] text-white px-8 py-2.5 rounded-sm font-bold text-[14px]">
+            <Link to="/vendor/home" className="bg-[#084224] text-white px-8 py-2.5 rounded-sm font-bold text-[14px]">
               Shop now
             </Link>
           </div>
@@ -146,8 +146,8 @@ const Cart = () => {
 
                     <div className="flex flex-col gap-1">
                       <div className="flex items-center gap-1">
-                        <span className="text-[#2874f0] italic font-black text-[12px]">WOW!</span>
-                        <span className="text-[12px] text-[#2874f0] font-bold">Buy at ₹{Math.floor(item.price * 0.92)}</span>
+                        <span className="text-[#084224] italic font-black text-[12px]">WOW!</span>
+                        <span className="text-[12px] text-[#084224] font-bold">Buy at ₹{Math.floor(item.price * 0.92)}</span>
                       </div>
                       <p className="text-[11px] text-gray-500 font-medium">+ ₹19 Protect Promise Fee <Info size={10} className="inline ml-0.5" /></p>
                       <div className="flex items-center gap-1 mt-0.5">
@@ -259,3 +259,4 @@ const Cart = () => {
 };
 
 export default Cart;
+

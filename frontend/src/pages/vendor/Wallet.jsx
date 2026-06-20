@@ -28,7 +28,7 @@ const Wallet = () => {
 
           <div className="grid grid-cols-2 gap-4">
              <button className="flex flex-col items-center gap-2 p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors">
-                <Plus size={24} className="text-blue-600" />
+                <Plus size={24} className="text-primary-dark" />
                 <span className="text-xs font-bold">Add Money</span>
              </button>
              <button className="flex flex-col items-center gap-2 p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors">
@@ -61,3 +61,4 @@ const Wallet = () => {
 };
 
 export default Wallet;
+

@@ -45,7 +45,7 @@ const AllOffers = () => {
   return (
     <div className="bg-[#fcfcfc] min-h-screen pb-24 font-sans">
       {/* Header - Matching Category Search Style */}
-      <div className="sticky top-0 z-50 bg-[#2874f0] text-white px-4 py-3 flex items-center justify-between shadow-md">
+      <div className="sticky top-0 z-50 bg-[#084224] text-white px-4 py-3 flex items-center justify-between shadow-md">
         <div className="flex items-center gap-4 flex-1">
           {!isSearchVisible ? (
             <>
@@ -97,7 +97,7 @@ const AllOffers = () => {
             >
               <ShoppingCart size={22} />
               {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-[#ff0000] text-white text-[10px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border border-[#2874f0]">
+                <span className="absolute -top-1.5 -right-1.5 bg-[#ff0000] text-white text-[10px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border border-[#084224]">
                   {cartCount}
                 </span>
               )}
@@ -147,3 +147,4 @@ const AllOffers = () => {
 };
 
 export default AllOffers;
+

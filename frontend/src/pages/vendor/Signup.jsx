@@ -52,12 +52,12 @@ const Signup = () => {
         </form>
 
         <p className="text-xs mt-6 text-gray-700 leading-tight">
-          By creating an account, you agree to Cocio's <a href="#" className="text-blue-600 hover:underline">Conditions of Use</a> and <a href="#" className="text-blue-600 hover:underline">Privacy Notice</a>.
+          By creating an account, you agree to Cocio's <a href="#" className="text-primary-dark hover:underline">Conditions of Use</a> and <a href="#" className="text-primary-dark hover:underline">Privacy Notice</a>.
         </p>
 
         <div className="mt-8 pt-4 border-t border-gray-200">
           <p className="text-xs">
-            Already have an account? <Link to="/vendor/login" className="text-blue-600 hover:underline hover:text-accent">Sign in</Link>
+            Already have an account? <Link to="/vendor/login" className="text-primary-dark hover:underline hover:text-accent">Sign in</Link>
           </p>
         </div>
       </div>
@@ -65,9 +65,9 @@ const Signup = () => {
       {/* Footer Links */}
       <div className="mt-10 py-6 border-t border-gray-200 w-full flex flex-col items-center bg-gray-50 md:bg-transparent">
         <div className="flex space-x-6 mb-2">
-          <a href="#" className="text-xs text-blue-600 hover:underline">Conditions of Use</a>
-          <a href="#" className="text-xs text-blue-600 hover:underline">Privacy Notice</a>
-          <a href="#" className="text-xs text-blue-600 hover:underline">Help</a>
+          <a href="#" className="text-xs text-primary-dark hover:underline">Conditions of Use</a>
+          <a href="#" className="text-xs text-primary-dark hover:underline">Privacy Notice</a>
+          <a href="#" className="text-xs text-primary-dark hover:underline">Help</a>
         </div>
         <p className="text-[10px] text-gray-500">© 2026-2027, Cocio.com, Inc. or its affiliates</p>
       </div>
@@ -76,3 +76,4 @@ const Signup = () => {
 };
 
 export default Signup;
+

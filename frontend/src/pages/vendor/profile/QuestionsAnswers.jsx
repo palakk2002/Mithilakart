@@ -78,7 +78,7 @@ const QuestionsAnswers = () => {
 
                   <div className="space-y-3">
                      <div className="flex gap-3">
-                        <div className="p-1.5 bg-blue-500/10 rounded-lg text-blue-500 flex-shrink-0 self-start">
+                        <div className="p-1.5 bg-primary-light0/10 rounded-lg text-primary-dark flex-shrink-0 self-start">
                            <HelpCircle size={16} />
                         </div>
                         <p className="text-xs font-black tracking-tight leading-relaxed">{item.question}</p>
@@ -123,3 +123,4 @@ const QuestionsAnswers = () => {
 };
 
 export default QuestionsAnswers;
+

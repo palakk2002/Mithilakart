@@ -21,7 +21,7 @@ const Support = () => {
       </div>
 
       <div className="p-4 space-y-6">
-        <div className="bg-[#2874f0] rounded-3xl p-6 text-white overflow-hidden relative">
+        <div className="bg-[#084224] rounded-3xl p-6 text-white overflow-hidden relative">
           <HelpCircle size={100} className="absolute -right-4 -bottom-4 opacity-10" />
           <h2 className="text-xl font-black mb-2">How can we help?</h2>
           <p className="text-sm opacity-80 font-medium">We're here to help you 24/7 with any delivery related issues.</p>
@@ -60,3 +60,4 @@ const Support = () => {
 };
 
 export default Support;
+

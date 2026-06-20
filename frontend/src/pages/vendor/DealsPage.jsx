@@ -94,7 +94,7 @@ const DealsPage = () => {
         {/* Adaptive Page Title */}
         <div className="mt-4 px-1">
            <h1 className={`text-lg font-black uppercase tracking-[2px] ${isDarkMode ? 'text-[var(--color-gold)]' : 'text-slate-900'}`}>{sectionTitle}</h1>
-           <div className={`w-10 h-1 mt-1 rounded-full ${isDarkMode ? 'bg-[var(--color-gold)] shadow-[0_0_10px_rgba(226,167,80,0.5)]' : 'bg-blue-600 shadow-sm'}`}></div>
+           <div className={`w-10 h-1 mt-1 rounded-full ${isDarkMode ? 'bg-[var(--color-gold)] shadow-[0_0_10px_rgba(226,167,80,0.5)]' : 'bg-primary-dark shadow-sm'}`}></div>
         </div>
       </div>
 
@@ -121,7 +121,7 @@ const DealsPage = () => {
                  {/* Adaptive Quick Add Button */}
                  <button 
                    onClick={(e) => handleAddToCart(product, e)}
-                   className={`absolute bottom-2 right-2 w-10 h-10 rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-all hover:scale-110 z-20 ${isDarkMode ? 'bg-[var(--color-gold)] shadow-[0_5px_15px_rgba(226,167,80,0.4)]' : 'bg-blue-600 text-white shadow-[0_5px_15px_rgba(37,99,235,0.3)]'}`}
+                   className={`absolute bottom-2 right-2 w-10 h-10 rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-all hover:scale-110 z-20 ${isDarkMode ? 'bg-[var(--color-gold)] shadow-[0_5px_15px_rgba(226,167,80,0.4)]' : 'bg-primary-dark text-white shadow-[0_5px_15px_rgba(37,99,235,0.3)]'}`}
                  >
                     <Plus size={24} className={isDarkMode ? "text-black" : "text-white"} />
                  </button>
@@ -131,7 +131,7 @@ const DealsPage = () => {
               <div className="space-y-1.5 px-1">
                  <div className="flex items-center gap-2">
                     <span className="bg-[#cc0c39] text-white text-[9px] font-black px-2 py-0.5 rounded-sm uppercase tracking-tighter shadow-md">{product.discount}</span>
-                    <span className={`text-[9px] font-black uppercase tracking-widest ${isDarkMode ? 'text-[var(--color-gold)]' : 'text-blue-600'}`}>{product.label}</span>
+                    <span className={`text-[9px] font-black uppercase tracking-widest ${isDarkMode ? 'text-[var(--color-gold)]' : 'text-primary-dark'}`}>{product.label}</span>
                  </div>
 
                  <div className="flex items-baseline gap-2">
@@ -144,7 +144,7 @@ const DealsPage = () => {
                     {product.name}
                  </h3>
 
-                 <button className={`text-[11px] font-black transition-colors uppercase tracking-widest mt-1 ${isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'}`}>
+                 <button className={`text-[11px] font-black transition-colors uppercase tracking-widest mt-1 ${isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-primary-dark hover:text-blue-700'}`}>
                     Shop {product.brand} deals
                  </button>
 
@@ -166,3 +166,4 @@ const DealsPage = () => {
 };
 
 export default DealsPage;
+

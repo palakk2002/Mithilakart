@@ -25,7 +25,7 @@ const BestQuality = ({ items }) => {
 
   return (
     <div className="px-2 mt-2 mb-1">
-      <div className="bg-[#2874f0] rounded-xl p-2 shadow-md">
+      <div className="bg-[#084224] rounded-xl p-2 shadow-md">
         
         {/* Compact Header */}
         <div className="flex justify-between items-center mb-2 px-0.5">
@@ -73,3 +73,4 @@ const BestQuality = ({ items }) => {
 };
 
 export default React.memo(BestQuality);
+

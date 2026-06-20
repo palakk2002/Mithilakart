@@ -6,6 +6,10 @@
   --color-black: #000000;
   --color-black-soft: #121212;
   --color-bg-luxury: #F4F4F4;
+  --color-primary-green: #b2eb99;
+  --color-primary-dark: #084224;
+  --color-primary-light: #e6f7e2;
+  --color-accent-orange: #ff5630;
 }
 
 /* ── Global heading style ── */

@@ -67,12 +67,12 @@ const Checkout = () => {
       <div className="flex items-center justify-between relative max-w-sm mx-auto">
         {/* Connecting Lines */}
         <div className="absolute top-3.5 left-[15%] right-[15%] h-[2px] bg-gray-100 -z-0">
-          <div className={`h-full bg-[#2874f0] transition-all duration-500`} style={{ width: currentStep === 2 ? '50%' : currentStep === 3 ? '100%' : '0%' }}></div>
+          <div className={`h-full bg-[#084224] transition-all duration-500`} style={{ width: currentStep === 2 ? '50%' : currentStep === 3 ? '100%' : '0%' }}></div>
         </div>
 
         {/* Step 1: Address */}
         <div className="flex flex-col items-center gap-1.5 z-10 bg-white px-2">
-          <div className="w-7 h-7 rounded-full bg-[#2874f0] text-white flex items-center justify-center text-[12px] font-bold">
+          <div className="w-7 h-7 rounded-full bg-[#084224] text-white flex items-center justify-center text-[12px] font-bold">
             <CheckCircle2 size={16} />
           </div>
           <span className="text-[11px] font-bold text-gray-400">Address</span>
@@ -80,7 +80,7 @@ const Checkout = () => {
 
         {/* Step 2: Order Summary */}
         <div className="flex flex-col items-center gap-1.5 z-10 bg-white px-2">
-          <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold transition-colors ${currentStep >= 2 ? 'bg-[#2874f0] text-white' : 'bg-gray-100 text-gray-400'}`}>
+          <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold transition-colors ${currentStep >= 2 ? 'bg-[#084224] text-white' : 'bg-gray-100 text-gray-400'}`}>
             {currentStep > 2 ? <CheckCircle2 size={16} /> : '2'}
           </div>
           <span className={`text-[11px] font-bold ${currentStep === 2 ? 'text-slate-900' : 'text-gray-400'}`}>Order Summary</span>
@@ -88,7 +88,7 @@ const Checkout = () => {
 
         {/* Step 3: Payment */}
         <div className="flex flex-col items-center gap-1.5 z-10 bg-white px-2">
-          <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold transition-colors ${currentStep === 3 ? 'bg-[#2874f0] text-white' : 'bg-gray-100 text-gray-400'}`}>
+          <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold transition-colors ${currentStep === 3 ? 'bg-[#084224] text-white' : 'bg-gray-100 text-gray-400'}`}>
             3
           </div>
           <span className={`text-[11px] font-bold ${currentStep === 3 ? 'text-slate-900' : 'text-gray-400'}`}>Payment</span>
@@ -103,7 +103,7 @@ const Checkout = () => {
       <div className="bg-white p-4 border-b border-gray-100 shadow-sm mb-2">
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-[15px] font-bold text-slate-900">Deliver to:</h3>
-          <button className="text-[#2874f0] text-[13px] font-bold border border-gray-200 px-4 py-1.5 rounded-sm">Change</button>
+          <button className="text-[#084224] text-[13px] font-bold border border-gray-200 px-4 py-1.5 rounded-sm">Change</button>
         </div>
         <p className="text-[14px] font-bold text-slate-800 mb-2">
           {address.name} <span className="text-[10px] bg-gray-100 text-gray-400 px-1.5 py-0.5 rounded ml-1 font-black uppercase">HOME</span>
@@ -169,7 +169,7 @@ const Checkout = () => {
         </div>
 
         <p className="text-[11px] text-gray-400 text-center leading-relaxed">
-          By continuing with the order, you confirm that you are above 18 years of age, and you agree to the Mithilakart's <span className="text-[#2874f0]">Terms of Use</span> and <span className="text-[#2874f0]">Privacy Policy</span>
+          By continuing with the order, you confirm that you are above 18 years of age, and you agree to the Mithilakart's <span className="text-[#084224]">Terms of Use</span> and <span className="text-[#084224]">Privacy Policy</span>
         </p>
       </div>
     </div>
@@ -204,7 +204,7 @@ const Checkout = () => {
         </div>
         <div className="flex items-center gap-1 bg-white px-2 py-1.5 rounded-full shadow-sm border border-gray-100">
            <div className="w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center text-[8px] font-bold text-orange-600 italic">IC</div>
-           <div className="w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center text-[8px] font-bold text-blue-600 italic">M</div>
+           <div className="w-5 h-5 bg-primary-green/20 rounded-full flex items-center justify-center text-[8px] font-bold text-primary-dark italic">M</div>
            <span className="text-[10px] font-bold text-gray-400 ml-0.5">+3</span>
         </div>
       </div>
@@ -229,8 +229,8 @@ const Checkout = () => {
                 <div className="border border-gray-100 rounded-xl p-4 shadow-sm bg-white">
                     {/* Paytm */}
                     <div className="flex items-start gap-4 mb-6 cursor-pointer" onClick={() => setSelectedUpi('paytm')}>
-                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 ${selectedUpi === 'paytm' ? 'border-[#2874f0]' : 'border-gray-300'}`}>
-                          {selectedUpi === 'paytm' && <div className="w-2.5 h-2.5 bg-[#2874f0] rounded-full"></div>}
+                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 ${selectedUpi === 'paytm' ? 'border-[#084224]' : 'border-gray-300'}`}>
+                          {selectedUpi === 'paytm' && <div className="w-2.5 h-2.5 bg-[#084224] rounded-full"></div>}
                        </div>
                        <div className="flex-1">
                           <div className="flex items-center justify-between">
@@ -254,8 +254,8 @@ const Checkout = () => {
 
                     {/* PhonePe */}
                     <div className="flex items-center gap-4 cursor-pointer" onClick={() => setSelectedUpi('phonepe')}>
-                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedUpi === 'phonepe' ? 'border-[#2874f0]' : 'border-gray-300'}`}>
-                          {selectedUpi === 'phonepe' && <div className="w-2.5 h-2.5 bg-[#2874f0] rounded-full"></div>}
+                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedUpi === 'phonepe' ? 'border-[#084224]' : 'border-gray-300'}`}>
+                          {selectedUpi === 'phonepe' && <div className="w-2.5 h-2.5 bg-[#084224] rounded-full"></div>}
                        </div>
                        <div className="flex-1 flex items-center justify-between">
                           <span className="text-[14px] font-medium text-slate-800">PhonePe</span>
@@ -322,7 +322,7 @@ const Checkout = () => {
                 <ShieldCheck size={20} className="text-slate-800" />
                 <h3 className="text-[14px] font-bold text-slate-800">Have a Mithilakart Gift Card?</h3>
              </div>
-             <button className="text-[#2874f0] text-[13px] font-bold">Add</button>
+             <button className="text-[#084224] text-[13px] font-bold">Add</button>
            </div>
         </div>
 
@@ -359,7 +359,7 @@ const Checkout = () => {
       <div className="min-h-screen bg-white flex flex-col items-center justify-center w-full fixed inset-0 z-[1000] px-6 text-center">
         {orderStatus === 'processing' ? (
           <>
-            <Loader2 size={48} className="text-[#2874f0] animate-spin mb-6" />
+            <Loader2 size={48} className="text-[#084224] animate-spin mb-6" />
             <p className="text-lg font-bold text-slate-900">Processing Your Order</p>
             <p className="text-sm text-gray-500 mt-2">Please do not close this window</p>
           </>
@@ -415,3 +415,5 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+

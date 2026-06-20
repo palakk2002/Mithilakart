@@ -30,7 +30,7 @@ const Bag = () => {
                   <h3 className="font-bold text-slate-800">{item.name}</h3>
                   <p className="text-primary font-bold mt-1">₹{item.price}</p>
                   <div className="mt-3 flex gap-4">
-                    <button className="text-xs text-blue-600 font-bold hover:underline">Move to Cart</button>
+                    <button className="text-xs text-primary-dark font-bold hover:underline">Move to Cart</button>
                     <button className="text-xs text-red-500 font-bold hover:underline">Remove</button>
                   </div>
                 </div>
@@ -48,9 +48,9 @@ const Bag = () => {
                 <p className="text-xs font-bold text-green-700">Extra 10% Off on HDFC Bank Cards</p>
                 <p className="text-[10px] text-green-600">Valid on orders above ₹4,999</p>
               </div>
-              <div className="p-3 bg-blue-50 border border-blue-100 rounded-lg">
+              <div className="p-3 bg-primary-light border border-primary-green/30 rounded-lg">
                 <p className="text-xs font-bold text-blue-700">Flat ₹500 Cashback</p>
-                <p className="text-[10px] text-blue-600">On your first purchase using Cocio Pay</p>
+                <p className="text-[10px] text-primary-dark">On your first purchase using Cocio Pay</p>
               </div>
             </div>
           </div>
@@ -70,3 +70,4 @@ const Bag = () => {
 };
 
 export default Bag;
+

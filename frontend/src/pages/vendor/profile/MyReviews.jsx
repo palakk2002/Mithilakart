@@ -52,7 +52,7 @@ const MyReviews = () => {
            <div className="text-center flex-1">
               <h3 className="text-3xl font-black text-[var(--card-text)]">{reviews.length}</h3>
               <div className="flex justify-center gap-0.5 my-1">
-                 <MessageSquare size={10} className="text-blue-500 fill-blue-500" />
+                 <MessageSquare size={10} className="text-primary-dark fill-blue-500" />
               </div>
               <p className="text-[8px] font-black uppercase tracking-widest text-[var(--card-sub)]">Total Reviews</p>
            </div>
@@ -79,7 +79,7 @@ const MyReviews = () => {
                 
                 <div className="flex items-center justify-between pt-2 border-t border-[var(--card-border)]/50">
                    <span className="text-[10px] font-black text-[var(--card-sub)] uppercase tracking-widest">{rev.date}</span>
-                   <div className="flex items-center gap-1.5 text-blue-500">
+                   <div className="flex items-center gap-1.5 text-primary-dark">
                       <ThumbsUp size={12} />
                       <span className="text-[10px] font-black">{rev.likes}</span>
                    </div>
@@ -93,3 +93,4 @@ const MyReviews = () => {
 };
 
 export default MyReviews;
+

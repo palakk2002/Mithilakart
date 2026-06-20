@@ -48,7 +48,7 @@ const NotificationSettings = () => {
           <div className="bg-black/20 border border-[var(--card-border)] rounded-2xl overflow-hidden divide-y divide-[var(--card-border)]">
              {[
                { id: 'offers', title: 'Promotions & Offers', icon: Zap, color: 'text-amber-500' },
-               { id: 'orders', title: 'Order Updates', icon: Smartphone, color: 'text-blue-500' },
+               { id: 'orders', title: 'Order Updates', icon: Smartphone, color: 'text-primary-dark' },
                { id: 'updates', title: 'System Updates', icon: Bell, color: 'text-purple-500' },
                { id: 'security', title: 'Account Security', icon: Bell, color: 'text-red-500' }
              ].map((item) => (
@@ -93,3 +93,4 @@ const NotificationSettings = () => {
 };
 
 export default NotificationSettings;
+

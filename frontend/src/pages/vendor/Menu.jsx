@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 
 const Menu = () => {
   const menuItems = [
-    { title: 'Prime', icon: <ShieldCheck className="text-blue-600" size={32} />, path: '/vendor/profile' },
+    { title: 'Prime', icon: <ShieldCheck className="text-primary-dark" size={32} />, path: '/vendor/profile' },
     { title: 'Orders', icon: <ShoppingBag className="text-orange-500" size={32} />, path: '/vendor/profile' },
     { title: 'Buy Again', icon: <RefreshCcw className="text-green-600" size={32} />, path: '/vendor/profile' },
     { title: 'Account', icon: <Settings className="text-slate-500" size={32} />, path: '/vendor/profile' },
@@ -72,3 +72,4 @@ const Menu = () => {
 };
 
 export default Menu;
+

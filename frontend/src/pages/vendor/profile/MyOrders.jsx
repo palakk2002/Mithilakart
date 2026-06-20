@@ -166,7 +166,7 @@ const MyOrders = () => {
 
   const OrderCard = ({ order }) => {
     const mainItem = order.items[0];
-    const statusColor = order.status === 'Delivered' ? 'text-green-600' : order.status === 'Cancelled' ? 'text-red-600' : 'text-blue-600';
+    const statusColor = order.status === 'Delivered' ? 'text-green-600' : order.status === 'Cancelled' ? 'text-red-600' : 'text-primary-dark';
     const currentOrderRating = ratings[order.id] || { rating: 0, review: '' };
 
     return (
@@ -192,7 +192,7 @@ const MyOrders = () => {
                   {mainItem.name}
                 </h3>
               </div>
-              <ChevronRight size={16} className="text-gray-300 mt-0.5 flex-shrink-0 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
+              <ChevronRight size={16} className="text-gray-300 mt-0.5 flex-shrink-0 group-hover:text-primary-dark group-hover:translate-x-1 transition-all" />
             </div>
 
             {/* Compact Bottom Section */}
@@ -215,7 +215,7 @@ const MyOrders = () => {
               {order.status === 'Delivered' && (
                 <button 
                   onClick={() => setShowReviewModal(order.id)}
-                  className="flex items-center gap-1 px-2.5 py-1.5 border border-blue-100 bg-blue-50/50 rounded-lg text-blue-600 text-[10px] font-black uppercase tracking-tight active:scale-95 transition-transform"
+                  className="flex items-center gap-1 px-2.5 py-1.5 border border-primary-green/30 bg-primary-light/50 rounded-lg text-primary-dark text-[10px] font-black uppercase tracking-tight active:scale-95 transition-transform"
                 >
                   <Edit3 size={11} />
                   Write Review
@@ -267,11 +267,11 @@ const MyOrders = () => {
               </div>
               <button 
                 onClick={() => setShowFilterSheet(true)}
-                className={`bg-white border border-gray-200 rounded-xl px-4 flex items-center gap-2 shadow-sm active:scale-95 transition-all ${activeFilters.status !== 'All' ? 'border-blue-500 bg-blue-50' : ''}`}
+                className={`bg-white border border-gray-200 rounded-xl px-4 flex items-center gap-2 shadow-sm active:scale-95 transition-all ${activeFilters.status !== 'All' ? 'border-blue-500 bg-primary-light' : ''}`}
               >
-                 <ListFilter size={18} className={activeFilters.status !== 'All' ? 'text-blue-600' : 'text-gray-600'} />
-                 <span className={`text-[13px] font-bold ${activeFilters.status !== 'All' ? 'text-blue-600' : 'text-gray-700'}`}>Filters</span>
-                 {activeFilters.status !== 'All' && <div className="w-2 h-2 bg-blue-600 rounded-full" />}
+                 <ListFilter size={18} className={activeFilters.status !== 'All' ? 'text-primary-dark' : 'text-gray-600'} />
+                 <span className={`text-[13px] font-bold ${activeFilters.status !== 'All' ? 'text-primary-dark' : 'text-gray-700'}`}>Filters</span>
+                 {activeFilters.status !== 'All' && <div className="w-2 h-2 bg-primary-dark rounded-full" />}
               </button>
            </div>
         </div>
@@ -298,7 +298,7 @@ const MyOrders = () => {
                   </p>
                   <button 
                     onClick={() => navigate('/vendor/home')}
-                    className="mt-10 bg-[#2874f0] text-white px-12 py-4 rounded-2xl font-black uppercase tracking-widest text-[12px] shadow-xl shadow-blue-100 active:scale-95 transition-transform"
+                    className="mt-10 bg-[#084224] text-white px-12 py-4 rounded-2xl font-black uppercase tracking-widest text-[12px] shadow-xl shadow-blue-100 active:scale-95 transition-transform"
                   >
                     Start Shopping
                   </button>
@@ -390,8 +390,8 @@ const MyOrders = () => {
                 <div className="p-6">
                    <div className="flex justify-between items-center mb-8">
                       <div className="flex items-center gap-3">
-                         <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
-                            <Filter size={20} className="text-blue-600" />
+                         <div className="w-10 h-10 bg-primary-light rounded-xl flex items-center justify-center">
+                            <Filter size={20} className="text-primary-dark" />
                          </div>
                          <h2 className="text-[20px] font-black text-slate-900 uppercase tracking-tight">Filter Orders</h2>
                       </div>
@@ -411,7 +411,7 @@ const MyOrders = () => {
                               onClick={() => setActiveFilters(prev => ({ ...prev, status: opt }))}
                               className={`px-5 py-2.5 rounded-xl text-[13px] font-bold transition-all ${
                                 activeFilters.status === opt 
-                                ? 'bg-[#2874f0] text-white shadow-lg shadow-blue-100 scale-105' 
+                                ? 'bg-[#084224] text-white shadow-lg shadow-blue-100 scale-105' 
                                 : 'bg-gray-50 text-slate-600 border border-gray-100'
                               }`}
                             >
@@ -432,7 +432,7 @@ const MyOrders = () => {
                               onClick={() => setActiveFilters(prev => ({ ...prev, time: opt }))}
                               className={`px-5 py-2.5 rounded-xl text-[13px] font-bold transition-all ${
                                 activeFilters.time === opt 
-                                ? 'bg-[#2874f0] text-white shadow-lg shadow-blue-100 scale-105' 
+                                ? 'bg-[#084224] text-white shadow-lg shadow-blue-100 scale-105' 
                                 : 'bg-gray-50 text-slate-600 border border-gray-100'
                               }`}
                             >
@@ -470,3 +470,5 @@ const MyOrders = () => {
 };
 
 export default MyOrders;
+
+

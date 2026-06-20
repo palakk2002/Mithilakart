@@ -78,7 +78,7 @@ const VendorLayout = () => {
               : '0 1px 0px rgba(0,0,0,0.06)',
           }}
           transition={{ duration: 0.22 }}
-          className="sticky top-0 z-50 bg-[#2874F0] pb-0"
+          className="sticky top-0 z-50 bg-primary-green pb-0"
         >
           {/* Row 0: Top Header Tabs (Mithilakart, 8 Mins, Travel, Grocery) */}
           <HeaderTabs />
@@ -121,7 +121,7 @@ const VendorLayout = () => {
         </Link>
         <Link 
           to="/categories"
-          className={`flex flex-col items-center transition-transform active:scale-90 ${location.pathname === '/categories' ? 'text-[#2874f0]' : ''}`}
+          className={`flex flex-col items-center transition-transform active:scale-90 ${location.pathname === '/categories' ? 'text-primary-dark' : ''}`}
         >
           <LayoutGrid size={22} strokeWidth={1.5} />
           <span className={`text-[10px] ${location.pathname === '/categories' ? 'font-black' : 'font-medium'}`}>Categories</span>

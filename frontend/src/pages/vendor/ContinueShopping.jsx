@@ -142,7 +142,7 @@ const ContinueShopping = () => {
                 onClick={() => setActiveFilter(filter)}
                 className={`whitespace-nowrap px-4 py-1.5 rounded-full text-[12px] font-bold border transition-all ${
                   activeFilter === filter 
-                    ? 'bg-[#2874f0] border-[#2874f0] text-white shadow-md scale-105' 
+                    ? 'bg-[#084224] border-[#084224] text-white shadow-md scale-105' 
                     : 'bg-white border-gray-200 text-gray-600 shadow-sm'
                 }`}
               >
@@ -177,7 +177,7 @@ const ContinueShopping = () => {
                   <p className="text-[8px] font-bold text-slate-500 flex items-center gap-0.5">
                     Or Pay ₹{Math.round(product.price * 0.95)} <span className="bg-yellow-400 text-[7px] px-0.5 rounded-none text-white leading-none">★</span> 28
                   </p>
-                  <p className="text-[8px] font-black text-[#2874f0] uppercase tracking-tighter mt-0.5">FREE DELIVERY</p>
+                  <p className="text-[8px] font-black text-[#084224] uppercase tracking-tighter mt-0.5">FREE DELIVERY</p>
                 </div>
               </div>
             </div>
@@ -195,7 +195,7 @@ const ContinueShopping = () => {
               <button 
                 key={idx}
                 className={`whitespace-nowrap px-4 py-1.5 rounded-full text-[12px] font-bold border ${
-                  idx === 0 ? 'bg-[#f0f5ff] border-[#2874f0] text-[#2874f0]' : 'bg-white border-gray-200 text-gray-600'
+                  idx === 0 ? 'bg-[#f0f5ff] border-[#084224] text-[#084224]' : 'bg-white border-gray-200 text-gray-600'
                 }`}
               >
                 {trend}
@@ -234,7 +234,7 @@ const ContinueShopping = () => {
         <div className="mt-4 mb-10">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-[18px] font-bold text-gray-900 tracking-tight">Bought Together</h2>
-            <button className="text-[11px] font-bold text-[#2874f0] border border-gray-200 px-3 py-1 rounded-sm shadow-sm">
+            <button className="text-[11px] font-bold text-[#084224] border border-gray-200 px-3 py-1 rounded-sm shadow-sm">
               View all
             </button>
           </div>
@@ -307,4 +307,5 @@ const ContinueShopping = () => {
 
 
 export default ContinueShopping;
+
 

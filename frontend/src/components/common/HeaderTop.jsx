@@ -20,21 +20,21 @@ const HeaderTop = ({ cartCount = 0 }) => {
       <div className="flex items-center gap-0 flex-shrink-0">
         <motion.div whileTap={{ scale: 0.82 }}>
           <Link to="/vendor/notifications" aria-label="Notifications" className="p-1.5 block">
-            <Bell size={20} strokeWidth={1.8} className="text-gray-700" />
+            <Bell size={20} strokeWidth={1.8} className="text-primary-dark" />
           </Link>
         </motion.div>
 
         <motion.div whileTap={{ scale: 0.82 }}>
           <Link to="/vendor/wishlist" aria-label="Wishlist" className="p-1.5 block">
-            <Heart size={20} strokeWidth={1.8} className="text-gray-700" />
+            <Heart size={20} strokeWidth={1.8} className="text-primary-dark" />
           </Link>
         </motion.div>
 
         <motion.div whileTap={{ scale: 0.82 }}>
           <Link to="/vendor/cart" aria-label="Cart" className="relative p-1.5 block">
-            <ShoppingCart size={20} strokeWidth={1.8} className="text-gray-700" />
+            <ShoppingCart size={20} strokeWidth={1.8} className="text-primary-dark" />
             {cartCount > 0 && (
-              <span className="absolute top-1 right-1 text-[8px] font-black min-w-[14px] h-3.5 rounded-full bg-[#2874F0] text-white flex items-center justify-center shadow-sm">
+              <span className="absolute top-1 right-1 text-[8px] font-black min-w-[14px] h-3.5 rounded-full bg-primary-dark text-white flex items-center justify-center shadow-sm">
                 {cartCount}
               </span>
             )}

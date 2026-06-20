@@ -183,7 +183,7 @@ const ProductDetail = () => {
         <button onClick={() => navigate(-1)} className="text-slate-800 p-1">
           <ArrowLeft size={22} />
         </button>
-        <div className="flex-1 bg-white border border-[#2874f0] rounded-sm px-2.5 py-1.5 flex items-center gap-2">
+        <div className="flex-1 bg-white border border-[#084224] rounded-sm px-2.5 py-1.5 flex items-center gap-2">
           <Search size={16} className="text-gray-400" />
           <input 
             type="text" 
@@ -347,7 +347,7 @@ const ProductDetail = () => {
                 <span className="text-gray-300 text-[10px]">•</span>
                 <span className="text-[10px] text-slate-500 font-medium">4 years with Mithilakart</span>
               </div>
-              <button className="text-[11px] font-bold text-[#2874f0] mt-1 underline underline-offset-2">See other sellers</button>
+              <button className="text-[11px] font-bold text-[#084224] mt-1 underline underline-offset-2">See other sellers</button>
             </div>
         </div>
       </div>
@@ -359,8 +359,8 @@ const ProductDetail = () => {
           onClick={() => setShowReturnPolicy(true)}
           className="flex flex-col items-center gap-2 cursor-pointer group active:scale-95 transition-transform"
         >
-          <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-blue-100 transition-colors">
-            <RotateCcw size={20} className="text-[#2874f0]" />
+          <div className="w-10 h-10 bg-primary-light rounded-full flex items-center justify-center group-hover:bg-primary-green/20 transition-colors">
+            <RotateCcw size={20} className="text-[#084224]" />
           </div>
           <span className="text-[10px] font-bold text-slate-600 text-center leading-tight">10-Day<br/>Return ›</span>
         </div>
@@ -368,16 +368,16 @@ const ProductDetail = () => {
           onClick={() => setShowPaymentOptions(true)}
           className="flex flex-col items-center gap-2 cursor-pointer group active:scale-95 transition-transform"
         >
-          <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-blue-100 transition-colors">
-            <IndianRupee size={20} className="text-[#2874f0]" />
+          <div className="w-10 h-10 bg-primary-light rounded-full flex items-center justify-center group-hover:bg-primary-green/20 transition-colors">
+            <IndianRupee size={20} className="text-[#084224]" />
           </div>
           <span className="text-[10px] font-bold text-slate-600 text-center leading-tight">Cash on<br/>Delivery ›</span>
         </div>
         <div className="flex flex-col items-center gap-2 cursor-pointer group active:scale-95 transition-transform"
           onClick={() => setShowSupportInfo(true)}
         >
-          <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-blue-100 transition-colors">
-            <span className="text-[#2874f0] font-black text-[10px]">24x7</span>
+          <div className="w-10 h-10 bg-primary-light rounded-full flex items-center justify-center group-hover:bg-primary-green/20 transition-colors">
+            <span className="text-[#084224] font-black text-[10px]">24x7</span>
           </div>
           <span className="text-[10px] font-bold text-slate-600 text-center leading-tight">Customer<br/>support ›</span>
         </div>
@@ -420,7 +420,7 @@ const ProductDetail = () => {
                   <span className="text-[9px] text-gray-400 line-through">₹1,999</span>
                   <span className="text-[12px] font-black">₹899</span>
                 </div>
-                <p className="text-[9px] text-blue-600 font-bold mt-1">₹799 <span className="font-medium text-gray-400 text-[8px]">with UPI</span></p>
+                <p className="text-[9px] text-primary-dark font-bold mt-1">₹799 <span className="font-medium text-gray-400 text-[8px]">with UPI</span></p>
               </div>
             </div>
           ))}
@@ -604,7 +604,7 @@ const ProductDetail = () => {
             </div>
 
             {/* Header */}
-            <div className="sticky top-0 bg-[#e0f2fe] px-4 py-3 flex items-center gap-4 border-b border-blue-100 z-10">
+            <div className="sticky top-0 bg-[#e0f2fe] px-4 py-3 flex items-center gap-4 border-b border-primary-green/30 z-10">
               <button onClick={() => {
                 setShowReturnPolicy(false);
                 setIsReturnExpanded(false);
@@ -619,8 +619,8 @@ const ProductDetail = () => {
               <div className="flex justify-between items-center mb-10 px-4">
                 <div className="flex flex-col items-center gap-2">
                   <div className="w-14 h-14 bg-gray-50 rounded-sm flex items-center justify-center relative">
-                    <div className="w-10 h-10 border-2 border-[#2874f0] rounded-sm flex items-center justify-center">
-                      <RotateCcw size={20} className="text-[#2874f0]" />
+                    <div className="w-10 h-10 border-2 border-[#084224] rounded-sm flex items-center justify-center">
+                      <RotateCcw size={20} className="text-[#084224]" />
                     </div>
                     <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
                       <span className="text-white text-[10px] font-bold">✓</span>
@@ -630,8 +630,8 @@ const ProductDetail = () => {
                 </div>
                 <div className="flex flex-col items-center gap-2">
                   <div className="w-14 h-14 bg-gray-50 rounded-sm flex items-center justify-center relative">
-                    <div className="w-10 h-10 border-2 border-[#2874f0] rounded-sm flex items-center justify-center">
-                      <IndianRupee size={20} className="text-[#2874f0]" />
+                    <div className="w-10 h-10 border-2 border-[#084224] rounded-sm flex items-center justify-center">
+                      <IndianRupee size={20} className="text-[#084224]" />
                     </div>
                     <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
                       <span className="text-white text-[10px] font-bold">✓</span>
@@ -641,8 +641,8 @@ const ProductDetail = () => {
                 </div>
                 <div className="flex flex-col items-center gap-2">
                   <div className="w-14 h-14 bg-gray-50 rounded-sm flex items-center justify-center relative">
-                    <div className="w-10 h-10 border-2 border-[#2874f0] rounded-sm flex items-center justify-center">
-                      <Share2 size={20} className="text-[#2874f0] rotate-90" />
+                    <div className="w-10 h-10 border-2 border-[#084224] rounded-sm flex items-center justify-center">
+                      <Share2 size={20} className="text-[#084224] rotate-90" />
                     </div>
                     <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
                       <span className="text-white text-[10px] font-bold">✓</span>
@@ -774,15 +774,15 @@ const ProductDetail = () => {
             <div className="sticky top-[53px] bg-white flex border-b border-gray-100 z-10">
               <button 
                 onClick={() => setActivePaymentTab('COD')}
-                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'COD' ? 'text-[#2874f0]' : 'text-gray-400'}`}
+                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'COD' ? 'text-[#084224]' : 'text-gray-400'}`}
               >
-                <IndianRupee size={22} className={activePaymentTab === 'COD' ? 'text-[#2874f0]' : 'text-gray-400'} />
+                <IndianRupee size={22} className={activePaymentTab === 'COD' ? 'text-[#084224]' : 'text-gray-400'} />
                 <span className="text-[13px] font-bold">COD</span>
-                {activePaymentTab === 'COD' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#2874f0]" />}
+                {activePaymentTab === 'COD' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#084224]" />}
               </button>
               <button 
                 onClick={() => setActivePaymentTab('UPI')}
-                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'UPI' ? 'text-[#2874f0]' : 'text-gray-400'}`}
+                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'UPI' ? 'text-[#084224]' : 'text-gray-400'}`}
               >
                 <div className="w-5 h-7 flex items-center justify-center">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -790,7 +790,7 @@ const ProductDetail = () => {
                   </svg>
                 </div>
                 <span className="text-[13px] font-bold">UPI</span>
-                {activePaymentTab === 'UPI' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#2874f0]" />}
+                {activePaymentTab === 'UPI' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#084224]" />}
               </button>
             </div>
 
@@ -807,9 +807,9 @@ const ProductDetail = () => {
                   </p>
                   {isPaymentExpanded && (
                     <div className="space-y-4 animate-in fade-in duration-500">
-                      <div className="bg-blue-50 p-4 rounded-sm border border-blue-100">
+                      <div className="bg-primary-light p-4 rounded-sm border border-primary-green/30">
                         <p className="text-[13px] text-blue-800 font-bold mb-1">Instant Refund Policy</p>
-                        <p className="text-[12px] text-blue-600">UPI payments are eligible for instant refunds upon cancellation.</p>
+                        <p className="text-[12px] text-primary-dark">UPI payments are eligible for instant refunds upon cancellation.</p>
                       </div>
                       <div className="border border-gray-100 rounded-sm p-4">
                         <p className="text-[13px] font-bold text-gray-400 mb-3 uppercase tracking-wider">Secure Payment</p>
@@ -873,20 +873,20 @@ const ProductDetail = () => {
                 <div className="space-y-6 animate-in fade-in duration-700">
                   <div className="grid grid-cols-2 gap-4">
                     <button className="flex flex-col items-center gap-2 p-4 border border-gray-100 rounded-sm active:bg-gray-50 transition-colors">
-                      <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center">
-                        <Send size={22} className="text-[#2874f0]" />
+                      <div className="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center">
+                        <Send size={22} className="text-[#084224]" />
                       </div>
                       <span className="text-[13px] font-bold text-slate-700">Chat with us</span>
                     </button>
                     <button className="flex flex-col items-center gap-2 p-4 border border-gray-100 rounded-sm active:bg-gray-50 transition-colors">
-                      <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center">
-                        <Star size={22} className="text-[#2874f0]" />
+                      <div className="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center">
+                        <Star size={22} className="text-[#084224]" />
                       </div>
                       <span className="text-[13px] font-bold text-slate-700">Help Center</span>
                     </button>
                   </div>
                   
-                  <div className="bg-gray-50 p-4 border-l-4 border-[#2874f0] rounded-r-sm">
+                  <div className="bg-gray-50 p-4 border-l-4 border-[#084224] rounded-r-sm">
                     <p className="text-[12px] font-bold text-slate-500 uppercase mb-3 tracking-wider">Common Topics</p>
                     <ul className="space-y-4">
                       {['Track Order', 'Refund Status', 'Cancel Items'].map(item => (
@@ -930,3 +930,5 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+
+

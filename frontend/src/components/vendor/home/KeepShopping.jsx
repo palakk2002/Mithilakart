@@ -51,7 +51,7 @@ const KeepShopping = ({ items }) => {
               </div>
               <div className="p-2 border-t border-gray-50">
                 <p className="text-[10px] font-bold text-gray-500 leading-tight truncate uppercase tracking-tight">{item.label}</p>
-                <p className="text-[11px] font-bold text-[#2874f0] uppercase tracking-wider mt-0.5">View More</p>
+                <p className="text-[11px] font-bold text-[#084224] uppercase tracking-wider mt-0.5">View More</p>
               </div>
             </div>
           ))}
@@ -62,3 +62,4 @@ const KeepShopping = ({ items }) => {
 };
 
 export default React.memo(KeepShopping);
+

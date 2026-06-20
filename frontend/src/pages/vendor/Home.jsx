@@ -103,7 +103,7 @@ const Home = () => {
       }}
     >
       {/* 🔴 REDESIGNED PROMOTIONAL AREA */}
-      <div className="flex flex-col bg-[#2874f0]">
+      <div className="flex flex-col bg-primary-green">
         {(selectedCategory === 'For You' || selectedCategory === 'Home') && <SaleBanner />}
       </div>
 

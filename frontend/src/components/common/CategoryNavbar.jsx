@@ -137,14 +137,14 @@ const CategoryNavbar = ({ selectedCategory, setSelectedCategory }) => {
             {isActive && (
               <motion.div
                 layoutId="activePill"
-                className="absolute top-1 left-1/2 -translate-x-1/2 w-14 h-10 rounded-lg bg-[#2874F0]/10"
+                className="absolute top-1 left-1/2 -translate-x-1/2 w-14 h-10 rounded-lg bg-primary-dark/10"
                 transition={{ type: 'spring', stiffness: 400, damping: 32 }}
               />
             )}
 
             {/* SVG Icon */}
             <motion.div
-              animate={{ color: isActive ? '#2874F0' : '#374151' }}
+              animate={{ color: isActive ? '#084224' : '#374151' }}
               transition={{ duration: 0.18 }}
               className="mb-0.5 leading-none relative z-10"
             >
@@ -154,7 +154,7 @@ const CategoryNavbar = ({ selectedCategory, setSelectedCategory }) => {
             {/* Label */}
             <motion.span
               animate={{
-                color:      isActive ? '#2874F0' : '#374151',
+                color:      isActive ? '#084224' : '#374151',
                 fontWeight: isActive ? 700 : 500,
               }}
               transition={{ duration: 0.18 }}
@@ -167,7 +167,7 @@ const CategoryNavbar = ({ selectedCategory, setSelectedCategory }) => {
             {isActive && (
               <motion.div
                 layoutId="activeCategoryBar"
-                className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#2874F0] rounded-t-full"
+                className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-primary-dark rounded-t-full"
                 transition={{ type: 'spring', stiffness: 400, damping: 32 }}
               />
             )}

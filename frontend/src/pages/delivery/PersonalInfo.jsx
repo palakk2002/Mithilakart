@@ -46,7 +46,7 @@ const PersonalInfo = () => {
         
         <button 
           onClick={() => setIsEditing(!isEditing)}
-          className={`p-2 rounded-xl transition-colors ${isEditing ? 'bg-blue-50 text-[#2874f0]' : 'text-slate-400'}`}
+          className={`p-2 rounded-xl transition-colors ${isEditing ? 'bg-blue-50 text-[#084224]' : 'text-slate-400'}`}
         >
           {isEditing ? <X size={22} /> : <Edit3 size={22} />}
         </button>
@@ -57,10 +57,10 @@ const PersonalInfo = () => {
         <div className="flex flex-col items-center py-4">
           <div className="relative">
             <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center border-4 border-white shadow-md">
-              <User size={40} className="text-[#2874f0]" />
+              <User size={40} className="text-[#084224]" />
             </div>
             {isEditing && (
-              <button className="absolute bottom-0 right-0 p-2 bg-[#2874f0] text-white rounded-full border-2 border-white shadow-lg animate-in zoom-in duration-300">
+              <button className="absolute bottom-0 right-0 p-2 bg-[#084224] text-white rounded-full border-2 border-white shadow-lg animate-in zoom-in duration-300">
                 <Camera size={14} />
               </button>
             )}
@@ -92,7 +92,7 @@ const PersonalInfo = () => {
                 <div key={field.key} className={`bg-white rounded-2xl p-4 border transition-all ${isEditing ? 'border-blue-200 shadow-blue-50' : 'border-slate-100 shadow-sm'}`}>
                   <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">{field.label}</label>
                   <div className="flex items-center gap-3">
-                    <field.icon size={16} className={`${isEditing ? 'text-[#2874f0]' : 'text-slate-400'}`} />
+                    <field.icon size={16} className={`${isEditing ? 'text-[#084224]' : 'text-slate-400'}`} />
                     <input 
                       type="text" 
                       readOnly={!isEditing}
@@ -118,7 +118,7 @@ const PersonalInfo = () => {
                 <div key={field.key} className={`bg-white rounded-2xl p-4 border transition-all ${isEditing ? 'border-blue-200 shadow-blue-50' : 'border-slate-100 shadow-sm'}`}>
                   <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">{field.label}</label>
                   <div className="flex items-center gap-3">
-                    <field.icon size={16} className={`${isEditing ? 'text-[#2874f0]' : 'text-slate-400'}`} />
+                    <field.icon size={16} className={`${isEditing ? 'text-[#084224]' : 'text-slate-400'}`} />
                     <input 
                       type="text" 
                       readOnly={!isEditing}
@@ -147,7 +147,7 @@ const PersonalInfo = () => {
                 <div key={field.key} className={`bg-white rounded-2xl p-4 border transition-all ${isEditing ? 'border-blue-200 shadow-blue-50' : 'border-slate-100 shadow-sm'}`}>
                   <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">{field.label}</label>
                   <div className="flex items-center gap-3">
-                    <field.icon size={16} className={`${isEditing ? 'text-[#2874f0]' : 'text-slate-400'}`} />
+                    <field.icon size={16} className={`${isEditing ? 'text-[#084224]' : 'text-slate-400'}`} />
                     <input 
                       type="text" 
                       readOnly={!isEditing}
@@ -176,7 +176,7 @@ const PersonalInfo = () => {
                 <div key={field.key} className={`bg-white rounded-2xl p-4 border transition-all ${isEditing ? 'border-blue-200 shadow-blue-50' : 'border-slate-100 shadow-sm'}`}>
                   <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">{field.label}</label>
                   <div className="flex items-center gap-3">
-                    <field.icon size={16} className={`${isEditing ? 'text-[#2874f0]' : 'text-slate-400'}`} />
+                    <field.icon size={16} className={`${isEditing ? 'text-[#084224]' : 'text-slate-400'}`} />
                     <input 
                       type="text" 
                       readOnly={!isEditing}
@@ -233,7 +233,7 @@ const PersonalInfo = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             onClick={handleSave}
-            className="w-full bg-[#2874f0] text-white py-4 rounded-2xl font-black uppercase tracking-widest shadow-lg shadow-blue-100 active:scale-95 transition-all flex items-center justify-center gap-2 mt-8"
+            className="w-full bg-[#084224] text-white py-4 rounded-2xl font-black uppercase tracking-widest shadow-lg shadow-blue-100 active:scale-95 transition-all flex items-center justify-center gap-2 mt-8"
           >
             <Save size={18} />
             Save Changes
@@ -258,3 +258,4 @@ const PersonalInfo = () => {
 };
 
 export default PersonalInfo;
+

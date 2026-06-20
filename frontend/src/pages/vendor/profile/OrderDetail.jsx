@@ -95,7 +95,7 @@ const OrderDetail = () => {
         {/* Order ID Section (Top) */}
         <div className="bg-white px-5 py-4 flex items-center gap-3 border-t border-gray-50">
            <span className="text-[13px] text-gray-400 font-black uppercase tracking-widest">Order #{order.id}</span>
-           <button className="text-blue-500 active:scale-90 transition-transform">
+           <button className="text-primary-dark active:scale-90 transition-transform">
               <Copy size={16} />
            </button>
         </div>
@@ -110,7 +110,7 @@ const OrderDetail = () => {
                        <HelpCircle size={12} className="text-gray-400" />
                     </div>
                     <p className="text-[13px] text-gray-500 font-medium">
-                       Return policy valid till May 15 <span className="text-blue-500 font-bold ml-1">Know more</span>
+                       Return policy valid till May 15 <span className="text-primary-dark font-bold ml-1">Know more</span>
                     </p>
                  </div>
                  <p className="text-[13px] text-gray-500 font-medium mt-1.5">Tap 'Help' for return related support.</p>
@@ -123,7 +123,7 @@ const OrderDetail = () => {
            <div className="pt-5 border-t border-gray-50 text-center">
               <button 
                 onClick={() => setShowUpdates(true)}
-                className="text-[15px] font-black text-blue-600 uppercase tracking-tight active:scale-95 transition-transform"
+                className="text-[15px] font-black text-primary-dark uppercase tracking-tight active:scale-95 transition-transform"
               >
                 See all updates
               </button>
@@ -159,7 +159,7 @@ const OrderDetail = () => {
               </div>
               <button 
                 onClick={() => setShowReviewModal(true)}
-                className="flex items-center gap-2 px-5 py-2.5 border border-blue-500 rounded-md text-[14px] font-black text-blue-600 uppercase tracking-tight active:bg-blue-50 transition-colors"
+                className="flex items-center gap-2 px-5 py-2.5 border border-blue-500 rounded-md text-[14px] font-black text-primary-dark uppercase tracking-tight active:bg-primary-light transition-colors"
               >
                  <Edit3 size={16} />
                  Write review
@@ -251,8 +251,8 @@ const OrderDetail = () => {
            <h3 className="text-[18px] font-black text-slate-800 tracking-tight mb-4">Delivery details</h3>
            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-50 space-y-5">
               <div className="flex gap-5">
-                 <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
-                    <MapPin size={20} className="text-blue-600" />
+                 <div className="w-10 h-10 bg-primary-light rounded-full flex items-center justify-center flex-shrink-0">
+                    <MapPin size={20} className="text-primary-dark" />
                  </div>
                  <div>
                     <h4 className="text-[15px] font-black text-slate-900 mb-1.5">Home</h4>
@@ -260,8 +260,8 @@ const OrderDetail = () => {
                  </div>
               </div>
               <div className="flex gap-5 border-t border-gray-50 pt-5">
-                 <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
-                    <User size={20} className="text-blue-600" />
+                 <div className="w-10 h-10 bg-primary-light rounded-full flex items-center justify-center flex-shrink-0">
+                    <User size={20} className="text-primary-dark" />
                  </div>
                  <div>
                     <h4 className="text-[15px] font-black text-slate-900 mb-1.5">Mukesh Jinodiya</h4>
@@ -319,7 +319,7 @@ const OrderDetail = () => {
             disabled={isDownloading}
             className={`w-full bg-white border border-gray-200 py-5 rounded-2xl flex items-center justify-center gap-4 active:bg-gray-50 transition-colors shadow-sm ${isDownloading ? 'opacity-50' : ''}`}
            >
-              <Download size={22} className={isDownloading ? 'animate-bounce text-blue-600' : 'text-blue-600'} />
+              <Download size={22} className={isDownloading ? 'animate-bounce text-primary-dark' : 'text-primary-dark'} />
               <span className="text-[16px] font-black text-slate-800 uppercase tracking-tight">
                 {isDownloading ? 'Downloading...' : 'Download Invoice'}
               </span>
@@ -333,13 +333,13 @@ const OrderDetail = () => {
                  <p className="text-[13px] text-gray-400 font-black uppercase tracking-widest mb-1.5">Order ID</p>
                  <span className="text-[15px] font-bold text-slate-800">{order.id}</span>
               </div>
-              <button className="p-2.5 bg-gray-50 rounded-xl text-blue-600 active:scale-90 transition-transform">
+              <button className="p-2.5 bg-gray-50 rounded-xl text-primary-dark active:scale-90 transition-transform">
                  <Copy size={22} />
               </button>
            </div>
            <button 
             onClick={() => navigate('/vendor/home')}
-            className="w-full bg-[#f0f5ff] text-blue-600 py-5 rounded-2xl font-black uppercase tracking-widest text-[14px] border border-blue-100 active:scale-[0.98] transition-transform"
+            className="w-full bg-[#f0f5ff] text-primary-dark py-5 rounded-2xl font-black uppercase tracking-widest text-[14px] border border-primary-green/30 active:scale-[0.98] transition-transform"
            >
               Shop more from Flipkart
            </button>
@@ -470,3 +470,4 @@ const OrderDetail = () => {
 };
 
 export default OrderDetail;
+

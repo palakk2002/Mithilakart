@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Search, Camera, Mic, ScanLine, Home, ChevronDown, Zap } from 'lucide-react';
 
@@ -9,8 +9,13 @@ import { Search, Camera, Mic, ScanLine, Home, ChevronDown, Zap } from 'lucide-re
  */
 const SearchBar = ({ selectedAddress }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [query, setQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
+
+  const isMithilakActive = location.pathname.includes('/mithilak');
+  const isFreshGroceryActive = location.pathname.includes('/fresh-grocery');
+  const hideAddressRow = isMithilakActive || isFreshGroceryActive;
 
   const handleSubmit = (e) => {
     e?.preventDefault();
@@ -25,25 +30,27 @@ const SearchBar = ({ selectedAddress }) => {
     <div className="px-3 pb-2 flex flex-col gap-2">
 
       {/* ── Delivery Address Field (Flipkart Style) ── */}
-      <div className="flex items-center justify-between py-1 text-slate-800">
-        <Link
-          to="/vendor/profile/addresses"
-          className="flex items-center gap-1.5 bg-white/15 px-3 py-1.5 rounded-lg min-w-0 transition-colors hover:bg-white/25"
-        >
-          <Home size={14} strokeWidth={2.5} className="text-white flex-shrink-0 fill-white" />
-          <span className="text-[11px] font-black text-white tracking-tight">HOME</span>
-          <span className="text-[11px] text-white font-medium truncate max-w-[170px]">
-            {displayAddress}
-          </span>
-          <ChevronDown size={12} strokeWidth={3} className="text-white flex-shrink-0" />
-        </Link>
+      {!hideAddressRow && (
+        <div className="flex items-center justify-between py-1 text-slate-800">
+          <Link
+            to="/vendor/profile/addresses"
+            className="flex items-center gap-1.5 bg-white/30 px-3 py-1.5 rounded-lg min-w-0 transition-colors hover:bg-white/50"
+          >
+            <Home size={14} strokeWidth={2.5} className="text-primary-dark flex-shrink-0 fill-primary-dark/20" />
+            <span className="text-[11px] font-black text-primary-dark tracking-tight">HOME</span>
+            <span className="text-[11px] text-primary-dark font-medium truncate max-w-[170px]">
+              {displayAddress}
+            </span>
+            <ChevronDown size={12} strokeWidth={3} className="text-primary-dark flex-shrink-0" />
+          </Link>
 
-        {/* Energy/Lightning Pill */}
-        <div className="flex items-center gap-1 bg-white px-2 py-0.5 rounded-full shadow-xs border border-blue-100">
-          <Zap size={12} className="text-amber-500 fill-amber-500" />
-          <span className="text-[11px] font-extrabold text-[#2874F0]">3</span>
+          {/* Energy/Lightning Pill */}
+          <div className="flex items-center gap-1 bg-white px-2 py-0.5 rounded-full shadow-xs border border-primary-green">
+            <Zap size={12} className="text-amber-500 fill-amber-500" />
+            <span className="text-[11px] font-extrabold text-primary-dark">3</span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ── Search + Scan Field ── */}
       <div className="flex items-center gap-2">
@@ -68,9 +75,9 @@ const SearchBar = ({ selectedAddress }) => {
 
         <motion.button
           whileTap={{ scale: 0.92 }}
-          className="p-2.5 bg-white/15 rounded-xl flex-shrink-0"
+          className="p-2.5 bg-white rounded-xl flex-shrink-0 shadow-xs"
         >
-          <ScanLine size={18} strokeWidth={2.2} className="text-white" />
+          <ScanLine size={18} strokeWidth={2.2} className="text-primary-dark" />
         </motion.button>
       </div>
     </div>

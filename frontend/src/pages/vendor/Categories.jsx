@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Search, Camera, ShoppingCart, ArrowLeft,
   ChevronRight, Star, Info, Bell, Zap, PlayCircle,
@@ -111,7 +111,7 @@ const Categories = () => {
                 setIsSearchVisible(false);
                 setSearchQuery('');
               }}>
-                <ArrowLeft size={22} className="text-[#2874f0]" />
+                <ArrowLeft size={22} className="text-[#084224]" />
               </button>
               <div className="flex-1 bg-gray-50 rounded-lg px-3 py-2 flex items-center gap-2 border border-gray-100">
                 <Search size={18} className="text-gray-400" />
@@ -169,16 +169,16 @@ const Categories = () => {
                   }`}
               >
                 {activeCategory === cat && (
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#2874f0] rounded-r-full" />
+                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#084224] rounded-r-full" />
                 )}
-                <div className={`w-12 h-12 rounded-full overflow-hidden flex items-center justify-center transition-transform ${activeCategory === cat ? 'scale-110 shadow-sm border-2 border-[#2874f0]/20' : 'scale-100'}`}>
+                <div className={`w-12 h-12 rounded-full overflow-hidden flex items-center justify-center transition-transform ${activeCategory === cat ? 'scale-110 shadow-sm border-2 border-[#084224]/20' : 'scale-100'}`}>
                   <img
                     src={allCategoryProducts[cat][0]?.image}
                     className="w-full h-full object-cover mix-blend-multiply p-1"
                     alt={cat}
                   />
                 </div>
-                <span className={`text-[10px] text-center leading-tight font-bold transition-colors ${activeCategory === cat ? 'text-[#2874f0]' : 'text-slate-500'
+                <span className={`text-[10px] text-center leading-tight font-bold transition-colors ${activeCategory === cat ? 'text-[#084224]' : 'text-slate-500'
                   }`}>
                   {cat}
                 </span>
@@ -194,7 +194,7 @@ const Categories = () => {
               {searchQuery.trim() ? `Results for "${searchQuery}"` : `${activeCategory} Collections`}
             </h2>
             {!searchQuery.trim() && (
-              <span className="text-[11px] font-bold text-[#2874f0] bg-blue-50 px-2 py-1 rounded">View All</span>
+              <span className="text-[11px] font-bold text-[#084224] bg-primary-light px-2 py-1 rounded">View All</span>
             )}
           </div>
 
@@ -247,8 +247,8 @@ const Categories = () => {
                       <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/fa_62673a.png" alt="assured" className="h-3 ml-auto" />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[15px] font-black text-slate-900">₹{product.price}</span>
-                      <span className="text-[11px] text-gray-400 line-through">₹{product.oldPrice}</span>
+                      <span className="text-[15px] font-black text-slate-900">?{product.price}</span>
+                      <span className="text-[11px] text-gray-400 line-through">?{product.oldPrice}</span>
                       <span className="text-[11px] font-black text-green-600">{product.discount}</span>
                     </div>
                   </div>
@@ -263,7 +263,7 @@ const Categories = () => {
                 <p className="text-gray-400 text-[13px] mt-2">Try searching for different keywords or categories</p>
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="mt-6 text-[#2874f0] font-black text-[14px] border border-[#2874f0] px-6 py-2 rounded-full active:scale-95 transition-transform"
+                  className="mt-6 text-[#084224] font-black text-[14px] border border-[#084224] px-6 py-2 rounded-full active:scale-95 transition-transform"
                 >
                   Clear Search
                 </button>
@@ -297,7 +297,7 @@ const Categories = () => {
           {!searchQuery.trim() && (
             <div className="mt-12 p-6 bg-gray-50 rounded-2xl text-center">
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm border border-gray-100">
-                <Truck size={24} className="text-[#2874f0]" />
+                <Truck size={24} className="text-[#084224]" />
               </div>
               <p className="text-[12px] font-black text-slate-800 uppercase tracking-wider mb-1">Fastest Delivery</p>
               <p className="text-[11px] text-gray-500">Across 20,000+ pincodes in India</p>
@@ -310,3 +310,5 @@ const Categories = () => {
 };
 
 export default Categories;
+
+

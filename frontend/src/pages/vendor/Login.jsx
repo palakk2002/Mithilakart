@@ -17,7 +17,7 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Blue Header with Logo */}
-      <div className="bg-[#2874F0] px-4 py-4 flex items-center justify-between shadow-md">
+      <div className="bg-[#084224] px-4 py-4 flex items-center justify-between shadow-md">
         <button 
           onClick={() => navigate(-1)}
           className="text-white active:scale-90 transition-transform"
@@ -59,7 +59,7 @@ const Login = () => {
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder={useEmail ? 'Enter your email' : ''}
-                className={`w-full ${!useEmail ? 'pl-16' : 'pl-4'} pr-4 py-3 border-2 border-[#2874F0] rounded-sm text-[15px] font-medium text-slate-900 placeholder:text-gray-400 focus:outline-none focus:border-[#2874F0] focus:ring-2 focus:ring-[#2874F0]/20 transition-all`}
+                className={`w-full ${!useEmail ? 'pl-16' : 'pl-4'} pr-4 py-3 border-2 border-[#084224] rounded-sm text-[15px] font-medium text-slate-900 placeholder:text-gray-400 focus:outline-none focus:border-[#084224] focus:ring-2 focus:ring-[#084224]/20 transition-all`}
                 required
                 maxLength={useEmail ? undefined : 10}
                 pattern={useEmail ? undefined : '[0-9]*'}
@@ -72,7 +72,7 @@ const Login = () => {
             <button
               type="button"
               onClick={() => setUseEmail(!useEmail)}
-              className="text-[13px] font-bold text-[#2874F0] hover:underline"
+              className="text-[13px] font-bold text-[#084224] hover:underline"
             >
               {useEmail ? 'Use Phone Number' : 'Use Email-ID'}
             </button>
@@ -81,11 +81,11 @@ const Login = () => {
           {/* Terms and Conditions - Moved here */}
           <p className="text-[10px] text-gray-400 leading-relaxed">
             By continuing, you confirm that you are above 18 years of age, and you agree to the Mithilakart's{' '}
-            <Link to="/vendor/terms" className="text-[#2874F0] hover:underline">
+            <Link to="/vendor/terms" className="text-[#084224] hover:underline">
               Terms of Use
             </Link>{' '}
             and{' '}
-            <Link to="/vendor/privacy" className="text-[#2874F0] hover:underline">
+            <Link to="/vendor/privacy" className="text-[#084224] hover:underline">
               Privacy Policy
             </Link>
           </p>
@@ -100,7 +100,7 @@ const Login = () => {
           disabled={!phoneNumber}
           className={`w-full py-4 rounded-sm text-[15px] font-bold uppercase tracking-wide transition-all ${
             phoneNumber
-              ? 'bg-[#2874F0] text-white shadow-md active:shadow-sm'
+              ? 'bg-[#084224] text-white shadow-md active:shadow-sm'
               : 'bg-gray-200 text-gray-400 cursor-not-allowed'
           }`}
         >
@@ -112,3 +112,4 @@ const Login = () => {
 };
 
 export default Login;
+

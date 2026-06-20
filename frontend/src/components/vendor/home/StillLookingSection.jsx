@@ -35,7 +35,7 @@ const StillLookingSection = ({ items }) => {
 
   return (
     <div className="px-2 mt-1.5 mb-1">
-      <div className="bg-[#2874f0] rounded-xl p-2 shadow-sm relative overflow-hidden">
+      <div className="bg-[#084224] rounded-xl p-2 shadow-sm relative overflow-hidden">
         {/* Diagonal Stripe Pattern */}
         <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{
           backgroundImage: 'linear-gradient(135deg, #fff 25%, transparent 25%, transparent 50%, #fff 50%, #fff 75%, transparent 75%, transparent)',
@@ -67,7 +67,7 @@ const StillLookingSection = ({ items }) => {
               </div>
               <div className="px-0.5">
                 <p className="text-[9px] font-bold text-gray-600 leading-tight truncate">{item.label}</p>
-                <p className="text-[8px] font-black text-[#2874f0] uppercase tracking-tighter mt-0.5">VIEW STORE</p>
+                <p className="text-[8px] font-black text-[#084224] uppercase tracking-tighter mt-0.5">VIEW STORE</p>
               </div>
             </div>
           ))}
@@ -79,3 +79,4 @@ const StillLookingSection = ({ items }) => {
 };
 
 export default React.memo(StillLookingSection);
+

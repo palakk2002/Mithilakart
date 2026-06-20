@@ -14,7 +14,7 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
             >
               {/* Background Capsule */}
               <div className={`relative w-[70px] h-[34px] rounded-full transition-all duration-300 ${
-                isActive ? 'bg-[#2874f0]' : 'bg-blue-100/60'
+                isActive ? 'bg-[#084224]' : 'bg-primary-green/20/60'
               }`}>
                 {isActive && <div className="absolute inset-0 bg-white/10 rounded-full" />}
               </div>
@@ -34,11 +34,11 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
               {/* Label and Indicator */}
               <div className="flex flex-col items-center gap-1.5 mt-1">
                 <span className={`text-[12px] font-bold tracking-tight transition-colors duration-300 ${
-                  isActive ? 'text-[#2874f0]' : 'text-slate-600'
+                  isActive ? 'text-[#084224]' : 'text-slate-600'
                 }`}>
                   {tab.label}
                 </span>
-                {isActive && <div className="w-8 h-1 bg-[#2874f0] rounded-full" />}
+                {isActive && <div className="w-8 h-1 bg-[#084224] rounded-full" />}
               </div>
             </div>
           );
@@ -49,3 +49,5 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
 };
 
 export default React.memo(CategoryTabs);
+
+

@@ -72,7 +72,7 @@ const BannerCarousel = ({ banners = [] }) => {
         {banners.map((_, idx) => (
           <div
             key={idx}
-            className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentIndex ? 'w-4 bg-[#2874f0]' : 'w-1.5 bg-gray-300'
+            className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentIndex ? 'w-4 bg-[#084224]' : 'w-1.5 bg-gray-300'
               }`}
           />
         ))}
@@ -83,3 +83,4 @@ const BannerCarousel = ({ banners = [] }) => {
 };
 
 export default BannerCarousel;
+

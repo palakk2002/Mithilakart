@@ -9,7 +9,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-[#2874F0] px-4 py-4 flex items-center gap-3 shadow-md">
+      <div className="sticky top-0 z-50 bg-[#084224] px-4 py-4 flex items-center gap-3 shadow-md">
         <button 
           onClick={() => navigate(-1)}
           className="text-white active:scale-90 transition-transform"
@@ -206,7 +206,7 @@ const PrivacyPolicy = () => {
             <p><strong>Phone:</strong> +91 1800-123-4567</p>
             <p><strong>Address:</strong> Mithilakart Pvt Ltd, Data Protection Officer, Mumbai, India</p>
           </div>
-          <div className="mt-4 p-4 bg-blue-50 border-l-4 border-[#2874F0] rounded">
+          <div className="mt-4 p-4 bg-primary-light border-l-4 border-[#084224] rounded">
             <p className="text-[12px] text-gray-700 leading-relaxed">
               <strong>Your privacy matters to us.</strong> We are committed to protecting your personal 
               information and being transparent about our data practices. If you have any concerns, please 
@@ -220,3 +220,5 @@ const PrivacyPolicy = () => {
 };
 
 export default PrivacyPolicy;
+
+

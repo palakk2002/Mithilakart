@@ -215,7 +215,7 @@ const DeliverySignup = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#2874f0] hover:bg-blue-700 text-white py-3.5 rounded-xl font-black text-sm uppercase tracking-widest shadow-lg shadow-blue-50 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-8 disabled:opacity-60"
+          className="w-full bg-[#084224] hover:bg-blue-700 text-white py-3.5 rounded-xl font-black text-sm uppercase tracking-widest shadow-lg shadow-blue-50 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-8 disabled:opacity-60"
         >
           {loading ? (
             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -237,3 +237,4 @@ const DeliverySignup = () => {
 };
 
 export default DeliverySignup;
+

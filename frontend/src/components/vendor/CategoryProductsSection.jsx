@@ -44,7 +44,7 @@ const ProductCard = React.memo(({ product, onProductClick, onAddToCart }) => {
             <span className="text-[12px] text-gray-400 line-through font-medium">₹{product.oldPrice || '1,999'}</span>
             <span className="text-[13px] font-black text-slate-900">₹{product.price}</span>
           </div>
-          <p className="text-[10px] font-bold text-[#2874f0] tracking-tight">
+          <p className="text-[10px] font-bold text-[#084224] tracking-tight">
             ₹{Math.round(product.price * 0.9)} with UPI offer + more
           </p>
         </div>
@@ -157,3 +157,4 @@ const CategoryProductsSection = ({ selectedCategory }) => {
 };
 
 export default React.memo(CategoryProductsSection);
+

@@ -49,8 +49,8 @@ const Products = () => {
         <div>
           <h3 className="font-bold text-sm mb-2 uppercase">Customer Ratings</h3>
           <ul className="space-y-1 text-sm text-gray-700">
-            <li className="cursor-pointer hover:text-blue-600">4★ & above</li>
-            <li className="cursor-pointer hover:text-blue-600">3★ & above</li>
+            <li className="cursor-pointer hover:text-primary-dark">4★ & above</li>
+            <li className="cursor-pointer hover:text-primary-dark">3★ & above</li>
           </ul>
         </div>
       </aside>
@@ -78,3 +78,4 @@ const Products = () => {
 };
 
 export default Products;
+
