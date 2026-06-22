@@ -89,7 +89,9 @@ const VendorLayout = () => {
           )}
 
           {/* Row 4 : Category strip */}
-          {!location.pathname.includes('quick-shop') && (
+          {!location.pathname.includes('quick-shop') &&
+           !location.pathname.includes('fresh-grocery') &&
+           !location.pathname.includes('mithilak') && (
             <CategoryNavbar
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
