@@ -52,7 +52,7 @@ const BannerCarousel = ({ banners = [] }) => {
               alt={banners[currentIndex]?.title || "Banner"}
               className="h-full w-full object-cover"
               loading="eager"
-              fetchpriority="high"
+              fetchPriority="high"
             />
             {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />

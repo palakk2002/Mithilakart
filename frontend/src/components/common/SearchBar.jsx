@@ -57,7 +57,7 @@ const SearchBar = ({ selectedAddress }) => {
         <motion.form
           onSubmit={handleSubmit}
           animate={{ scale: searchFocused ? 1.005 : 1 }}
-          className="flex-1 flex items-center gap-1.5 md:gap-2 bg-white rounded-xl px-2.5 py-1.5 md:px-3 md:py-2 border border-gray-100 shadow-xs"
+          className="flex-1 flex items-center gap-1.5 md:gap-2 bg-white rounded-xl px-2.5 py-2.5 md:px-3 md:py-3 border border-gray-100 shadow-xs"
         >
           <Search size={16} strokeWidth={2.5} className="w-[14px] h-[14px] md:w-[16px] md:h-[16px] text-gray-400 flex-shrink-0" />
           <input
@@ -75,7 +75,7 @@ const SearchBar = ({ selectedAddress }) => {
 
         <motion.button
           whileTap={{ scale: 0.92 }}
-          className="p-2 md:p-2.5 bg-white rounded-xl flex-shrink-0 shadow-xs"
+          className="p-3 md:p-3.5 bg-white rounded-xl flex-shrink-0 shadow-xs"
         >
           <ScanLine size={18} strokeWidth={2.2} className="w-[16px] h-[16px] md:w-[18px] md:h-[18px] text-primary-dark" />
         </motion.button>

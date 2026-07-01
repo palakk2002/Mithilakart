@@ -118,7 +118,7 @@ const HeroBanner = ({ banners }) => {
             transition={{ duration: 0.3 }}
             className="absolute inset-0 w-full h-full object-cover"
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
           />
         </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />

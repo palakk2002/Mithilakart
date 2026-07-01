@@ -407,7 +407,7 @@ const CategoryProducts = () => {
 
       {/* 🔶 Main Product Grid (Bottom Part) */}
       <div className="px-4 py-2 mt-4">
-        <h2 className="text-[13px] font-black text-[var(--card-text)] uppercase tracking-tight">For You</h2>
+        <h2 className="text-[13px] font-black text-[var(--card-text)] uppercase tracking-tight">All</h2>
       </div>
       <div className="p-4 grid grid-cols-2 gap-4">
         {sortedProducts.slice(4).map((product) => (

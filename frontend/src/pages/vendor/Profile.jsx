@@ -196,33 +196,6 @@ const VendorProfile = () => {
          </div>
       </div>
 
-      {/* Help India Make Good Choices (Rating Card) */}
-      <div className="bg-white mt-3 py-4 border-t border-b border-gray-100">
-         <div className="flex items-center justify-between px-4 mb-4">
-            <h2 className="text-[16px] font-black text-slate-900">Help India make good choices</h2>
-            <button className="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white">
-               <ArrowRight size={18} />
-            </button>
-         </div>
-         <div className="px-4">
-            <div className="bg-gray-50 rounded-2xl p-4 flex gap-4 border border-gray-100 relative overflow-hidden">
-               <div className="w-16 h-16 bg-white rounded-xl p-2 flex-shrink-0 shadow-sm">
-                  <img src={ShoesImg} className="w-full h-full object-contain" alt="product" />
-               </div>
-               <div className="flex-1">
-                  <h4 className="text-[14px] font-black text-slate-800">WALKAROO Men Casual</h4>
-                  <p className="text-[11px] text-gray-400 font-bold mt-1">Delivered on May 05, 2026</p>
-                  <div className="flex items-center gap-3 mt-3">
-                     <span className="text-[12px] font-bold text-gray-500">Rate this product</span>
-                     <div className="flex gap-1.5">
-                        {[1, 2, 3, 4, 5].map(s => <Star key={s} size={18} className="text-gray-300" />)}
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-
       {/* Language Selector */}
       <div className="bg-white mt-3 py-6 px-4 border-t border-b border-gray-100">
          <h2 className="text-[16px] font-black text-slate-900 mb-4">Try Mithilakart in your language</h2>

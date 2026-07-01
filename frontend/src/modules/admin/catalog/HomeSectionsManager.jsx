@@ -73,7 +73,7 @@ const HomeSectionsManager = () => {
 
   const getTitle = () => {
     const titles = {
-      'stillLooking': 'Still Looking For These?',
+      'stillLooking': 'Trending This Week',
       'topSelection': 'Top Selection',
       'brandsSpotlight': 'Brands in Spotlight',
       'bestQuality': 'Best Quality',
