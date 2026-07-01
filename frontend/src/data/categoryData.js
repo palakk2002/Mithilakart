@@ -1,6 +1,6 @@
 import Mascara from '../assets/products/product01.jpg';
 import LipstickDeal from '../assets/products/product02.jpg';
-import LipGloss from '../assets/products/product08.jpg';
+import LipGloss from '../assets/products/product03.jpg';
 import LipLiner from '../assets/products/product04.jpg';
 import PlumShampoo from '../assets/products/product05.jpg';
 import LorealShampoo from '../assets/products/product06.jpg';
@@ -10,7 +10,7 @@ import MakeupHero from '../assets/products/product08.jpg';
 import StationeryImg from '../assets/products/product09.jpg';
 import GiftingImg from '../assets/products/product10.jpg';
 import PrintingImg from '../assets/products/product11.webp';
-import JewelleryImg from '../assets/products/product06.jpg';
+import JewelleryImg from '../assets/products/product12.jpg';
 import ElectricalImg from '../assets/products/product13.jpg';
 import ToysImg from '../assets/products/product14.jpg';
 import TopImg3 from '../assets/TopSection/TopSection3.jpg';
@@ -18,7 +18,7 @@ import TopImg4 from '../assets/TopSection/TopSection21.jpg';
 
 import SamsungS24 from '../assets/products/product01.jpg';
 import AsusLaptop from '../assets/products/product02.jpg';
-import EarbudsDeal from '../assets/products/product08.jpg';
+import EarbudsDeal from '../assets/products/product03.jpg';
 import ElectronicsHero from '../assets/products/product04.jpg';
 
 import ClothesImg from '../assets/products/product15.webp';
@@ -34,7 +34,7 @@ import CoolerWhite from '../assets/products/product12.jpg';
 import CookwareHero from '../assets/products/product13.jpg';
 
 export const allCategoryProducts = {
-  'All': [
+  'For You': [
     { id: 'fy1', name: 'Premium Gifting Box', category: 'Gifting', price: 699, oldPrice: 999, discount: '30% OFF', rating: 4.8, image: GiftingImg, shortDescription: 'Assorted luxury collection' },
     { id: 'fy2', name: 'Samsung Galaxy S24', category: 'Electronics', price: 79999, oldPrice: 89999, discount: '11% OFF', rating: 4.9, image: SamsungS24, shortDescription: 'Flagship AI smartphone' },
     { id: 'fy3', name: 'Luxury Matte Lipstick', category: 'Beauty', price: 499, oldPrice: 999, discount: '50% OFF', rating: 4.8, image: LipstickDeal, shortDescription: 'Long-lasting matte finish' },

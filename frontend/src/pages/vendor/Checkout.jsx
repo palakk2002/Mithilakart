@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { 
-  ArrowLeft, Edit2, Loader2, CheckCircle
+  ArrowLeft, CheckCircle2, ChevronRight, ShieldCheck, 
+  Star, Info, Truck, CheckCircle, Zap, Loader2, IndianRupee, CreditCard
 } from 'lucide-react';
 import useAccountStore from '../../store/useAccountStore';
 import ElectronicsImg from '../../assets/products/product04.jpg';
@@ -9,8 +10,9 @@ import ElectronicsImg from '../../assets/products/product04.jpg';
 const Checkout = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [selectedAddress, setSelectedAddress] = useState('home');
-  const [selectedPayment, setSelectedPayment] = useState('card');
+  const [currentStep, setCurrentStep] = useState(2); // 1: Address, 2: Order Summary, 3: Payment
+  const [selectedPayment, setSelectedPayment] = useState('UPI');
+  const [selectedUpi, setSelectedUpi] = useState('paytm');
   const [orderStatus, setOrderStatus] = useState('idle'); // 'idle', 'processing', 'success'
   const addOrder = useAccountStore((state) => state.addOrder);
 
@@ -24,34 +26,333 @@ const Checkout = () => {
     reviews: '5,960'
   };
 
-  const deliveryFee = 30;
-  const subTotal = product.price;
-  const totalAmount = subTotal + deliveryFee;
+  const address = {
+    name: 'Mukesh Jinodiya',
+    type: 'HOME',
+    address: '83 kishan pura mataji mandir, sector no. 5 new harsud chhanera, New Harsud, Nehru Marg, Mangal Pandey Ward, Harsud, Khandwa 450116',
+    phone: '9302841832'
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [currentStep]);
 
-  const handlePayments = () => {
-    setOrderStatus('processing');
-    
-    const newOrder = {
-      id: `OD${Math.floor(Math.random() * 1000000000)}`,
-      status: 'Confirmed',
-      date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
-      items: [{
-        name: product.name,
-        price: product.price,
-        image: product.image
-      }]
-    };
+  const handleContinue = () => {
+    if (currentStep === 2) {
+      setCurrentStep(3);
+    } else if (currentStep === 3) {
+      setOrderStatus('processing');
+      
+      const newOrder = {
+        id: `OD${Math.floor(Math.random() * 1000000000)}`,
+        status: 'Confirmed',
+        date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+        items: [{
+          name: product.name,
+          price: product.price,
+          image: product.image
+        }]
+      };
 
-    setTimeout(() => {
-      addOrder(newOrder);
-      setOrderStatus('success');
-      setTimeout(() => navigate('/profile/orders'), 2000);
-    }, 2000);
+      setTimeout(() => {
+        addOrder(newOrder);
+        setOrderStatus('success');
+        setTimeout(() => navigate('/vendor/profile/orders'), 2000);
+      }, 2000);
+    }
   };
+
+  const renderStepper = () => (
+    <div className="bg-white px-4 py-4 border-b border-gray-100 sticky top-14 z-40">
+      <div className="flex items-center justify-between relative max-w-sm mx-auto">
+        {/* Connecting Lines */}
+        <div className="absolute top-3.5 left-[15%] right-[15%] h-[2px] bg-gray-100 -z-0">
+          <div className={`h-full bg-[#084224] transition-all duration-500`} style={{ width: currentStep === 2 ? '50%' : currentStep === 3 ? '100%' : '0%' }}></div>
+        </div>
+
+        {/* Step 1: Address */}
+        <div className="flex flex-col items-center gap-1.5 z-10 bg-white px-2">
+          <div className="w-7 h-7 rounded-full bg-[#084224] text-white flex items-center justify-center text-[12px] font-bold">
+            <CheckCircle2 size={16} />
+          </div>
+          <span className="text-[11px] font-bold text-gray-400">Address</span>
+        </div>
+
+        {/* Step 2: Order Summary */}
+        <div className="flex flex-col items-center gap-1.5 z-10 bg-white px-2">
+          <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold transition-colors ${currentStep >= 2 ? 'bg-[#084224] text-white' : 'bg-gray-100 text-gray-400'}`}>
+            {currentStep > 2 ? <CheckCircle2 size={16} /> : '2'}
+          </div>
+          <span className={`text-[11px] font-bold ${currentStep === 2 ? 'text-slate-900' : 'text-gray-400'}`}>Order Summary</span>
+        </div>
+
+        {/* Step 3: Payment */}
+        <div className="flex flex-col items-center gap-1.5 z-10 bg-white px-2">
+          <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold transition-colors ${currentStep === 3 ? 'bg-[#084224] text-white' : 'bg-gray-100 text-gray-400'}`}>
+            3
+          </div>
+          <span className={`text-[11px] font-bold ${currentStep === 3 ? 'text-slate-900' : 'text-gray-400'}`}>Payment</span>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderOrderSummary = () => (
+    <div className="animate-in fade-in slide-in-from-right duration-300">
+      {/* Deliver To */}
+      <div className="bg-white p-4 border-b border-gray-100 shadow-sm mb-2">
+        <div className="flex justify-between items-start mb-3">
+          <h3 className="text-[15px] font-bold text-slate-900">Deliver to:</h3>
+          <button className="text-[#084224] text-[13px] font-bold border border-gray-200 px-4 py-1.5 rounded-sm">Change</button>
+        </div>
+        <p className="text-[14px] font-bold text-slate-800 mb-2">
+          {address.name} <span className="text-[10px] bg-gray-100 text-gray-400 px-1.5 py-0.5 rounded ml-1 font-black uppercase">HOME</span>
+        </p>
+        <p className="text-[13px] text-gray-600 leading-relaxed mb-4">{address.address}</p>
+        <p className="text-[14px] text-slate-800 font-medium tracking-tight">{address.phone}</p>
+      </div>
+
+      {/* Product Item */}
+      <div className="bg-white p-4 border-b border-gray-100 shadow-sm mb-2">
+        <div className="flex gap-4 mb-4">
+          <div className="w-20 h-20 bg-gray-50 rounded-sm p-1 flex-shrink-0">
+            <img src={product.image} className="w-full h-full object-contain mix-blend-multiply" alt="product" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h4 className="text-[14px] text-slate-800 line-clamp-2 leading-snug mb-1">{product.name}</h4>
+            <p className="text-[11px] text-gray-400 mb-2 uppercase">USB 2.0, Black</p>
+            <div className="flex items-center gap-1.5 mb-2">
+              <div className="flex items-center bg-green-700 text-white px-1 py-0.5 rounded-sm text-[10px] font-bold">
+                {product.rating} <Star size={8} fill="white" className="ml-0.5" />
+              </div>
+              <span className="text-[11px] text-gray-400 font-medium">({product.reviews})</span>
+              <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/fa_62673a.png" alt="assured" className="h-3.5 ml-1" />
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[14px] font-bold text-green-700">↓ {product.discount}</span>
+              <span className="text-[13px] text-gray-400 line-through">₹{product.oldPrice}</span>
+              <span className="text-[16px] font-bold text-slate-900">₹{product.price}</span>
+            </div>
+            <p className="text-[11px] text-gray-500 font-medium mt-1">+ ₹19 Protect Promise Fee <Info size={10} className="inline ml-0.5" /></p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 pt-3 border-t border-gray-50">
+          <Truck size={16} className="text-gray-400" />
+          <p className="text-[12px] text-slate-800"><span className="italic font-black text-[10px] uppercase tracking-tighter mr-1">Express</span> Delivery in 2 days, Fri</p>
+        </div>
+      </div>
+
+      {/* Price Summary */}
+      <div className="bg-white p-4 shadow-sm mb-32">
+        <div className="space-y-5 mb-8">
+          <div className="flex justify-between items-center text-[15px]">
+            <p className="text-slate-800">MRP</p>
+            <p className="text-slate-800 font-medium">₹{product.oldPrice}</p>
+          </div>
+          <div className="flex justify-between items-center text-[15px]">
+            <p className="text-slate-800 flex items-center gap-1">Fees <ChevronRight size={14} className="rotate-90 text-gray-400" /></p>
+            <p className="text-slate-800 font-medium">₹19</p>
+          </div>
+          <div className="flex justify-between items-center text-[15px]">
+            <p className="text-slate-800 flex items-center gap-1">Discounts <ChevronRight size={14} className="rotate-90 text-gray-400" /></p>
+            <p className="text-green-700 font-medium">- ₹677</p>
+          </div>
+          <div className="pt-4 border-t border-dashed border-gray-200 flex justify-between items-center">
+            <h3 className="text-[18px] font-bold text-slate-900">Total Amount</h3>
+            <h3 className="text-[18px] font-bold text-slate-900">₹{product.price + 19}</h3>
+          </div>
+        </div>
+        
+        <div className="bg-[#f1f9f5] px-4 py-3 rounded-sm border border-[#e6f3ec] flex items-center justify-center gap-2 mb-6">
+           <Zap size={14} className="text-green-600 fill-green-600" />
+           <p className="text-[13px] font-bold text-green-800">You'll save ₹658 on this order!</p>
+        </div>
+
+        <p className="text-[11px] text-gray-400 text-center leading-relaxed">
+          By continuing with the order, you confirm that you are above 18 years of age, and you agree to the Mithilakart's <span className="text-[#084224]">Terms of Use</span> and <span className="text-[#084224]">Privacy Policy</span>
+        </p>
+      </div>
+    </div>
+  );
+
+  const renderPayment = () => (
+    <div className="animate-in fade-in slide-in-from-right duration-300 pb-32">
+      {/* Price Summary Card */}
+      <div className="bg-[#f5faff] px-4 py-4 border-b border-gray-100 shadow-sm mx-4 mt-4 rounded-xl">
+        <div className="flex justify-between items-center mb-3">
+          <div className="flex items-center gap-1">
+            <span className="text-[14px] text-slate-600">Total Amount</span>
+            <ChevronRight size={14} className="rotate-90 text-slate-400" />
+          </div>
+          <span className="text-[18px] font-bold text-slate-900 tracking-tight">₹{product.price + 19}</span>
+        </div>
+        <div className="flex justify-between items-center mb-3 border-t border-gray-200/50 pt-3">
+          <span className="text-[14px] text-gray-400 border-b border-dashed border-gray-300">Bank cashback</span>
+          <span className="text-[14px] font-medium text-green-600">-₹50</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-[14px] text-slate-600">Final Amount</span>
+          <span className="text-[16px] font-bold text-slate-500">₹{product.price + 19 - 50}</span>
+        </div>
+      </div>
+
+      {/* Cashback Banner */}
+      <div className="bg-[#f1f9f5] px-4 py-3 border border-[#e6f3ec] mx-4 mt-3 rounded-xl flex items-center justify-between">
+        <div className="flex flex-col">
+          <span className="text-[14px] font-bold text-green-700">5% Cashback</span>
+          <span className="text-[12px] text-green-600">Claim now with payment offers</span>
+        </div>
+        <div className="flex items-center gap-1 bg-white px-2 py-1.5 rounded-full shadow-sm border border-gray-100">
+           <div className="w-5 h-5 bg-orange-100 rounded-full flex items-center justify-center text-[8px] font-bold text-orange-600 italic">IC</div>
+           <div className="w-5 h-5 bg-primary-green/20 rounded-full flex items-center justify-center text-[8px] font-bold text-primary-dark italic">M</div>
+           <span className="text-[10px] font-bold text-gray-400 ml-0.5">+3</span>
+        </div>
+      </div>
+
+      {/* Payment Options */}
+      <div className="mt-6 space-y-0.5 border-t border-gray-100">
+        {/* UPI Option */}
+        <div className="bg-white border-b border-gray-100">
+           <div 
+            onClick={() => setSelectedPayment(selectedPayment === 'UPI' ? '' : 'UPI')}
+            className="px-4 py-4 flex items-start justify-between cursor-pointer"
+           >
+             <div className="flex items-center gap-4">
+                <div className="w-8 h-6 border border-gray-200 rounded flex items-center justify-center text-[8px] font-black tracking-tight text-gray-400 bg-gray-50 uppercase">UPI</div>
+                <h3 className="text-[15px] font-bold text-slate-800">UPI</h3>
+             </div>
+             <ChevronRight size={20} className={`text-slate-400 transition-transform ${selectedPayment === 'UPI' ? 'rotate-90' : ''}`} />
+           </div>
+
+           {selectedPayment === 'UPI' && (
+             <div className="px-4 pb-6 pt-2 animate-in slide-in-from-top duration-200">
+                <div className="border border-gray-100 rounded-xl p-4 shadow-sm bg-white">
+                    {/* Paytm */}
+                    <div className="flex items-start gap-4 mb-6 cursor-pointer" onClick={() => setSelectedUpi('paytm')}>
+                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 ${selectedUpi === 'paytm' ? 'border-[#084224]' : 'border-gray-300'}`}>
+                          {selectedUpi === 'paytm' && <div className="w-2.5 h-2.5 bg-[#084224] rounded-full"></div>}
+                       </div>
+                       <div className="flex-1">
+                          <div className="flex items-center justify-between">
+                             <span className="text-[14px] font-bold text-slate-800">Paytm</span>
+                             <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/paytm_5a68fd.png" alt="paytm" className="h-4" />
+                          </div>
+                          <div className="flex items-center gap-1 mt-1">
+                             <CheckCircle size={10} className="text-green-600" />
+                             <span className="text-[11px] text-green-600 font-medium border-b border-dashed border-green-300">₹50 cashback applicable. Tap for info</span>
+                          </div>
+                          {selectedUpi === 'paytm' && (
+                             <button 
+                                onClick={handleContinue}
+                                className="w-full bg-[#ffc107] text-slate-900 py-3.5 rounded-sm font-black uppercase text-[14px] mt-6 shadow-md"
+                             >
+                               Pay ₹{product.price + 19}
+                             </button>
+                          )}
+                       </div>
+                    </div>
+
+                    {/* PhonePe */}
+                    <div className="flex items-center gap-4 cursor-pointer" onClick={() => setSelectedUpi('phonepe')}>
+                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedUpi === 'phonepe' ? 'border-[#084224]' : 'border-gray-300'}`}>
+                          {selectedUpi === 'phonepe' && <div className="w-2.5 h-2.5 bg-[#084224] rounded-full"></div>}
+                       </div>
+                       <div className="flex-1 flex items-center justify-between">
+                          <span className="text-[14px] font-medium text-slate-800">PhonePe</span>
+                          <div className="w-6 h-6 bg-purple-700 rounded-full flex items-center justify-center text-white text-[10px] font-black">पे</div>
+                       </div>
+                    </div>
+                </div>
+             </div>
+           )}
+        </div>
+
+        {/* Credit / Debit Card */}
+        <div className="bg-white border-b border-gray-100">
+           <div 
+            onClick={() => setSelectedPayment(selectedPayment === 'CARD' ? '' : 'CARD')}
+            className="px-4 py-4 flex items-start justify-between cursor-pointer"
+           >
+             <div className="flex items-start gap-4">
+                <CreditCard size={20} className="text-slate-800 mt-1" />
+                <div className="flex flex-col">
+                  <h3 className="text-[15px] font-bold text-slate-800">Credit / Debit / ATM Card</h3>
+                  <p className="text-[11px] text-gray-400 mt-0.5">Add and secure cards as per RBI guidelines</p>
+                  <p className="text-[11px] text-green-600 font-bold mt-1">Get upto 5% cashback • 2 offers available</p>
+                </div>
+             </div>
+             <ChevronRight size={20} className={`text-slate-400 transition-transform ${selectedPayment === 'CARD' ? 'rotate-90' : ''}`} />
+           </div>
+        </div>
+
+        {/* Cash on Delivery */}
+        <div className="bg-white border-b border-gray-100">
+           <div 
+            onClick={() => setSelectedPayment(selectedPayment === 'COD' ? '' : 'COD')}
+            className="px-4 py-4 flex items-start justify-between cursor-pointer"
+           >
+             <div className="flex items-start gap-4">
+                <IndianRupee size={20} className="text-slate-800 mt-1" />
+                <h3 className="text-[15px] font-bold text-slate-800">Cash on Delivery</h3>
+             </div>
+             <ChevronRight size={20} className={`text-slate-400 transition-transform ${selectedPayment === 'COD' ? 'rotate-90' : ''}`} />
+           </div>
+
+           {selectedPayment === 'COD' && (
+             <div className="px-4 pb-6 pt-2 animate-in slide-in-from-top duration-200">
+                <div className="border border-gray-100 rounded-xl p-6 shadow-sm bg-white">
+                  <p className="text-[12px] text-gray-500 leading-relaxed mb-6">
+                    Due to handling costs, a nominal fee of ₹9 will be charged for orders placed using this option. Avoid this fee by paying online now.
+                  </p>
+                  <button 
+                    onClick={handleContinue}
+                    className="w-full bg-[#ffc107] text-slate-900 py-3.5 rounded-sm font-black uppercase text-[14px] shadow-md"
+                  >
+                    Place Order
+                  </button>
+                </div>
+             </div>
+           )}
+        </div>
+
+        {/* Gift Card */}
+        <div className="bg-white border-b border-gray-100">
+           <div className="px-4 py-4 flex items-center justify-between">
+             <div className="flex items-center gap-4">
+                <ShieldCheck size={20} className="text-slate-800" />
+                <h3 className="text-[14px] font-bold text-slate-800">Have a Mithilakart Gift Card?</h3>
+             </div>
+             <button className="text-[#084224] text-[13px] font-bold">Add</button>
+           </div>
+        </div>
+
+        {/* EMI */}
+        <div className="bg-white border-b border-gray-100">
+           <div className="px-4 py-4 flex items-center justify-between opacity-60">
+             <div className="flex items-center gap-4">
+                <Star size={20} className="text-slate-800" />
+                <h3 className="text-[14px] font-bold text-slate-800">EMI</h3>
+             </div>
+             <div className="flex items-center gap-1.5">
+                <span className="text-[12px] text-gray-500">Unavailable</span>
+                <Info size={14} className="text-gray-400" />
+             </div>
+           </div>
+        </div>
+      </div>
+
+      {/* Trust Message */}
+      <div className="mt-12 mb-20 text-center px-8">
+         <p className="text-[16px] font-medium text-gray-400 mb-4 tracking-tight">35 Crore happy customers and counting!</p>
+         <div className="w-10 h-10 border-2 border-gray-200 rounded-full flex items-center justify-center mx-auto opacity-40">
+            <div className="w-6 h-0.5 bg-gray-300 rounded-full relative">
+               <div className="absolute -top-1.5 -left-1 w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+               <div className="absolute -top-1.5 -right-1 w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+            </div>
+         </div>
+      </div>
+    </div>
+  );
 
   if (orderStatus !== 'idle') {
     return (
@@ -67,8 +368,8 @@ const Checkout = () => {
             <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mb-6 shadow-xl mx-auto">
               <CheckCircle size={40} className="text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-2">Order Successful!</h2>
-            <p className="text-gray-500">Redirecting to your orders...</p>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">Order Success!</h2>
+            <p className="text-gray-500">Redirecting you to home...</p>
           </div>
         )}
       </div>
@@ -76,191 +377,43 @@ const Checkout = () => {
   }
 
   return (
-    <div className="bg-[#f9f9f9] min-h-screen font-sans pb-[240px]">
+    <div className="bg-gray-50 min-h-screen font-sans">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-[#f9f9f9] px-4 py-4 flex items-center justify-between">
-        <button 
-          onClick={() => navigate(-1)} 
-          className="w-10 h-10 bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex items-center justify-center border border-gray-100/50 active:scale-95 transition-transform"
-        >
-          <ArrowLeft size={20} className="text-slate-800" />
-        </button>
-        <h1 className="text-[18px] font-bold text-slate-800 mr-10 flex-1 text-center">Checkout</h1>
-      </div>
-
-      <div className="max-w-md mx-auto px-4">
-        {/* Delivery to Section */}
-        <div className="mt-4">
-          <h2 className="text-base font-bold text-slate-800 mb-3">Delivery to</h2>
-          
-          {/* Home Address Card */}
-          <div 
-            onClick={() => setSelectedAddress('home')}
-            className={`bg-white rounded-2xl p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] border transition-all duration-200 flex items-start gap-4 mb-3 cursor-pointer ${
-              selectedAddress === 'home' 
-                ? 'border-[var(--color-gold)]/60 shadow-[0_4px_16px_rgba(226,167,80,0.08)]' 
-                : 'border-transparent opacity-80'
-            }`}
-          >
-            <div className="mt-1">
-              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                selectedAddress === 'home' ? 'border-[var(--color-gold)]' : 'border-gray-200'
-              }`}>
-                {selectedAddress === 'home' && (
-                  <div className="w-3 h-3 rounded-full bg-[var(--color-gold)]"></div>
-                )}
-              </div>
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center justify-between">
-                <span className="text-[15px] font-bold text-slate-800">Home</span>
-                <button className="text-gray-400 hover:text-gray-600 p-1">
-                  <Edit2 size={16} />
-                </button>
-              </div>
-              <p className="text-[12px] text-gray-500 mt-1 font-medium">+91 888 888 8888</p>
-              <p className="text-[12px] text-gray-400 mt-1 leading-relaxed">1749 Chaudhray Dhaba Delhi</p>
-            </div>
-          </div>
-
-          {/* Office Address Card */}
-          <div 
-            onClick={() => setSelectedAddress('office')}
-            className={`bg-white rounded-2xl p-4 shadow-[0_2px_12px_rgba(0,0,0,0.03)] border transition-all duration-200 flex items-start gap-4 mb-3 cursor-pointer ${
-              selectedAddress === 'office' 
-                ? 'border-[var(--color-gold)]/60 shadow-[0_4px_16px_rgba(226,167,80,0.08)]' 
-                : 'border-transparent opacity-80'
-            }`}
-          >
-            <div className="mt-1">
-              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                selectedAddress === 'office' ? 'border-[var(--color-gold)]' : 'border-gray-200'
-              }`}>
-                {selectedAddress === 'office' && (
-                  <div className="w-3 h-3 rounded-full bg-[var(--color-gold)]"></div>
-                )}
-              </div>
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center justify-between">
-                <span className="text-[15px] font-bold text-slate-800">Office</span>
-                <button className="text-gray-400 hover:text-gray-600 p-1">
-                  <Edit2 size={16} />
-                </button>
-              </div>
-              <p className="text-[12px] text-gray-500 mt-1 font-medium">(0261) 555-0115</p>
-              <p className="text-[12px] text-gray-400 mt-1 leading-relaxed">2588 Ratan lal sahdev marg</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Payment Method Section */}
-        <div className="mt-6">
-          <h2 className="text-base font-bold text-slate-800 mb-3">payment method</h2>
-
-          {/* Credit Card */}
-          <div 
-            onClick={() => setSelectedPayment('card')}
-            className="flex items-center justify-between bg-white rounded-2xl p-4 mb-3 shadow-[0_2px_12px_rgba(0,0,0,0.02)] border border-gray-100/50 cursor-pointer"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-7 bg-gray-50 rounded flex items-center justify-center border border-gray-100">
-                <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="8" cy="8" r="6" fill="#EB001B" fillOpacity="0.8"/>
-                  <circle cx="16" cy="8" r="6" fill="#F79E1B" fillOpacity="0.8"/>
-                </svg>
-              </div>
-              <span className="text-[14px] font-bold text-slate-800">Credit Card</span>
-            </div>
-            <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-              selectedPayment === 'card' ? 'border-[var(--color-gold)]' : 'border-gray-200'
-            }`}>
-              {selectedPayment === 'card' && (
-                <div className="w-3 h-3 rounded-full bg-[var(--color-gold)]"></div>
-              )}
-            </div>
-          </div>
-
-          {/* PayPal */}
-          <div 
-            onClick={() => setSelectedPayment('paypal')}
-            className="flex items-center justify-between bg-white rounded-2xl p-4 mb-3 shadow-[0_2px_12px_rgba(0,0,0,0.02)] border border-gray-100/50 cursor-pointer"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-7 bg-gray-50 rounded flex items-center justify-center border border-gray-100">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7.076 2.02C7.567 2.01 8.28 2 9.22 2H16.03c1.55 0 2.87.97 3.25 2.44l2.13 8.35c.18.72-.03 1.48-.56 2.01-.52.53-1.25.82-1.99.82h-4.83c-.47 0-.89.31-1.02.76l-1.06 3.6c-.15.53-.63.89-1.18.89H6.18c-.78 0-1.37-.73-1.21-1.49l2.84-13.43c.15-.71.77-1.21 1.49-1.21z" fill="#003087"/>
-                  <path d="M10.076 6.02C10.567 6.01 11.28 6 12.22 6H19.03c1.55 0 2.87.97 3.25 2.44l1.37 5.37c-.37-.47-.93-.76-1.56-.76h-4.83c-.47 0-.89.31-1.02.76l-1.06 3.6c-.15.53-.63.89-1.18.89H8.18c-.78 0-1.37-.73-1.21-1.49l1.84-8.6c.15-.71.77-1.21 1.49-1.21z" fill="#0079C1"/>
-                </svg>
-              </div>
-              <span className="text-[14px] font-bold text-slate-800">PayPal</span>
-            </div>
-            <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-              selectedPayment === 'paypal' ? 'border-[var(--color-gold)]' : 'border-gray-200'
-            }`}>
-              {selectedPayment === 'paypal' && (
-                <div className="w-3 h-3 rounded-full bg-[var(--color-gold)]"></div>
-              )}
-            </div>
-          </div>
-
-          {/* Google Pay */}
-          <div 
-            onClick={() => setSelectedPayment('gpay')}
-            className="flex items-center justify-between bg-white rounded-2xl p-4 mb-3 shadow-[0_2px_12px_rgba(0,0,0,0.02)] border border-gray-100/50 cursor-pointer"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-7 bg-gray-50 rounded flex items-center justify-center border border-gray-100">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M19.98 12.28c0-.62-.05-1.23-.16-1.82H12v3.45h4.48c-.19 1.01-.76 1.87-1.62 2.44v2.03h2.62c1.53-1.41 2.5-3.48 2.5-6.1z" fill="#4285F4"/>
-                  <path d="M12 20.36c2.26 0 4.15-.75 5.54-2.03l-2.62-2.03c-.73.49-1.66.78-2.92.78-2.25 0-4.15-1.52-4.83-3.57H4.47v2.1c1.38 2.74 4.22 4.62 7.53 4.62z" fill="#34A853"/>
-                  <path d="M7.17 13.51c-.17-.51-.27-1.06-.27-1.63s.1-1.12.27-1.63v-2.1H4.47c-.58 1.16-.91 2.47-.91 3.73s.33 2.57.91 3.73l2.7-2.1z" fill="#FBBC05"/>
-                  <path d="M12 6.89c1.23 0 2.33.42 3.2 1.25l2.4-2.4C16.14 4.38 14.25 3.64 12 3.64c-3.31 0-6.15 1.88-7.53 4.62l2.7 2.1c.68-2.05 2.58-3.57 4.83-3.57z" fill="#EA4335"/>
-                </svg>
-              </div>
-              <span className="text-[14px] font-bold text-slate-800">Google Pay</span>
-            </div>
-            <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-              selectedPayment === 'gpay' ? 'border-[var(--color-gold)]' : 'border-gray-200'
-            }`}>
-              {selectedPayment === 'gpay' && (
-                <div className="w-3 h-3 rounded-full bg-[var(--color-gold)]"></div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Floating Bottom Section */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white shadow-[0_-8px_30px_rgba(0,0,0,0.06)] rounded-t-[32px] px-6 pt-5 pb-6 border-t border-gray-100/60 z-50">
-        <div className="max-w-md mx-auto">
-          {/* Price Breakdown */}
-          <div className="space-y-2.5 mb-5">
-            <div className="flex justify-between items-center text-[14px] text-gray-500">
-              <span>Delivery fee</span>
-              <span>₹{deliveryFee.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between items-center text-[14px] text-gray-500">
-              <span>Sub total</span>
-              <span>₹{subTotal.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between items-center pt-2 border-t border-gray-100">
-              <span className="text-[16px] font-bold text-slate-800">Total</span>
-              <span className="text-[18px] font-black text-slate-900">₹{totalAmount.toFixed(2)}</span>
-            </div>
-          </div>
-
-          {/* Payments Button */}
-          <button 
-            onClick={handlePayments}
-            className="w-full bg-[var(--color-gold)] hover:bg-[var(--color-gold-hover)] text-white font-bold py-4 rounded-2xl shadow-lg shadow-[var(--color-gold)]/10 active:scale-[0.98] transition-all text-center text-[16px]"
-          >
-            Payments
+      <div className="sticky top-0 z-50 bg-white px-4 py-4 flex items-center justify-between border-b border-gray-100 shadow-sm">
+        <div className="flex items-center gap-4">
+          <button onClick={() => navigate(-1)} className="active:scale-95 transition-transform">
+            <ArrowLeft size={24} className="text-slate-800" />
           </button>
+          <h1 className="text-[18px] font-bold text-slate-900">Order Summary</h1>
         </div>
+      </div>
+
+      {renderStepper()}
+
+      <main className="max-w-xl mx-auto">
+        {currentStep === 2 ? renderOrderSummary() : renderPayment()}
+      </main>
+
+      {/* Fixed Bottom Action Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-3 flex items-center justify-between z-50 shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
+        <div className="flex flex-col pl-2">
+          <span className="text-[12px] text-gray-400 line-through">₹{product.oldPrice}</span>
+          <div className="flex items-center gap-1">
+            <span className="text-[20px] font-black text-slate-900">₹{product.price + 19}</span>
+            <Info size={14} className="text-gray-400" />
+          </div>
+        </div>
+        <button 
+          onClick={handleContinue}
+          className="bg-[#ffc107] text-slate-900 px-12 py-3.5 rounded-sm font-black uppercase text-[15px] shadow-lg active:scale-95 transition-transform"
+        >
+          {currentStep === 3 ? 'Place Order' : 'Continue'}
+        </button>
       </div>
     </div>
   );
 };
 
 export default Checkout;
+
+

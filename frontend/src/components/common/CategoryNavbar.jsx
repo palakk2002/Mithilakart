@@ -85,7 +85,7 @@ const IconElectrical = ({ size = 24, active }) => (
    Category list — project ki actual categories
 ───────────────────────────────────────────── */
 const CATEGORIES = [
-  { id: 'for-you',     label: 'All',         Svg: IconForYou     },
+  { id: 'for-you',     label: 'For You',     Svg: IconForYou     },
   { id: 'beauty',      label: 'Beauty',      Svg: IconBeauty     },
   { id: 'gifting',     label: 'Gifting',     Svg: IconGifting    },
   { id: 'electronics', label: 'Electronics', Svg: IconElectronics},
@@ -117,7 +117,7 @@ const CategoryNavbar = ({ selectedCategory, setSelectedCategory }) => {
 
   return (
     <div
-      className="flex items-center overflow-x-auto no-scrollbar bg-primary-green p-2 gap-1.5 border-b border-black/5"
+      className="flex items-end overflow-x-auto no-scrollbar border-t border-gray-100 bg-white"
       role="navigation"
       aria-label="Product categories"
     >
@@ -128,35 +128,49 @@ const CategoryNavbar = ({ selectedCategory, setSelectedCategory }) => {
           <motion.button
             key={cat.id}
             onClick={() => handleSelect(cat)}
-            whileTap={{ scale: 0.94 }}
-            animate={{
-              backgroundColor: isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.35)',
-              boxShadow: isActive ? '0px 2px 6px rgba(0, 0, 0, 0.05)' : '0px 0px 0px rgba(0, 0, 0, 0)',
-            }}
-            transition={{ duration: 0.2 }}
-            className="w-[62px] h-[62px] flex flex-col items-center justify-center flex-shrink-0 rounded-[16px] focus:outline-none relative cursor-pointer"
+            whileTap={{ scale: 0.88 }}
+            className="flex flex-col items-center flex-shrink-0 relative px-3 pt-1.5 pb-2 focus:outline-none"
             aria-pressed={isActive}
             aria-label={cat.label}
           >
+            {/* Blue highlight pill behind icon */}
+            {isActive && (
+              <motion.div
+                layoutId="activePill"
+                className="absolute top-1 left-1/2 -translate-x-1/2 w-14 h-10 rounded-lg bg-primary-dark/10"
+                transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+              />
+            )}
+
             {/* SVG Icon */}
             <motion.div
-              animate={{ color: isActive ? '#084224' : '#1e293b' }}
+              animate={{ color: isActive ? '#084224' : '#374151' }}
               transition={{ duration: 0.18 }}
-              className="mb-0.5 leading-none flex items-center justify-center"
+              className="mb-0.5 leading-none relative z-10"
             >
-              <cat.Svg size={20} active={isActive} />
+              <cat.Svg size={22} active={isActive} />
             </motion.div>
 
             {/* Label */}
             <motion.span
               animate={{
-                color: isActive ? '#084224' : '#1e293b',
+                color:      isActive ? '#084224' : '#374151',
+                fontWeight: isActive ? 700 : 500,
               }}
               transition={{ duration: 0.18 }}
-              className="text-[10px] font-black tracking-tight whitespace-nowrap leading-tight"
+              className="text-[10px] tracking-tight whitespace-nowrap leading-tight relative z-10"
             >
               {cat.label}
             </motion.span>
+
+            {/* Active blue underline */}
+            {isActive && (
+              <motion.div
+                layoutId="activeCategoryBar"
+                className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-primary-dark rounded-t-full"
+                transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+              />
+            )}
           </motion.button>
         );
       })}

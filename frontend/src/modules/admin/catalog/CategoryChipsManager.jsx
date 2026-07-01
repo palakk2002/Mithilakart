@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // These match EXACTLY the CATEGORIES array in CategoryNavbar.jsx
 const INITIAL_CATEGORIES = [
-  { id: 'for-you',     label: 'All',         emoji: '🏠', active: true,  order: 1 },
+  { id: 'for-you',     label: 'For You',     emoji: '🏠', active: true,  order: 1 },
   { id: 'beauty',      label: 'Beauty',      emoji: '💄', active: true,  order: 2 },
   { id: 'gifting',     label: 'Gifting',     emoji: '🎁', active: true,  order: 3 },
   { id: 'electronics', label: 'Electronics', emoji: '📱', active: true,  order: 4 },

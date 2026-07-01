@@ -43,7 +43,7 @@ const StillLookingSection = ({ items }) => {
         }}></div>
 
         <h2 className="text-white text-[15px] font-black uppercase tracking-tight mb-2 pl-0.5 relative z-10">
-          Trending this week
+          Still looking for these?
         </h2>
 
         <div className="flex overflow-x-auto w-full gap-1.5 pb-0.5 no-scrollbar snap-x relative z-10">

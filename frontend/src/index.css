@@ -10,7 +10,6 @@
   --color-primary-dark: #084224;
   --color-primary-light: #e6f7e2;
   --color-accent-orange: #ff5630;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* ── Global heading style ── */
@@ -54,7 +53,7 @@
 
   body {
     @apply bg-gray-50 text-blue-950 transition-colors duration-300;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Nunito', Arial, sans-serif;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     overflow-x: hidden;

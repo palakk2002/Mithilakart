@@ -10,7 +10,6 @@ import BestQuality from '../../components/vendor/home/BestQuality';
 import KeepShopping from '../../components/vendor/home/KeepShopping';
 import RatingSection from '../../components/vendor/home/RatingSection';
 import CategoryTabs from '../../components/vendor/home/CategoryTabs';
-import GridCategories from '../../components/vendor/home/GridCategories';
 
 // Import Existing Shared Components
 import CategoryProductsSection from '../../components/vendor/CategoryProductsSection';
@@ -47,7 +46,7 @@ import ImageBanner4 from '../../assets/TopBanner/ImageBanner4.jpg';
 import useVendorStore from '../../store/useVendorStore';
 
 const Home = () => {
-  const [activeTab, setActiveTab] = useState('All');
+  const [activeTab, setActiveTab] = useState('For You');
   const navigate = useNavigate();
   const { selectedCategory, homeSections } = useVendorStore();
 
@@ -76,7 +75,7 @@ const Home = () => {
       { name: 'LAKME...', fullName: 'LAKME 9TO5 VITAMIN C+...', date: 'Delivered on Apr 10, 2026', img: MakeupHero }
     ],
     tabs: [
-      { label: 'All', img: ForYouProduct },
+      { label: 'For You', img: ForYouProduct },
       { label: 'Stationery', img: StationeryTab },
       { label: 'Fashion', img: FashionTabProduct },
       { label: 'Beauty', img: BeautyTab },
@@ -105,7 +104,7 @@ const Home = () => {
     >
       {/* 🔴 REDESIGNED PROMOTIONAL AREA */}
       <div className="flex flex-col bg-primary-green">
-        {(selectedCategory === 'All' || selectedCategory === 'Home') && <SaleBanner />}
+        {(selectedCategory === 'For You' || selectedCategory === 'Home') && <SaleBanner />}
       </div>
 
       {/* Banner Carousel */}
@@ -113,11 +112,7 @@ const Home = () => {
         <BannerCarousel banners={categoryBanners[selectedCategory] || categoryBanners['Home']} />
       </div>
 
-      {(selectedCategory === 'All' || selectedCategory === 'Home') && (
-        <GridCategories />
-      )}
-
-      {selectedCategory !== 'All' && selectedCategory !== 'Home' && (
+      {selectedCategory !== 'For You' && selectedCategory !== 'Home' && (
         <div className="py-4">
           <div className="flex justify-between items-center px-4 mb-4">
             <h2 className="text-xl font-black text-[var(--card-text)]">{selectedCategory} Specials</h2>
@@ -127,18 +122,18 @@ const Home = () => {
         </div>
       )}
 
-      {(selectedCategory === 'All' || selectedCategory === 'Home') && (
+      {(selectedCategory === 'For You' || selectedCategory === 'Home') && (
         <>
           <LazySection height="240px">
             <StillLookingSection items={homeSections.stillLooking} />
           </LazySection>
 
-          <LazySection height="350px">
-            <BrandsSpotlight items={homeSections.brandsSpotlight} />
-          </LazySection>
-
           <LazySection height="400px">
             <TopSelection items={homeSections.topSelection} />
+          </LazySection>
+
+          <LazySection height="350px">
+            <BrandsSpotlight items={homeSections.brandsSpotlight} />
           </LazySection>
 
           <LazySection height="500px">
@@ -149,7 +144,9 @@ const Home = () => {
             <KeepShopping items={homeSections.keepShopping} />
           </LazySection>
 
-
+          <LazySection height="200px">
+            <RatingSection items={data.ratings} />
+          </LazySection>
 
           <LazySection height="150px">
             <CategoryTabs
