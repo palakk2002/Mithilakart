@@ -10,6 +10,7 @@ import BestQuality from '../../components/vendor/home/BestQuality';
 import KeepShopping from '../../components/vendor/home/KeepShopping';
 import RatingSection from '../../components/vendor/home/RatingSection';
 import CategoryTabs from '../../components/vendor/home/CategoryTabs';
+import SubCategoryGrid from '../../components/vendor/home/SubCategoryGrid';
 
 // Import Existing Shared Components
 import CategoryProductsSection from '../../components/vendor/CategoryProductsSection';
@@ -112,6 +113,11 @@ const Home = () => {
         <BannerCarousel banners={categoryBanners[selectedCategory] || categoryBanners['Home']} />
       </div>
 
+      {/* SubCategory Showcase Grid (Directly below Banner) */}
+      {(selectedCategory === 'For You' || selectedCategory === 'Home') && (
+        <SubCategoryGrid />
+      )}
+
       {selectedCategory !== 'For You' && selectedCategory !== 'Home' && (
         <div className="py-4">
           <div className="flex justify-between items-center px-4 mb-4">
@@ -128,25 +134,23 @@ const Home = () => {
             <StillLookingSection items={homeSections.stillLooking} />
           </LazySection>
 
-          <LazySection height="400px">
-            <TopSelection items={homeSections.topSelection} />
-          </LazySection>
-
           <LazySection height="350px">
             <BrandsSpotlight items={homeSections.brandsSpotlight} />
           </LazySection>
 
-          <LazySection height="500px">
-            <BestQuality items={homeSections.bestQuality} />
+          <LazySection height="400px">
+            <TopSelection items={homeSections.topSelection} />
           </LazySection>
 
           <LazySection height="250px">
             <KeepShopping items={homeSections.keepShopping} />
           </LazySection>
 
-          <LazySection height="200px">
-            <RatingSection items={data.ratings} />
+          <LazySection height="500px">
+            <BestQuality items={homeSections.bestQuality} />
           </LazySection>
+
+
 
           <LazySection height="150px">
             <CategoryTabs

@@ -30,6 +30,13 @@ const OrderDetail = () => {
   const [reviewText, setReviewText] = useState('');
   const [isDownloading, setIsDownloading] = useState(false);
 
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+  const primaryText = isFreshGroceryFlow ? 'text-[#7A3E17]' : isQuickShopFlow ? 'text-[#d6186d]' : 'text-primary-dark';
+  const primaryBg = isFreshGroceryFlow ? 'bg-[#7A3E17]' : isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-green-600';
+  const primaryLightBg = isFreshGroceryFlow ? 'bg-[#FFF0A0]/40 border border-[#7A3E17]/10' : isQuickShopFlow ? 'bg-pink-50' : 'bg-primary-light';
+  const primaryActiveBg = isFreshGroceryFlow ? 'active:bg-[#FFF0A0]' : isQuickShopFlow ? 'active:bg-pink-50' : 'active:bg-primary-light';
+
   // Find the specific order
   const order = orders.find(o => o.id === orderId) || orders[0];
 
@@ -65,9 +72,13 @@ const OrderDetail = () => {
   ];
 
   return (
-    <div className="bg-[#f1f2f4] min-h-screen font-nunito pb-10">
+    <div className={`min-h-screen font-nunito pb-10 transition-colors duration-300 ${
+      isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : 'bg-[#f1f2f4]'
+    }`}>
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-white px-4 py-4 flex items-center justify-between shadow-sm">
+      <div className={`sticky top-0 z-50 px-4 py-4 flex items-center justify-between shadow-sm transition-colors duration-300 ${
+        isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-white'
+      }`}>
         <div className="flex items-center gap-4">
           <button onClick={() => navigate(-1)} className="p-1 -ml-1 text-slate-800">
             <ArrowLeft size={26} />
@@ -95,7 +106,7 @@ const OrderDetail = () => {
         {/* Order ID Section (Top) */}
         <div className="bg-white px-5 py-4 flex items-center gap-3 border-t border-gray-50">
            <span className="text-[13px] text-gray-400 font-black uppercase tracking-widest">Order #{order.id}</span>
-           <button className="text-primary-dark active:scale-90 transition-transform">
+           <button className={`${primaryText} active:scale-90 transition-transform`}>
               <Copy size={16} />
            </button>
         </div>
@@ -104,18 +115,18 @@ const OrderDetail = () => {
         <div className="bg-white p-5 mx-2 rounded-xl border border-gray-100 shadow-sm mt-2">
            <div className="flex justify-between items-start mb-5">
               <div>
-                 <h3 className="text-[18px] font-black text-green-600 mb-1.5">{order.status}, {order.date}</h3>
+                 <h3 className={`text-[18px] font-black ${isQuickShopFlow ? 'text-[#d6186d]' : 'text-green-600'} mb-1.5`}>{order.status}, {order.date}</h3>
                  <div className="flex items-center gap-2 mt-2">
                     <div className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center">
                        <HelpCircle size={12} className="text-gray-400" />
                     </div>
                     <p className="text-[13px] text-gray-500 font-medium">
-                       Return policy valid till May 15 <span className="text-primary-dark font-bold ml-1">Know more</span>
+                       Return policy valid till May 15 <span className={`${primaryText} font-bold ml-1`}>Know more</span>
                     </p>
                  </div>
                  <p className="text-[13px] text-gray-500 font-medium mt-1.5">Tap 'Help' for return related support.</p>
               </div>
-              <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-100">
+              <div className={`w-10 h-10 ${isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-green-650'} rounded-full flex items-center justify-center shadow-lg shadow-green-100`}>
                  <CheckCircle2 size={22} className="text-white" strokeWidth={3} />
               </div>
            </div>
@@ -123,7 +134,7 @@ const OrderDetail = () => {
            <div className="pt-5 border-t border-gray-50 text-center">
               <button 
                 onClick={() => setShowUpdates(true)}
-                className="text-[15px] font-black text-primary-dark uppercase tracking-tight active:scale-95 transition-transform"
+                className={`text-[15px] font-black ${primaryText} uppercase tracking-tight active:scale-95 transition-transform`}
               >
                 See all updates
               </button>
@@ -152,14 +163,14 @@ const OrderDetail = () => {
                         key={star} 
                         size={26} 
                         onClick={() => setRating(star)}
-                        className={`cursor-pointer transition-colors ${star <= rating ? 'text-green-600 fill-green-600' : 'text-gray-200'}`} 
+                        className={`cursor-pointer transition-colors ${star <= rating ? (isQuickShopFlow ? 'text-[#d6186d] fill-[#d6186d]' : 'text-green-600 fill-green-600') : 'text-gray-200'}`} 
                       />
                     ))}
                  </div>
               </div>
               <button 
                 onClick={() => setShowReviewModal(true)}
-                className="flex items-center gap-2 px-5 py-2.5 border border-blue-500 rounded-md text-[14px] font-black text-primary-dark uppercase tracking-tight active:bg-primary-light transition-colors"
+                className={`flex items-center gap-2 px-5 py-2.5 border ${isQuickShopFlow ? 'border-[#d6186d] hover:bg-pink-50' : 'border-blue-500'} rounded-md text-[14px] font-black ${primaryText} uppercase tracking-tight ${primaryActiveBg} transition-colors`}
               >
                  <Edit3 size={16} />
                  Write review
@@ -194,9 +205,9 @@ const OrderDetail = () => {
               <div className="relative z-10 pr-24">
                  <div className="flex items-center gap-2 mb-3">
                     <span className="text-white text-[14px] font-bold">Flipkart × Uber</span>
-                 </div>
-                 <h2 className="text-white text-[20px] font-black leading-tight mb-3">Get 4% Coins on Uber rides Redeem for 2X value</h2>
-                 <button className="text-[13px] font-black text-white underline underline-offset-4 uppercase tracking-widest">Link now</button>
+                  </div>
+                  <h2 className="text-white text-[20px] font-black leading-tight mb-3">Get 4% Coins on Uber rides Redeem for 2X value</h2>
+                  <button className="text-[13px] font-black text-white underline underline-offset-4 uppercase tracking-widest">Link now</button>
               </div>
               <div className="absolute bottom-4 left-7 flex items-center gap-1.5 opacity-50">
                  <span className="text-[11px] text-white font-bold tracking-widest uppercase">*T&C Apply</span>
@@ -231,7 +242,7 @@ const OrderDetail = () => {
                    </div>
                    <h4 className="text-[14px] font-bold text-slate-800 line-clamp-2 h-10 mb-3 leading-tight">{item.name}</h4>
                    <div className="flex items-center gap-2.5 mb-3">
-                      <div className="bg-green-600 text-white text-[12px] font-black px-2 py-0.5 rounded flex items-center gap-0.5">
+                      <div className={`text-white text-[12px] font-black px-2 py-0.5 rounded flex items-center gap-0.5 ${primaryBg}`}>
                          {item.rating} <Star size={10} fill="white" />
                       </div>
                       <span className="text-[12px] text-gray-400 font-bold">({item.reviews})</span>
@@ -239,7 +250,7 @@ const OrderDetail = () => {
                    <div className="flex items-baseline gap-2">
                       <span className="text-[16px] font-black text-slate-900">₹{item.price}</span>
                       <span className="text-[12px] text-gray-400 line-through">₹{item.oldPrice}</span>
-                      <span className="text-[11px] text-green-600 font-black">{item.discount}</span>
+                      <span className={`text-[11px] font-black ${primaryText}`}>{item.discount}</span>
                    </div>
                 </div>
               ))}
@@ -251,8 +262,8 @@ const OrderDetail = () => {
            <h3 className="text-[18px] font-black text-slate-800 tracking-tight mb-4">Delivery details</h3>
            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-50 space-y-5">
               <div className="flex gap-5">
-                 <div className="w-10 h-10 bg-primary-light rounded-full flex items-center justify-center flex-shrink-0">
-                    <MapPin size={20} className="text-primary-dark" />
+                 <div className={`w-10 h-10 ${primaryLightBg} rounded-full flex items-center justify-center flex-shrink-0`}>
+                    <MapPin size={20} className={primaryText} />
                  </div>
                  <div>
                     <h4 className="text-[15px] font-black text-slate-900 mb-1.5">Home</h4>
@@ -260,8 +271,8 @@ const OrderDetail = () => {
                  </div>
               </div>
               <div className="flex gap-5 border-t border-gray-50 pt-5">
-                 <div className="w-10 h-10 bg-primary-light rounded-full flex items-center justify-center flex-shrink-0">
-                    <User size={20} className="text-primary-dark" />
+                 <div className={`w-10 h-10 ${primaryLightBg} rounded-full flex items-center justify-center flex-shrink-0`}>
+                    <User size={20} className={primaryText} />
                  </div>
                  <div>
                     <h4 className="text-[15px] font-black text-slate-900 mb-1.5">Mukesh Jinodiya</h4>
@@ -319,7 +330,7 @@ const OrderDetail = () => {
             disabled={isDownloading}
             className={`w-full bg-white border border-gray-200 py-5 rounded-2xl flex items-center justify-center gap-4 active:bg-gray-50 transition-colors shadow-sm ${isDownloading ? 'opacity-50' : ''}`}
            >
-              <Download size={22} className={isDownloading ? 'animate-bounce text-primary-dark' : 'text-primary-dark'} />
+              <Download size={22} className={isDownloading ? `animate-bounce ${primaryText}` : primaryText} />
               <span className="text-[16px] font-black text-slate-800 uppercase tracking-tight">
                 {isDownloading ? 'Downloading...' : 'Download Invoice'}
               </span>
@@ -333,15 +344,15 @@ const OrderDetail = () => {
                  <p className="text-[13px] text-gray-400 font-black uppercase tracking-widest mb-1.5">Order ID</p>
                  <span className="text-[15px] font-bold text-slate-800">{order.id}</span>
               </div>
-              <button className="p-2.5 bg-gray-50 rounded-xl text-primary-dark active:scale-90 transition-transform">
+              <button className={`p-2.5 bg-gray-50 rounded-xl ${primaryText} active:scale-90 transition-transform`}>
                  <Copy size={22} />
               </button>
            </div>
            <button 
             onClick={() => navigate('/vendor/home')}
-            className="w-full bg-[#f0f5ff] text-primary-dark py-5 rounded-2xl font-black uppercase tracking-widest text-[14px] border border-primary-green/30 active:scale-[0.98] transition-transform"
+            className={`w-full ${isQuickShopFlow ? 'bg-pink-50 text-[#d6186d]' : 'bg-[#f0f5ff] text-primary-dark'} py-5 rounded-2xl font-black uppercase tracking-widest text-[14px] border ${isQuickShopFlow ? 'border-[#d6186d]/30' : 'border-primary-green/30'} active:scale-[0.98] transition-transform`}
            >
-              Shop more from Flipkart
+              Shop more from Mithilakart
            </button>
         </div>
       </div>
@@ -372,27 +383,27 @@ const OrderDetail = () => {
                   <div key={index} className="relative flex gap-6">
                     {/* Timeline Line */}
                     {index !== deliveryUpdates.length - 1 && (
-                      <div className="absolute left-[13px] top-[26px] bottom-[-48px] w-1 bg-green-500 rounded-full" />
+                      <div className={`absolute left-[13px] top-[26px] bottom-[-48px] w-1 ${isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-green-500'} rounded-full`} />
                     )}
                     
                     {/* Circle */}
-                    <div className={`z-10 w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 ${update.active ? 'bg-green-500 shadow-lg shadow-green-100' : 'bg-gray-200'}`}>
+                    <div className={`z-10 w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 ${update.active ? (isQuickShopFlow ? 'bg-[#d6186d] shadow-lg shadow-pink-100' : 'bg-green-500 shadow-lg shadow-green-100') : 'bg-gray-200'}`}>
                       <div className="w-2.5 h-2.5 bg-white rounded-full" />
                     </div>
 
                     <div className="space-y-4 flex-1 -mt-1">
-                      <div className="flex flex-col">
-                        <h3 className="text-[16px] font-black text-slate-800">{update.title} <span className="text-[14px] text-gray-400 font-bold ml-2">{update.date}</span></h3>
-                        <p className="text-[14px] text-gray-600 font-medium mt-1">{update.desc}</p>
-                      </div>
-                      
-                      <div className="space-y-3">
-                        {update.details.map((detail, dIndex) => (
-                          <p key={dIndex} className="text-[13px] text-gray-400 font-bold leading-tight pl-0">
-                            {detail}
-                          </p>
-                        ))}
-                      </div>
+                       <div className="flex flex-col">
+                         <h3 className="text-[16px] font-black text-slate-800">{update.title} <span className="text-[14px] text-gray-400 font-bold ml-2">{update.date}</span></h3>
+                         <p className="text-[14px] text-gray-600 font-medium mt-1">{update.desc}</p>
+                       </div>
+                       
+                       <div className="space-y-3">
+                         {update.details.map((detail, dIndex) => (
+                           <p key={dIndex} className="text-[13px] text-gray-400 font-bold leading-tight pl-0">
+                             {detail}
+                           </p>
+                         ))}
+                       </div>
                     </div>
                   </div>
                 ))}
@@ -431,7 +442,7 @@ const OrderDetail = () => {
                           key={star} 
                           size={32} 
                           onClick={() => setRating(star)}
-                          className={`cursor-pointer transition-all active:scale-125 ${star <= rating ? 'text-green-600 fill-green-600 shadow-sm' : 'text-gray-200'}`} 
+                          className={`cursor-pointer transition-all active:scale-125 ${star <= rating ? (isQuickShopFlow ? 'text-[#d6186d] fill-[#d6186d] shadow-sm' : 'text-green-600 fill-green-600 shadow-sm') : 'text-gray-200'}`} 
                         />
                       ))}
                    </div>
@@ -455,7 +466,7 @@ const OrderDetail = () => {
 
                 <button 
                   onClick={() => setShowReviewModal(false)}
-                  className="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-[14px] shadow-xl active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
+                  className={`w-full ${isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-slate-900'} text-white py-4 rounded-2xl font-black uppercase tracking-widest text-[14px] shadow-xl active:scale-[0.98] transition-transform flex items-center justify-center gap-2`}
                 >
                    <MessageSquare size={18} />
                    Submit Review
@@ -470,4 +481,3 @@ const OrderDetail = () => {
 };
 
 export default OrderDetail;
-

@@ -89,8 +89,10 @@ const MarketRoutes = () => {
         <Route path="/all-offers" element={<AllOffers />} />
         <Route path="/quick-shop" element={<QuickShop />} />
         <Route path="/quick-shop/category" element={<QuickShopSubcategory />} />
+        <Route path="/mithilak/category" element={<QuickShopSubcategory />} />
         <Route path="/mithilak" element={<Mithilak />} />
         <Route path="/fresh-grocery" element={<QuickShop />} />
+        <Route path="/fresh-grocery/category" element={<QuickShopSubcategory />} />
       </Route>
 
       {/* Redirects */}

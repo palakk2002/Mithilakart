@@ -22,6 +22,22 @@ import TowerFan from '../../assets/products/product09.jpg';
 const ProductDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+
+  const primaryText = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#084224]');
+  const primaryBg = isMithilakFlow ? 'bg-[#7c3aed]' : isFreshGroceryFlow ? 'bg-[#7A3E17]' : (isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-[#084224]');
+  const primaryBgHover = isMithilakFlow ? 'hover:bg-[#6d28d9]' : isFreshGroceryFlow ? 'hover:bg-[#653313]' : (isQuickShopFlow ? 'hover:bg-[#b5125b]' : 'hover:bg-[#06331b]');
+  const primaryBorder = isMithilakFlow ? 'border-[#7c3aed]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#084224]');
+  const primaryLightBg = isMithilakFlow ? 'bg-purple-50' : isFreshGroceryFlow ? 'bg-[#FFF0A0]/45' : (isQuickShopFlow ? 'bg-pink-50' : 'bg-primary-light');
+  const shadowColor = isMithilakFlow ? 'shadow-[0_4px_16px_rgba(124,58,237,0.22)]' : isFreshGroceryFlow ? 'shadow-[0_4px_16px_rgba(122,62,23,0.15)]' : (isQuickShopFlow ? 'shadow-[0_4px_16px_rgba(214,24,109,0.22)]' : 'shadow-[0_4px_16px_rgba(8,66,36,0.22)]');
+  const shadowColorLight = isMithilakFlow ? 'shadow-[0_10px_30px_rgba(124,58,237,0.08)]' : isFreshGroceryFlow ? 'shadow-[0_10px_30px_rgba(122,62,23,0.06)]' : (isQuickShopFlow ? 'shadow-[0_10px_30px_rgba(214,24,109,0.08)]' : 'shadow-[0_10px_30px_rgba(8,66,36,0.08)]');
+  
+  const accentBg = isMithilakFlow ? 'bg-purple-500' : isFreshGroceryFlow ? 'bg-[#7A3E17]' : (isQuickShopFlow ? 'bg-pink-500' : 'bg-green-500');
+  const accentText = isMithilakFlow ? 'text-purple-500' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-pink-500' : 'text-green-500');
+  const accentBorder = isMithilakFlow ? 'border-purple-500' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-pink-500' : 'border-green-500');
+
   const [selectedSize, setSelectedSize] = useState('S');
   const { wishlist, addToWishlist, removeFromWishlist } = useAccountStore();
   const [isWishlisted, setIsWishlisted] = useState(false);
@@ -89,10 +105,8 @@ const ProductDetail = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Check if product is in wishlist using global store
     setIsWishlisted(wishlist.some(item => item.id === product.id));
 
-    // Update cart count
     const updateCount = () => {
       const cart = JSON.parse(localStorage.getItem('userCart') || '[]');
       const total = cart.reduce((acc, item) => acc + (item.qty || 1), 0);
@@ -102,13 +116,6 @@ const ProductDetail = () => {
     window.addEventListener('cartUpdated', updateCount);
     return () => window.removeEventListener('cartUpdated', updateCount);
   }, [product, wishlist]);
-
-  const handleScroll = (e) => {
-    const scrollLeft = e.target.scrollLeft;
-    const width = e.target.offsetWidth;
-    const slide = Math.round(scrollLeft / width);
-    setCurrentSlide(slide);
-  };
 
   const toggleWishlist = useCallback(() => {
     if (isWishlisted) {
@@ -130,24 +137,20 @@ const ProductDetail = () => {
     };
 
     try {
-      // Check if Web Share API is supported (mobile devices)
       if (navigator.share) {
         await navigator.share(shareData);
         setToastMessage('Shared successfully!');
         setShowToast(true);
         setTimeout(() => setShowToast(false), 2000);
       } else {
-        // Fallback: Copy link to clipboard
         await navigator.clipboard.writeText(window.location.href);
         setToastMessage('Link copied to clipboard!');
         setShowToast(true);
         setTimeout(() => setShowToast(false), 2000);
       }
     } catch (error) {
-      // User cancelled share or error occurred
       if (error.name !== 'AbortError') {
         console.error('Error sharing:', error);
-        // Try clipboard as final fallback
         try {
           await navigator.clipboard.writeText(window.location.href);
           setToastMessage('Link copied to clipboard!');
@@ -177,223 +180,327 @@ const ProductDetail = () => {
   }, [product, navigate]);
 
   return (
-    <div className="bg-white min-h-screen pb-20 font-sans text-slate-900">
-      {/* Top Header - Search Style - Compact */}
-      <div className="sticky top-0 z-50 bg-white px-3 py-1.5 flex items-center gap-2.5 border-b border-gray-100 shadow-sm">
-        <button onClick={() => navigate(-1)} className="text-slate-800 p-1">
-          <ArrowLeft size={22} />
+    <div className={`min-h-screen pb-28 font-sans text-slate-800 transition-colors duration-300 ${
+      isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : 'bg-[#fbfcff]'
+    }`}>
+      {/* Premium Boutique Header */}
+      <div className={`sticky top-0 z-50 px-4 py-3 flex items-center justify-between border-b border-gray-100 shadow-[0_1px_8px_rgba(0,0,0,0.01)] transition-colors duration-300 ${
+        isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-white/80 backdrop-blur-md'
+      }`}>
+        <button onClick={() => navigate(-1)} className={`p-1.5 rounded-full transition-colors active:scale-90 ${
+          isFreshGroceryFlow ? 'text-black hover:bg-black/5' : 'text-slate-800 hover:bg-gray-50'
+        }`}>
+          <ArrowLeft size={20} strokeWidth={2.5} />
         </button>
-        <div className="flex-1 bg-white border border-[#084224] rounded-sm px-2.5 py-1.5 flex items-center gap-2">
-          <Search size={16} className="text-gray-400" />
-          <input 
-            type="text" 
-            placeholder="Search for products" 
-            className="bg-transparent outline-none text-[13px] w-full placeholder:text-gray-400 font-medium"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && searchQuery.trim()) {
-                navigate(`/vendor/search?q=${encodeURIComponent(searchQuery)}`);
-              }
-            }}
-          />
+        <span className={`text-[12px] font-black tracking-[0.25em] ${primaryText} uppercase pl-4`}>
+          Mithilakart
+        </span>
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={() => navigate('/vendor/search')} 
+            className={`p-1.5 rounded-full transition-colors active:scale-90 ${
+              isFreshGroceryFlow ? 'text-black hover:bg-black/5' : 'text-slate-800 hover:bg-gray-50'
+            }`}
+          >
+            <Search size={20} />
+          </button>
+          <div 
+            onClick={() => navigate('/vendor/cart')} 
+            className={`relative p-1.5 rounded-full transition-colors active:scale-95 cursor-pointer ${
+              isFreshGroceryFlow ? 'text-black hover:bg-black/5' : 'text-slate-800 hover:bg-gray-50'
+            }`}
+          >
+            <ShoppingCart size={20} className="text-current" />
+            {cartCount > 0 && (
+              <span className={`absolute top-0 right-0 ${primaryBg} text-white text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white shadow-xs`}>
+                {cartCount}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="md:grid md:grid-cols-2 md:gap-10 md:max-w-6xl md:mx-auto md:px-4 md:py-6">
+        {/* Left Column: Images */}
+        <div className="flex flex-col">
+          {/* Boutique Lookbook Image Frame */}
+          <div className="px-4 pt-4 pb-2">
+            <div className="relative w-full aspect-[4/5] bg-white rounded-[28px] overflow-hidden shadow-[0_12px_32px_rgba(8,66,36,0.06)] border border-slate-100">
+              <img 
+                src={images[currentSlide]} 
+                alt={product.name} 
+                className="w-full h-full object-cover transition-all duration-500 ease-out" 
+              />
+
+              {/* Floating Luxury Widgets */}
+              <div className="absolute top-4 right-4 flex flex-col gap-2.5 z-10">
+                <button 
+                  onClick={toggleWishlist}
+                  className="w-9 h-9 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-md active:scale-90 transition-all border border-white/50 hover:bg-white"
+                >
+                  <Heart size={16} className={isWishlisted ? "text-red-500 fill-red-500" : "text-slate-700"} />
+                </button>
+                <button 
+                  onClick={handleShare}
+                  className="w-9 h-9 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-md active:scale-90 transition-all border border-white/50 hover:bg-white"
+                >
+                  <Share2 size={15} className="text-slate-700" />
+                </button>
+              </div>
+
+              {/* Rating Badge */}
+              <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-md px-2 py-0.5 rounded-full border border-gray-100 flex items-center gap-1 shadow-sm z-10">
+                <span className="text-[11px] font-black text-slate-800">{product.rating}</span>
+                <Star size={9} fill="#e2a750" className="text-[var(--color-gold)]" />
+                <div className="w-[1px] h-2.5 bg-gray-200 mx-0.5" />
+                <span className="text-[9.5px] font-bold text-slate-400">{product.ratingCount || 12} reviews</span>
+              </div>
+            </div>
+
+            {/* Thumbnail Preview Slider */}
+            <div className="flex justify-center gap-2 mt-4 pb-1">
+              {images.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentSlide(idx)}
+                  className={`w-12 h-15 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                    currentSlide === idx 
+                      ? `${primaryBorder} scale-105 shadow-sm` 
+                      : 'border-transparent opacity-60'
+                  }`}
+                >
+                  <img src={img} className="w-full h-full object-cover" alt={`preview-${idx}`} />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: Details & Actions */}
+        <div className="flex flex-col">
+          {/* Brand & Title */}
+      <div className="px-4 py-2 mt-1">
+        <span className={`text-[10px] font-black tracking-[0.25em] ${primaryText} uppercase block mb-1`}>
+          {product.brand || 'Mithilakart Brand'}
+        </span>
+        <h1 className="text-[19px] font-black text-slate-800 leading-tight mb-2 tracking-tight">
+          {product.name}
+        </h1>
+        
+        {/* Luxury Pricing Layout */}
+        <div className="flex items-center gap-3 mt-1.5">
+          <span className="text-[26px] font-black text-slate-900 leading-none">
+            ₹{product.price}
+          </span>
+          <span className="text-[15px] text-slate-400 line-through">
+            ₹{product.oldPrice}
+          </span>
+          <span className="text-[11px] font-black tracking-wider uppercase border border-[var(--color-gold)] text-[var(--color-gold)] bg-amber-50/20 px-2 py-0.5 rounded-full">
+            {product.discount || 'Special Offer'}
+          </span>
+        </div>
+      </div>
+
+      {/* Variant Selector (Premium Circles) */}
+      <div className="px-4 py-3 mt-1">
+        <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block mb-2.5">
+          Select Size
+        </span>
+        <div className="flex gap-2.5">
+          {['XS', 'S', 'M', 'L', 'XL'].map((size) => (
+            <button
+              key={size}
+              onClick={() => setSelectedSize(size)}
+              className={`w-10 h-10 rounded-full text-[11px] font-black transition-all flex items-center justify-center border ${
+                selectedSize === size
+                  ? 'bg-slate-900 text-white border-slate-900 shadow-sm scale-105'
+                  : 'bg-white text-slate-800 border-gray-200 hover:border-slate-300'
+              }`}
+            >
+              {size}
+            </button>
+          ))}
+        </div>
+      </div>
+
+        {/* Desktop Action Buttons */}
+        <div className="hidden md:flex gap-4 mt-5 mb-3 px-4">
+          <button 
+            onClick={handleAddToCart}
+            className="flex-1 bg-white border border-slate-200 text-slate-800 font-bold py-3.5 rounded-full active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-[13px] hover:bg-slate-50 cursor-pointer"
+          >
+            Add to Bag
+          </button>
+          <button 
+            onClick={handleBuyNow}
+            className={`flex-1 ${primaryBg} text-white font-black py-3.5 rounded-full active:scale-[0.98] transition-all flex items-center justify-center text-[13px] ${shadowColor} ${primaryBgHover} cursor-pointer`}
+          >
+            Buy Now • ₹{product.price}
+          </button>
+        </div>
+
+        {/* Glassmorphic Services & Policies Panel */}
+      <div className="px-4 py-3 mt-2 grid grid-cols-3 gap-2.5">
+        <div 
+          onClick={() => setShowReturnPolicy(true)}
+          className="bg-white border border-slate-100 rounded-2xl p-3 flex flex-col items-center justify-center gap-1.5 shadow-[0_4px_12px_rgba(0,0,0,0.01)] cursor-pointer hover:bg-slate-50/50 transition-colors active:scale-95 duration-200"
+        >
+          <div className="w-8 h-8 bg-sky-50 rounded-full flex items-center justify-center">
+            <RotateCcw size={16} className="text-sky-700" />
+          </div>
+          <span className="text-[9.5px] font-black text-slate-700 text-center uppercase tracking-tighter leading-tight">
+            10-Day Return
+          </span>
         </div>
         <div 
-          onClick={() => navigate('/vendor/cart')} 
-          className="relative p-1 active:scale-95 transition-transform cursor-pointer"
+          onClick={() => setShowPaymentOptions(true)}
+          className="bg-white border border-slate-100 rounded-2xl p-3 flex flex-col items-center justify-center gap-1.5 shadow-[0_4px_12px_rgba(0,0,0,0.01)] cursor-pointer hover:bg-slate-50/50 transition-colors active:scale-95 duration-200"
         >
-          <ShoppingCart size={22} className="text-slate-800" />
-          {cartCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 bg-[#cc0c39] text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border border-white leading-none">
-              {cartCount}
-            </span>
+          <div className="w-8 h-8 bg-amber-50 rounded-full flex items-center justify-center">
+            <IndianRupee size={16} className="text-amber-700" />
+          </div>
+          <span className="text-[9.5px] font-black text-slate-700 text-center uppercase tracking-tighter leading-tight">
+            COD Available
+          </span>
+        </div>
+        <div 
+          onClick={() => setShowSupportInfo(true)}
+          className="bg-white border border-slate-100 rounded-2xl p-3 flex flex-col items-center justify-center gap-1.5 shadow-[0_4px_12px_rgba(0,0,0,0.01)] cursor-pointer hover:bg-slate-50/50 transition-colors active:scale-95 duration-200"
+        >
+          <div className="w-8 h-8 bg-emerald-50 rounded-full flex items-center justify-center">
+            <span className="text-emerald-700 font-black text-[9px] uppercase tracking-tighter">24x7</span>
+          </div>
+          <span className="text-[9.5px] font-black text-slate-700 text-center uppercase tracking-tighter leading-tight">
+            Live Support
+          </span>
+        </div>
+      </div>
+
+      {/* Delivery / Shipping details */}
+      <div className="px-4 py-3 mt-2">
+        <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block mb-2.5">
+          Delivery Details
+        </span>
+        <div className="bg-white border border-slate-100 rounded-2xl p-3.5 space-y-3.5 shadow-[0_4px_16px_rgba(0,0,0,0.01)]">
+          <div className="flex items-center gap-3">
+            <MapPin size={18} className="text-[#084224]" />
+            <div className="flex-1 min-w-0">
+              <p className="text-[11px] font-black text-slate-800 uppercase tracking-wider leading-none">Deliver to Home</p>
+              <p className="text-[12px] text-slate-500 font-medium truncate mt-1">83 Kishan Pura Mataji Mandir, Sector N...</p>
+            </div>
+            <ChevronRight size={16} className="text-gray-400" />
+          </div>
+          <div className="h-[1px] bg-slate-100" />
+          <div className="flex items-center gap-3">
+            <Truck size={18} className="text-[#084224]" />
+            <div>
+              <p className="text-[12px] font-black text-slate-850">Delivery by Sat, 16 May</p>
+              <p className="text-[10px] text-orange-600 font-bold mt-0.5">Order in 00h 00m 14s</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Product Highlights Expandable Accordion */}
+      <div className="px-4 py-1.5 mt-2">
+        <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.01)]">
+          <div 
+            onClick={() => setIsHighlightsOpen(!isHighlightsOpen)}
+            className="flex justify-between items-center cursor-pointer"
+          >
+            <h3 className="text-[13px] font-black text-slate-900 uppercase tracking-wider">Product Highlights</h3>
+            <ChevronRight 
+              size={16} 
+              className={`text-gray-400 transition-transform duration-300 ${isHighlightsOpen ? '-rotate-90' : 'rotate-90'}`} 
+            />
+          </div>
+          {isHighlightsOpen && (
+            <div className="grid grid-cols-2 gap-y-3.5 gap-x-6 mt-4 pt-3 border-t border-slate-50 animate-in fade-in duration-300">
+              {detailsData.highlights.map((item, idx) => (
+                <div key={idx} className="pb-0.5">
+                  <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">{item.label}</p>
+                  <p className="text-[12.5px] font-black text-slate-800">{item.value}</p>
+                </div>
+              ))}
+            </div>
           )}
         </div>
       </div>
 
-      {/* Product Image Carousel - Cover Style */}
-      <div className="relative w-full aspect-[4/5] bg-gray-100 overflow-hidden">
-        <div 
-          className="flex h-full overflow-x-auto snap-x snap-mandatory no-scrollbar"
-          onScroll={handleScroll}
-        >
-          {images.map((img, idx) => (
-            <div key={idx} className="flex-shrink-0 w-full h-full snap-center relative">
-              <img src={img} alt={product.name} className="w-full h-full object-cover" />
-              
-              {/* Highlight Overlay on Second Slide */}
-              {idx === 1 && (
-                <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px] p-5 flex flex-col justify-start pt-10 text-white z-10">
-                  <h2 className="text-[20px] font-black mb-4 drop-shadow-md uppercase tracking-tight">Key Highlights</h2>
-                  
-                  <div className="space-y-2.5 max-h-[70%] overflow-hidden">
-                    <div>
-                      <p className="text-[10px] font-bold opacity-80 uppercase tracking-widest mb-0.5">Fit</p>
-                      <p className="text-[15px] font-black drop-shadow-sm">{product.fit || 'Boxy'}</p>
+      {/* All Specs Accordion */}
+      <div className="px-4 py-1.5 mt-1">
+        <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.01)]">
+          <div 
+            onClick={() => setIsAllDetailsOpen(!isAllDetailsOpen)}
+            className="flex justify-between items-center cursor-pointer"
+          >
+            <div>
+              <h3 className="text-[13px] font-black text-slate-900 uppercase tracking-wider">Specifications & Info</h3>
+              <p className="text-[10px] text-gray-400 font-bold mt-0.5">Specifications, Description and Manufacturer</p>
+            </div>
+            <ChevronRight 
+              size={16} 
+              className={`text-gray-400 transition-transform duration-300 ${isAllDetailsOpen ? '-rotate-90' : 'rotate-90'}`} 
+            />
+          </div>
+          {isAllDetailsOpen && (
+            <div className="mt-4 pt-4 border-t border-slate-50 animate-in fade-in duration-350">
+              {/* Tab Selector */}
+              <div className="flex gap-2 overflow-x-auto no-scrollbar mb-4 pb-1">
+                {['Specifications', 'Description', 'Manufacturer Info'].map(tab => (
+                  <button
+                    key={tab}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveDetailTab(tab);
+                    }}
+                    className={`px-3 py-1.5 rounded-full text-[10.5px] font-black border whitespace-nowrap transition-all ${
+                      activeDetailTab === tab 
+                        ? 'bg-slate-900 text-white border-slate-900 shadow-xs' 
+                        : 'bg-white text-slate-600 border-slate-100 active:scale-95'
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
+
+              {activeDetailTab === 'Specifications' && (
+                <div className="grid grid-cols-2 gap-y-3 gap-x-6">
+                  {detailsData.specs.map((item, idx) => (
+                    <div key={idx} className="pb-0.5 border-b border-slate-50">
+                      <p className="text-[9.5px] font-bold text-gray-400 mb-0.5">{item.label}</p>
+                      <p className="text-[12px] font-black text-slate-800">{item.value}</p>
                     </div>
-                    <div className="w-8 h-[1px] bg-white/30" />
-                    <div>
-                      <p className="text-[10px] font-bold opacity-80 uppercase tracking-widest mb-0.5">Collar</p>
-                      <p className="text-[15px] font-black drop-shadow-sm">{product.collar || 'Spread'}</p>
-                    </div>
-                    <div className="w-8 h-[1px] bg-white/30" />
-                    <div>
-                      <p className="text-[10px] font-bold opacity-80 uppercase tracking-widest mb-0.5">Fabric</p>
-                      <p className="text-[15px] font-black drop-shadow-sm">{product.fabric || 'Wool Blend'}</p>
-                    </div>
-                    <div className="w-8 h-[1px] bg-white/30" />
-                    <div>
-                      <p className="text-[10px] font-bold opacity-80 uppercase tracking-widest mb-0.5">Pattern</p>
-                      <p className="text-[15px] font-black drop-shadow-sm">{product.pattern || 'Checkered'}</p>
-                    </div>
-                    <div className="w-8 h-[1px] bg-white/30" />
-                    <div>
-                      <p className="text-[10px] font-bold opacity-80 uppercase tracking-widest mb-0.5">Occasion</p>
-                      <p className="text-[15px] font-black drop-shadow-sm">Casual</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               )}
-            </div>
-          ))}
-        </div>
-        
-        {/* Wishlist & Share Buttons */}
-        <div className="absolute top-3 right-3 flex flex-col gap-3 z-10">
-          <button 
-            onClick={toggleWishlist}
-            className="w-8 h-8 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform"
-          >
-            <Heart size={18} className={isWishlisted ? "text-red-500 fill-red-500" : "text-slate-700"} />
-          </button>
-          <button 
-            onClick={handleShare}
-            className="w-8 h-8 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform"
-          >
-            <Send size={16} className="text-slate-700" />
-          </button>
-        </div>
 
-        {/* Rating Badge - Compact */}
-        <div className="absolute bottom-4 left-3 bg-white/90 px-1.5 py-0.5 rounded-sm border border-gray-200 flex items-center gap-1 shadow-sm z-10">
-          <div className="flex items-center gap-0.5">
-            <span className="text-[11px] font-bold text-slate-800">{product.rating}</span>
-            <Star size={8} fill="#15803d" className="text-green-700" />
-          </div>
-          <div className="w-[1px] h-2.5 bg-gray-300 mx-0.5" />
-          <span className="text-[10px] font-medium text-slate-500">{product.ratingCount}</span>
-        </div>
+              {activeDetailTab === 'Description' && (
+                <p className="text-[12px] text-slate-600 leading-relaxed font-medium">
+                  Premium quality materials with a modern, elegant drape. Features a premium finish and detailed stitching. Ideal for casual, lounge, and semi-formal wear.
+                </p>
+              )}
 
-        {/* Carousel Indicator Line */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200 z-10">
-          <div 
-            className="h-full bg-slate-800 transition-all duration-300 ease-out" 
-            style={{ width: `${(1 / images.length) * 100}%`, transform: `translateX(${currentSlide * 100}%)` }}
-          />
-        </div>
-      </div>
-
-
-      {/* Product Title & Price Section */}
-      <div className="px-3 py-3">
-        <h1 className="text-[16px] font-medium text-slate-800 leading-tight mb-2">
-          {product.name}
-        </h1>
-        <div className="flex items-center gap-2">
-          <div className="flex items-center text-green-600 font-bold text-[16px]">
-            <span className="text-[14px] mr-0.5">↓</span>
-            <span>48%</span>
-          </div>
-          <span className="text-[16px] text-gray-400 line-through">₹{product.oldPrice}</span>
-          <span className="text-[22px] font-black text-slate-900">₹{product.price}</span>
-        </div>
-      </div>
-
-      {/* Delivery Details */}
-      <div className="px-3 mb-4">
-        <h3 className="text-[15px] font-black uppercase tracking-tight text-slate-900 mb-3">Delivery details</h3>
-        <div className="space-y-0.5">
-          {/* Address */}
-          <div className="bg-white border border-gray-100 rounded-t-lg p-2.5 flex items-center gap-3">
-            <div className="bg-gray-50 p-1.5 rounded-md">
-              <MapPin size={18} className="text-slate-700" />
+              {activeDetailTab === 'Manufacturer Info' && (
+                <p className="text-[12px] text-slate-600 leading-relaxed font-medium">
+                  Manufactured by Lounge Dreams Clothing Pvt Ltd. Designed and tailored in India.
+                </p>
+              )}
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[12px] font-black text-slate-800 uppercase tracking-tight">HOME <span className="font-medium text-gray-500 normal-case">83 kishan pura mataji mandir, sector n...</span></p>
-            </div>
-            <ChevronRight size={16} className="text-gray-400" />
-          </div>
-          
-          {/* Date */}
-          <div className="bg-white border border-gray-100 p-2.5 flex items-center gap-3">
-            <div className="bg-gray-50 p-1.5 rounded-md">
-              <Truck size={18} className="text-slate-700" />
-            </div>
-            <div className="flex-1">
-              <p className="text-[13px] font-bold text-slate-800">Delivery by 16 May, Sat</p>
-              <p className="text-[10px] text-orange-600 font-bold">Order in 00h 00m 14s</p>
-            </div>
-          </div>
-
-          {/* Seller */}
-          <div className="bg-white border border-gray-100 rounded-b-lg p-2.5 flex items-center gap-3">
-            <div className="bg-gray-50 p-1.5 rounded-md">
-              <div className="w-[18px] h-[18px] border-2 border-slate-700 rounded-[2px]" />
-            </div>
-            <div className="flex-1">
-              <p className="text-[11px] text-slate-600">Fulfilled by <span className="font-bold text-slate-800 text-[12px]">Lounge Dreams</span></p>
-              <div className="flex items-center gap-1.5 mt-0.5">
-                <span className="text-[10px] font-bold text-slate-600 bg-gray-100 px-1 py-0.5 rounded-sm">3.2 ★</span>
-                <span className="text-gray-300 text-[10px]">•</span>
-                <span className="text-[10px] text-slate-500 font-medium">4 years with Mithilakart</span>
-              </div>
-              <button className="text-[11px] font-bold text-[#084224] mt-1 underline underline-offset-2">See other sellers</button>
-            </div>
+          )}
         </div>
       </div>
     </div>
-
-      {/* Service Icons Row */}
-      <div className="px-3 py-4 flex justify-around items-center border-t border-gray-50 bg-gray-50/30">
-        <div 
-          onClick={() => setShowReturnPolicy(true)}
-          className="flex flex-col items-center gap-2 cursor-pointer group active:scale-95 transition-transform"
-        >
-          <div className="w-10 h-10 bg-primary-light rounded-full flex items-center justify-center group-hover:bg-primary-green/20 transition-colors">
-            <RotateCcw size={20} className="text-[#084224]" />
-          </div>
-          <span className="text-[10px] font-bold text-slate-600 text-center leading-tight">10-Day<br/>Return ›</span>
-        </div>
-        <div 
-          onClick={() => setShowPaymentOptions(true)}
-          className="flex flex-col items-center gap-2 cursor-pointer group active:scale-95 transition-transform"
-        >
-          <div className="w-10 h-10 bg-primary-light rounded-full flex items-center justify-center group-hover:bg-primary-green/20 transition-colors">
-            <IndianRupee size={20} className="text-[#084224]" />
-          </div>
-          <span className="text-[10px] font-bold text-slate-600 text-center leading-tight">Cash on<br/>Delivery ›</span>
-        </div>
-        <div className="flex flex-col items-center gap-2 cursor-pointer group active:scale-95 transition-transform"
-          onClick={() => setShowSupportInfo(true)}
-        >
-          <div className="w-10 h-10 bg-primary-light rounded-full flex items-center justify-center group-hover:bg-primary-green/20 transition-colors">
-            <span className="text-[#084224] font-black text-[10px]">24x7</span>
-          </div>
-          <span className="text-[10px] font-bold text-slate-600 text-center leading-tight">Customer<br/>support ›</span>
-        </div>
-      </div>
-
-      <div className="h-1.5 bg-gray-50" />
+  </div>
 
       {/* Similar Products */}
-      <div className="py-3 border-t border-gray-100">
-        <div className="flex justify-between items-center px-3 mb-3">
-          <h3 className="text-[15px] font-bold uppercase tracking-tight text-slate-900">Similar Products</h3>
-          <button className="w-7 h-7 bg-slate-900 rounded-full flex items-center justify-center text-white active:scale-90 transition-transform">
-            <ChevronRight size={18} />
-          </button>
+      <div className="mt-4 py-4 bg-white border-y border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.01)] md:max-w-6xl md:mx-auto md:w-full md:rounded-2xl md:border md:my-6 md:p-6">
+        <div className="flex justify-between items-center px-4 mb-3 md:px-0">
+          <h3 className="text-[13px] font-black uppercase tracking-wider text-slate-900">Similar Products</h3>
+          <span className="text-[10px] font-black text-[#084224] tracking-widest uppercase">View All</span>
         </div>
-        <div className="flex gap-4 px-3 overflow-x-auto no-scrollbar pb-3">
+        <div className="flex gap-4 px-4 overflow-x-auto no-scrollbar pb-2 md:justify-center md:gap-6 md:px-0 md:overflow-x-visible">
           {[
             { img: TopSection1, name: 'Checked Cotton Shirt', brand: 'Fashion Hub', price: 899, oldPrice: 1999 },
             { img: FlipFlops, name: 'Casual Flip Flops', brand: 'Drasert', price: 1299, oldPrice: 2499 },
@@ -402,153 +509,37 @@ const ProductDetail = () => {
             <div 
               key={idx} 
               onClick={() => navigate('/vendor/product-detail', { state: { product: { ...item, image: item.img, rating: 4.1, discount: '55% OFF' } } })}
-              className="flex-shrink-0 w-[130px] bg-white border border-gray-100 rounded-lg overflow-hidden shadow-sm active:scale-95 transition-transform cursor-pointer"
+              className="flex-shrink-0 w-[130px] bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_12px_rgba(0,0,0,0.02)] active:scale-95 transition-all cursor-pointer hover:shadow-sm"
             >
-              <div className="aspect-[4/5] relative">
+              <div className="aspect-square m-1.5 rounded-xl overflow-hidden relative bg-slate-50 border border-slate-100/55 flex items-center justify-center">
                 <img src={item.img} className="w-full h-full object-cover" alt="similar" />
-                <div className="absolute bottom-1.5 left-1.5 bg-white/95 px-1 py-0.5 rounded-sm flex items-center gap-0.5 border border-gray-50 shadow-sm">
-                  <span className="text-[9px] font-bold">4.1</span>
-                  <Star size={7} fill="#15803d" className="text-green-700" />
+                <div className="absolute top-1.5 left-1.5 bg-white/90 backdrop-blur-md px-1.5 py-0.5 rounded-full flex items-center gap-0.5 border border-gray-100 shadow-2xs">
+                  <span className="text-[9px] font-black text-slate-800">4.1</span>
+                  <Star size={7} fill="#e2a750" className="text-[#e2a750]" />
                 </div>
               </div>
-              <div className="p-2">
-                <h4 className="text-[10px] font-bold text-slate-800 line-clamp-1 mb-1 uppercase tracking-tight">{item.name}</h4>
-                <div className="flex items-center gap-1.5 leading-none">
-                  <span className="text-[10px] font-black text-green-600">55% OFF</span>
+              <div className="px-2.5 pb-2.5 pt-0.5">
+                <h4 className="text-[11px] font-black text-slate-800 truncate uppercase tracking-tight">{item.name}</h4>
+                <div className="text-[9px] font-black text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded-full w-fit mt-1">
+                  55% OFF
                 </div>
-                <div className="flex items-center gap-1 mt-1">
-                  <span className="text-[9px] text-gray-400 line-through">₹1,999</span>
-                  <span className="text-[12px] font-black">₹899</span>
+                <div className="flex items-baseline gap-1.5 mt-2">
+                  <span className="text-[13px] font-black text-slate-900">₹{item.price}</span>
+                  <span className="text-[9.5px] text-gray-400 line-through">₹{item.oldPrice}</span>
                 </div>
-                <p className="text-[9px] text-primary-dark font-bold mt-1">₹799 <span className="font-medium text-gray-400 text-[8px]">with UPI</span></p>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Product Highlights */}
-      <div className="px-3 py-3 border-t border-gray-100">
-        <div 
-          onClick={() => setIsHighlightsOpen(!isHighlightsOpen)}
-          className="flex justify-between items-center cursor-pointer group"
-        >
-          <h3 className="text-[15px] font-black uppercase tracking-tight text-slate-900 group-active:scale-[0.98] transition-transform">Product highlights</h3>
-          <ChevronRight 
-            size={18} 
-            className={`text-gray-400 transition-transform duration-300 ${isHighlightsOpen ? '-rotate-90' : 'rotate-90'}`} 
-          />
-        </div>
-        
-        {isHighlightsOpen && (
-          <div className="grid grid-cols-2 gap-y-4 gap-x-8 mt-4 animate-in fade-in slide-in-from-top-2 duration-300">
-            {detailsData.highlights.map((item, idx) => (
-              <div key={idx} className="border-b border-gray-50 pb-2">
-                <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">{item.label}</p>
-                <p className="text-[13px] font-black text-slate-800">{item.value}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* All Details */}
-      <div className="border-t border-gray-100">
-        <div 
-          onClick={() => setIsAllDetailsOpen(!isAllDetailsOpen)}
-          className="px-3 py-3 flex justify-between items-center cursor-pointer group"
-        >
-          <div>
-            <h3 className="text-[15px] font-black uppercase tracking-tight text-slate-900 group-active:scale-[0.98] transition-transform">All details</h3>
-            <p className="text-[11px] text-gray-500">Features, description and more</p>
-          </div>
-          <div className="w-7 h-7 bg-gray-50 rounded-full flex items-center justify-center">
-            <ChevronRight 
-              size={18} 
-              className={`text-gray-400 transition-transform duration-300 ${isAllDetailsOpen ? '-rotate-90' : 'rotate-90'}`} 
-            />
-          </div>
-        </div>
-
-        {isAllDetailsOpen && (
-          <div className="px-3 pb-6 animate-in fade-in slide-in-from-top-2 duration-300">
-            {/* Tabs */}
-            <div className="flex gap-2 overflow-x-auto no-scrollbar mb-6">
-              {['Specifications', 'Description', 'Manufacturer info'].map(tab => (
-                <button
-                  key={tab}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActiveDetailTab(tab);
-                  }}
-                  className={`px-3 py-1.5 rounded-full text-[11px] font-bold border whitespace-nowrap transition-all ${
-                    activeDetailTab === tab 
-                    ? 'bg-[#212121] text-white border-[#212121]' 
-                    : 'bg-white text-slate-600 border-gray-200 active:scale-95'
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-
-            {activeDetailTab === 'Specifications' && (
-              <div className="space-y-6">
-                <div>
-                  <h4 className="text-[13px] font-black text-slate-900 mb-3 tracking-tight uppercase">General</h4>
-                  <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-                    {detailsData.specs.map((item, idx) => (
-                      <div key={idx} className="border-b border-gray-50 pb-2">
-                        <p className="text-[10px] font-bold text-gray-400 mb-0.5">{item.label}</p>
-                        <p className="text-[12px] font-black text-slate-800 tracking-tight">{item.value}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 border-b border-gray-50 pb-4">
-                    <p className="text-[10px] font-bold text-gray-400 mb-1">Other Details</p>
-                    <p className="text-[12px] font-medium text-slate-700 leading-relaxed">
-                      Oversized shirt in crisp cotton poplin. Dropped shoulders, long sleeves with buttoned cuffs.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex justify-center">
-                  <button className="flex items-center gap-1.5 px-5 py-1.5 border border-gray-200 rounded-full text-[12px] font-bold text-slate-800 active:scale-95 transition-transform">
-                    See more <ChevronRight size={16} className="rotate-90 text-gray-400" />
-                  </button>
-                </div>
-              </div>
-            )}
-            
-            {activeDetailTab === 'Description' && (
-              <div className="text-[12px] text-slate-600 leading-relaxed">
-                Premium wool blend shirt with a modern boxy fit. Features a classic spread collar and checkered pattern. Perfect for seasonal transitions.
-              </div>
-            )}
-
-            {activeDetailTab === 'Manufacturer info' && (
-              <div className="text-[12px] text-slate-600 leading-relaxed">
-                Manufactured by Lounge Dreams Clothing Pvt Ltd. Made in India.
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      <div className="h-1.5 bg-gray-50" />
-
       {/* Bought Together */}
-      <div className="py-4 mb-8">
-        <div className="flex justify-between items-center px-3 mb-4">
-          <h3 className="text-[15px] font-bold uppercase tracking-tight text-slate-900">Bought Together</h3>
-          <button 
-            onClick={() => navigate('/vendor/all-offers')}
-            className="w-7 h-7 bg-slate-900 rounded-full flex items-center justify-center text-white active:scale-90 transition-transform"
-          >
-            <ChevronRight size={18} />
-          </button>
+      <div className="mt-4 py-4 bg-white border-y border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.01)] md:max-w-6xl md:mx-auto md:w-full md:rounded-2xl md:border md:my-6 md:p-6">
+        <div className="flex justify-between items-center px-4 mb-3 md:px-0">
+          <h3 className="text-[13px] font-black uppercase tracking-wider text-slate-900">Bought Together</h3>
+          <span className="text-[10px] font-black text-[#084224] tracking-widest uppercase">Explore</span>
         </div>
-        <div className="flex gap-4 px-3 overflow-x-auto no-scrollbar pb-4">
+        <div className="flex gap-4 px-4 overflow-x-auto no-scrollbar pb-2 md:justify-center md:gap-6 md:px-0 md:overflow-x-visible">
           {[
             { img: Balloons, name: 'Party Pack', price: 299, oldPrice: 599 },
             { img: SplitAC, name: 'Samsung AC', price: 34999, oldPrice: 45999 },
@@ -557,20 +548,19 @@ const ProductDetail = () => {
             <div 
               key={i} 
               onClick={() => navigate('/vendor/product-detail', { state: { product: { ...item, image: item.img, rating: 4.3, discount: '60% off' } } })}
-              className="flex-shrink-0 w-[145px] bg-white border border-gray-100 rounded-lg overflow-hidden shadow-sm active:scale-95 transition-transform cursor-pointer"
+              className="flex-shrink-0 w-[130px] bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_12px_rgba(0,0,0,0.02)] active:scale-95 transition-all cursor-pointer hover:shadow-sm"
             >
-              <div className="aspect-[4/5] bg-gray-50">
+              <div className="aspect-square m-1.5 rounded-xl overflow-hidden relative bg-slate-50 border border-slate-100/55 flex items-center justify-center">
                 <img src={item.img} className="w-full h-full object-cover" alt="bought" />
               </div>
-              <div className="p-2">
-                <h4 className="text-[11px] font-bold text-slate-800 line-clamp-1 mb-1 tracking-tight">{item.name}</h4>
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-[14px] font-black">₹{item.price}</span>
-                  <span className="text-[10px] font-black text-green-600">60% off</span>
+              <div className="px-2.5 pb-2.5 pt-0.5">
+                <h4 className="text-[11px] font-black text-slate-800 truncate uppercase tracking-tight">{item.name}</h4>
+                <div className="text-[9px] font-black text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded-full w-fit mt-1">
+                  60% off
                 </div>
-                <div className="flex items-center gap-0.5">
-                  {[1, 2, 3, 4].map(s => <Star key={s} size={9} fill="#16a34a" className="text-green-600" />)}
-                  <span className="text-[9px] ml-1 text-slate-400 font-bold">(1.2k)</span>
+                <div className="flex items-baseline gap-1.5 mt-2">
+                  <span className="text-[13px] font-black text-slate-900">₹{item.price}</span>
+                  <span className="text-[9.5px] text-gray-400 line-through">₹{item.oldPrice}</span>
                 </div>
               </div>
             </div>
@@ -581,7 +571,6 @@ const ProductDetail = () => {
       {/* Easy Returns Policy Bottom Sheet */}
       {showReturnPolicy && (
         <div className="fixed inset-0 z-[1000] flex items-end justify-center">
-          {/* Overlay */}
           <div 
             className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300" 
             onClick={() => {
@@ -589,8 +578,6 @@ const ProductDetail = () => {
               setIsReturnExpanded(false);
             }}
           />
-          
-          {/* Sheet */}
           <div 
             onTouchStart={handleTouchStart}
             onTouchMove={(e) => handleTouchMove(e, setIsReturnExpanded, isReturnExpanded)}
@@ -598,12 +585,10 @@ const ProductDetail = () => {
               isReturnExpanded ? 'h-[95vh] rounded-t-3xl shadow-2xl' : 'max-h-[85vh] rounded-t-2xl'
             } overflow-hidden animate-in slide-in-from-bottom`}
           >
-            {/* Drag Handle */}
             <div className="w-full flex justify-center pt-2 pb-1 bg-white">
               <div className="w-10 h-1 bg-gray-200 rounded-full" />
             </div>
 
-            {/* Header */}
             <div className="sticky top-0 bg-[#e0f2fe] px-4 py-3 flex items-center gap-4 border-b border-primary-green/30 z-10">
               <button onClick={() => {
                 setShowReturnPolicy(false);
@@ -615,14 +600,13 @@ const ProductDetail = () => {
             </div>
 
             <div className="flex-1 overflow-y-auto p-5 pb-10">
-              {/* Type Icons */}
               <div className="flex justify-between items-center mb-10 px-4">
                 <div className="flex flex-col items-center gap-2">
                   <div className="w-14 h-14 bg-gray-50 rounded-sm flex items-center justify-center relative">
-                    <div className="w-10 h-10 border-2 border-[#084224] rounded-sm flex items-center justify-center">
-                      <RotateCcw size={20} className="text-[#084224]" />
+                    <div className={`w-10 h-10 border-2 ${primaryBorder} rounded-sm flex items-center justify-center`}>
+                      <RotateCcw size={20} className={primaryText} />
                     </div>
-                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
+                    <div className={`absolute -top-1 -right-1 w-5 h-5 ${accentBg} rounded-full border-2 border-white flex items-center justify-center`}>
                       <span className="text-white text-[10px] font-bold">✓</span>
                     </div>
                   </div>
@@ -630,10 +614,10 @@ const ProductDetail = () => {
                 </div>
                 <div className="flex flex-col items-center gap-2">
                   <div className="w-14 h-14 bg-gray-50 rounded-sm flex items-center justify-center relative">
-                    <div className="w-10 h-10 border-2 border-[#084224] rounded-sm flex items-center justify-center">
-                      <IndianRupee size={20} className="text-[#084224]" />
+                    <div className={`w-10 h-10 border-2 ${primaryBorder} rounded-sm flex items-center justify-center`}>
+                      <IndianRupee size={20} className={primaryText} />
                     </div>
-                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
+                    <div className={`absolute -top-1 -right-1 w-5 h-5 ${accentBg} rounded-full border-2 border-white flex items-center justify-center`}>
                       <span className="text-white text-[10px] font-bold">✓</span>
                     </div>
                   </div>
@@ -641,10 +625,10 @@ const ProductDetail = () => {
                 </div>
                 <div className="flex flex-col items-center gap-2">
                   <div className="w-14 h-14 bg-gray-50 rounded-sm flex items-center justify-center relative">
-                    <div className="w-10 h-10 border-2 border-[#084224] rounded-sm flex items-center justify-center">
-                      <Share2 size={20} className="text-[#084224] rotate-90" />
+                    <div className={`w-10 h-10 border-2 ${primaryBorder} rounded-sm flex items-center justify-center`}>
+                      <Share2 size={20} className={`${primaryText} rotate-90`} />
                     </div>
-                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
+                    <div className={`absolute -top-1 -right-1 w-5 h-5 ${accentBg} rounded-full border-2 border-white flex items-center justify-center`}>
                       <span className="text-white text-[10px] font-bold">✓</span>
                     </div>
                   </div>
@@ -652,7 +636,6 @@ const ProductDetail = () => {
                 </div>
               </div>
 
-              {/* Conditions List */}
               <div className="mb-10">
                 <h3 className="text-[17px] font-black text-slate-900 mb-6">What are the conditions for return?</h3>
                 <div className="space-y-5">
@@ -663,8 +646,8 @@ const ProductDetail = () => {
                     'Did not like the product'
                   ].map(text => (
                     <div key={text} className="flex items-center gap-4">
-                      <div className="w-5 h-5 border border-green-500 rounded-sm flex items-center justify-center">
-                        <span className="text-green-500 text-[12px] font-bold">✓</span>
+                      <div className={`w-5 h-5 border ${accentBorder} rounded-sm flex items-center justify-center`}>
+                        <span className={`${accentText} text-[12px] font-bold`}>✓</span>
                       </div>
                       <span className="text-[15px] font-bold text-slate-700">{text}</span>
                     </div>
@@ -672,15 +655,13 @@ const ProductDetail = () => {
                 </div>
               </div>
 
-              {/* How to place section */}
               <div>
                 <h3 className="text-[17px] font-black text-slate-900 mb-8">How to place a return?</h3>
                 
                 <div className="space-y-12 pl-4 border-l-2 border-dashed border-gray-200 ml-2">
-                  {/* Step 1 */}
                   <div className="relative">
-                    <div className="absolute -left-[26px] top-0 w-4 h-4 bg-white border-2 border-green-500 rounded-full flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                    <div className={`absolute -left-[26px] top-0 w-4 h-4 bg-white border-2 ${accentBorder} rounded-full flex items-center justify-center`}>
+                      <div className={`w-1.5 h-1.5 ${accentBg} rounded-full`} />
                     </div>
                     <div className="flex items-start justify-between gap-4">
                       <div>
@@ -692,15 +673,14 @@ const ProductDetail = () => {
                         <div className="w-10 h-10 border border-gray-300 rounded-sm flex items-center justify-center">
                           <span className="text-[8px] font-bold text-gray-400 absolute top-1 right-1">Return</span>
                         </div>
-                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
+                        <div className={`absolute -top-1 -right-1 w-4 h-4 ${accentBg} rounded-full border-2 border-white`} />
                       </div>
                     </div>
                   </div>
 
-                  {/* Step 2 */}
                   <div className="relative">
-                    <div className="absolute -left-[26px] top-0 w-4 h-4 bg-white border-2 border-green-500 rounded-full flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                    <div className={`absolute -left-[26px] top-0 w-4 h-4 bg-white border-2 ${accentBorder} rounded-full flex items-center justify-center`}>
+                      <div className={`w-1.5 h-1.5 ${accentBg} rounded-full`} />
                     </div>
                     <div className="flex items-start justify-between gap-4">
                       <div>
@@ -709,15 +689,14 @@ const ProductDetail = () => {
                       </div>
                       <div className="w-20 h-16 bg-gray-50 rounded-sm flex items-center justify-center relative border border-gray-100">
                          <div className="w-10 h-10 bg-slate-200 rounded-full" />
-                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
+                        <div className={`absolute -top-1 -right-1 w-4 h-4 ${accentBg} rounded-full border-2 border-white`} />
                       </div>
                     </div>
                   </div>
 
-                  {/* Step 3 */}
                   <div className="relative">
-                    <div className="absolute -left-[26px] top-0 w-4 h-4 bg-white border-2 border-green-500 rounded-full flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                    <div className={`absolute -left-[26px] top-0 w-4 h-4 bg-white border-2 ${accentBorder} rounded-full flex items-center justify-center`}>
+                      <div className={`w-1.5 h-1.5 ${accentBg} rounded-full`} />
                     </div>
                     <div className="flex items-start justify-between gap-4">
                       <div>
@@ -726,7 +705,7 @@ const ProductDetail = () => {
                       </div>
                       <div className="w-20 h-16 bg-gray-50 rounded-sm flex items-center justify-center relative border border-gray-100">
                         <Truck size={30} className="text-gray-300" />
-                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
+                        <div className={`absolute -top-1 -right-1 w-4 h-4 ${accentBg} rounded-full border-2 border-white`} />
                       </div>
                     </div>
                   </div>
@@ -754,12 +733,10 @@ const ProductDetail = () => {
               isPaymentExpanded ? 'h-[95vh] rounded-t-3xl shadow-2xl' : 'max-h-[85vh] rounded-t-2xl'
             } overflow-hidden animate-in slide-in-from-bottom`}
           >
-            {/* Drag Handle */}
             <div className="w-full flex justify-center pt-2 pb-1 bg-white cursor-grab active:cursor-grabbing">
               <div className="w-10 h-1 bg-gray-200 rounded-full" />
             </div>
 
-            {/* Header */}
             <div className="sticky top-0 bg-white px-4 py-2.5 flex items-center gap-4 border-b border-gray-100 z-10">
               <button onClick={() => {
                 setShowPaymentOptions(false);
@@ -770,7 +747,6 @@ const ProductDetail = () => {
               <h2 className="text-[18px] font-bold text-slate-800">Payments Options</h2>
             </div>
 
-            {/* Tab Switched */}
             <div className="sticky top-[53px] bg-white flex border-b border-gray-100 z-10">
               <button 
                 onClick={() => setActivePaymentTab('COD')}
@@ -794,7 +770,6 @@ const ProductDetail = () => {
               </button>
             </div>
 
-            {/* Content Area */}
             <div className="flex-1 overflow-y-auto p-6 bg-white">
               {activePaymentTab === 'COD' ? (
                 <p className="text-[15px] text-slate-700 font-medium leading-relaxed">
@@ -828,8 +803,6 @@ const ProductDetail = () => {
         </div>
       )}
 
-      {/* Toast Notification */}
-
       {/* Customer Support Bottom Sheet */}
       {showSupportInfo && (
         <div className="fixed inset-0 z-[1000] flex items-end justify-center">
@@ -847,12 +820,10 @@ const ProductDetail = () => {
               isSupportExpanded ? 'h-[95vh] rounded-t-3xl shadow-2xl' : 'max-h-[85vh] rounded-t-2xl'
             } overflow-hidden animate-in slide-in-from-bottom`}
           >
-            {/* Drag Handle */}
             <div className="w-full flex justify-center pt-2 pb-1 bg-white">
               <div className="w-10 h-1 bg-gray-200 rounded-full" />
             </div>
 
-            {/* Header */}
             <div className="sticky top-0 bg-white px-4 py-3.5 flex items-center justify-between border-b border-gray-100 z-10">
               <h2 className="text-[18px] font-bold text-slate-800">24x7 Customer Support</h2>
               <button onClick={() => {
@@ -863,30 +834,29 @@ const ProductDetail = () => {
               </button>
             </div>
 
-            {/* Content Area */}
             <div className="flex-1 overflow-y-auto p-6 bg-white">
               <p className="text-[15px] text-slate-700 font-medium leading-relaxed mb-6">
-                Mithilakart Help Centre offers quick support for order tracking, returns, refunds, and delivery updates. Find more information on Mithilakart Plus, payments, and shopping here. Access support via guided topics, customer care number, or chat with a support executive. Find Help Centre in "My Account" on mobile app or in the main menu on the desktop app.
+                Mithilakart Help Centre offers quick support for order tracking, returns, refunds, and delivery updates. Find Help Centre in "My Account" on mobile app or in the main menu on the desktop app.
               </p>
               
               {isSupportExpanded && (
                 <div className="space-y-6 animate-in fade-in duration-700">
                   <div className="grid grid-cols-2 gap-4">
                     <button className="flex flex-col items-center gap-2 p-4 border border-gray-100 rounded-sm active:bg-gray-50 transition-colors">
-                      <div className="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center">
-                        <Send size={22} className="text-[#084224]" />
+                      <div className={`w-12 h-12 ${primaryLightBg} rounded-full flex items-center justify-center`}>
+                        <Send size={22} className={primaryText} />
                       </div>
                       <span className="text-[13px] font-bold text-slate-700">Chat with us</span>
                     </button>
                     <button className="flex flex-col items-center gap-2 p-4 border border-gray-100 rounded-sm active:bg-gray-50 transition-colors">
-                      <div className="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center">
-                        <Star size={22} className="text-[#084224]" />
+                      <div className={`w-12 h-12 ${primaryLightBg} rounded-full flex items-center justify-center`}>
+                        <Star size={22} className={primaryText} />
                       </div>
                       <span className="text-[13px] font-bold text-slate-700">Help Center</span>
                     </button>
                   </div>
                   
-                  <div className="bg-gray-50 p-4 border-l-4 border-[#084224] rounded-r-sm">
+                  <div className={`bg-gray-50 p-4 border-l-4 ${primaryBorder} rounded-r-sm`}>
                     <p className="text-[12px] font-bold text-slate-500 uppercase mb-3 tracking-wider">Common Topics</p>
                     <ul className="space-y-4">
                       {['Track Order', 'Refund Status', 'Cancel Items'].map(item => (
@@ -903,25 +873,25 @@ const ProductDetail = () => {
         </div>
       )}
 
-      {/* Sticky Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-3 py-3 flex gap-3 z-50 shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+      {/* Floating Bottom Action Bar */}
+      <div className={`fixed bottom-3 left-4 right-4 bg-white/90 backdrop-blur-md border border-slate-100 px-4 py-3.5 flex gap-3.5 z-50 ${shadowColorLight} rounded-[24px] md:hidden`}>
         <button 
           onClick={handleAddToCart}
-          className="flex-1 bg-white border border-gray-200 text-slate-800 font-bold py-3.5 rounded-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+          className="flex-1 bg-white border border-slate-200 text-slate-800 font-bold py-3.5 rounded-full active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-[13px] hover:bg-slate-50"
         >
-          Add to cart
+          Add to Bag
         </button>
         <button 
           onClick={handleBuyNow}
-          className="flex-1 bg-[#ffc107] text-slate-900 font-black py-3.5 rounded-sm active:scale-[0.98] transition-all flex items-center justify-center"
+          className={`flex-1 ${primaryBg} text-white font-black py-3.5 rounded-full active:scale-[0.98] transition-all flex items-center justify-center text-[13px] ${shadowColor} ${primaryBgHover}`}
         >
-          Buy at ₹{product.price}
+          Buy Now • ₹{product.price}
         </button>
       </div>
 
       {/* Toast Notification */}
       {showToast && (
-        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[2000] bg-slate-900 text-white px-6 py-3 rounded-sm text-[14px] font-bold shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-300">
+        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[2000] bg-slate-900 text-white px-6 py-3 rounded-full text-[13px] font-bold shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-300">
           {toastMessage}
         </div>
       )}
@@ -930,5 +900,3 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
-
-

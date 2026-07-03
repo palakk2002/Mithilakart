@@ -2,8 +2,8 @@ import React from 'react';
 
 const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
   return (
-    <div className="mt-4 pb-0">
-      <div className="flex overflow-x-auto gap-6 px-6 no-scrollbar pt-14 pb-4" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <div className="mt-4 pb-0 md:max-w-6xl md:mx-auto">
+      <div className="flex overflow-x-auto gap-6 px-6 no-scrollbar pt-14 pb-4 md:justify-center md:gap-8 md:overflow-x-visible md:px-0" style={{ WebkitOverflowScrolling: 'touch' }}>
         {tabs.map((tab, idx) => {
           const isActive = activeTab === tab.label;
           return (

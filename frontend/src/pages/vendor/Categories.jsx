@@ -1,314 +1,287 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import {
-  Search, Camera, ShoppingCart, ArrowLeft,
-  ChevronRight, Star, Info, Bell, Zap, PlayCircle,
-  LayoutGrid, User, Home, Smartphone, Truck, Heart, X, Star as StarIcon
-} from 'lucide-react';
+import React from 'react';
+import { Search, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { allCategoryProducts } from '../../data/categoryData';
+import CategoryCard from '../../components/vendor/CategoryCard';
+
+// Import Assets (aligned with categories)
+import SamsungS24 from '../../assets/products/product01.jpg';
+import EarbudsDeal from '../../assets/products/product02.jpg';
+import LorealShampoo from '../../assets/products/product03.jpg';
+import LipGloss from '../../assets/products/product05.jpg';
+import JewelleryImg from '../../assets/products/product06.jpg';
+import FashionHero from '../../assets/products/product07.jpg';
+import ElectronicsHero from '../../assets/products/product08.jpg';
+import MakeupHero from '../../assets/products/product09.jpg';
+import FashionTabProduct from '../../assets/products/product10.jpg';
+import BeautyTab from '../../assets/products/product12.jpg';
+import ToysTab from '../../assets/products/product13.jpg';
+import StationeryTab from '../../assets/products/product14.jpg';
+import prod4 from '../../assets/products/product04.jpg';
+import ClothesImg from '../../assets/products/product15.webp';
+
+const SECTIONS = [
+  {
+    title: 'Beauty & Grooming',
+    items: [
+      { name: 'Cosmetics', img: MakeupHero, path: '/vendor/category-products?category=Beauty' },
+      { name: 'Skin Care', img: BeautyTab, path: '/vendor/category-products?category=Beauty' },
+      { name: 'Hair Care', img: LorealShampoo, path: '/vendor/category-products?category=Beauty' },
+      { name: 'Fragrances', img: LipGloss, path: '/vendor/category-products?category=Beauty' },
+    ]
+  },
+  {
+    title: 'Fashion & Jewellery',
+    items: [
+      { name: 'Ethnic Wear', img: FashionHero, path: '/vendor/category-products?category=Fashion' },
+      { name: 'Modern Wear', img: FashionTabProduct, path: '/vendor/category-products?category=Fashion' },
+      { name: 'Art. Jewellery', img: JewelleryImg, path: '/vendor/category-products?category=Jewellery' },
+      { name: 'Bags & Wallets', img: FashionHero, path: '/vendor/category-products?category=Fashion' },
+    ]
+  },
+  {
+    title: 'Kids & Play',
+    items: [
+      { name: 'Soft Toys', img: ToysTab, path: '/vendor/toys' },
+      { name: 'Board Games', img: ToysTab, path: '/vendor/toys' },
+      { name: 'Learning', img: ToysTab, path: '/vendor/toys' },
+      { name: 'Kids Wear', img: ClothesImg, path: '/vendor/toys' },
+    ]
+  },
+  {
+    title: 'Home & Stationery',
+    items: [
+      { name: 'Notebooks', img: StationeryTab, path: '/vendor/category-products?category=Stationery' },
+      { name: 'Art & Craft', img: StationeryTab, path: '/vendor/category-products?category=Stationery' },
+      { name: 'Office Supply', img: StationeryTab, path: '/vendor/category-products?category=Stationery' },
+      { name: 'Gifts', img: LipGloss, path: '/vendor/category-products?category=Gifting' },
+    ]
+  },
+  {
+    title: 'Electronics & Gadgets',
+    items: [
+      { name: 'Smart Phones', img: SamsungS24, path: '/vendor/category-products?category=Electronics' },
+      { name: 'Earbuds', img: EarbudsDeal, path: '/vendor/category-products?category=Electronics' },
+      { name: 'Appliances', img: ElectronicsHero, path: '/vendor/category-products?category=Electronics' },
+      { name: 'Smart Watches', img: SamsungS24, path: '/vendor/category-products?category=Electronics' },
+    ]
+  }
+];
+
+const QUICK_SHOP_CATEGORIES = [
+  {
+    title: 'Grocery',
+    items: [
+      { name: 'Fruits & Vegetables', img: 'https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Atta, Rice & Dal', img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Oil, Ghee & Masala', img: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Dairy, Bread & Eggs', img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Cereals & Dry Fruits', img: 'https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Chicken, Meat & Fish', img: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Instant & Frozen Food', img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=150&auto=format&fit=crop&q=60' },
+    ]
+  },
+  {
+    title: 'Snacks & Drinks',
+    items: [
+      { name: 'Chips & Namkeens', img: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Ice Creams', img: 'https://images.unsplash.com/photo-1501443762811-c52940c6a2c3?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Drinks & Juices', img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Sweets & Chocolates', img: 'https://images.unsplash.com/photo-1581798459219-318e76aecc7b?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Tea, Coffee & Milk Drinks', img: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Bakery & Biscuits', img: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Sauces & Spreads', img: 'https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=150&auto=format&fit=crop&q=60' },
+    ]
+  },
+  {
+    title: 'Beauty & Personal Care',
+    items: [
+      { name: 'Bath, Body & Grooming', img: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Baby Care', img: 'https://images.unsplash.com/photo-1519689680058-324335c77ebe?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Hair Care', img: 'https://images.unsplash.com/photo-1527799881376-127bb49c3038?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Healthcare & Pharma', img: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Wellness & Hygiene', img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Beauty & Fragrances', img: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=150&auto=format&fit=crop&q=60' },
+    ]
+  },
+  {
+    title: 'Household, Stationery & Lifestyle',
+    items: [
+      { name: 'Cleaning Essentials', img: 'https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Stationery Supplies', img: 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Toys & Games', img: 'https://images.unsplash.com/photo-1558060370-d644479cb6f7?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Sports & Fitness', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Home & Kitchen', img: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Electricals & Tools', img: 'https://images.unsplash.com/photo-1524294078988-0f34149ed411?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Fashion Accessories', img: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Pet Supplies', img: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=150&auto=format&fit=crop&q=60' },
+    ]
+  },
+  {
+    title: 'Mobiles & Electronics',
+    items: [
+      { name: 'Mobiles', img: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Electronics & Gadgets', img: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=150&auto=format&fit=crop&q=60' },
+      { name: 'Audio & Smart Watches', img: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=150&auto=format&fit=crop&q=60' },
+    ]
+  }
+];
+
+const MITHILA_CATEGORIES = [
+  {
+    title: 'Mithila Specialities',
+    items: [
+      { name: 'Mithila Festival & Cultural', img: SamsungS24 },
+      { name: 'Mithila Paridhan', img: EarbudsDeal },
+      { name: 'Mithila Special Cuisines', img: LorealShampoo },
+      { name: 'Mithila Lac Bangles', img: prod4 },
+      { name: 'Mithila Handcrafted Items', img: LipGloss },
+      { name: 'Mithila Pooja Needs', img: JewelleryImg },
+      { name: 'Mithila Books & Panchang', img: FashionHero },
+      { name: 'Mithila Achaar', img: ElectronicsHero }
+    ]
+  }
+];
+
 
 const Categories = () => {
   const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState('For You');
-  const [cartCount, setCartCount] = useState(0);
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [wishlist, setWishlist] = useState([]);
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
-  useEffect(() => {
-    const updateCartCount = () => {
-      const cart = JSON.parse(localStorage.getItem('userCart') || '[]');
-      const total = cart.reduce((acc, item) => acc + (item.qty || 1), 0);
-      setCartCount(total);
-    };
-    updateCartCount();
-    window.addEventListener('cartUpdated', updateCartCount);
-    return () => window.removeEventListener('cartUpdated', updateCartCount);
-  }, []);
-
-  useEffect(() => {
-    const savedWishlist = JSON.parse(localStorage.getItem('userWishlist') || '[]');
-    setWishlist(savedWishlist);
-  }, []);
-
-  const handleWishlistClick = (product) => {
-    const savedWishlist = JSON.parse(localStorage.getItem('userWishlist') || '[]');
-    const isInWishlist = savedWishlist.some(item => item.id === product.id);
-
-    let updatedWishlist;
-    if (isInWishlist) {
-      updatedWishlist = savedWishlist.filter(item => item.id !== product.id);
-    } else {
-      updatedWishlist = [...savedWishlist, product];
-    }
-
-    localStorage.setItem('userWishlist', JSON.stringify(updatedWishlist));
-    setWishlist(updatedWishlist);
-
-    // Dispatch event for other components to update
-    window.dispatchEvent(new Event('wishlistUpdated'));
-  };
-
-  const isInWishlist = (productId) => {
-    return wishlist.some(item => item.id === productId);
-  };
-
-  const categories = useMemo(() => Object.keys(allCategoryProducts), []);
-
-  // Filtered Products Logic
-  const filteredProducts = useMemo(() => {
-    if (!searchQuery.trim()) return [];
-    const query = searchQuery.toLowerCase();
-
-    // Search across all categories
-    const results = [];
-    Object.values(allCategoryProducts).forEach(categoryItems => {
-      categoryItems.forEach(product => {
-        if (
-          product.name.toLowerCase().includes(query) ||
-          product.category.toLowerCase().includes(query) ||
-          (product.shortDescription && product.shortDescription.toLowerCase().includes(query))
-        ) {
-          // Avoid duplicates if a product is in multiple categories (though not the case here)
-          if (!results.find(p => p.id === product.id)) {
-            results.push(product);
-          }
-        }
-      });
-    });
-    return results;
-  }, [searchQuery]);
-
-  const currentProducts = useMemo(() => {
-    if (searchQuery.trim()) return filteredProducts;
-    return allCategoryProducts[activeCategory] || [];
-  }, [activeCategory, searchQuery, filteredProducts]);
-
-  const launches = [
-    { id: 1, name: 'Ai+ Nova 2 series', status: 'NOTIFY ME', color: 'bg-emerald-700', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=200&q=80' },
-    { id: 2, name: 'Samsung Mini-LED', status: 'SALE IS LIVE!', color: 'bg-emerald-700', image: 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=200&q=80' },
-    { id: 3, name: 'Braun by Gillette', status: 'BUY NOW', color: 'bg-emerald-700', image: 'https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=200&q=80' },
-    { id: 4, name: 'CMF Watch 3 Pro', status: '', color: '', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=200&q=80' },
-    { id: 5, name: 'Ai+ Pulse Tab', status: '', color: '', image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=200&q=80' },
-    { id: 6, name: 'OPPO F33 Series 5G', status: 'BUY NOW', color: 'bg-emerald-700', image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=200&q=80' },
-  ];
+  const sectionsList = isMithilakFlow ? MITHILA_CATEGORIES : (isQuickShopFlow ? QUICK_SHOP_CATEGORIES : SECTIONS);
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-[#eaf5ee]');
+  const headerBg = isMithilakFlow ? 'bg-[#7c3aed]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-[#084224]');
+  const textPrimary = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#084224]');
 
   return (
-    <div className="bg-white min-h-screen flex flex-col font-sans">
+    <div className={`${pageBg} min-h-screen pb-24 font-sans text-slate-800`}>
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-white px-4 py-3 flex items-center justify-between border-b border-gray-100 shadow-sm">
-        <div className="flex items-center gap-3 flex-1">
-          {!isSearchVisible ? (
-            <>
-              <button onClick={() => navigate(-1)}>
-                <ArrowLeft size={22} className="text-slate-800" />
-              </button>
-              <h1 className="text-[19px] font-medium text-slate-800">All Categories</h1>
-            </>
-          ) : (
-            <div className="flex items-center gap-3 w-full animate-in slide-in-from-right duration-200">
-              <button onClick={() => {
-                setIsSearchVisible(false);
-                setSearchQuery('');
-              }}>
-                <ArrowLeft size={22} className="text-[#084224]" />
-              </button>
-              <div className="flex-1 bg-gray-50 rounded-lg px-3 py-2 flex items-center gap-2 border border-gray-100">
-                <Search size={18} className="text-gray-400" />
-                <input
-                  autoFocus
-                  type="text"
-                  placeholder="Search in Categories..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-transparent border-none outline-none text-[14px] w-full placeholder:text-gray-400 font-medium"
-                />
-                {searchQuery && (
-                  <X
-                    size={18}
-                    className="text-gray-400 cursor-pointer"
-                    onClick={() => setSearchQuery('')}
-                  />
-                )}
-              </div>
-            </div>
-          )}
+      <div className={`sticky top-0 z-50 ${headerBg} px-4 py-3.5 flex items-center justify-between shadow-md transition-colors`}>
+        <div className="flex items-center gap-3">
+          <button onClick={() => navigate(-1)} className={`p-0.5 active:scale-95 transition-transform ${isFreshGroceryFlow ? 'text-black' : 'text-white'}`}>
+            <ArrowLeft size={22} />
+          </button>
+          <h1 className={`text-[19px] font-black tracking-tight ${isFreshGroceryFlow ? 'text-black' : 'text-white'}`}>Categories</h1>
         </div>
-
-        {!isSearchVisible && (
-          <div className="flex items-center gap-5 ml-4">
-            <Search
-              size={22}
-              className="text-slate-800 cursor-pointer active:scale-90 transition-transform"
-              onClick={() => setIsSearchVisible(true)}
-            />
-            <div
-              onClick={() => navigate('/vendor/cart')}
-              className="relative cursor-pointer"
-            >
-              <ShoppingCart size={22} className="text-slate-800" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-[#cc0c39] text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border border-white">
-                  {cartCount}
-                </span>
-              )}
-            </div>
-          </div>
-        )}
+        <button onClick={() => navigate('/vendor/search')} className={`p-1 active:scale-95 transition-transform ${isFreshGroceryFlow ? 'text-black' : 'text-white'}`}>
+          <Search size={22} />
+        </button>
       </div>
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* Left Sidebar - Fixed (Hidden during search results) */}
-        {!searchQuery.trim() && (
-          <div className="w-[90px] bg-[#f8f9fb] border-r border-gray-100 overflow-y-auto no-scrollbar h-[calc(100vh-60px)]">
-            {categories.map((cat) => (
-              <div
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`py-4 px-2 flex flex-col items-center gap-2 cursor-pointer transition-all relative ${activeCategory === cat ? 'bg-white' : 'bg-transparent'
-                  }`}
-              >
-                {activeCategory === cat && (
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#084224] rounded-r-full" />
-                )}
-                <div className={`w-12 h-12 rounded-full overflow-hidden flex items-center justify-center transition-transform ${activeCategory === cat ? 'scale-110 shadow-sm border-2 border-[#084224]/20' : 'scale-100'}`}>
-                  <img
-                    src={allCategoryProducts[cat][0]?.image}
-                    className="w-full h-full object-cover mix-blend-multiply p-1"
-                    alt={cat}
-                  />
-                </div>
-                <span className={`text-[10px] text-center leading-tight font-bold transition-colors ${activeCategory === cat ? 'text-[#084224]' : 'text-slate-500'
-                  }`}>
-                  {cat}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Right Content - Scrollable */}
-        <div className={`flex-1 overflow-y-auto pb-32 h-[calc(100vh-60px)] px-4 pt-4 bg-white ${searchQuery.trim() ? 'w-full' : ''}`}>
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-[17px] font-black text-slate-900 tracking-tight">
-              {searchQuery.trim() ? `Results for "${searchQuery}"` : `${activeCategory} Collections`}
+      {/* Sections and Grid (Mobile View) */}
+      <div className="px-4 py-3 space-y-6 md:hidden">
+        {sectionsList.map((section, sIdx) => (
+          <div key={sIdx} className="flex flex-col">
+            <h2 className="text-[16px] font-black text-slate-900 mb-3 tracking-tight pl-1">
+              {section.title}
             </h2>
-            {!searchQuery.trim() && (
-              <span className="text-[11px] font-bold text-[#084224] bg-primary-light px-2 py-1 rounded">View All</span>
-            )}
-          </div>
-
-          {/* Dynamic Product Grid */}
-          <div className="grid grid-cols-2 gap-4">
-            {currentProducts.length > 0 ? (
-              currentProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm transition-transform animate-in fade-in zoom-in duration-300"
-                >
-                  <div
-                    className="aspect-square bg-gray-50 p-3 relative cursor-pointer active:scale-[0.98]"
-                    onClick={() => navigate('/vendor/product-detail', { state: { product } })}
-                  >
-                    <img
-                      src={product.image}
-                      className="w-full h-full object-contain mix-blend-multiply pointer-events-none"
-                      alt={product.name}
+            <div className="grid grid-cols-4 gap-x-2 gap-y-4 justify-items-center">
+              {section.items.map((item, idx) => {
+                if (isQuickShopFlow || isMithilakFlow) {
+                  return (
+                    <CategoryCard
+                      key={idx}
+                      item={item}
+                      onClick={() => {
+                        if (isMithilakFlow) {
+                          localStorage.setItem('isMithilakFlow', 'true');
+                          localStorage.setItem('isQuickShopFlow', 'false');
+                          navigate('/mithilak/category', { state: { category: item.name } });
+                        } else {
+                          localStorage.setItem('isQuickShopFlow', 'true');
+                          localStorage.setItem('isMithilakFlow', 'false');
+                          navigate(isFreshGroceryFlow ? '/fresh-grocery/category' : '/quick-shop/category', { state: { category: item.name } });
+                        }
+                      }}
                     />
-                    <div
-                      onMouseDown={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        handleWishlistClick(product);
-                      }}
-                      onTouchEnd={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        handleWishlistClick(product);
-                      }}
-                      className="absolute top-2 right-2 w-7 h-7 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm active:scale-90 transition-all hover:bg-white cursor-pointer z-20"
-                    >
-                      <Heart
-                        size={14}
-                        className={`transition-all ${isInWishlist(product.id) ? "text-red-500 fill-red-500" : "text-gray-400"}`}
+                  );
+                }
+                return (
+                  <div
+                    key={idx}
+                    onClick={() => navigate(item.path)}
+                    className="flex flex-col items-center justify-between pt-2 pb-1.5 px-1.5 w-[88px] h-[106px] flex-shrink-0 bg-white border border-[#d0edd8] rounded-[14px] shadow-[0_1.5px_4px_rgba(0,0,0,0.02)] cursor-pointer active:scale-95 transition-transform"
+                  >
+                    <span className={`px-0.5 text-[10px] font-black text-center ${textPrimary} leading-tight tracking-tight h-[24px] flex items-center justify-center`}>
+                      {item.name}
+                    </span>
+                    <div className="w-[76px] h-[66px] rounded-[10px] overflow-hidden flex items-center justify-center">
+                      <img
+                        src={item.img}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   </div>
-                  <div
-                    className="p-3 cursor-pointer active:bg-gray-50"
-                    onClick={() => navigate('/vendor/product-detail', { state: { product } })}
-                  >
-                    <h3 className="text-[13px] font-medium text-slate-800 line-clamp-1 mb-1">{product.name}</h3>
-                    <div className="flex items-center gap-1.5 mb-2">
-                      <div className="flex items-center bg-green-700 text-white px-1 py-0.5 rounded-sm text-[9px] font-black">
-                        {product.rating} <StarIcon size={8} fill="white" className="ml-0.5" />
-                      </div>
-                      <span className="text-[10px] text-gray-400 font-bold">(5k+)</span>
-                      <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/fa_62673a.png" alt="assured" className="h-3 ml-auto" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[15px] font-black text-slate-900">?{product.price}</span>
-                      <span className="text-[11px] text-gray-400 line-through">?{product.oldPrice}</span>
-                      <span className="text-[11px] font-black text-green-600">{product.discount}</span>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : searchQuery.trim() ? (
-              <div className="col-span-2 py-20 text-center">
-                <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-dashed border-gray-200">
-                  <Search size={24} className="text-gray-300" />
-                </div>
-                <p className="text-slate-900 font-black text-[18px]">No products found</p>
-                <p className="text-gray-400 text-[13px] mt-2">Try searching for different keywords or categories</p>
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="mt-6 text-[#084224] font-black text-[14px] border border-[#084224] px-6 py-2 rounded-full active:scale-95 transition-transform"
-                >
-                  Clear Search
-                </button>
-              </div>
-            ) : null}
+                );
+              })}
+            </div>
           </div>
+        ))}
+      </div>
 
-          {/* Extra Section for "For You" (Hidden during search) */}
-          {!searchQuery.trim() && activeCategory === 'For You' && (
-            <div className="mt-8 border-t border-gray-100 pt-8">
-              <h3 className="text-[15px] font-black text-slate-900 mb-4">New & Upcoming Launches</h3>
-              <div className="grid grid-cols-3 gap-3">
-                {launches.map((item) => (
-                  <div key={item.id} className="flex flex-col gap-2">
-                    <div className="aspect-square bg-[#f0f5ff] rounded-xl overflow-hidden relative p-2">
-                      <img src={item.image} className="w-full h-full object-contain mix-blend-multiply" alt="launch" />
-                      {item.status && (
-                        <div className={`absolute bottom-0 left-0 right-0 ${item.color} text-white text-[7px] font-black py-1 text-center uppercase tracking-tighter`}>
-                          {item.status}
-                        </div>
-                      )}
+      {/* Desktop view (Copying the banner + white panel structure) */}
+      <div className="hidden md:block md:max-w-6xl md:mx-auto md:px-4 md:py-8 space-y-10">
+        {sectionsList.map((section, sIdx) => (
+          <div key={sIdx} className="flex flex-col">
+            {/* Header Banner */}
+            <div className={`px-6 py-4 rounded-t-3xl flex items-center justify-between shadow-sm text-white ${headerBg}`}>
+              <h2 className="text-[17px] font-black uppercase tracking-wider">
+                {section.title}
+              </h2>
+            </div>
+
+            {/* White container panel with rounded-b corners containing the cards */}
+            <div className="bg-white border-x border-b border-slate-100 rounded-b-3xl p-6 shadow-md">
+              <div className="grid grid-cols-4 gap-6">
+                {section.items.map((item, idx) => {
+                  return (
+                    <div
+                      key={idx}
+                      onClick={() => {
+                        if (isMithilakFlow) {
+                          localStorage.setItem('isMithilakFlow', 'true');
+                          localStorage.setItem('isQuickShopFlow', 'false');
+                          navigate('/mithilak/category', { state: { category: item.name } });
+                        } else if (isQuickShopFlow) {
+                          localStorage.setItem('isQuickShopFlow', 'true');
+                          localStorage.setItem('isMithilakFlow', 'false');
+                          navigate(isFreshGroceryFlow ? '/fresh-grocery/category' : '/quick-shop/category', { state: { category: item.name } });
+                        } else {
+                          navigate(item.path);
+                        }
+                      }}
+                      className="flex flex-col items-center gap-3 cursor-pointer group active:scale-95 transition-transform w-[180px] mx-auto"
+                    >
+                      {/* Soft grey rounded image box */}
+                      <div className="relative w-full aspect-square rounded-[24px] overflow-hidden bg-slate-50 border border-slate-100/60 flex items-center justify-center p-5 group-hover:bg-slate-100/65 transition-colors duration-300">
+                        <img
+                          src={item.img}
+                          alt={item.name}
+                          className="h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      </div>
+
+                      {/* Content placed below the image box */}
+                      <div className="px-1 text-center">
+                        <h3 className={`text-[13px] font-black text-slate-800 leading-tight group-hover:${textPrimary} transition-colors line-clamp-2`}>
+                          {item.name}
+                        </h3>
+                        <p className="text-[11px] font-black text-slate-400 mt-1 uppercase tracking-wider">View Collection</p>
+                      </div>
                     </div>
-                    <p className="text-[9px] font-bold text-slate-600 leading-tight text-center">{item.name}</p>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
-          )}
-
-          {/* Trust Banner */}
-          {!searchQuery.trim() && (
-            <div className="mt-12 p-6 bg-gray-50 rounded-2xl text-center">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm border border-gray-100">
-                <Truck size={24} className="text-[#084224]" />
-              </div>
-              <p className="text-[12px] font-black text-slate-800 uppercase tracking-wider mb-1">Fastest Delivery</p>
-              <p className="text-[11px] text-gray-500">Across 20,000+ pincodes in India</p>
-            </div>
-          )}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
 export default Categories;
-
 

@@ -13,13 +13,11 @@ const ContinueShopping = () => {
   const clickedProduct = useMemo(() => {
     if (state?.product) return state.product;
     
-    // Search in all categories if not in state
     for (const cat in allCategoryProducts) {
       const p = allCategoryProducts[cat].find(item => item.id === productId);
       if (p) return p;
     }
     
-    // Fallback product if not found
     return {
       id: productId,
       name: 'Premium Product',
@@ -44,7 +42,6 @@ const ContinueShopping = () => {
     let products = allCategoryProducts[clickedProduct.category] || allCategoryProducts['For You'];
     products = products.filter(p => p.id !== clickedProduct.id);
 
-    // Apply filter logic
     if (activeFilter === 'High rated') {
       return [...products].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 10);
     }
@@ -65,60 +62,65 @@ const ContinueShopping = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen pb-10">
+    <div className="bg-[#f4faf6] min-h-screen pb-24 font-sans text-slate-800">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-100 px-4 py-2.5 flex items-center justify-between">
+      <header className="sticky top-0 z-50 bg-[#084224] text-white px-4 py-3 flex items-center justify-between shadow-md">
         <div className="flex items-center gap-3">
-          <button onClick={() => navigate(-1)} className="p-1">
-            <ArrowLeft size={22} className="text-gray-800" />
+          <button onClick={() => navigate(-1)} className="p-1 hover:bg-white/10 rounded-full active:scale-95 transition-transform">
+            <ArrowLeft size={22} className="text-white" />
           </button>
-          <h1 className="text-[16px] font-bold text-gray-800 tracking-tight">Continue Your Shopping</h1>
+          <h1 className="text-[17px] font-black tracking-tight text-white">Continue Shopping</h1>
         </div>
         <div className="flex items-center gap-3.5">
-          <Search size={20} className="text-gray-600" />
-          <div className="relative">
-            <ShoppingCart size={20} className="text-gray-600" />
-            <span className="absolute -top-1.5 -right-1.5 bg-[#cc0c39] text-white text-[9px] font-black px-1 py-0.5 rounded-full border border-white">
-              9
+          <button onClick={() => navigate('/vendor/search')} className="p-1 hover:bg-white/10 rounded-full">
+            <Search size={20} className="text-white" />
+          </button>
+          <div 
+            onClick={() => navigate('/vendor/cart')} 
+            className="relative p-1 hover:bg-white/10 rounded-full cursor-pointer"
+          >
+            <ShoppingCart size={20} className="text-white" />
+            <span className="absolute -top-0.5 -right-0.5 bg-[#e2a750] text-slate-900 text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-[#084224]">
+              2
             </span>
           </div>
         </div>
       </header>
 
-      <div className="px-3 py-4">
+      <div className="px-4 py-4 space-y-6">
         {/* Section 1: Recently Viewed */}
-        <div className="mb-5">
-          <h2 className="text-[18px] font-bold text-gray-900 mb-2 tracking-tight">Recently Viewed</h2>
+        <div>
+          <h2 className="text-[14px] font-black text-slate-900 mb-3 tracking-wider uppercase">Recently Viewed</h2>
 
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-2 gap-4">
             {[clickedProduct, relatedRecentlyViewed].map((product, idx) => (
               <div 
                 key={idx} 
-                className="bg-white rounded-sm overflow-hidden shadow-sm border border-gray-100 flex flex-col cursor-pointer active:scale-[0.98] transition-transform"
+                className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.01)] border border-slate-100/50 flex flex-col cursor-pointer active:scale-[0.98] transition-transform hover:shadow-xs"
                 onClick={() => handleProductClick(product)}
               >
-                <div className="aspect-[4/5] bg-gray-50 overflow-hidden relative">
+                <div className="aspect-square m-1.5 rounded-xl overflow-hidden relative bg-slate-50 border border-slate-100/55 flex items-center justify-center">
                   <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                   {idx === 0 && (
-                    <div className="absolute top-1 left-1 bg-black/70 text-white text-[7px] font-black px-1 py-0.5 rounded-none tracking-tighter">
-                      LAST VIEWED
+                    <div className="absolute top-1.5 left-1.5 bg-[#084224]/90 backdrop-blur-xs text-white text-[7.5px] font-black px-1.5 py-0.5 rounded-full tracking-wider uppercase">
+                      Last Viewed
                     </div>
                   )}
                 </div>
-                <div className="p-1.5">
-                  <p className="text-[9px] font-bold text-gray-400 uppercase tracking-tight leading-none mb-0.5">{product.brand || 'Lounge Dreams'}</p>
-                  <h3 className="text-[11px] font-medium text-gray-800 line-clamp-1 leading-tight mb-0.5">{product.name}</h3>
-                  <div className="flex items-center gap-1.5 leading-none">
-                    <span className="text-[9px] text-gray-400 line-through">₹{product.oldPrice}</span>
-                    <span className="text-[12px] font-black text-gray-900">₹{product.price}</span>
-                    <span className="text-[9px] font-bold text-green-600">{product.discount || '50% off'}</span>
+                <div className="px-2.5 pb-2.5 pt-0.5">
+                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{product.brand || 'Premium Brand'}</p>
+                  <h3 className="text-[11.5px] font-black text-slate-800 line-clamp-1 leading-tight mb-1">{product.name}</h3>
+                  <div className="text-[9px] font-black text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded-full w-fit mb-1.5">
+                    {product.discount || '50% off'}
                   </div>
-                  <div className="flex items-center gap-1 mt-1">
-                    <div className="flex items-center gap-0.5 bg-green-600 px-1 py-0.5 rounded-none h-3.5">
-                      <span className="text-[8px] font-black text-white">4.2</span>
-                      <Star size={6} fill="white" className="text-white" />
-                    </div>
-                    <span className="text-[8px] text-gray-400 font-bold">(2,450)</span>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-[13px] font-black text-slate-900">₹{product.price}</span>
+                    <span className="text-[9.5px] text-gray-400 line-through">₹{product.oldPrice}</span>
+                  </div>
+                  <div className="flex items-center gap-1 mt-2 pt-1.5 border-t border-slate-50">
+                    <Star size={9} fill="#e2a750" className="text-[#e2a750]" />
+                    <span className="text-[9.5px] font-black text-slate-800">{product.rating || '4.2'}</span>
+                    <span className="text-[9.5px] text-slate-400 font-bold">(2.4k reviews)</span>
                   </div>
                 </div>
               </div>
@@ -126,76 +128,69 @@ const ContinueShopping = () => {
           </div>
         </div>
 
-
         {/* Section 2: Similar Products + Filters */}
-        <div className="mb-4">
+        <div>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-[18px] font-bold text-gray-900 tracking-tight">Similar Products</h2>
+            <h2 className="text-[14px] font-black text-slate-900 tracking-wider uppercase">Similar Products</h2>
           </div>
 
-
           {/* Filter Chips */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 -mx-3 px-3">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2">
             {filters.map((filter, idx) => (
               <button 
                 key={idx}
                 onClick={() => setActiveFilter(filter)}
-                className={`whitespace-nowrap px-4 py-1.5 rounded-full text-[12px] font-bold border transition-all ${
+                className={`whitespace-nowrap px-4 py-1.5 rounded-full text-[11px] font-black border transition-all ${
                   activeFilter === filter 
-                    ? 'bg-[#084224] border-[#084224] text-white shadow-md scale-105' 
-                    : 'bg-white border-gray-200 text-gray-600 shadow-sm'
+                    ? 'bg-[#084224] border-[#084224] text-white shadow-xs' 
+                    : 'bg-white border-slate-100 text-slate-650 shadow-2xs'
                 }`}
               >
                 {filter}
               </button>
             ))}
           </div>
-        </div>
 
-        {/* Section 3: Horizontal Similar Product List */}
-        <div className="flex items-center gap-2.5 overflow-x-auto no-scrollbar -mx-3 px-3 pb-4">
-          {similarProducts.map((product) => (
-            <div 
-              key={product.id}
-              className="flex-shrink-0 w-[135px] bg-white rounded-sm overflow-hidden shadow-sm border border-gray-100 flex flex-col cursor-pointer active:scale-95 transition-transform"
-              onClick={() => handleProductClick(product)}
-            >
-              <div className="aspect-[4/5] bg-gray-50 overflow-hidden">
-                <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-              </div>
-              <div className="p-1.5">
-                <p className="text-[8px] font-bold text-gray-400 uppercase tracking-tight mb-0.5 leading-none">{product.brand || 'Adam Phillip'}</p>
-                <h3 className="text-[10px] font-medium text-gray-800 line-clamp-1 mb-0.5 leading-tight">{product.name}</h3>
-                <div className="flex items-center gap-1 leading-none">
-                  <span className="text-[8px] text-gray-400 line-through">₹{product.oldPrice}</span>
-                  <span className="text-[12px] font-black text-gray-900">₹{product.price}</span>
+          {/* Section 3: Horizontal Similar Product List */}
+          <div className="flex items-center gap-4 overflow-x-auto no-scrollbar pb-3 mt-3">
+            {similarProducts.map((product) => (
+              <div 
+                key={product.id}
+                className="flex-shrink-0 w-[130px] bg-white rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.01)] border border-slate-100 flex flex-col cursor-pointer active:scale-95 transition-transform"
+                onClick={() => handleProductClick(product)}
+              >
+                <div className="aspect-square m-1.5 rounded-xl overflow-hidden relative bg-slate-50 border border-slate-100 flex items-center justify-center">
+                  <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                 </div>
-                <div className="flex items-center gap-1 mt-0.5">
-                  <span className="text-[9px] font-bold text-green-600">{product.discount}</span>
-                </div>
-                <div className="flex flex-col gap-0 mt-1">
-                  <p className="text-[8px] font-bold text-slate-500 flex items-center gap-0.5">
-                    Or Pay ₹{Math.round(product.price * 0.95)} <span className="bg-yellow-400 text-[7px] px-0.5 rounded-none text-white leading-none">★</span> 28
-                  </p>
-                  <p className="text-[8px] font-black text-[#084224] uppercase tracking-tighter mt-0.5">FREE DELIVERY</p>
+                <div className="px-2.5 pb-2.5 pt-0.5">
+                  <p className="text-[8px] font-black text-slate-405 uppercase tracking-widest leading-none mb-1">{product.brand || 'Boutique Collection'}</p>
+                  <h3 className="text-[11px] font-black text-slate-800 line-clamp-1 mb-1 leading-tight">{product.name}</h3>
+                  <div className="text-[9px] font-black text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded-full w-fit mb-1.5">
+                    {product.discount}
+                  </div>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-[13px] font-black text-slate-900">₹{product.price}</span>
+                    <span className="text-[9.5px] text-gray-400 line-through">₹{product.oldPrice}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-          <div className="flex-shrink-0 w-2" />
+            ))}
+          </div>
         </div>
 
         {/* Section 4: Explore Similar Trends */}
-        <div className="mt-8 mb-6">
-          <h2 className="text-[18px] font-bold text-gray-900 mb-3 tracking-tight">Explore Similar Trends</h2>
+        <div>
+          <h2 className="text-[14px] font-black text-slate-900 mb-3 tracking-wider uppercase">Explore Similar Trends</h2>
           
           {/* Trend Hashtags */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 -mx-3 px-3">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3">
             {['#Gingham', '#Oversized', '#SummerStripe', '#RetroCheck', '#PastelMix'].map((trend, idx) => (
               <button 
                 key={idx}
-                className={`whitespace-nowrap px-4 py-1.5 rounded-full text-[12px] font-bold border ${
-                  idx === 0 ? 'bg-[#f0f5ff] border-[#084224] text-[#084224]' : 'bg-white border-gray-200 text-gray-600'
+                className={`whitespace-nowrap px-4 py-1.5 rounded-full text-[11px] font-black border transition-all ${
+                  idx === 0 
+                    ? 'bg-emerald-50 border-emerald-200 text-[#084224] shadow-xs' 
+                    : 'bg-white border-slate-100 text-slate-650'
                 }`}
               >
                 {trend}
@@ -203,27 +198,26 @@ const ContinueShopping = () => {
             ))}
           </div>
 
-          <div className="flex items-center gap-3 overflow-x-auto no-scrollbar -mx-3 px-3 pb-4">
+          <div className="flex items-center gap-4 overflow-x-auto no-scrollbar pb-3">
             {similarProducts.slice(2, 7).map((product) => (
               <div 
                 key={product.id}
-                className="flex-shrink-0 w-[145px] bg-white rounded-sm overflow-hidden shadow-sm border border-gray-100 flex flex-col cursor-pointer"
+                className="flex-shrink-0 w-[130px] bg-white rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.01)] border border-slate-100 flex flex-col cursor-pointer active:scale-95 transition-transform"
                 onClick={() => handleProductClick(product)}
               >
-                <div className="aspect-square bg-gray-50 overflow-hidden">
+                <div className="aspect-square m-1.5 rounded-xl overflow-hidden relative bg-slate-50 border border-slate-100 flex items-center justify-center">
                   <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                 </div>
-                <div className="p-2">
-                  <p className="text-[9px] font-bold text-gray-400 uppercase tracking-tight mb-0.5">{product.brand || 'CHIMPAAANZEE'}</p>
-                  <h3 className="text-[11px] font-medium text-gray-800 line-clamp-1 mb-1">{product.name}</h3>
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-[9px] text-gray-400 line-through">₹{product.oldPrice}</span>
-                    <span className="text-[13px] font-black text-gray-900">₹{product.price}</span>
-                    <span className="text-[10px] font-bold text-green-600">{product.discount}</span>
+                <div className="px-2.5 pb-2.5 pt-0.5">
+                  <p className="text-[8px] font-black text-slate-405 uppercase tracking-widest leading-none mb-1">{product.brand || 'Boutique Collection'}</p>
+                  <h3 className="text-[11px] font-black text-slate-800 line-clamp-1 mb-1 leading-tight">{product.name}</h3>
+                  <div className="text-[9px] font-black text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded-full w-fit mb-1.5">
+                    {product.discount}
                   </div>
-                  <p className="text-[8px] font-bold text-slate-500 flex items-center gap-0.5">
-                    Or Pay ₹{Math.round(product.price * 0.9)} <span className="bg-yellow-400 text-[7px] px-0.5 rounded-none text-white">★</span> 40
-                  </p>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-[13px] font-black text-slate-900">₹{product.price}</span>
+                    <span className="text-[9.5px] text-gray-400 line-through">₹{product.oldPrice}</span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -231,54 +225,45 @@ const ContinueShopping = () => {
         </div>
 
         {/* Section 5: Bought Together */}
-        <div className="mt-4 mb-10">
+        <div>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-[18px] font-bold text-gray-900 tracking-tight">Bought Together</h2>
-            <button className="text-[11px] font-bold text-[#084224] border border-gray-200 px-3 py-1 rounded-sm shadow-sm">
+            <h2 className="text-[14px] font-black text-slate-900 tracking-wider uppercase">Bought Together</h2>
+            <button className="text-[10px] font-black text-[#084224] tracking-widest uppercase hover:underline">
               View all
             </button>
           </div>
 
-          <div className="flex items-center gap-3 overflow-x-auto no-scrollbar -mx-3 px-3 pb-4">
+          <div className="flex items-center gap-4 overflow-x-auto no-scrollbar pb-3">
             {similarProducts.slice(4, 9).map((product) => (
               <div 
                 key={product.id}
-                className="flex-shrink-0 w-[150px] bg-white rounded-sm overflow-hidden shadow-sm border border-gray-100 flex flex-col cursor-pointer"
+                className="flex-shrink-0 w-[130px] bg-white rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.01)] border border-slate-100 flex flex-col cursor-pointer active:scale-95 transition-transform"
                 onClick={() => handleProductClick(product)}
               >
-                <div className="aspect-[4/5] bg-gray-50 overflow-hidden">
+                <div className="aspect-square m-1.5 rounded-xl overflow-hidden relative bg-slate-50 border border-slate-100 flex items-center justify-center">
                   <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                 </div>
-                <div className="p-2">
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tight mb-0.5">{product.brand || 'hitarth fashion'}</p>
-                  <h3 className="text-[12px] font-medium text-gray-800 line-clamp-1 mb-1">{product.name}</h3>
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-[10px] text-gray-400 line-through">₹{product.oldPrice}</span>
-                    <span className="text-[14px] font-black text-gray-900">₹{product.price}</span>
+                <div className="px-2.5 pb-2.5 pt-0.5">
+                  <p className="text-[8px] font-black text-slate-405 uppercase tracking-widest leading-none mb-1">{product.brand || 'Boutique Collection'}</p>
+                  <h3 className="text-[11px] font-black text-slate-800 line-clamp-1 mb-1 leading-tight">{product.name}</h3>
+                  <div className="text-[9px] font-black text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded-full w-fit mb-1.5">
+                    {product.discount}
                   </div>
-                  <div className="flex items-center gap-1.5 mb-1.5">
-                    <span className="text-[10px] font-bold text-green-600">{product.discount}</span>
-                    {Math.random() > 0.5 && (
-                      <img src="https://img1a.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png" alt="assured" className="h-2.5 object-contain" />
-                    )}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className="flex items-center gap-0.5">
-                      {[1, 2, 3, 4].map(s => <Star key={s} size={10} fill="#16a34a" className="text-green-600" />)}
-                      <Star size={10} fill="#d1d5db" className="text-gray-300" />
-                    </div>
-                    <span className="text-[10px] text-gray-400">(92)</span>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-[13px] font-black text-slate-900">₹{product.price}</span>
+                    <span className="text-[9.5px] text-gray-400 line-through">₹{product.oldPrice}</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+
         {/* Section 6: You May Also Want to Shop for */}
-        <div className="mt-4 mb-12">
-          <h2 className="text-[18px] font-bold text-gray-900 mb-4 tracking-tight px-0.5">You May Also Want to Shop for</h2>
+        <div className="pb-8">
+          <h2 className="text-[14px] font-black text-slate-900 mb-4 tracking-wider uppercase">You May Also Want to Shop for</h2>
           
-          <div className="flex items-center gap-3 overflow-x-auto no-scrollbar -mx-3 px-3">
+          <div className="flex items-center gap-4 overflow-x-auto no-scrollbar">
             {[
               { name: "Women's Flats", img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=200&h=200" },
               { name: "Women's Trousers", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&q=80&w=200&h=200" },
@@ -288,15 +273,14 @@ const ContinueShopping = () => {
             ].map((item, idx) => (
               <div 
                 key={idx}
-                className="flex-shrink-0 w-[120px] bg-white rounded-sm border border-gray-100 shadow-sm p-2 flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform"
+                className="flex-shrink-0 w-[120px] bg-white rounded-2xl border border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.01)] p-2 flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform"
               >
-                <div className="w-full aspect-square bg-gray-50 overflow-hidden">
+                <div className="w-full aspect-square rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center">
                   <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
                 </div>
-                <span className="text-[11px] font-bold text-gray-700 text-center line-clamp-1">{item.name}</span>
+                <span className="text-[11px] font-black text-slate-800 text-center line-clamp-1">{item.name}</span>
               </div>
             ))}
-            <div className="flex-shrink-0 w-2" />
           </div>
         </div>
       </div>
@@ -304,8 +288,4 @@ const ContinueShopping = () => {
   );
 };
 
-
-
 export default ContinueShopping;
-
-

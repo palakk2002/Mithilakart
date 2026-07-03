@@ -15,7 +15,7 @@ const SearchBar = ({ selectedAddress }) => {
 
   const isMithilakActive = location.pathname.includes('/mithilak');
   const isFreshGroceryActive = location.pathname.includes('/fresh-grocery');
-  const hideAddressRow = isMithilakActive || isFreshGroceryActive;
+  const hideAddressRow = isMithilakActive;
 
   const handleSubmit = (e) => {
     e?.preventDefault();
@@ -24,31 +24,44 @@ const SearchBar = ({ selectedAddress }) => {
 
   const displayAddress = selectedAddress?.address
     ? selectedAddress.address.slice(0, 30) + '...'
-    : 'Sarvanad nagar ,near pearl girl...';
+    : 'Sarvanad nagar ,near pe...';
 
   return (
-    <div className="px-2 pb-1.5 md:px-3 md:pb-2 flex flex-col gap-1.5 md:gap-2">
+    <div className="px-3 pb-2.5 md:px-4 md:pb-3 flex flex-col gap-2 md:gap-3">
 
       {/* ── Delivery Address Field (Flipkart Style) ── */}
       {!hideAddressRow && (
-        <div className="flex items-center justify-between py-0.5 md:py-1 text-slate-800">
+        <div className="flex items-center justify-between py-1.5 md:py-2 text-slate-800">
           <Link
             to="/vendor/profile/addresses"
-            className="flex items-center gap-1 md:gap-1.5 bg-white/30 px-2 py-1 md:px-3 md:py-1.5 rounded-lg min-w-0 transition-colors hover:bg-white/50"
+            className={`flex items-center gap-1 md:gap-1.5 px-2.5 py-1.5 md:px-3 md:py-1.5 rounded-xl min-w-0 transition-colors ${
+              isFreshGroceryActive
+                ? 'bg-[#FFF0A0] border border-[#7A3E17]/35 hover:bg-[#FFF5B8]'
+                : 'bg-white/30 hover:bg-white/50'
+            }`}
           >
-            <Home size={14} strokeWidth={2.5} className="w-[12px] h-[12px] md:w-[14px] md:h-[14px] text-primary-dark flex-shrink-0 fill-primary-dark/20" />
-            <span className="text-[10px] md:text-[11px] font-black text-primary-dark tracking-tight">HOME</span>
-            <span className="text-[10px] md:text-[11px] text-primary-dark font-medium truncate max-w-[120px] md:max-w-[170px]">
+            <Home size={14} strokeWidth={2.5} className={`w-[12px] h-[12px] md:w-[14px] md:h-[14px] flex-shrink-0 fill-current ${
+              isFreshGroceryActive ? 'text-black fill-black/10' : 'text-primary-dark fill-primary-dark/20'
+            }`} />
+            <span className={`text-[10px] md:text-[11px] font-black tracking-tight ${isFreshGroceryActive ? 'text-black' : 'text-primary-dark'}`}>HOME</span>
+            <span className={`text-[10px] md:text-[11px] font-medium truncate max-w-[120px] md:max-w-[170px] ${isFreshGroceryActive ? 'text-slate-800' : 'text-primary-dark'}`}>
               {displayAddress}
             </span>
-            <ChevronDown size={12} strokeWidth={3} className="w-[10px] h-[10px] md:w-[12px] md:h-[12px] text-primary-dark flex-shrink-0" />
+            <ChevronDown size={12} strokeWidth={3} className={`w-[10px] h-[10px] md:w-[12px] md:h-[12px] flex-shrink-0 ${isFreshGroceryActive ? 'text-[#7A3E17]' : 'text-primary-dark'}`} />
           </Link>
 
-          {/* Energy/Lightning Pill */}
-          <div className="flex items-center gap-0.5 md:gap-1 bg-white px-1.5 py-0.2 md:px-2 md:py-0.5 rounded-full shadow-xs border border-primary-green">
-            <Zap size={12} className="w-[10px] h-[10px] md:w-[12px] md:h-[12px] text-amber-500 fill-amber-500" />
-            <span className="text-[10px] md:text-[11px] font-extrabold text-primary-dark">3</span>
-          </div>
+          {/* Energy/Lightning Pill or 8 Min Badge */}
+          {isFreshGroceryActive ? (
+            <div className="flex items-center gap-1 bg-[#7A3E17] text-white px-3 py-1.5 rounded-xl shadow-sm border border-[#7A3E17]">
+              <span className="text-[14px] font-black leading-none">8</span>
+              <span className="text-[9px] font-bold leading-none text-white/90">min</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-0.5 md:gap-1 bg-white px-1.5 py-0.2 md:px-2 md:py-0.5 rounded-full shadow-xs border border-primary-green">
+              <Zap size={12} className="w-[10px] h-[10px] md:w-[12px] md:h-[12px] text-amber-500 fill-amber-500" />
+              <span className="text-[10px] md:text-[11px] font-extrabold text-primary-dark">3</span>
+            </div>
+          )}
         </div>
       )}
 
@@ -57,27 +70,41 @@ const SearchBar = ({ selectedAddress }) => {
         <motion.form
           onSubmit={handleSubmit}
           animate={{ scale: searchFocused ? 1.005 : 1 }}
-          className="flex-1 flex items-center gap-1.5 md:gap-2 bg-white rounded-xl px-2.5 py-1.5 md:px-3 md:py-2 border border-gray-100 shadow-xs"
+          className={`flex-1 flex items-center gap-2 md:gap-3 rounded-2xl px-3 py-2 md:px-4 md:py-2.5 border shadow-xs transition-colors duration-200 ${
+            isFreshGroceryActive
+              ? 'bg-[#FFF9DB] border-[#7A3E17] text-[#7A3E17]'
+              : 'bg-white border-gray-100 text-gray-800'
+          }`}
         >
-          <Search size={16} strokeWidth={2.5} className="w-[14px] h-[14px] md:w-[16px] md:h-[16px] text-gray-400 flex-shrink-0" />
+          <Search size={16} strokeWidth={2.5} className={`w-[14px] h-[14px] md:w-[16px] md:h-[16px] flex-shrink-0 ${isFreshGroceryActive ? 'text-[#7A3E17]' : 'text-gray-400'}`} />
           <input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
-            placeholder="Search products..."
-            className="flex-1 bg-transparent outline-none text-[12px] md:text-[13px] placeholder:text-gray-400 text-gray-800 font-semibold min-w-0"
+            placeholder={isFreshGroceryActive ? "Search in Grocery" : "Search products..."}
+            className={`flex-1 bg-transparent outline-none text-[12px] md:text-[13px] font-semibold min-w-0 ${
+              isFreshGroceryActive
+                ? 'text-[#7A3E17] placeholder:text-[#7A3E17]/65'
+                : 'text-gray-800 placeholder:text-gray-400'
+            }`}
           />
-          <Camera size={18} strokeWidth={2.2} className="w-[16px] h-[16px] md:w-[18px] md:h-[18px] text-gray-400 cursor-pointer hover:text-gray-600 transition-colors" />
-          <Mic size={18} strokeWidth={2.2} className="w-[16px] h-[16px] md:w-[18px] md:h-[18px] text-gray-400 cursor-pointer hover:text-gray-600 transition-colors" />
+          {!isFreshGroceryActive && (
+            <Camera size={18} strokeWidth={2.2} className="w-[16px] h-[16px] md:w-[18px] md:h-[18px] text-gray-400 cursor-pointer hover:text-gray-600 transition-colors" />
+          )}
+          <Mic size={18} strokeWidth={2.2} className={`w-[16px] h-[16px] md:w-[18px] md:h-[18px] cursor-pointer hover:text-opacity-80 transition-colors ${
+            isFreshGroceryActive ? 'text-[#7A3E17]' : 'text-gray-400 hover:text-gray-600'
+          }`} />
         </motion.form>
 
         <motion.button
           whileTap={{ scale: 0.92 }}
-          className="p-2 md:p-2.5 bg-white rounded-xl flex-shrink-0 shadow-xs"
+          className={`p-2.5 md:p-3 rounded-2xl flex-shrink-0 shadow-xs border transition-colors duration-200 ${
+            isFreshGroceryActive ? 'bg-[#FFF9DB] border-[#7A3E17] text-[#7A3E17]' : 'bg-white border-transparent text-primary-dark'
+          }`}
         >
-          <ScanLine size={18} strokeWidth={2.2} className="w-[16px] h-[16px] md:w-[18px] md:h-[18px] text-primary-dark" />
+          <ScanLine size={18} strokeWidth={2.2} className="w-[16px] h-[16px] md:w-[18px] md:h-[18px] text-current" />
         </motion.button>
       </div>
     </div>

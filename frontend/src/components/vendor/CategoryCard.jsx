@@ -1,29 +1,36 @@
 import React from 'react';
 
 const CategoryCard = ({ item, onClick }) => {
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+  const cardBg = isMithilakFlow
+    ? 'bg-[#ede9fe]'
+    : isFreshGroceryFlow
+      ? 'bg-[#FFF0A0] border border-[#7A3E17]/20 shadow-2xs'
+      : 'bg-[#fdebf3]';
+
   return (
     <div
       onClick={onClick}
-      className="col-span-1 bg-[#F5F5F5] rounded-[16px] h-[125px] flex flex-col items-center justify-between overflow-hidden cursor-pointer active:scale-98 transition-transform select-none p-2 shadow-2xs"
+      className="flex flex-col items-center cursor-pointer active:scale-95 transition-transform select-none w-20"
     >
-      {/* Category Title */}
-      <div className="w-full text-center pt-1">
-        <span className="text-[12px] font-semibold text-gray-800 leading-[1.25] tracking-tight line-clamp-2 block px-1">
-          {item.name}
-        </span>
-      </div>
-
-      {/* Category Image */}
-      <div className="w-full h-[68%] flex items-center justify-center p-1.5 mt-auto">
+      {/* Category Image Wrapper with soft background */}
+      <div className={`w-16 h-16 rounded-[22px] ${cardBg} overflow-hidden flex items-center justify-center p-2.5`}>
         <img
           src={item.img}
           alt={item.name}
-          className="max-w-full max-h-full object-contain mix-blend-multiply"
+          className="w-full h-full object-contain mix-blend-multiply"
           loading="lazy"
         />
       </div>
+
+      {/* Category Title */}
+      <span className="text-[11px] font-medium text-center text-gray-800 mt-2 leading-tight tracking-tight line-clamp-2 h-[32px] w-full flex items-start justify-center">
+        {item.name}
+      </span>
     </div>
   );
 };
 
 export default CategoryCard;
+

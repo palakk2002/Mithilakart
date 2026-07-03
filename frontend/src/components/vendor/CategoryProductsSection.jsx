@@ -123,7 +123,7 @@ const CategoryProductsSection = ({ selectedCategory }) => {
   if (!selectedCategory) return null;
 
   return (
-    <div id="category-products-section" className="py-2 px-3 bg-white mt-0 transition-all duration-300 relative">
+    <div id="category-products-section" className="py-2 px-3 bg-white mt-0 transition-all duration-300 relative md:max-w-6xl md:mx-auto md:py-6">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[100] bg-black text-white px-6 py-3 rounded-full shadow-xl flex items-center gap-3">
@@ -138,7 +138,7 @@ const CategoryProductsSection = ({ selectedCategory }) => {
         </div>
       ) : (
         <>
-          <div className={`grid grid-cols-2 gap-x-3 gap-y-6 transition-all duration-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className={`grid grid-cols-2 md:grid-cols-4 md:gap-x-6 md:gap-y-8 md:max-w-6xl md:mx-auto gap-x-3 gap-y-6 transition-all duration-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             {products.map((product) => (
               <ProductCard
                 key={product.id}

@@ -96,6 +96,53 @@ const CATEGORIES = [
   { id: 'electrical',  label: 'Electrical',  Svg: IconElectrical },
 ];
 
+const getMithilakartHeaderBg = (category) => {
+  switch (category) {
+    case 'Beauty':
+      return 'bg-[#F9A8D4]'; // Soft Rose Pink
+    case 'Gifting':
+      return 'bg-[#D8B4FE]'; // Soft Purple
+    case 'Electronics':
+      return 'bg-[#93C5FD]'; // Soft Blue
+    case 'Jewellery':
+      return 'bg-[#FDBA74]'; // Soft Orange/Peach
+    case 'Toys':
+      return 'bg-[#99F6E4]'; // Soft Teal
+    case 'Stationery':
+      return 'bg-[#C7D2FE]'; // Soft Indigo
+    case 'Fashion':
+      return 'bg-[#FCA5A5]'; // Soft Red
+    case 'Electrical':
+      return 'bg-[#FEF08A]'; // Soft Yellow
+    case 'For You':
+    default:
+      return 'bg-primary-green'; // Default Green (Mithilakart default brand color)
+  }
+};
+
+const getMithilakartActiveTextColor = (category) => {
+  switch (category) {
+    case 'Beauty':
+      return 'text-[#A2396B]';
+    case 'Gifting':
+      return 'text-[#5E32A6]';
+    case 'Electronics':
+      return 'text-[#1C4E9C]';
+    case 'Jewellery':
+      return 'text-[#A04E15]';
+    case 'Toys':
+      return 'text-[#0D7F77]';
+    case 'Stationery':
+      return 'text-[#3B4CA8]';
+    case 'Fashion':
+      return 'text-[#B62626]';
+    case 'Electrical':
+      return 'text-[#9B7C16]';
+    default:
+      return 'text-[#084224]';
+  }
+};
+
 const CategoryNavbar = ({ selectedCategory, setSelectedCategory }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -117,7 +164,7 @@ const CategoryNavbar = ({ selectedCategory, setSelectedCategory }) => {
 
   return (
     <div
-      className="flex items-end overflow-x-auto no-scrollbar border-t border-gray-100 bg-white"
+      className={`flex items-center overflow-x-auto no-scrollbar pt-1 pb-2 px-3 gap-1.5 transition-colors duration-300 ${getMithilakartHeaderBg(selectedCategory)}`}
       role="navigation"
       aria-label="Product categories"
     >
@@ -128,49 +175,32 @@ const CategoryNavbar = ({ selectedCategory, setSelectedCategory }) => {
           <motion.button
             key={cat.id}
             onClick={() => handleSelect(cat)}
-            whileTap={{ scale: 0.88 }}
-            className="flex flex-col items-center flex-shrink-0 relative px-3 pt-1.5 pb-2 focus:outline-none"
+            whileTap={{ scale: 0.92 }}
+            className={`flex flex-col items-center justify-center flex-shrink-0 w-[58px] h-[64px] rounded-[12px] transition-all duration-200 focus:outline-none ${
+              isActive 
+                ? 'bg-white/85 backdrop-blur-md shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.6),0_3px_8px_rgba(8,66,36,0.05)] border border-white' 
+                : 'bg-white/35 border border-white/10'
+            }`}
             aria-pressed={isActive}
             aria-label={cat.label}
           >
-            {/* Blue highlight pill behind icon */}
-            {isActive && (
-              <motion.div
-                layoutId="activePill"
-                className="absolute top-1 left-1/2 -translate-x-1/2 w-14 h-10 rounded-lg bg-primary-dark/10"
-                transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-              />
-            )}
-
             {/* SVG Icon */}
-            <motion.div
-              animate={{ color: isActive ? '#084224' : '#374151' }}
-              transition={{ duration: 0.18 }}
-              className="mb-0.5 leading-none relative z-10"
+            <div
+              className={`mb-1 leading-none transition-colors duration-200 ${
+                isActive ? getMithilakartActiveTextColor(selectedCategory) : 'text-primary-dark/80'
+              }`}
             >
-              <cat.Svg size={22} active={isActive} />
-            </motion.div>
+              <cat.Svg size={18} active={isActive} />
+            </div>
 
             {/* Label */}
-            <motion.span
-              animate={{
-                color:      isActive ? '#084224' : '#374151',
-                fontWeight: isActive ? 700 : 500,
-              }}
-              transition={{ duration: 0.18 }}
-              className="text-[10px] tracking-tight whitespace-nowrap leading-tight relative z-10"
+            <span
+              className={`text-[9.5px] tracking-tight whitespace-nowrap leading-tight text-center transition-colors duration-200 ${
+                isActive ? `font-black ${getMithilakartActiveTextColor(selectedCategory)}` : 'font-extrabold text-primary-dark/80'
+              }`}
             >
               {cat.label}
-            </motion.span>
-
-            {/* Active blue underline */}
-            {isActive && (
-              <motion.div
-                layoutId="activeCategoryBar"
-                className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-primary-dark rounded-t-full"
-                transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-              />
-            )}
+            </span>
           </motion.button>
         );
       })}

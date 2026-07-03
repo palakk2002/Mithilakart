@@ -272,6 +272,20 @@ const QuickShopSubcategory = () => {
   const location = useLocation();
   const categoryName = location.state?.category || 'Fruits & Vegetables';
 
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+  
+  const primaryText = isFreshGroceryFlow ? 'text-[#7A3E17]' : isMithilakFlow ? 'text-[#7c3aed]' : 'text-[#d6186d]';
+  const primaryBg = isFreshGroceryFlow ? 'bg-[#7A3E17]' : isMithilakFlow ? 'bg-[#7c3aed]' : 'bg-[#d6186d]';
+  const primaryBgHover = isFreshGroceryFlow ? 'hover:bg-[#FFF0A0] bg-white' : isMithilakFlow ? 'hover:bg-purple-55 bg-white' : 'hover:bg-pink-50 bg-white';
+  const primaryBorder = isFreshGroceryFlow ? 'border-[#7A3E17]' : isMithilakFlow ? 'border-[#7c3aed]' : 'border-[#d6186d]';
+  const primaryBorderLight = isFreshGroceryFlow ? 'border-[#7A3E17]/25' : isMithilakFlow ? 'border-[#7c3aed]/25' : 'border-[#d6186d]/25';
+  const primaryLightBg = isFreshGroceryFlow ? 'bg-[#FFF0A0]/30' : isMithilakFlow ? 'bg-purple-50/30' : 'bg-pink-50/30';
+  const primarySidebarAccent = isFreshGroceryFlow ? 'bg-[#7A3E17]' : isMithilakFlow ? 'bg-[#7c3aed]' : 'bg-[#d6186d]';
+  
+  const rightGridBg = isFreshGroceryFlow ? 'bg-[#FFFDF3]/35' : isMithilakFlow ? 'bg-purple-50/10' : 'bg-pink-50/15';
+  const promoBg = isFreshGroceryFlow ? 'bg-[#FFF0A0]/40 border border-[#7A3E17]/15' : isMithilakFlow ? 'bg-purple-50/60 border border-purple-100/60' : 'bg-pink-50/60 border border-pink-100/60';
+
   // Get dynamic category structure
   const categoryData = getCategoryData(categoryName);
   
@@ -315,9 +329,13 @@ const QuickShopSubcategory = () => {
     : productsList.filter(p => p.category === activeSub);
 
   return (
-    <div className="bg-white min-h-screen flex flex-col font-sans select-none">
+    <div className={`min-h-screen flex flex-col font-sans select-none transition-colors duration-300 ${
+      isFreshGroceryFlow ? 'bg-[#FFFDF3]' : 'bg-white'
+    }`}>
       {/* Header Bar */}
-      <div className="sticky top-0 z-50 bg-white border-b border-gray-100 px-4 py-2 flex items-center justify-between shadow-3xs">
+      <div className={`sticky top-0 z-50 border-b border-gray-100 px-4 py-2 flex items-center justify-between shadow-3xs transition-colors duration-300 ${
+        isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-white'
+      }`}>
         <div className="flex items-center gap-3">
           <button 
             onClick={() => navigate(-1)}
@@ -329,7 +347,7 @@ const QuickShopSubcategory = () => {
             <h1 className="text-[16px] font-bold text-gray-900 leading-tight">
               {categoryName}
             </h1>
-            <span className="text-[10px] text-emerald-600 font-bold flex items-center gap-0.5">
+            <span className={`text-[10px] ${primaryText} font-bold flex items-center gap-0.5`}>
               Delivering to : <span className="text-gray-500 font-medium truncate max-w-[150px]">Indrapuri Colony, Indore</span>
               <ChevronDown size={10} />
             </span>
@@ -347,7 +365,9 @@ const QuickShopSubcategory = () => {
       </div>
 
       {/* Filters & Sort Header */}
-      <div className="bg-white border-b border-gray-100/80 px-4 py-2 flex gap-2 overflow-x-auto no-scrollbar shadow-3xs">
+      <div className={`border-b border-gray-100/80 px-4 py-2 flex gap-2 overflow-x-auto no-scrollbar shadow-3xs transition-colors duration-300 ${
+        isFreshGroceryFlow ? 'bg-[#FFFDF3]' : 'bg-white'
+      }`}>
         <button className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200/80 rounded-full text-[11px] font-bold text-gray-700 hover:bg-gray-50 transition-colors">
           <SlidersHorizontalIcon /> Filters <ChevronDown size={10} />
         </button>
@@ -363,7 +383,9 @@ const QuickShopSubcategory = () => {
       <div className="flex-1 flex overflow-hidden">
         
         {/* Left Subcategories Sidebar */}
-        <div className="w-[24%] bg-gray-50/60 border-r border-gray-100 overflow-y-auto no-scrollbar h-[calc(100vh-105px)]">
+        <div className={`w-[24%] border-r border-gray-100 overflow-y-auto no-scrollbar h-[calc(100vh-105px)] transition-colors duration-300 ${
+          isFreshGroceryFlow ? 'bg-[#FFFDF3]' : 'bg-gray-50/60'
+        }`}>
           {subCategories.map((sub) => {
             const isActive = activeSub === sub.id;
             return (
@@ -371,19 +393,19 @@ const QuickShopSubcategory = () => {
                 key={sub.id}
                 onClick={() => setActiveSub(sub.id)}
                 className={`py-3.5 px-1 flex flex-col items-center gap-1.5 cursor-pointer relative transition-all ${
-                  isActive ? 'bg-white' : 'bg-transparent'
+                  isActive ? (isFreshGroceryFlow ? 'bg-[#FFF0A0]/20' : 'bg-white') : 'bg-transparent'
                 }`}
               >
                 {isActive && (
-                  <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-[#1FA54E] rounded-r-full" />
+                  <div className={`absolute left-0 top-0 bottom-0 w-[4px] ${primarySidebarAccent} rounded-r-full`} />
                 )}
                 <div className={`w-11 h-11 rounded-full overflow-hidden flex items-center justify-center border transition-all ${
-                  isActive ? 'border-[#1FA54E]/25 bg-emerald-50/30' : 'border-gray-200/50 bg-white'
+                  isActive ? `${primaryBorderLight} ${primaryLightBg}` : 'border-gray-200/50 bg-white'
                 }`}>
                   <img src={sub.icon} alt={sub.name} className="w-8 h-8 object-contain mix-blend-multiply" />
                 </div>
                 <span className={`text-[9.5px] text-center leading-tight font-semibold tracking-tight ${
-                  isActive ? 'text-[#1FA54E] font-bold' : 'text-gray-500'
+                  isActive ? `${primaryText} font-bold` : 'text-gray-500'
                 }`}>
                   {sub.name}
                 </span>
@@ -393,10 +415,10 @@ const QuickShopSubcategory = () => {
         </div>
 
         {/* Right Product Grid Area */}
-        <div className="flex-1 bg-emerald-50/15 overflow-y-auto h-[calc(100vh-105px)] p-3 pb-24">
+        <div className={`flex-1 ${rightGridBg} overflow-y-auto h-[calc(100vh-105px)] p-3 pb-24`}>
           
           {/* Promo banner */}
-          <div className="bg-emerald-50/60 border border-emerald-100/60 rounded-xl p-3 flex justify-between items-center mb-4 relative overflow-hidden">
+          <div className={`${promoBg} rounded-xl p-3 flex justify-between items-center mb-4 relative overflow-hidden`}>
             <div className="z-10 flex flex-col">
               <span className="text-[12px] font-bold text-gray-900 leading-tight">
                 Fresh & Premium Products
@@ -413,7 +435,7 @@ const QuickShopSubcategory = () => {
           </div>
 
           {/* Grid list */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {filteredProducts.map((product) => {
               const isFav = favorites.includes(product.id);
               return (
@@ -508,15 +530,15 @@ const QuickShopSubcategory = () => {
                         localStorage.setItem('userCart', JSON.stringify(cart));
                         window.dispatchEvent(new Event('cartUpdated'));
                       }}
-                      className="px-3.5 py-1 border border-[#1FA54E] bg-white rounded-lg text-[11px] font-bold text-[#1FA54E] hover:bg-emerald-50/30 active:scale-95 transition-all shadow-3xs uppercase"
+                      className={`px-3.5 py-1 border ${primaryBorder} rounded-lg text-[11px] font-bold ${primaryText} ${primaryBgHover} active:scale-95 transition-all shadow-3xs uppercase`}
                     >
                       Add
                     </button>
                   </div>
-
+ 
                   {/* ETA & Stock status strip */}
                   <div className="flex items-center gap-2 mt-2 pt-1 border-t border-dashed border-gray-100 text-[8.5px] text-gray-400 font-semibold">
-                    <span className="flex items-center gap-0.5 text-emerald-600">
+                    <span className={`flex items-center gap-0.5 ${primaryText}`}>
                       ⏱ {product.eta}
                     </span>
                     {product.stock && (
