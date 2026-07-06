@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import MarketRoutes from './routes/MarketRoutes';
-import SellerRoutes from './routes/SellerRoutes';
-import AdminRoutes from './routes/AdminRoutes';
-import DeliveryRoutes from './routes/DeliveryRoutes';
+import MarketRoutes from './modules/user/routes/MarketRoutes';
+import SellerRoutes from './modules/vendor/routes/SellerRoutes';
+import AdminRoutes from './modules/admin/routes/AdminRoutes';
+import DeliveryRoutes from './modules/delivery/routes/DeliveryRoutes';
 
 function App() {
   return (

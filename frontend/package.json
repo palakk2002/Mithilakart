@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -35,6 +35,7 @@
     "globals": "^17.5.0",
     "postcss": "^8.5.10",
     "tailwindcss": "^4.2.4",
-    "vite": "^6.0.0"
+    "vite": "^6.0.0",
+    "vite-plugin-pwa": "^1.3.0"
   }
 }
