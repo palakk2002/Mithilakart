@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import MarketRoutes from './modules/user/routes/MarketRoutes';
-import SellerRoutes from './modules/vendor/routes/SellerRoutes';
+import SellerRoutes from './modules/seller/routes/SellerRoutes';
 import AdminRoutes from './modules/admin/routes/AdminRoutes';
 import DeliveryRoutes from './modules/delivery/routes/DeliveryRoutes';
 
@@ -23,6 +23,9 @@ function App() {
       <Routes>
         {/* Delivery Agent Portal */}
         <Route path="/delivery/*" element={<DeliveryRoutes />} />
+
+        {/* Seller Dashboard */}
+        <Route path="/seller/*" element={<SellerRoutes />} />
 
         {/* Unified Admin Management Panel */}
         <Route path="/admin/*" element={<AdminRoutes />} />

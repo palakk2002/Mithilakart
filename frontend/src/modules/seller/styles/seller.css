@@ -1,0 +1,136 @@
+/**
+ * Seller Module — Scoped Styles
+ * CSS variables and print styles for the seller dashboard.
+ * This file does NOT modify any global styles.
+ */
+
+/* ─── Seller Module Light Theme Variables ─────────────────────── */
+.seller-module {
+  --seller-bg: #F8FAFC;
+  --seller-card: #FFFFFF;
+  --seller-text: #111827;
+  --seller-subtext: #6B7280;
+  --seller-border: #E5E7EB;
+  --seller-border-light: #F3F4F6;
+  --seller-primary: #2563EB;
+  --seller-primary-dark: #1D4ED8;
+  --seller-primary-light: #DBEAFE;
+  --seller-success: #16A34A;
+  --seller-success-light: #DCFCE7;
+  --seller-warning: #F59E0B;
+  --seller-warning-light: #FEF3C7;
+  --seller-danger: #DC2626;
+  --seller-danger-light: #FEE2E2;
+  --seller-sidebar-bg: #FFFFFF;
+  --seller-sidebar-text: #374151;
+  --seller-sidebar-hover: #F3F4F6;
+  --seller-sidebar-active: #EFF6FF;
+  --seller-topbar-bg: #FFFFFF;
+  --seller-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --seller-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+  font-family: 'Inter', 'Poppins', system-ui, -apple-system, sans-serif;
+}
+
+/* ─── Seller Module Dark Theme Variables ──────────────────────── */
+.seller-dark .seller-module {
+  --seller-bg: #0F172A;
+  --seller-card: #1E293B;
+  --seller-text: #F1F5F9;
+  --seller-subtext: #94A3B8;
+  --seller-border: #334155;
+  --seller-border-light: #1E293B;
+  --seller-primary: #3B82F6;
+  --seller-primary-dark: #2563EB;
+  --seller-primary-light: #1E3A5F;
+  --seller-success: #22C55E;
+  --seller-success-light: #14532D;
+  --seller-warning: #FBBF24;
+  --seller-warning-light: #713F12;
+  --seller-danger: #EF4444;
+  --seller-danger-light: #7F1D1D;
+  --seller-sidebar-bg: #1E293B;
+  --seller-sidebar-text: #CBD5E1;
+  --seller-sidebar-hover: #334155;
+  --seller-sidebar-active: #1E3A5F;
+  --seller-topbar-bg: #1E293B;
+  --seller-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
+  --seller-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+}
+
+/* ─── Seller Module Custom Scrollbar ──────────────────────────── */
+.seller-module ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.seller-module ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.seller-module ::-webkit-scrollbar-thumb {
+  background: var(--seller-border);
+  border-radius: 3px;
+}
+
+.seller-module ::-webkit-scrollbar-thumb:hover {
+  background: var(--seller-subtext);
+}
+
+/* ─── Seller No Scrollbar (for sidebar) ───────────────────────── */
+.seller-no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.seller-no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ─── Print Styles (Invoice) ──────────────────────────────────── */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .seller-print-area,
+  .seller-print-area * {
+    visibility: visible;
+  }
+  .seller-print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+  }
+  .seller-no-print {
+    display: none !important;
+  }
+}
+
+/* ─── Seller Animations ───────────────────────────────────────── */
+@keyframes seller-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes seller-slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes seller-pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.seller-fade-in {
+  animation: seller-fade-in 0.3s ease-out forwards;
+}
+
+.seller-slide-in {
+  animation: seller-slide-in-right 0.3s ease-out forwards;
+}
+
+.seller-pulse-dot {
+  animation: seller-pulse-dot 2s ease-in-out infinite;
+}

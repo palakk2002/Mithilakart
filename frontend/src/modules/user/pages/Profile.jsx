@@ -90,12 +90,12 @@ const VendorProfile = () => {
                  </p>
               </div>
               <div className="flex items-center gap-1.5 bg-white px-2 py-1.5 rounded-full border border-yellow-100 shadow-sm">
-                 <div className="w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center text-blue-900 font-black text-[12px]">P</div>
+                 <div className="w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center text-blue-900 font-black text-[10px]">★</div>
                  <span className="text-[14px] font-black">0</span>
               </div>
            </div>
            <button className="bg-black text-white px-6 py-2.5 rounded-lg text-[12px] font-black uppercase tracking-widest shadow-lg">
-              Explore <span className="text-blue-400">BLACK</span>
+              Explore <span className="text-yellow-400">PRIME</span>
            </button>
         </div>
       </div>
@@ -243,7 +243,7 @@ const VendorProfile = () => {
          </div>
          <div className="divide-y divide-gray-50">
             {[
-               { title: 'Mithilakart Plus', icon: <Zap size={18} className="text-primary-dark" /> },
+               { title: 'Mithilakart Prime', icon: <Zap size={18} className="text-primary-dark" /> },
                { title: 'Edit Profile', icon: <Mail size={18} className="text-primary-dark" /> },
                { title: 'Saved Addresses', icon: <Store size={18} className="text-primary-dark" /> },
                { title: 'Notification Settings', icon: <Bell size={18} className="text-primary-dark" /> }

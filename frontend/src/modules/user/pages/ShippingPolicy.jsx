@@ -108,7 +108,7 @@ const ShippingPolicy = () => {
                   <Truck size={20} className="text-[#084224]" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-[14px] font-bold text-slate-900 mb-1">Express Delivery</h3>
+                  <h3 className="text-[14px] font-bold text-slate-900 mb-1">Quick Delivery</h3>
                   <p className="text-[12px] text-gray-600 mb-2">
                     <strong>Select Cities:</strong> 1-2 business days
                   </p>

@@ -505,7 +505,7 @@ const CategoryProducts = () => {
                   <div className="w-10 h-5 bg-[#084224] rounded-full relative">
                     <div className="absolute right-0.5 top-0.5 w-4 h-4 bg-black rounded-full"></div>
                   </div>
-                  <span className="text-sm font-bold text-white">Express Delivery Only</span>
+                  <span className="text-sm font-bold text-white">Quick Delivery Only</span>
                 </div>
               </div>
             </div>

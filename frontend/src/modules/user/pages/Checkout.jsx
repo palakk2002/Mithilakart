@@ -148,7 +148,7 @@ const Checkout = () => {
         </div>
         <div className="flex items-center gap-2 pt-3.5 border-t border-slate-50 mt-4">
           <Truck size={16} className={primaryText} />
-          <p className="text-[12px] text-slate-800 font-medium"><span className={`italic font-black text-[10px] uppercase tracking-tighter mr-1 ${primaryText}`}>Express</span> Delivery in 2 days, Fri</p>
+          <p className="text-[12px] text-slate-800 font-medium"><span className={`italic font-black text-[10px] uppercase tracking-tighter mr-1 ${primaryText}`}>Quick</span> Delivery in 2 days, Fri</p>
         </div>
       </div>
 

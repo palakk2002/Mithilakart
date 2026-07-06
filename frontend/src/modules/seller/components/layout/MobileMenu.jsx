@@ -1,0 +1,135 @@
+/**
+ * MobileMenu Component
+ * Slide-out drawer sidebar for mobile devices.
+ */
+import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Store, LayoutDashboard, Package, PlusCircle, Warehouse,
+  ShoppingCart, RotateCcw, Users, Star, Ticket, Bell,
+  BarChart3, Wallet, Settings, LogOut } from 'lucide-react';
+import { useSellerAuth } from '../../context/SellerAuthContext';
+import { SIDEBAR_MENU } from '../../constants';
+
+const iconComponents = {
+  LayoutDashboard, Package, PlusCircle, Warehouse, ShoppingCart,
+  RotateCcw, Users, Star, Ticket, Bell, BarChart3, Wallet,
+  Settings, LogOut, Store,
+};
+
+const MobileMenu = ({ isOpen, onClose }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { seller, logout } = useSellerAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/seller/login');
+    onClose();
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 lg:hidden"
+          />
+
+          {/* Drawer */}
+          <motion.aside
+            initial={{ x: '-100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '-100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed inset-y-0 left-0 w-72 bg-white z-50 flex flex-col shadow-2xl lg:hidden"
+          >
+            {/* Header */}
+            <div className="h-16 flex items-center justify-between px-5 border-b border-gray-100">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
+                  <Store size={18} className="text-white" />
+                </div>
+                <div>
+                  <h2 className="text-sm font-bold text-gray-900">Seller Hub</h2>
+                  <p className="text-[10px] text-gray-400">Mithilakart</p>
+                </div>
+              </div>
+              <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Close menu">
+                <X size={20} className="text-gray-500" />
+              </button>
+            </div>
+
+            {/* Navigation */}
+            <nav className="flex-1 py-4 px-3 overflow-y-auto">
+              {SIDEBAR_MENU.map((group, gIdx) => (
+                <div key={gIdx} className={gIdx > 0 ? 'mt-5' : ''}>
+                  <p className="px-3 mb-2 text-[10px] font-semibold text-gray-400 uppercase tracking-widest">
+                    {group.group}
+                  </p>
+                  <div className="space-y-1">
+                    {group.items.map((item) => {
+                      const IconComponent = iconComponents[item.icon];
+                      const active = location.pathname === item.path;
+
+                      if (item.path === '#logout') {
+                        return (
+                          <button
+                            key={item.name}
+                            onClick={handleLogout}
+                            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-50"
+                          >
+                            {IconComponent && <IconComponent size={20} />}
+                            <span>{item.name}</span>
+                          </button>
+                        );
+                      }
+
+                      return (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          onClick={onClose}
+                          className={`
+                            flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
+                            ${active
+                              ? 'bg-[#2563EB] text-white shadow-md shadow-blue-200/50'
+                              : 'text-gray-600 hover:bg-gray-50'
+                            }
+                          `}
+                        >
+                          {IconComponent && <IconComponent size={20} className={active ? 'text-white' : 'text-gray-400'} />}
+                          <span>{item.name}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </nav>
+
+            {/* Footer */}
+            <div className="border-t border-gray-100 p-4">
+              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                <div className="w-9 h-9 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center">
+                  <span className="text-sm font-bold text-blue-600">{seller?.name?.charAt(0) || 'S'}</span>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-gray-900">{seller?.storeName || 'Seller Store'}</p>
+                  <p className="text-[10px] text-gray-400">{seller?.email || 'seller@example.com'}</p>
+                </div>
+              </div>
+            </div>
+          </motion.aside>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
+
+export default MobileMenu;
