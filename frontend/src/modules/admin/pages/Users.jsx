@@ -99,22 +99,22 @@ const Users = () => {
   return (
     <div className="space-y-6 pb-10 animate-in fade-in duration-700 relative">
       {/* Header */}
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h1 className="text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Customer Database</h1>
-          <p className="text-slate-500 font-medium mt-1 font-raleway">Manage platform buyers, review their spending history and account status.</p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Customer Database</h1>
+          <p className="text-slate-500 text-sm sm:text-base font-medium mt-1 font-raleway">Manage platform buyers, review their spending history and account status.</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 w-full sm:w-auto">
           <button 
             onClick={handleExport}
-            className="flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm active:scale-95"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm active:scale-95"
           >
             <Download size={16} />
             Export List
           </button>
           <button 
             onClick={() => setIsAddModalOpen(true)}
-            className="flex items-center gap-2 px-8 py-3 bg-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:scale-105 active:scale-95 transition-all"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3 bg-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:scale-105 active:scale-95 transition-all"
           >
             <UserPlus size={16} />
             Add Customer
@@ -123,7 +123,7 @@ const Users = () => {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { label: 'Total Buyers', value: usersList.length.toLocaleString(), icon: UsersIcon, color: 'text-blue-500', bg: 'bg-blue-50' },
           { label: 'Active Now', value: '182', icon: Clock, color: 'text-green-500', bg: 'bg-green-50' },
@@ -145,7 +145,7 @@ const Users = () => {
       {/* Table */}
       <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden min-h-[400px]">
         <div className="p-6 border-b border-slate-50">
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1 group">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
               <input 
@@ -156,10 +156,10 @@ const Users = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <div className="relative">
+            <div className="relative w-full sm:w-auto">
               <button 
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
-                className={`px-6 h-[52px] border rounded-xl transition-all shadow-sm flex items-center gap-2 ${isFilterOpen || filterStatus !== 'All' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 border-slate-100 text-slate-400 hover:text-slate-900'}`}
+                className={`w-full sm:w-auto px-6 h-[52px] border rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 ${isFilterOpen || filterStatus !== 'All' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 border-slate-100 text-slate-400 hover:text-slate-900'}`}
               >
                 <Filter size={18} />
                 {filterStatus !== 'All' && <span className="text-[10px] font-black uppercase tracking-widest">{filterStatus}</span>}

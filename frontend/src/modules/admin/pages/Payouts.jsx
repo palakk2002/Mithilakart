@@ -35,17 +35,17 @@ const Payouts = () => {
   return (
     <div className="space-y-6 pb-10 animate-in fade-in duration-700">
       {/* Header */}
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h1 className="text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Vendor Payouts</h1>
-          <p className="text-slate-500 font-medium mt-1 font-raleway">Manage settlement requests and financial disbursements to platform partners.</p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Vendor Payouts</h1>
+          <p className="text-slate-500 text-sm sm:text-base font-medium mt-1 font-raleway">Manage settlement requests and financial disbursements to platform partners.</p>
         </div>
-        <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm">
+        <div className="flex gap-3 w-full sm:w-auto">
+          <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm">
             <Download size={16} />
             Payout History
           </button>
-          <button className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:scale-105 active:scale-95 transition-all">
+          <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:scale-105 active:scale-95 transition-all">
             <ShieldCheck size={16} />
             Bulk Settle
           </button>
@@ -53,7 +53,7 @@ const Payouts = () => {
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { label: 'Total Settled', value: '₹12.5L', sub: 'Last 30 days', icon: CheckCircle2, color: 'text-green-500', bg: 'bg-green-50' },
           { label: 'Pending Requests', value: '₹2.4L', sub: '12 vendors waiting', icon: Clock, color: 'text-amber-500', bg: 'bg-amber-50' },

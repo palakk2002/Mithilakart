@@ -62,7 +62,7 @@ const InventoryList = () => {
       </div>
 
       {/* Inventory Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         {[
           { label: 'Live Products', value: myProducts.filter(p => p.status === 'Approved').length, icon: Layers, color: 'text-green-500', bg: 'bg-green-50' },
           { label: 'Low Stock Alert', value: myProducts.filter(p => p.stock < 10 && p.stock > 0).length, icon: AlertTriangle, color: 'text-amber-500', bg: 'bg-amber-50' },
@@ -86,6 +86,8 @@ const InventoryList = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100">
+                <th className="px-8 py-6 text-[11px] font-black text-slate-400 uppercase tracking-widest">Product</th>
+                <th className="px-8 py-6 text-[11px] font-black text-slate-400 uppercase tracking-widest">Category</th>
                 <th className="px-8 py-6 text-[11px] font-black text-slate-400 uppercase tracking-widest text-center">Status</th>
                 <th className="px-8 py-6 text-[11px] font-black text-slate-400 uppercase tracking-widest">Price</th>
                 <th className="px-8 py-6 text-[11px] font-black text-slate-400 uppercase tracking-widest">Stock</th>

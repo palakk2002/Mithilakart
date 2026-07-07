@@ -43,17 +43,17 @@ const Sidebar = ({ collapsed, onToggle }) => {
       {/* Header / Logo Area */}
       <div className={`h-16 flex items-center border-b border-[var(--seller-border-light,#F3F4F6)] ${collapsed ? 'justify-center px-2' : 'px-6'}`}>
         {collapsed ? (
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center">
             <Store size={20} className="text-white" />
           </div>
         ) : (
           <Link to="/seller/dashboard" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200/50 group-hover:shadow-blue-300/60 transition-shadow">
+            <div className="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center shadow-md group-hover:bg-slate-800 transition-colors">
               <Store size={18} className="text-white" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-[var(--seller-text,#111827)] leading-tight">Seller Hub</h2>
-              <p className="text-[10px] text-[var(--seller-subtext,#6B7280)]">Mithilakart</p>
+              <h2 className="text-sm font-bold text-slate-100 leading-tight">Seller Hub</h2>
+              <p className="text-[10px] text-slate-400">Mithilakart</p>
             </div>
           </Link>
         )}
@@ -65,7 +65,7 @@ const Sidebar = ({ collapsed, onToggle }) => {
           <div key={gIdx} className={gIdx > 0 ? 'mt-6' : ''}>
             {/* Group Label */}
             {!collapsed && (
-              <p className="px-3 mb-2 text-[10px] font-semibold text-[var(--seller-subtext,#6B7280)] uppercase tracking-widest">
+              <p className="px-3 mb-2 text-[10px] font-semibold text-slate-500 uppercase tracking-widest">
                 {group.group}
               </p>
             )}
@@ -84,7 +84,7 @@ const Sidebar = ({ collapsed, onToggle }) => {
                       className={`
                         w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium
                         transition-all duration-200 group
-                        text-red-400 hover:bg-red-50 hover:text-red-600
+                        text-red-400 hover:bg-red-950/30 hover:text-red-500
                         ${collapsed ? 'justify-center' : ''}
                       `}
                       title={collapsed ? item.name : undefined}
@@ -104,8 +104,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
                       transition-all duration-200 group relative
                       ${collapsed ? 'justify-center' : ''}
                       ${active
-                        ? 'bg-[#2563EB] text-white shadow-lg shadow-blue-200/50'
-                        : 'text-[var(--seller-sidebar-text,#374151)] hover:bg-[var(--seller-sidebar-hover,#F3F4F6)]'
+                        ? 'bg-slate-800 text-white shadow-none border border-slate-700'
+                        : 'text-slate-400 hover:bg-slate-900/60 hover:text-white'
                       }
                     `}
                     title={collapsed ? item.name : undefined}
@@ -113,7 +113,7 @@ const Sidebar = ({ collapsed, onToggle }) => {
                     {IconComponent && (
                       <IconComponent
                         size={20}
-                        className={`flex-shrink-0 ${active ? 'text-white' : 'text-gray-400 group-hover:text-[#2563EB]'}`}
+                        className={`flex-shrink-0 ${active ? 'text-white' : 'text-slate-500 group-hover:text-white'}`}
                       />
                     )}
                     {!collapsed && <span>{item.name}</span>}
@@ -136,20 +136,20 @@ const Sidebar = ({ collapsed, onToggle }) => {
       {/* Sidebar Footer — Seller Info */}
       <div className={`border-t border-[var(--seller-border-light,#F3F4F6)] p-4 ${collapsed ? 'px-2' : ''}`}>
         {collapsed ? (
-          <div className="w-10 h-10 mx-auto bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center">
-            <span className="text-sm font-bold text-blue-600">
+          <div className="w-10 h-10 mx-auto bg-slate-900 rounded-xl flex items-center justify-center">
+            <span className="text-sm font-bold text-white">
               {seller?.name?.charAt(0) || 'S'}
             </span>
           </div>
         ) : (
-          <div className="flex items-center gap-3 p-3 bg-[var(--seller-sidebar-hover,#F3F4F6)] rounded-xl">
-            <div className="w-9 h-9 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center flex-shrink-0">
-              <span className="text-sm font-bold text-blue-600">
+          <div className="flex items-center gap-3 p-3 bg-slate-900/60 rounded-xl">
+            <div className="w-9 h-9 bg-slate-800 rounded-xl flex items-center justify-center flex-shrink-0">
+              <span className="text-sm font-bold text-white">
                 {seller?.name?.charAt(0) || 'S'}
               </span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-[var(--seller-text,#111827)] truncate">
+              <p className="text-xs font-semibold text-slate-200 truncate">
                 {seller?.storeName || 'Seller Store'}
               </p>
               <p className="text-[10px] text-green-500 font-medium flex items-center gap-1">
@@ -164,12 +164,12 @@ const Sidebar = ({ collapsed, onToggle }) => {
       {/* Collapse Toggle */}
       <button
         onClick={onToggle}
-        className="absolute top-20 -right-3 w-6 h-6 bg-white border border-gray-200 rounded-full
+        className="absolute top-20 -right-3 w-6 h-6 bg-slate-900 border border-slate-800 rounded-full
                    flex items-center justify-center shadow-sm hover:shadow-md transition-all
-                   hover:bg-blue-50 hover:border-blue-200 z-50"
+                   hover:bg-slate-800 hover:border-slate-700 z-50"
         aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
       >
-        {collapsed ? <ChevronRight size={14} className="text-gray-500" /> : <ChevronLeft size={14} className="text-gray-500" />}
+        {collapsed ? <ChevronRight size={14} className="text-slate-400" /> : <ChevronLeft size={14} className="text-slate-400" />}
       </button>
     </aside>
   );

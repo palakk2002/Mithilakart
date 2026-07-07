@@ -6,12 +6,12 @@ import {
   Truck, Store, Key, Settings, ChevronDown, ChevronRight,
   UserPlus, DollarSign, BarChart3, HelpCircle, FileText, Image, LayoutGrid, Layout,
   Tag, Zap, MessageSquare, RotateCcw, Inbox,
-  Banknote, Percent, AlertCircle, CheckCircle2
+  Banknote, Percent, AlertCircle, CheckCircle2, Lock
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const AdminLayout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState({});
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
@@ -85,7 +85,25 @@ const AdminLayout = () => {
           ]
         },
         { name: 'Orders', path: '/admin/orders', icon: <ShoppingCart size={18} /> },
-        { name: 'Returns & Refunds', path: '/admin/operations/returns', icon: <RotateCcw size={18} /> },
+        {
+          name: 'Returns & Refunds',
+          icon: <RotateCcw size={18} />,
+          subItems: [
+            { name: 'Returns Claims', path: '/admin/operations/returns' },
+            { name: 'Refunds Hub', path: '/admin/operations/refunds' },
+          ]
+        },
+      ]
+    },
+    {
+      title: 'REPORTS',
+      items: [
+        { name: 'Sales Report', path: '/admin/reports/sales', icon: <BarChart3 size={18} /> },
+        { name: 'Seller Report', path: '/admin/reports/sellers', icon: <Store size={18} /> },
+        { name: 'User Report', path: '/admin/reports/users', icon: <Users size={18} /> },
+        { name: 'Order Report', path: '/admin/reports/orders', icon: <ShoppingCart size={18} /> },
+        { name: 'Inventory Report', path: '/admin/reports/inventory', icon: <Package size={18} /> },
+        { name: 'Refund Report', path: '/admin/reports/refunds', icon: <RotateCcw size={18} /> },
       ]
     },
     {
@@ -157,7 +175,9 @@ const AdminLayout = () => {
     {
       title: 'SYSTEM',
       items: [
-        { name: 'Sub-Admins & Roles', path: '/admin/system/sub-admins', icon: <ShieldCheck size={18} /> },
+        { name: 'Sub-Admins', path: '/admin/system/sub-admins', icon: <ShieldCheck size={18} /> },
+        { name: 'Role Management', path: '/admin/system/roles', icon: <Lock size={18} /> },
+        { name: 'Audit Logs', path: '/admin/system/audit-logs', icon: <FileText size={18} /> },
         { name: 'Settings', path: '/admin/settings', icon: <Settings size={18} /> },
         { name: 'Logout', path: '/admin/auth', icon: <LogOut size={18} /> },
       ]
@@ -179,39 +199,37 @@ const AdminLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex text-blue-900 font-nunito">
+    <div className="min-h-screen bg-[#f8fafc] flex text-slate-900 font-nunito">
+      {/* Mobile Sidebar Overlay Backdrop */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-40 lg:hidden transition-opacity"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
       <aside
-        className={`${isSidebarOpen ? 'w-72' : 'w-24'} bg-white border-r border-slate-200 transition-all duration-500 ease-in-out flex flex-col fixed inset-y-0 z-50 shadow-[4px_0_24px_rgba(0,0,0,0.02)]`}
+        className={`bg-slate-950 border-r border-slate-900 flex flex-col fixed inset-y-0 left-0 z-50 w-72 transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } shadow-[4px_0_24px_rgba(0,0,0,0.02)]`}
       >
         <div className="h-20 flex items-center px-6 gap-3">
-          {isSidebarOpen ? (
-            <Link to="/admin/dashboard" className="flex items-center gap-3 group">
-              <img 
-                src="/mithilakartbglogo.png" 
-                alt="Logo" 
-                className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
-              />
-            </Link>
-          ) : (
-            <div className="w-12 h-12 flex items-center justify-center transition-all">
-              <img 
-                src="/mithilakartbglogo.png" 
-                alt="Logo" 
-                className="h-10 w-10 object-contain" 
-              />
-            </div>
-          )}
+          <Link to="/admin/dashboard" className="flex items-center gap-3 group">
+            <img 
+              src="/mithilakartbglogo.png" 
+              alt="Logo" 
+              className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105 brightness-0 invert" 
+            />
+          </Link>
         </div>
 
         <nav className="flex-1 py-2 px-3 space-y-6 overflow-y-auto no-scrollbar">
           {menuGroups.map((group, gIdx) => (
             <div key={gIdx} className="space-y-2">
-              {isSidebarOpen && (
-                <h3 className="px-4 text-[9px] font-semibold text-blue-300 uppercase tracking-[2px]">
-                  {group.title}
-                </h3>
-              )}
+              <h3 className="px-4 text-[9px] font-semibold text-slate-500 uppercase tracking-[2px]">
+                {group.title}
+              </h3>
               <div className="space-y-1.5">
                 {group.items.map((item) => {
                   const hasSubItems = item.subItems && item.subItems.length > 0;
@@ -225,32 +243,31 @@ const AdminLayout = () => {
                         <button
                           onClick={() => toggleSubMenu(item.name)}
                           className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all ${isActive
-                              ? 'bg-blue-50 text-blue-500'
-                              : 'text-blue-900/60 hover:bg-blue-50/50 hover:text-blue-500'
+                              ? 'bg-slate-900 text-white'
+                              : 'text-slate-400 hover:bg-slate-900/50 hover:text-white'
                             }`}
                         >
                           <div className="flex items-center gap-3">
-                            <span className={`flex-shrink-0 ${isActive ? 'text-blue-500' : ''}`}>{item.icon}</span>
-                            {isSidebarOpen && <span className="font-bold text-[13px] font-raleway">{item.name}</span>}
+                            <span className={`flex-shrink-0 ${isActive ? 'text-white' : ''}`}>{item.icon}</span>
+                            <span className="font-bold text-[13px] font-raleway">{item.name}</span>
                           </div>
-                          {isSidebarOpen && (
-                            <span className="opacity-40">{isMenuOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
-                          )}
+                          <span className="opacity-40">{isMenuOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}</span>
                         </button>
 
                         <AnimatePresence>
-                          {isMenuOpen && isSidebarOpen && (
+                          {isMenuOpen && (
                             <motion.div 
                               initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-                              className="ml-10 space-y-1.5 border-l-2 border-slate-100 pl-5 overflow-hidden"
+                              className="ml-10 space-y-1.5 border-l-2 border-slate-800 pl-5 overflow-hidden"
                             >
                               {item.subItems.map((sub) => (
                                 <Link
                                   key={sub.path}
                                   to={sub.path}
+                                  onClick={() => setIsSidebarOpen(false)}
                                   className={`block py-2.5 text-[13px] font-bold transition-all ${location.pathname === sub.path
-                                      ? 'text-blue-500'
-                                      : 'text-slate-400 hover:text-blue-500'
+                                      ? 'text-white font-extrabold'
+                                      : 'text-slate-500 hover:text-white'
                                     }`}
                                 >
                                   {sub.name}
@@ -267,13 +284,14 @@ const AdminLayout = () => {
                     <Link
                       key={item.path}
                       to={item.path}
+                      onClick={() => setIsSidebarOpen(false)}
                       className={`flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${isActive
-                          ? 'bg-blue-500 text-white shadow-lg shadow-blue-100'
-                          : 'text-blue-900/60 hover:bg-blue-50/50 hover:text-blue-500'
+                          ? 'bg-slate-800 text-white shadow-none'
+                          : 'text-slate-400 hover:bg-slate-900/50 hover:text-white'
                         }`}
                     >
                       <span className="flex-shrink-0">{item.icon}</span>
-                      {isSidebarOpen && <span className="font-bold text-[13px] font-raleway">{item.name}</span>}
+                      <span className="font-bold text-[13px] font-raleway">{item.name}</span>
                     </Link>
                   );
                 })}
@@ -283,36 +301,34 @@ const AdminLayout = () => {
         </nav>
 
         {/* Sidebar Footer */}
-        <div className="p-6 border-t border-slate-50">
+        <div className="p-6 border-t border-slate-900">
             <div 
-              onClick={() => navigate('/admin/settings')}
-              className={`p-4 bg-blue-50 rounded-2xl flex items-center gap-3 cursor-pointer hover:bg-blue-100 transition-all`}
+              onClick={() => { navigate('/admin/settings'); setIsSidebarOpen(false); }}
+              className={`p-4 bg-slate-900 rounded-2xl flex items-center gap-3 cursor-pointer hover:bg-slate-800 transition-all`}
             >
-              <div className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center font-bold text-xs text-blue-500 border border-blue-100">
+              <div className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center font-bold text-xs text-slate-950 border border-slate-800">
                  A
               </div>
-              {isSidebarOpen && (
-                <div>
-                   <p className="text-[11px] font-bold text-blue-500 uppercase leading-none">System Admin</p>
-                   <p className="text-[10px] text-green-500 font-bold mt-1 flex items-center gap-1">
-                      <span className="w-1 h-1 bg-green-500 rounded-full animate-pulse" /> Live & Secure
-                   </p>
-                </div>
-              )}
+              <div>
+                 <p className="text-[11px] font-bold text-slate-200 uppercase leading-none">System Admin</p>
+                 <p className="text-[10px] text-green-500 font-bold mt-1 flex items-center gap-1">
+                    <span className="w-1 h-1 bg-green-500 rounded-full animate-pulse" /> Live & Secure
+                 </p>
+              </div>
            </div>
         </div>
       </aside>
 
       {/* Main Content */}
-      <div className={`flex-1 transition-all duration-500 ease-in-out ${isSidebarOpen ? 'ml-72' : 'ml-24'}`}>
+      <div className="flex-1 transition-all duration-500 ease-in-out lg:ml-72">
         {/* Topbar */}
-        <header className="h-24 bg-white border-b border-slate-100 sticky top-0 z-40 px-10 flex items-center justify-between">
+        <header className="h-24 bg-white border-b border-slate-100 sticky top-0 z-40 px-4 sm:px-6 lg:px-10 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="w-10 h-10 border border-blue-50 flex items-center justify-center rounded-xl hover:bg-blue-50 transition-all shadow-sm active:scale-90"
+              className="w-10 h-10 border border-slate-100 flex items-center justify-center rounded-xl hover:bg-slate-50 transition-all shadow-sm active:scale-90 lg:hidden"
             >
-              <Menu size={18} className="text-blue-500" />
+              <Menu size={18} className="text-slate-900" />
             </button>
 
             <div className="hidden lg:block">
@@ -325,7 +341,7 @@ const AdminLayout = () => {
 
           <div className="flex items-center gap-6">
             <div className="relative hidden md:block group">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-slate-800 transition-colors" size={18} />
               <input
                 type="text"
                 value={searchQuery}
@@ -336,7 +352,7 @@ const AdminLayout = () => {
                 onFocus={() => searchQuery.length > 0 && setShowSearchDropdown(true)}
                 onBlur={() => setTimeout(() => setShowSearchDropdown(false), 200)}
                 placeholder="Search global records..."
-                className="bg-blue-50/50 border-none rounded-[20px] py-3.5 pl-14 pr-8 text-[14px] font-bold focus:ring-4 focus:ring-blue-100 w-96 shadow-inner transition-all text-blue-900"
+                className="bg-slate-100/70 border-none rounded-[20px] py-3.5 pl-14 pr-8 text-[14px] font-bold focus:ring-4 focus:ring-slate-200 w-full max-w-[180px] sm:max-w-[260px] md:max-w-[320px] lg:w-96 shadow-inner transition-all text-slate-900 animate-none"
               />
 
               {/* Search Dropdown */}
@@ -355,9 +371,9 @@ const AdminLayout = () => {
                           setSearchQuery('');
                           setShowSearchDropdown(false);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-blue-50 rounded-xl text-sm font-bold text-slate-700 transition-all text-left"
+                        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-50 rounded-xl text-sm font-bold text-slate-700 transition-all text-left"
                       >
-                        <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center">
+                        <div className="w-8 h-8 bg-slate-100 text-slate-600 rounded-lg flex items-center justify-center">
                           <Layers size={14} />
                         </div>
                         {link.name}
@@ -374,7 +390,7 @@ const AdminLayout = () => {
                <div className="relative">
                   <button 
                     onClick={() => setShowNotifications(!showNotifications)}
-                    className={`w-12 h-12 border rounded-2xl flex items-center justify-center relative transition-all ${showNotifications ? 'bg-blue-500 text-white border-blue-500 shadow-lg' : 'bg-white border-slate-100 text-slate-400 hover:text-slate-900 shadow-sm'}`}
+                    className={`w-12 h-12 border rounded-2xl flex items-center justify-center relative transition-all ${showNotifications ? 'bg-slate-950 text-white border-slate-950 shadow-lg' : 'bg-white border-slate-100 text-slate-400 hover:text-slate-900 shadow-sm'}`}
                   >
                      <Bell size={20} />
                      {!showNotifications && <div className="absolute top-3.5 right-3.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />}
@@ -389,12 +405,12 @@ const AdminLayout = () => {
                       >
                         <div className="p-5 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
                            <h4 className="font-black text-[11px] uppercase tracking-widest text-slate-900">Notifications</h4>
-                           <span className="bg-blue-100 text-blue-600 text-[9px] font-black px-2 py-0.5 rounded-full">3 New</span>
+                           <span className="bg-slate-100 text-slate-600 text-[9px] font-black px-2 py-0.5 rounded-full">3 New</span>
                         </div>
                         <div className="max-h-[400px] overflow-y-auto no-scrollbar">
                            {mockNotifications.map(n => (
                              <button key={n.id} className="w-full p-5 flex gap-4 hover:bg-slate-50 transition-all text-left border-b border-slate-50 last:border-0">
-                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${n.type === 'warning' ? 'bg-amber-100 text-amber-600' : n.type === 'success' ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'}`}>
+                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${n.type === 'warning' ? 'bg-amber-100 text-amber-600' : n.type === 'success' ? 'bg-green-100 text-green-600' : 'bg-slate-100 text-slate-600'}`}>
                                    {n.type === 'warning' ? <AlertCircle size={18} /> : n.type === 'success' ? <CheckCircle2 size={18} /> : <Bell size={18} />}
                                 </div>
                                 <div>
@@ -406,7 +422,7 @@ const AdminLayout = () => {
                         </div>
                         <button 
                           onClick={() => { navigate('/admin/comms/notifications'); setShowNotifications(false); }}
-                          className="w-full py-4 bg-slate-50 text-[10px] font-black uppercase tracking-widest text-blue-600 hover:bg-blue-50 transition-all"
+                          className="w-full py-4 bg-slate-50 text-[10px] font-black uppercase tracking-widest text-slate-900 hover:bg-slate-100 transition-all"
                         >
                            View All Notifications
                         </button>
@@ -416,7 +432,7 @@ const AdminLayout = () => {
                </div>
                <div 
                  onClick={() => navigate('/admin/settings')}
-                 className={`w-12 h-12 bg-blue-500 rounded-2xl flex items-center justify-center text-white font-semibold text-lg shadow-xl cursor-pointer hover:scale-105 active:scale-95 transition-all`}
+                 className={`w-12 h-12 bg-slate-950 rounded-2xl flex items-center justify-center text-white font-semibold text-lg shadow-xl cursor-pointer hover:scale-105 active:scale-95 transition-all`}
                >
                  A
                </div>
@@ -424,7 +440,7 @@ const AdminLayout = () => {
           </div>
         </header>
 
-        <main className="p-8 max-w-[1600px] mx-auto">
+        <main className="p-4 sm:p-6 lg:p-8 max-w-[1600px] mx-auto">
           <Outlet />
         </main>
       </div>

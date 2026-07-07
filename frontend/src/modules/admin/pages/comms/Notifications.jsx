@@ -20,14 +20,14 @@ const Notifications = () => {
   return (
     <div className="space-y-6 pb-20 animate-in fade-in duration-700">
       {/* Header */}
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h1 className="text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Notification Hub</h1>
-          <p className="text-slate-500 font-medium mt-1 font-raleway">Broadcast messages and alerts to users via push, email and in-app channels.</p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Notification Hub</h1>
+          <p className="text-slate-500 text-sm sm:text-base font-medium mt-1 font-raleway">Broadcast messages and alerts to users via push, email and in-app channels.</p>
         </div>
         <button 
           onClick={() => setIsComposeOpen(true)}
-          className="flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:scale-105 active:scale-95 transition-all"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:scale-105 active:scale-95 transition-all"
         >
           <Plus size={16} />
           Compose Message
@@ -35,7 +35,7 @@ const Notifications = () => {
       </div>
 
       {/* Stats row */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
          {[
            { label: 'Total Sent', value: '4.2k', icon: Send, color: 'text-blue-500', bg: 'bg-blue-50' },
            { label: 'Avg Read Rate', value: '64%', icon: CheckCircle2, color: 'text-green-500', bg: 'bg-green-50' },

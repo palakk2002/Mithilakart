@@ -37,15 +37,15 @@ const Returns = () => {
   return (
     <div className="space-y-6 pb-20 animate-in fade-in duration-700">
       {/* Header */}
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h1 className="text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Returns & Refunds</h1>
-          <p className="text-slate-500 font-medium mt-1 font-raleway">Manage product returns, inspection status and refund processing.</p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Returns & Refunds</h1>
+          <p className="text-slate-500 text-sm sm:text-base font-medium mt-1 font-raleway">Manage product returns, inspection status and refund processing.</p>
         </div>
       </div>
 
       {/* Stats row */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { label: 'Open Requests', value: '18', icon: RotateCcw, color: 'text-amber-600', bg: 'bg-amber-50' },
           { label: 'Approved', value: '12', icon: CheckCircle2, color: 'text-blue-600', bg: 'bg-blue-50' },

@@ -33,15 +33,15 @@ const FlashSale = () => {
   return (
     <div className="space-y-6 pb-20 animate-in fade-in duration-700">
       {/* Header */}
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h1 className="text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Flash Sales</h1>
-          <p className="text-slate-500 font-medium mt-1 font-raleway">Configure high-velocity limited time discount events.</p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Flash Sales</h1>
+          <p className="text-slate-500 text-sm sm:text-base font-medium mt-1 font-raleway">Configure high-velocity limited time discount events.</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 w-full sm:w-auto">
           <button 
             onClick={() => setIsAdding(true)}
-            className="flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-red-100 hover:scale-105 active:scale-95 transition-all"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-red-100 hover:scale-105 active:scale-95 transition-all"
           >
             <Zap size={16} fill="white" />
             Launch New Sale
@@ -50,7 +50,7 @@ const FlashSale = () => {
       </div>
 
       {/* Stats row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
           { label: 'Active Sales', value: '01', icon: Timer, color: 'text-red-500', bg: 'bg-red-50' },
           { label: 'Participating Items', value: '68', icon: ShoppingBag, color: 'text-blue-500', bg: 'bg-blue-50' },

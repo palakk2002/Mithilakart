@@ -32,19 +32,19 @@ const StockAlerts = () => {
   return (
     <div className="space-y-6 pb-20 animate-in fade-in duration-700">
       {/* Header */}
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h1 className="text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Inventory Alerts</h1>
-          <p className="text-slate-500 font-medium mt-1 font-raleway">Monitor low-stock items and prevent out-of-stock situations.</p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Inventory Alerts</h1>
+          <p className="text-slate-500 text-sm sm:text-base font-medium mt-1 font-raleway">Monitor low-stock items and prevent out-of-stock situations.</p>
         </div>
-        <button className="flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:scale-105 transition-all">
+        <button className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:scale-105 transition-all">
           <RefreshCcw size={16} />
           Bulk Restock Request
         </button>
       </div>
 
       {/* Stats row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
          {[
            { label: 'Out of Stock', value: '03', icon: AlertCircle, color: 'text-slate-900', bg: 'bg-slate-100' },
            { label: 'Critical Level', value: '08', icon: AlertTriangle, color: 'text-red-500', bg: 'bg-red-50' },
@@ -64,13 +64,13 @@ const StockAlerts = () => {
 
       {/* Table */}
       <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
-        <div className="p-6 border-b border-slate-50 flex justify-between items-center">
-           <div className="relative w-full max-w-md group">
+        <div className="p-6 border-b border-slate-50 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
+           <div className="relative w-full sm:max-w-md group">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500" size={18} />
               <input type="text" placeholder="Search by product or vendor..." className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3.5 pl-12 pr-6 text-sm font-bold outline-none" />
            </div>
-           <div className="flex gap-3">
-              <button className="p-3 bg-slate-50 text-slate-400 rounded-xl hover:text-slate-900 transition-all border border-slate-100">
+           <div className="flex gap-3 justify-end">
+              <button className="p-3 bg-slate-50 text-slate-400 rounded-xl hover:text-slate-900 transition-all border border-slate-100 w-full sm:w-auto flex items-center justify-center">
                  <Filter size={18} />
               </button>
            </div>

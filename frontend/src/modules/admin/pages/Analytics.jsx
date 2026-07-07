@@ -55,17 +55,17 @@ const Analytics = () => {
   return (
     <div className="space-y-6 pb-10 animate-in fade-in duration-700">
       {/* Header */}
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h1 className="text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Market Analytics</h1>
-          <p className="text-slate-500 font-medium mt-1 font-raleway">In-depth platform performance, user acquisition, and sales intelligence.</p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Market Analytics</h1>
+          <p className="text-slate-500 text-sm sm:text-base font-medium mt-1 font-raleway">In-depth platform performance, user acquisition, and sales intelligence.</p>
         </div>
-        <div className="flex gap-3">
-          <div className="bg-white border border-slate-200 rounded-xl px-4 py-2.5 flex items-center gap-3 shadow-sm">
+        <div className="flex flex-wrap sm:flex-nowrap gap-3 w-full sm:w-auto">
+          <div className="bg-white border border-slate-200 rounded-xl px-4 py-2.5 flex items-center justify-center gap-3 shadow-sm flex-1 sm:flex-none">
              <Calendar size={16} className="text-slate-400" />
              <span className="text-[11px] font-black text-slate-700 uppercase tracking-widest">Last 6 Months</span>
           </div>
-          <button className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 text-white rounded-xl text-[11px] font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:scale-105 active:scale-95 transition-all">
+          <button className="flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-500 text-white rounded-xl text-[11px] font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:scale-105 active:scale-95 transition-all flex-1 sm:flex-none">
             <Download size={16} />
             Generate PDF
           </button>
@@ -73,7 +73,7 @@ const Analytics = () => {
       </div>
 
       {/* High Level Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard title="Net Revenue" value="₹35,00,000" change="+18.5%" icon={DollarSign} isPositive={true} />
         <StatCard title="Conversion Rate" value="4.2%" change="+2.1%" icon={Activity} isPositive={true} />
         <StatCard title="Active Buyers" value="12,450" change="+8.4%" icon={Users} isPositive={true} />

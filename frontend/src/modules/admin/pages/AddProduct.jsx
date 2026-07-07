@@ -31,18 +31,18 @@ const AddProduct = () => {
   return (
     <div className="space-y-6 pb-20 animate-in fade-in duration-700 max-w-5xl mx-auto">
       {/* Header */}
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h1 className="text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Catalog Entry</h1>
-          <p className="text-slate-500 font-medium mt-1 font-raleway">Add new inventory items directly to the platform catalog.</p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Catalog Entry</h1>
+          <p className="text-slate-500 text-sm sm:text-base font-medium mt-1 font-raleway">Add new inventory items directly to the platform catalog.</p>
         </div>
-        <div className="flex gap-3">
-          <button className="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm">
+        <div className="flex gap-3 w-full sm:w-auto">
+          <button className="flex-1 sm:flex-none px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm">
             Save as Draft
           </button>
           <button 
             onClick={handleSave}
-            className={`flex items-center gap-2 px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg ${saved ? 'bg-green-500 text-white' : 'bg-blue-500 text-white shadow-blue-100 hover:scale-105'}`}
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg ${saved ? 'bg-green-500 text-white' : 'bg-blue-500 text-white shadow-blue-100 hover:scale-105'}`}
           >
             {saved ? <CheckCircle2 size={16} /> : <Save size={16} />}
             {saved ? 'Product Published!' : 'Publish to Catalog'}
@@ -70,7 +70,7 @@ const AddProduct = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Category *</label>
                   <select className="w-full bg-slate-50 border border-slate-100 rounded-xl py-4 px-6 text-sm font-bold focus:ring-4 focus:ring-blue-50 transition-all outline-none text-slate-900 appearance-none">
@@ -145,7 +145,7 @@ const AddProduct = () => {
                {/* Highlights */}
                <div className="space-y-4">
                   <h4 className="text-[10px] font-black text-indigo-500 uppercase tracking-widest">Key Highlights</h4>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1.5">Pack of</label>
                       <input type="text" placeholder="e.g. 1" className="w-full bg-slate-50 border border-slate-100 rounded-lg py-2.5 px-4 text-xs font-bold outline-none" />
@@ -220,7 +220,7 @@ const AddProduct = () => {
                <Truck size={18} className="text-blue-500" />
                <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest font-montserrat">Shipping & Logistics</h3>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                <div>
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Weight (kg)</label>
                   <input type="number" placeholder="0.5" className="w-full bg-slate-50 border border-slate-100 rounded-xl py-4 px-6 text-sm font-black outline-none" />

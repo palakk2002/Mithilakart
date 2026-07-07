@@ -47,21 +47,21 @@ const MobileMenu = ({ isOpen, onClose }) => {
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-y-0 left-0 w-72 bg-white z-50 flex flex-col shadow-2xl lg:hidden"
+            className="fixed inset-y-0 left-0 w-72 bg-slate-950 z-50 flex flex-col shadow-2xl lg:hidden border-r border-slate-900 text-slate-200"
           >
             {/* Header */}
-            <div className="h-16 flex items-center justify-between px-5 border-b border-gray-100">
+            <div className="h-16 flex items-center justify-between px-5 border-b border-slate-900">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
+                <div className="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center">
                   <Store size={18} className="text-white" />
                 </div>
                 <div>
-                  <h2 className="text-sm font-bold text-gray-900">Seller Hub</h2>
-                  <p className="text-[10px] text-gray-400">Mithilakart</p>
+                  <h2 className="text-sm font-bold text-slate-100">Seller Hub</h2>
+                  <p className="text-[10px] text-slate-400">Mithilakart</p>
                 </div>
               </div>
-              <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Close menu">
-                <X size={20} className="text-gray-500" />
+              <button onClick={onClose} className="p-2 rounded-lg hover:bg-slate-900 transition-colors" aria-label="Close menu">
+                <X size={20} className="text-slate-400" />
               </button>
             </div>
 
@@ -69,7 +69,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
             <nav className="flex-1 py-4 px-3 overflow-y-auto">
               {SIDEBAR_MENU.map((group, gIdx) => (
                 <div key={gIdx} className={gIdx > 0 ? 'mt-5' : ''}>
-                  <p className="px-3 mb-2 text-[10px] font-semibold text-gray-400 uppercase tracking-widest">
+                  <p className="px-3 mb-2 text-[10px] font-semibold text-slate-500 uppercase tracking-widest">
                     {group.group}
                   </p>
                   <div className="space-y-1">
@@ -82,7 +82,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                           <button
                             key={item.name}
                             onClick={handleLogout}
-                            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-50"
+                            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-950/30 hover:text-red-500"
                           >
                             {IconComponent && <IconComponent size={20} />}
                             <span>{item.name}</span>
@@ -98,12 +98,12 @@ const MobileMenu = ({ isOpen, onClose }) => {
                           className={`
                             flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
                             ${active
-                              ? 'bg-[#2563EB] text-white shadow-md shadow-blue-200/50'
-                              : 'text-gray-600 hover:bg-gray-50'
+                              ? 'bg-slate-800 text-white border border-slate-700'
+                              : 'text-slate-400 hover:bg-slate-900/60 hover:text-white'
                             }
                           `}
                         >
-                          {IconComponent && <IconComponent size={20} className={active ? 'text-white' : 'text-gray-400'} />}
+                          {IconComponent && <IconComponent size={20} className={active ? 'text-white' : 'text-slate-500'} />}
                           <span>{item.name}</span>
                         </Link>
                       );
@@ -114,14 +114,14 @@ const MobileMenu = ({ isOpen, onClose }) => {
             </nav>
 
             {/* Footer */}
-            <div className="border-t border-gray-100 p-4">
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                <div className="w-9 h-9 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center">
-                  <span className="text-sm font-bold text-blue-600">{seller?.name?.charAt(0) || 'S'}</span>
+            <div className="border-t border-slate-900 p-4">
+              <div className="flex items-center gap-3 p-3 bg-slate-900/60 rounded-xl">
+                <div className="w-9 h-9 bg-slate-800 rounded-xl flex items-center justify-center">
+                  <span className="text-sm font-bold text-white">{seller?.name?.charAt(0) || 'S'}</span>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-gray-900">{seller?.storeName || 'Seller Store'}</p>
-                  <p className="text-[10px] text-gray-400">{seller?.email || 'seller@example.com'}</p>
+                  <p className="text-xs font-semibold text-slate-200">{seller?.storeName || 'Seller Store'}</p>
+                  <p className="text-[10px] text-slate-400">{seller?.email || 'seller@example.com'}</p>
                 </div>
               </div>
             </div>

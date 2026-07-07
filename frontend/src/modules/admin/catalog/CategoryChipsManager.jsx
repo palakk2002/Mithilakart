@@ -89,7 +89,7 @@ const CategoryChipsManager = () => {
       className="bg-blue-50/60 border border-blue-100 rounded-xl p-4 space-y-3"
     >
       <p className="text-[10px] font-black text-blue-500 uppercase tracking-widest">{label}</p>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div className="col-span-2">
           <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">Category Name *</label>
           <input
@@ -135,21 +135,21 @@ const CategoryChipsManager = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight font-montserrat uppercase">Category & Tab Manager</h1>
           <p className="text-[11px] text-slate-400 font-bold uppercase tracking-widest mt-0.5 font-raleway">Control the category chips & banner tabs shown in the user app</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full sm:w-auto">
           <button
             onClick={() => { setIsAdding(true); setEditingId(null); setFormData(EMPTY_CAT); }}
-            className="flex items-center gap-1.5 px-4 py-2 bg-blue-500 text-white rounded-xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-blue-100 hover:scale-105 active:scale-95 transition-all"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-500 text-white rounded-xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-blue-100 hover:scale-105 active:scale-95 transition-all"
           >
             <Plus size={13} /> Add Category
           </button>
           <button
             onClick={handleSaveAll}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all ${saved ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all ${saved ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
           >
             {saved ? <CheckCircle2 size={13} /> : <Save size={13} />}
             {saved ? 'Saved!' : 'Publish Changes'}
@@ -158,7 +158,7 @@ const CategoryChipsManager = () => {
       </div>
 
       {/* Stats Row */}
-      <div className="grid grid-cols-3 gap-4 max-w-xl">
+      <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-xl">
         {[
           { label: 'Total', value: categories.length, color: 'text-blue-500', bg: 'bg-blue-50' },
           { label: 'Visible', value: activeCount, color: 'text-green-500', bg: 'bg-green-50' },

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { 
   Search, Filter, MoreVertical, ExternalLink, 
   UserCheck, UserX, Ban, MessageSquare, Download
@@ -7,6 +8,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 
 const VendorList = () => {
+  const navigate = useNavigate();
   const { allVendors } = useSelector(state => state.admin);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
@@ -94,6 +96,7 @@ const VendorList = () => {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
+                    onClick={() => navigate(`/admin/vendors/${vendor.id}`)}
                     className="group hover:bg-slate-50/50 transition-colors cursor-pointer"
                   >
                     <td className="px-8 py-6">

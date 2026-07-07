@@ -55,7 +55,7 @@ const BannerForm = ({ formData, setFormData, onSave, onCancel, label, categories
          </select>
       </div>
     </div>
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <div>
         <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">Banner Title *</label>
         <input
@@ -215,21 +215,21 @@ const BannerManager = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">Banner Manager</h1>
           <p className="text-[11px] text-slate-400 font-bold uppercase tracking-widest mt-0.5 font-raleway">Control banners shown in the user home carousel</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full sm:w-auto">
           <button
             onClick={() => { setIsAdding(true); setEditingId(null); setFormData(EMPTY_BANNER); }}
-            className="flex items-center gap-1.5 px-4 py-2 bg-blue-500 text-white rounded-xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-blue-100 hover:scale-105 active:scale-95 transition-all"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-500 text-white rounded-xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-blue-100 hover:scale-105 active:scale-95 transition-all"
           >
             <Plus size={13} /> Add Banner
           </button>
           <button
             onClick={handleSaveAll}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all ${saved ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all ${saved ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
           >
             {saved ? <CheckCircle2 size={13} /> : <Save size={13} />}
             {saved ? 'Saved!' : 'Publish'}
@@ -284,18 +284,18 @@ const BannerManager = () => {
                   label={`Editing banner`}
                   formData={formData}
                   setFormData={setFormData}
-                  categories={CATEGORY_TABS}
+          categories={CATEGORY_TABS}
                   onSave={handleSaveEdit}
                   onCancel={() => { setEditingId(null); setFormData(EMPTY_BANNER); }}
                 />
               ) : (
-                <div className={`bg-white border rounded-xl overflow-hidden flex items-stretch gap-0 shadow-sm hover:shadow-md transition-all group ${!banner.active ? 'opacity-50' : 'border-slate-100'}`}>
+                <div className={`bg-white border rounded-xl overflow-hidden flex flex-col sm:flex-row items-stretch sm:items-stretch gap-0 shadow-sm hover:shadow-md transition-all group ${!banner.active ? 'opacity-50' : 'border-slate-100'}`}>
                   {/* Drag Handle */}
-                  <div className="w-8 flex items-center justify-center bg-slate-50 border-r border-slate-100 text-slate-300 cursor-grab">
+                  <div className="w-8 flex items-center justify-center bg-slate-50 border-r border-slate-100 text-slate-300 cursor-grab hidden sm:flex">
                     <GripVertical size={16} />
                   </div>
                   {/* Image Preview */}
-                  <div className="w-32 h-20 bg-slate-100 flex-shrink-0 overflow-hidden relative">
+                  <div className="w-full sm:w-32 h-32 sm:h-auto bg-slate-100 flex-shrink-0 overflow-hidden relative">
                     {banner.image ? (
                       <img src={banner.image} alt={banner.title} className="w-full h-full object-cover" />
                     ) : (
@@ -315,11 +315,11 @@ const BannerManager = () => {
                     <p className="text-[9px] text-blue-400 font-black mt-1.5 uppercase tracking-tighter">→ {banner.link}</p>
                   </div>
                   {/* Position */}
-                  <div className="px-4 flex items-center">
-                    <span className="text-[10px] font-black text-slate-300 font-roboto">#{index + 1}</span>
+                  <div className="px-4 py-2 sm:py-0 flex items-center">
+                    <span className="text-[10px] font-black text-slate-300 font-roboto">Position #{index + 1}</span>
                   </div>
                   {/* Actions */}
-                  <div className="flex items-center gap-1.5 px-4">
+                  <div className="flex items-center gap-1.5 px-4 py-3 sm:py-0 border-t sm:border-t-0 border-slate-50 justify-end">
                     <button onClick={() => handleToggle(banner.id)} className={`p-2 rounded-lg transition-all ${banner.active ? 'bg-green-50 text-green-500 hover:bg-green-100' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`} title={banner.active ? 'Deactivate' : 'Activate'}>
                       {banner.active ? <Eye size={15} /> : <EyeOff size={15} />}
                     </button>

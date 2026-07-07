@@ -56,16 +56,16 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-6 pb-6">
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h1 className="text-4xl font-semibold text-slate-900 tracking-tight font-montserrat">System Overview</h1>
-          <p className="text-slate-500 font-medium mt-1 font-raleway">Real-time performance metrics and platform health.</p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-900 tracking-tight font-montserrat">System Overview</h1>
+          <p className="text-slate-500 text-sm sm:text-base font-medium mt-1 font-raleway">Real-time performance metrics and platform health.</p>
         </div>
-        <div className="flex gap-3">
-          <button className="px-5 py-2.5 bg-white border border-blue-100 rounded-xl text-sm font-bold text-blue-600 hover:bg-blue-50 transition-all">
+        <div className="flex gap-3 w-full sm:w-auto">
+          <button className="flex-1 sm:flex-none px-5 py-2.5 bg-white border border-blue-100 rounded-xl text-sm font-bold text-blue-600 hover:bg-blue-50 transition-all">
             Download Report
           </button>
-          <button className="px-5 py-2.5 bg-blue-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-200 hover:scale-105 active:scale-95 transition-all">
+          <button className="flex-1 sm:flex-none px-5 py-2.5 bg-blue-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-200 hover:scale-105 active:scale-95 transition-all">
             Refresh Data
           </button>
         </div>
@@ -159,17 +159,17 @@ const Dashboard = () => {
           </div>
           <div className="space-y-4">
             {pendingVendors.map((vendor) => (
-              <div key={vendor.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-100 transition-colors">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center font-black text-slate-900 shadow-sm border border-slate-100">
+              <div key={vendor.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 gap-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-100 transition-colors">
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center font-black text-slate-900 shadow-sm border border-slate-100 shrink-0">
                     {vendor.name.charAt(0)}
                   </div>
-                  <div>
-                    <h4 className="font-black text-slate-900 text-sm">{vendor.name}</h4>
-                    <p className="text-xs text-slate-400 font-medium">{vendor.email}</p>
+                  <div className="min-w-0">
+                    <h4 className="font-black text-slate-900 text-sm truncate">{vendor.name}</h4>
+                    <p className="text-xs text-slate-400 font-medium truncate">{vendor.email}</p>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 w-full sm:w-auto justify-end">
                   <button className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
                     <AlertCircle size={20} />
                   </button>

@@ -46,9 +46,25 @@ import LegalPolicies from '../pages/content/LegalPolicies';
 // Operations
 import Returns from '../pages/operations/Returns';
 import OrderDetail from '../pages/operations/OrderDetail';
+import Refunds from '../pages/operations/Refunds';
 
 // Support
 import Tickets from '../pages/support/Tickets';
+
+// Reports
+import SalesReport from '../pages/reports/SalesReport';
+import SellerReport from '../pages/reports/SellerReport';
+import UserReport from '../pages/reports/UserReport';
+import OrderReport from '../pages/reports/OrderReport';
+import InventoryReport from '../pages/reports/InventoryReport';
+import RefundReport from '../pages/reports/RefundReport';
+
+// System
+import AuditLogs from '../pages/system/AuditLogs';
+import RoleManagement from '../pages/system/RoleManagement';
+
+// Vendors
+import SellerDetail from '../pages/vendors/SellerDetail';
 
 const AdminRoutes = () => {
   return (
@@ -77,6 +93,7 @@ const AdminRoutes = () => {
 
         {/* Operations */}
         <Route path="operations/returns" element={<Returns />} />
+        <Route path="operations/refunds" element={<Refunds />} />
 
         {/* Support */}
         <Route path="support/tickets" element={<Tickets />} />
@@ -96,6 +113,7 @@ const AdminRoutes = () => {
         
         {/* Partners */}
         <Route path="vendors/all" element={<VendorList />} />
+        <Route path="vendors/:vendorId" element={<SellerDetail />} />
         <Route path="vendors/approval" element={<VendorApproval />} />
         <Route path="delivery/all" element={<AllDeliveries />} />
         <Route path="delivery/approval" element={<DeliveryApproval />} />
@@ -106,9 +124,19 @@ const AdminRoutes = () => {
         <Route path="finance/rules" element={<Rules />} />
         <Route path="finance/tax" element={<TaxConfig />} />
         <Route path="finance/delivery-charges" element={<DeliveryCharges />} />
+
+        {/* Reports */}
+        <Route path="reports/sales" element={<SalesReport />} />
+        <Route path="reports/sellers" element={<SellerReport />} />
+        <Route path="reports/users" element={<UserReport />} />
+        <Route path="reports/orders" element={<OrderReport />} />
+        <Route path="reports/inventory" element={<InventoryReport />} />
+        <Route path="reports/refunds" element={<RefundReport />} />
         
         {/* System */}
         <Route path="system/sub-admins" element={<SubAdmins />} />
+        <Route path="system/audit-logs" element={<AuditLogs />} />
+        <Route path="system/roles" element={<RoleManagement />} />
         <Route path="settings" element={<Settings />} />
         
         <Route path="" element={<Navigate to="dashboard" replace />} />

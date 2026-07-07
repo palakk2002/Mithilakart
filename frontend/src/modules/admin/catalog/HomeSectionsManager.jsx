@@ -96,26 +96,26 @@ const HomeSectionsManager = () => {
   return (
     <div className="space-y-6 pb-20 animate-in fade-in duration-700">
       {/* Header */}
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900 tracking-tight font-montserrat uppercase">
             {getTitle()}
           </h1>
-          <p className="text-slate-500 font-medium mt-1 font-raleway">
+          <p className="text-slate-500 font-medium mt-1 font-raleway text-sm">
             Manage items for the <span className="font-bold text-blue-500">{getTitle()}</span> section on the home page.
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 w-full sm:w-auto">
           <button 
             onClick={() => navigate('/admin/inventory/add')}
-            className="flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm"
           >
             <Plus size={16} />
             Create Product
           </button>
           <button 
             onClick={handleSaveAll}
-            className={`flex items-center gap-2 px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg ${saved ? 'bg-green-500 text-white' : 'bg-blue-600 text-white shadow-blue-100 hover:scale-105'}`}
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg ${saved ? 'bg-green-500 text-white' : 'bg-blue-600 text-white shadow-blue-100 hover:scale-105'}`}
           >
             {saved ? <CheckCircle2 size={16} /> : <Save size={16} />}
             {saved ? 'Changes Published!' : 'Save & Publish'}

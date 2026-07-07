@@ -4,8 +4,9 @@
  */
 import React, { useState } from 'react';
 import { BarChart3, TrendingUp, TrendingDown, DollarSign, ShoppingCart, Users, Package } from 'lucide-react';
-import { PageHeader, CardSkeleton } from '../../components/common';
+import { PageHeader } from '../../components/common';
 import { Card, Button } from '../../components/ui';
+import { CardSkeleton } from '../../components/ui/Skeleton';
 import {
   AreaChart, Area, BarChart, Bar, LineChart, Line, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer, Legend
