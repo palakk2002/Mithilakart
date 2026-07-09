@@ -14,8 +14,10 @@ import HeaderTop from '../components/common/HeaderTop';
 import HeaderTabs from '../components/common/HeaderTabs';
 import SearchBar from '../components/common/SearchBar';
 import CategoryNavbar from '../components/common/CategoryNavbar';
+import LanguageSelector from '../components/common/LanguageSelector';
 import useAccountStore from '../../../store/useAccountStore';
 import useVendorStore from '../../../store/useVendorStore';
+import { useTranslation } from 'react-i18next';
 
 const getMithilakartHeaderBg = (category) => {
   switch (category) {
@@ -42,6 +44,7 @@ const getMithilakartHeaderBg = (category) => {
 };
 
 const VendorLayout = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -126,15 +129,18 @@ const VendorLayout = () => {
             </div>
 
             <nav className="flex items-center gap-8 ml-2">
-              <Link to="/home" className="text-[15px] font-bold hover:opacity-80 transition-opacity">Home</Link>
-              <Link to="/categories" className="text-[15px] font-bold hover:opacity-80 transition-opacity">Categories</Link>
-              <Link to="/cart" className="text-[15px] font-bold hover:opacity-80 transition-opacity">Cart ({cartCount})</Link>
-              <Link to="/profile" className="text-[15px] font-bold hover:opacity-80 transition-opacity">You</Link>
+              <Link to="/home" className="text-[15px] font-bold hover:opacity-80 transition-opacity">{t('nav.home')}</Link>
+              <Link to="/categories" className="text-[15px] font-bold hover:opacity-80 transition-opacity">{t('nav.categories')}</Link>
+              <Link to="/cart" className="text-[15px] font-bold hover:opacity-80 transition-opacity">{t('nav.cart')} ({cartCount})</Link>
+              <Link to="/profile" className="text-[15px] font-bold hover:opacity-80 transition-opacity">{t('nav.you')}</Link>
             </nav>
 
             <div className="ml-auto flex items-center gap-6">
+              <LanguageSelector isDarkHeader={
+                (localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak') || (location.pathname.includes('/quick-shop') && !location.pathname.includes('/fresh-grocery')))
+              } />
               <div className="text-sm font-semibold flex items-center gap-1 opacity-90">
-                <span>📍 Deliver to:</span>
+                <span>📍 {t('nav.deliverTo')}</span>
                 <span className="font-bold truncate max-w-[200px]">{selectedAddress?.name || 'Indrapuri Colony, Indore'}</span>
               </div>
             </div>
@@ -207,7 +213,7 @@ const VendorLayout = () => {
           className={`flex flex-col items-center transition-transform active:scale-90`}
         >
           <HomeIcon size={22} strokeWidth={1.5} />
-          <span className={`text-[10px] ${location.pathname === '/home' ? 'font-black' : 'font-medium'}`}>Home</span>
+          <span className={`text-[10px] ${location.pathname === '/home' ? 'font-black' : 'font-medium'}`}>{t('nav.home')}</span>
           {location.pathname === '/home' && <div className="w-1 h-1 bg-current rounded-full mt-0.5 animate-pulse" />}
         </Link>
         <Link 
@@ -223,18 +229,18 @@ const VendorLayout = () => {
           }`}
         >
           <LayoutGrid size={22} strokeWidth={1.5} />
-          <span className={`text-[10px] ${location.pathname === '/categories' ? 'font-black' : 'font-medium'}`}>Categories</span>
+          <span className={`text-[10px] ${location.pathname === '/categories' ? 'font-black' : 'font-medium'}`}>{t('nav.categories')}</span>
         </Link>
         <Link to="/cart" className={`flex flex-col items-center transition-transform active:scale-90`}>
           <div className="relative">
             <ShoppingCart size={22} strokeWidth={1.5} />
             <span className={`absolute -top-1 -right-1.5 text-[8px] font-black px-1 rounded-full border shadow-sm ${isDarkMode ? 'bg-[var(--color-gold)] text-black border-black' : 'bg-[#cc0c39] text-white border-white'}`}>{cartCount}</span>
           </div>
-          <span className={`text-[10px] ${location.pathname === '/cart' ? 'font-black' : 'font-medium'}`}>Cart</span>
+          <span className={`text-[10px] ${location.pathname === '/cart' ? 'font-black' : 'font-medium'}`}>{t('nav.cart')}</span>
         </Link>
         <Link to="/profile" className={`flex flex-col items-center transition-transform active:scale-90`}>
           <User size={22} strokeWidth={1.5} />
-          <span className={`text-[10px] ${location.pathname === '/profile' ? 'font-black' : 'font-medium'}`}>You</span>
+          <span className={`text-[10px] ${location.pathname === '/profile' ? 'font-black' : 'font-medium'}`}>{t('nav.you')}</span>
         </Link>
       </nav>
       )}

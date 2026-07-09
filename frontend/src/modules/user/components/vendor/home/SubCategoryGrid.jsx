@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Import Assets (aligned with categories)
 import SamsungS24 from '../../../../../assets/products/product01.jpg';
@@ -13,22 +14,23 @@ import ToysTab from '../../../../../assets/products/product13.jpg';
 import StationeryTab from '../../../../../assets/products/product14.jpg';
 
 const row1Items = [
-  { id: 1, title: 'Beauty & Care', img: BeautyTab },
-  { id: 2, title: 'Gifts & Hampers', img: CardImg },
-  { id: 3, title: 'Smart Gadgets', img: SamsungS24 },
-  { id: 4, title: 'Art. Jewellery', img: JewelleryImg },
-  { id: 5, title: 'Toys & Games', img: ToysTab },
+  { id: 1, key: 'beautyCare', img: BeautyTab },
+  { id: 2, key: 'giftsHampers', img: CardImg },
+  { id: 3, key: 'smartGadgets', img: SamsungS24 },
+  { id: 4, key: 'artJewellery', img: JewelleryImg },
+  { id: 5, key: 'toysGames', img: ToysTab },
 ];
 
 const row2Items = [
-  { id: 6, title: 'Office & Books', img: StationeryTab },
-  { id: 7, title: 'Trendy Fashion', img: FashionTabProduct },
-  { id: 8, title: 'Electricals', img: ElectronicsHero },
-  { id: 9, title: 'Best Deals', img: EarbudsDeal },
-  { id: 10, title: 'Lip Care', img: LipGloss },
+  { id: 6, key: 'officeBooks', img: StationeryTab },
+  { id: 7, key: 'trendyFashion', img: FashionTabProduct },
+  { id: 8, key: 'electricals', img: ElectronicsHero },
+  { id: 9, key: 'bestDeals', img: EarbudsDeal },
+  { id: 10, key: 'lipCare', img: LipGloss },
 ];
 
 const SubCategoryGrid = () => {
+  const { t } = useTranslation();
   return (
     <>
       {/* Mobile view (Untouched layout, only hidden on desktop) */}
@@ -41,12 +43,12 @@ const SubCategoryGrid = () => {
               className="flex flex-col items-center justify-between pt-2 pb-1.5 px-1.5 w-[88px] h-[106px] flex-shrink-0 bg-white border border-[#d0edd8] rounded-[14px] shadow-[0_1.5px_4px_rgba(0,0,0,0.02)]"
             >
               <span className="px-0.5 text-[10px] font-black text-center text-[#084224] leading-tight tracking-tight h-[24px] flex items-center justify-center">
-                {item.title}
+                {t('categories.' + item.key)}
               </span>
               <div className="w-[76px] h-[66px] rounded-[10px] overflow-hidden flex items-center justify-center">
                 <img
                   src={item.img}
-                  alt={item.title}
+                  alt={t('categories.' + item.key)}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -62,12 +64,12 @@ const SubCategoryGrid = () => {
               className="flex flex-col items-center justify-between pt-2 pb-1.5 px-1.5 w-[88px] h-[106px] flex-shrink-0 bg-white border border-[#d0edd8] rounded-[14px] shadow-[0_1.5px_4px_rgba(0,0,0,0.02)]"
             >
               <span className="px-0.5 text-[10px] font-black text-center text-[#084224] leading-tight tracking-tight h-[24px] flex items-center justify-center">
-                {item.title}
+                {t('categories.' + item.key)}
               </span>
               <div className="w-[76px] h-[66px] rounded-[10px] overflow-hidden flex items-center justify-center">
                 <img
                   src={item.img}
-                  alt={item.title}
+                  alt={t('categories.' + item.key)}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -83,10 +85,10 @@ const SubCategoryGrid = () => {
           {row1Items.map((item) => (
             <div key={item.id} className="flex flex-col items-center cursor-pointer group active:scale-95 transition-transform">
               <div className="w-[150px] h-[150px] rounded-[24px] overflow-hidden flex items-center justify-center bg-gray-50 border border-slate-100/50 shadow-sm group-hover:shadow-md transition-all duration-300">
-                <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
+                <img src={item.img} alt={t('categories.' + item.key)} className="w-full h-full object-cover" />
               </div>
               <span className="text-[13px] font-black text-center text-slate-800 mt-3.5 leading-tight tracking-tight hover:text-[#084224] transition-colors">
-                {item.title}
+                {t('categories.' + item.key)}
               </span>
             </div>
           ))}
@@ -97,10 +99,10 @@ const SubCategoryGrid = () => {
           {row2Items.map((item) => (
             <div key={item.id} className="flex flex-col items-center cursor-pointer group active:scale-95 transition-transform">
               <div className="w-[150px] h-[150px] rounded-[24px] overflow-hidden flex items-center justify-center bg-gray-50 border border-slate-100/50 shadow-sm group-hover:shadow-md transition-all duration-300">
-                <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
+                <img src={item.img} alt={t('categories.' + item.key)} className="w-full h-full object-cover" />
               </div>
               <span className="text-[13px] font-black text-center text-slate-800 mt-3.5 leading-tight tracking-tight hover:text-[#084224] transition-colors">
-                {item.title}
+                {t('categories.' + item.key)}
               </span>
             </div>
           ))}

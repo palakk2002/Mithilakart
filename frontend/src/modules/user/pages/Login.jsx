@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [useEmail, setUseEmail] = useState(false);
@@ -39,14 +41,14 @@ const Login = () => {
       {/* Login Form Content */}
       <div className="flex-1 px-6 pt-8 pb-6">
         <h1 className="text-[20px] font-bold text-slate-900 mb-8">
-          Log in to check your Cart
+          {t('auth.loginTitle')}
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Phone Number / Email Input */}
           <div>
             <label className="block text-[13px] font-medium text-gray-600 mb-2">
-              {useEmail ? 'Email' : 'Phone Number'}
+              {useEmail ? t('auth.emailLabel') : t('auth.mobileLabel')}
             </label>
             <div className="relative">
               {!useEmail && (
@@ -58,7 +60,7 @@ const Login = () => {
                 type={useEmail ? 'email' : 'tel'}
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder={useEmail ? 'Enter your email' : ''}
+                placeholder={useEmail ? t('auth.emailPlaceholder') : ''}
                 className={`w-full ${!useEmail ? 'pl-16' : 'pl-4'} pr-4 py-3 border-2 border-[#084224] rounded-sm text-[15px] font-medium text-slate-900 placeholder:text-gray-400 focus:outline-none focus:border-[#084224] focus:ring-2 focus:ring-[#084224]/20 transition-all`}
                 required
                 maxLength={useEmail ? undefined : 10}
@@ -74,19 +76,19 @@ const Login = () => {
               onClick={() => setUseEmail(!useEmail)}
               className="text-[13px] font-bold text-[#084224] hover:underline"
             >
-              {useEmail ? 'Use Phone Number' : 'Use Email-ID'}
+              {useEmail ? t('auth.usePhone') : t('auth.useEmail')}
             </button>
           </div>
 
-          {/* Terms and Conditions - Moved here */}
+          {/* Terms and Conditions */}
           <p className="text-[10px] text-gray-400 leading-relaxed">
-            By continuing, you confirm that you are above 18 years of age, and you agree to the Mithilakart's{' '}
+            {t('auth.termsText')}{' '}
             <Link to="/vendor/terms" className="text-[#084224] hover:underline">
-              Terms of Use
+              {t('auth.termsOfUse')}
             </Link>{' '}
-            and{' '}
+            {t('auth.and')}{' '}
             <Link to="/vendor/privacy" className="text-[#084224] hover:underline">
-              Privacy Policy
+              {t('auth.privacyPolicy')}
             </Link>
           </p>
         </form>
@@ -104,7 +106,7 @@ const Login = () => {
               : 'bg-gray-200 text-gray-400 cursor-not-allowed'
           }`}
         >
-          Continue
+          {t('auth.continue')}
         </motion.button>
       </div>
     </div>

@@ -2,8 +2,10 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Plane, Zap } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const HeaderTabs = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -70,7 +72,7 @@ const HeaderTabs = () => {
                 ? 'text-[#084224]/80' 
                 : 'text-white'
         }`}>
-          Mithilakart
+          {t('home.title')}
         </span>
       </motion.div>
 
@@ -118,7 +120,7 @@ const HeaderTabs = () => {
                     : 'text-white'
           }`}
         >
-          Quick Shop
+          {t('nav.quickShop')}
         </span>
       </motion.div>
 
@@ -165,7 +167,7 @@ const HeaderTabs = () => {
                   ? 'text-[#7c3aed]/80' 
                   : 'text-white'
         }`}>
-          Mithilak
+          {t('nav.mithilak')}
         </span>
       </motion.div>
 
@@ -192,7 +194,7 @@ const HeaderTabs = () => {
                 ? 'text-[#7A3E17]/80'
                 : 'text-white/80'
         }`}>
-          Xtra Saver
+          {t('nav.xtraSaver')}
         </span>
         <span className={`text-[10px] md:text-[11px] font-black tracking-tight leading-none mt-0.5 whitespace-nowrap transition-colors duration-300 ${
           isFreshGroceryActive 
@@ -203,7 +205,7 @@ const HeaderTabs = () => {
                 ? 'text-[#7A3E17]'
                 : 'text-white'
         }`}>
-          Grocery
+          {t('nav.grocery')}
         </span>
       </motion.div>
     </div>

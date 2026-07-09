@@ -4,8 +4,10 @@ import {
   ArrowLeft, ShieldCheck, MapPin, Truck, Star, Heart, Zap, X
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Cart = () => {
+  const { t } = useTranslation();
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
 
@@ -72,7 +74,7 @@ const Cart = () => {
         >
           <ArrowLeft size={18} strokeWidth={2.5} />
         </button>
-        <h1 className="text-[17px] font-black text-slate-800 tracking-tight">Cart</h1>
+        <h1 className="text-[17px] font-black text-slate-800 tracking-tight">{t('nav.cart')}</h1>
         <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-400 border border-slate-100/50 font-bold select-none cursor-pointer">
           •••
         </div>
@@ -116,17 +118,16 @@ const Cart = () => {
               <path d="M129 94h6M132 91v6" stroke="white" strokeWidth="2" strokeLinecap="round" />
             </svg>
 
-            {/* Typography */}
             <h2 className="text-[16px] font-black text-slate-800 tracking-tight">
-              Ohhh... Your cart is empty
+              {t('cart.empty')}
             </h2>
             <p className="text-[13px] text-slate-400 font-bold mt-1.5 mb-8">
-              but it doesn't have to be.
+              {t('cart.emptySubtitle')}
             </p>
             
             {/* Action Button */}
             <Link to={shopNowLink} className={`inline-block ${primaryBg} text-white px-12 py-3 rounded-full font-black uppercase text-[12px] shadow-md tracking-wider active:scale-95 transition-transform`}>
-              Shop Now
+              {t('cart.shopNow')}
             </Link>
           </div>
         ) : (
@@ -199,20 +200,20 @@ const Cart = () => {
               {/* Pricing Summary Card */}
               <div className="bg-white rounded-[28px] p-5 shadow-[0_4px_20px_rgba(0,0,0,0.01)] border border-slate-100/50 space-y-3.5">
                 <div className="flex justify-between items-center text-[13px] text-slate-500 font-bold">
-                  <span>Sub total</span>
+                  <span>{t('cart.subtotal')}</span>
                   <span className="text-slate-800 font-black">₹{totalPrice.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between items-center text-[13px] text-slate-500 font-bold">
-                  <span>Shipping & tax</span>
+                  <span>{t('cart.shippingAndTax')}</span>
                   <span className="text-slate-800 font-black">
-                    {shippingCost === 0 ? 'FREE' : `₹${shippingCost}`}
+                    {shippingCost === 0 ? t('cart.free') : `₹${shippingCost}`}
                   </span>
                 </div>
                 
                 <div className="border-t border-dashed border-slate-200 my-2" />
 
                 <div className="flex justify-between items-center text-[15px] font-black text-slate-800">
-                  <span>Total</span>
+                  <span>{t('cart.total')}</span>
                   <span className="text-[18px] text-slate-900">₹{(totalPrice + shippingCost).toLocaleString('en-IN')}</span>
                 </div>
               </div>
@@ -222,7 +223,7 @@ const Cart = () => {
                 onClick={() => navigate('/vendor/checkout')}
                 className={`hidden md:flex w-full ${primaryBg} text-white font-black py-4 rounded-full active:scale-[0.98] transition-all items-center justify-center text-[14px] shadow-md cursor-pointer`}
               >
-                Proceed to Checkout
+                {t('cart.checkout')}
               </button>
             </div>
           </div>
@@ -233,14 +234,14 @@ const Cart = () => {
       {cartItems.length > 0 && (
         <div className="fixed bottom-3 left-4 right-4 bg-white/95 backdrop-blur-md border border-slate-100 px-5 py-3.5 flex items-center justify-between z-50 shadow-[0_10px_30px_rgba(8,66,36,0.08)] rounded-[24px] md:hidden">
           <div className="flex flex-col">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Total Amount</span>
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{t('cart.totalAmount')}</span>
             <span className="text-[18px] font-black text-slate-905 leading-none mt-1">₹{(totalPrice + shippingCost).toLocaleString('en-IN')}</span>
           </div>
           <button 
             onClick={() => navigate('/vendor/checkout', { state: { product: cartItems[0] } })}
             className={`${primaryBg} text-white rounded-full px-8 py-3.5 font-black uppercase text-[12px] tracking-widest shadow-[0_4px_16px_rgba(8,66,36,0.22)] active:scale-95 transition-transform`}
           >
-            Checkout Now
+            {t('cart.checkoutNow')}
           </button>
         </div>
       )}
@@ -249,10 +250,10 @@ const Cart = () => {
       <div className="mt-8 px-6 py-6 flex flex-col items-center gap-3 text-slate-400/80">
         <div className="flex items-center gap-2">
           <ShieldCheck size={18} className={`${primaryText}/70`} />
-          <span className="text-[11px] font-black uppercase tracking-wider">100% Safe Payments</span>
+          <span className="text-[11px] font-black uppercase tracking-wider">{t('cart.safePayments')}</span>
         </div>
         <p className="text-[10px] text-center leading-relaxed font-bold">
-          Mithilakart Pay. Secure transactions. Easy Returns.
+          {t('cart.paymentsSubtitle')}
         </p>
       </div>
     </div>

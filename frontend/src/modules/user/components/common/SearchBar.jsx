@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Search, Camera, Mic, ScanLine, Home, ChevronDown, Zap } from 'lucide-react';
+import LanguageSelector from './LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 /**
  * SearchBar — Address selector (top) + Search input (bottom)
  * Styled exactly like the reference image
  */
 const SearchBar = ({ selectedAddress }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const [query, setQuery] = useState('');
@@ -43,7 +46,7 @@ const SearchBar = ({ selectedAddress }) => {
             <Home size={14} strokeWidth={2.5} className={`w-[12px] h-[12px] md:w-[14px] md:h-[14px] flex-shrink-0 fill-current ${
               isFreshGroceryActive ? 'text-black fill-black/10' : 'text-primary-dark fill-primary-dark/20'
             }`} />
-            <span className={`text-[10px] md:text-[11px] font-black tracking-tight ${isFreshGroceryActive ? 'text-black' : 'text-primary-dark'}`}>HOME</span>
+            <span className={`text-[10px] md:text-[11px] font-black tracking-tight ${isFreshGroceryActive ? 'text-black' : 'text-primary-dark'}`}>{t('nav.home').toUpperCase()}</span>
             <span className={`text-[10px] md:text-[11px] font-medium truncate max-w-[120px] md:max-w-[170px] ${isFreshGroceryActive ? 'text-slate-800' : 'text-primary-dark'}`}>
               {displayAddress}
             </span>
@@ -51,17 +54,20 @@ const SearchBar = ({ selectedAddress }) => {
           </Link>
 
           {/* Energy/Lightning Pill or 8 Min Badge */}
-          {isFreshGroceryActive ? (
-            <div className="flex items-center gap-1 bg-[#7A3E17] text-white px-3 py-1.5 rounded-xl shadow-sm border border-[#7A3E17]">
-              <span className="text-[14px] font-black leading-none">8</span>
-              <span className="text-[9px] font-bold leading-none text-white/90">min</span>
-            </div>
-          ) : (
-            <div className="flex items-center gap-0.5 md:gap-1 bg-white px-1.5 py-0.2 md:px-2 md:py-0.5 rounded-full shadow-xs border border-primary-green">
-              <Zap size={12} className="w-[10px] h-[10px] md:w-[12px] md:h-[12px] text-amber-500 fill-amber-500" />
-              <span className="text-[10px] md:text-[11px] font-extrabold text-primary-dark">3</span>
-            </div>
-          )}
+          <div className="flex items-center gap-1.5">
+            <LanguageSelector isDarkHeader={false} />
+            {isFreshGroceryActive ? (
+              <div className="flex items-center gap-1 bg-[#7A3E17] text-white px-3 py-1.5 rounded-xl shadow-sm border border-[#7A3E17]">
+                <span className="text-[14px] font-black leading-none">8</span>
+                <span className="text-[9px] font-bold leading-none text-white/90">min</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-0.5 md:gap-1 bg-white px-1.5 py-0.2 md:px-2 md:py-0.5 rounded-full shadow-xs border border-primary-green">
+                <Zap size={12} className="w-[10px] h-[10px] md:w-[12px] md:h-[12px] text-amber-500 fill-amber-500" />
+                <span className="text-[10px] md:text-[11px] font-extrabold text-primary-dark">3</span>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -83,7 +89,7 @@ const SearchBar = ({ selectedAddress }) => {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
-            placeholder={isFreshGroceryActive ? "Search in Grocery" : "Search products..."}
+            placeholder={isFreshGroceryActive ? "Search in Grocery" : t('nav.searchPlaceholder')}
             className={`flex-1 bg-transparent outline-none text-[12px] md:text-[13px] font-semibold min-w-0 ${
               isFreshGroceryActive
                 ? 'text-[#7A3E17] placeholder:text-[#7A3E17]/65'
