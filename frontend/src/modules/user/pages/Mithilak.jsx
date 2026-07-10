@@ -163,9 +163,9 @@ const Mithilak = () => {
       </div>
 
       {/* Category Grid (Desktop View - copy style & structure of large square cards) */}
-      <div className="hidden md:block md:max-w-6xl md:mx-auto md:w-full md:px-4 md:mb-8">
+      <div className="hidden md:block md:max-w-[1600px] md:mx-auto md:w-full md:px-4 md:mb-8">
         <div className="bg-white border border-slate-100 rounded-3xl p-6 shadow-md">
-          <div className="grid grid-cols-4 gap-6 justify-items-center">
+          <div className="grid grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-x-8 gap-y-8 justify-items-center">
             {MITHILA_CATEGORIES.map((item, idx) => (
               <div
                 key={idx}
@@ -174,14 +174,14 @@ const Mithilak = () => {
                   localStorage.setItem('isQuickShopFlow', 'false');
                   navigate('/mithilak/category', { state: { category: item.name } });
                 }}
-                className="flex flex-col items-center gap-3 cursor-pointer group active:scale-95 transition-transform w-[180px] mx-auto"
+                className="flex flex-col items-center gap-3.5 cursor-pointer group active:scale-95 transition-transform w-full max-w-[160px] mx-auto"
               >
                 {/* Soft purple rounded image container box */}
-                <div className="relative w-full aspect-square rounded-[24px] overflow-hidden bg-[#f3e8ff] border border-purple-100/30 flex items-center justify-center p-5 group-hover:bg-[#ebdcfc] transition-colors duration-300">
+                <div className="relative w-full aspect-square rounded-[24px] overflow-hidden bg-[#f3e8ff] border border-purple-100/30 flex items-center justify-center p-0 group-hover:bg-[#ebdcfc] transition-colors duration-300">
                   <img
                     src={item.img}
                     alt={item.name}
-                    className="h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                 </div>
@@ -195,7 +195,7 @@ const Mithilak = () => {
       </div>
 
       {/* ── Section: Today's special deals ── */}
-      <div className="mt-8 mb-6 md:max-w-6xl md:mx-auto md:w-full md:px-4">
+      <div className="mt-8 mb-6 md:max-w-[1600px] md:mx-auto md:w-full md:px-4">
         <div className="flex items-center justify-between mb-4 pl-1">
           <div className="flex flex-col">
             <h2 className="text-[16px] font-black text-gray-900 leading-none">Today's Special Deals</h2>
@@ -267,7 +267,7 @@ const Mithilak = () => {
         </div>
 
         {/* Desktop View */}
-        <div className="hidden md:grid md:grid-cols-4 md:gap-6">
+        <div className="hidden md:grid md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 md:gap-6">
           {MITHILA_DEALS.map((prod) => (
             <div 
               key={prod.id} 

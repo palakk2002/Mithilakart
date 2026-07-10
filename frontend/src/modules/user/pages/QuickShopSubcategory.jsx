@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Search, Share2, ChevronDown, Heart } from 'lucide-react';
+import { formatPrice } from '../../../shared/utils/priceFormatter';
 
 const DYNAMIC_DATA = {
   'Fruits & Vegetables': {
@@ -442,7 +443,7 @@ const QuickShopSubcategory = () => {
                 <div 
                   key={product.id}
                   onClick={() => handleProductClick(product)}
-                  className="bg-white border border-gray-100/60 rounded-2xl p-2.5 flex flex-col relative shadow-2xs hover:shadow-xs cursor-pointer active:scale-[0.99] transition-transform"
+                  className="bg-white border border-gray-100/60 rounded-2xl p-1.5 md:p-2.5 flex flex-col relative shadow-2xs hover:shadow-xs cursor-pointer active:scale-[0.99] transition-transform"
                 >
                   {/* Badge label like 'Season's Best' */}
                   {product.badge && (
@@ -466,7 +467,7 @@ const QuickShopSubcategory = () => {
                   </button>
 
                   {/* Product Image Panel */}
-                  <div className="h-24 w-full flex items-center justify-center p-1 relative mb-2">
+                  <div className="h-20 md:h-24 w-full flex items-center justify-center p-1 relative mb-1.5 md:mb-2">
                     <img 
                       src={product.img} 
                       alt={product.name} 
@@ -511,12 +512,12 @@ const QuickShopSubcategory = () => {
                   {/* Price and Add CTA bar */}
                   <div className="mt-auto pt-2 flex items-center justify-between border-t border-gray-50">
                     <div className="flex flex-col">
-                      <span className="text-[14px] font-bold text-gray-950 leading-none">
-                        ₹{product.price}
+                      <span className="text-[14px] font-bold text-gray-955 leading-none">
+                        {formatPrice(product.price)}
                       </span>
                       {product.oldPrice && (
-                        <span className="text-[10px] text-gray-400 line-through mt-0.5">
-                          ₹{product.oldPrice}
+                        <span className="text-[10px] text-gray-405 line-through mt-0.5">
+                          {formatPrice(product.oldPrice)}
                         </span>
                       )}
                     </div>

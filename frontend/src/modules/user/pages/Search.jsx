@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Search as SearchIcon, Filter, ArrowLeft, SlidersHorizontal, LayoutGrid, List } from 'lucide-react';
+import { Search as SearchIcon, Filter, ArrowLeft, LayoutGrid, List } from 'lucide-react';
 import ProductCard from '../components/common/ProductCard';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Import local assets
+// Import local assets for search page
 import SamsungImg from '../../../assets/products/product01.jpg';
+import LaptopImg from '../../../assets/products/product02.jpg';
 import EarbudsImg from '../../../assets/products/product03.jpg';
 import ElectronicsImg from '../../../assets/products/product04.jpg';
-import LaptopImg from '../../../assets/products/product02.jpg';
 import ShoesImg from '../../../assets/products/product07.jpg';
 import JewelleryImg from '../../../assets/products/product12.jpg';
 
@@ -18,7 +18,15 @@ const Search = () => {
   const query = searchParams.get('q') || '';
   
   const [viewMode, setViewMode] = useState('grid');
-  const [sortBy, setSortBy] = useState('relevance');
+
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-[#eaf5ee]');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-gradient-to-r from-[#F5B014] to-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#084224]');
+  const textPrimary = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#084224]');
+  const borderPrimary = isMithilakFlow ? 'border-[#7c3aed]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#084224]');
 
   const allProducts = [
     { id: 1, name: 'Apple iPhone 15 (Blue, 128 GB)', price: '69,999', oldPrice: '79,900', rating: '4.6', reviews: '2,450', image: SamsungImg, brand: 'APPLE' },
@@ -40,63 +48,63 @@ const Search = () => {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="bg-black min-h-screen text-white pb-20"
+      className={`min-h-screen ${pageBg} text-slate-800 pb-20`}
     >
-      {/* Search Header */}
-      <div className="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-[var(--color-gold)]/20 p-4 flex items-center gap-4">
-        <button onClick={() => navigate(-1)} className="text-[var(--color-gold)]">
+      {/* Search Header (Colored based on active tab) */}
+      <div className={`sticky top-0 z-40 ${headerBg} p-4 flex items-center gap-4 shadow-md`}>
+        <button onClick={() => navigate(-1)} className={isFreshGroceryFlow ? 'text-black' : 'text-white'}>
           <ArrowLeft size={24} />
         </button>
-        <div className="flex-1 flex items-center bg-[#121212] border border-[var(--color-gold)]/30 rounded-xl px-4 py-2.5">
-           <SearchIcon size={18} className="text-[var(--color-gold)]" />
+        <div className="flex-1 flex items-center bg-white rounded-xl px-4 py-2 border border-slate-100/50 shadow-sm">
+           <SearchIcon size={18} className="text-slate-400" />
            <input 
              type="text" 
              defaultValue={query}
              onKeyDown={(e) => {
                if (e.key === 'Enter') {
-                 navigate(`/vendor/search?q=${e.target.value}`);
+                 navigate(`/search?q=${e.target.value}`);
                }
              }}
-             className="bg-transparent border-none outline-none flex-1 px-3 text-sm font-bold"
+             className="bg-transparent border-none outline-none flex-1 px-3 text-sm font-bold text-slate-850 placeholder:text-slate-400"
              placeholder="Search Mithilakart..."
            />
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-6 max-w-4xl">
+      <div className="container mx-auto px-2 py-4 md:px-4 md:py-6 max-w-4xl">
         {/* Results Info & Filters */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-5">
            <div>
-              <h2 className="text-xs font-black uppercase tracking-widest text-[var(--color-gold)]">Results for "{query}"</h2>
-              <p className="text-[10px] font-bold text-gray-500 mt-1 uppercase tracking-widest">{filteredProducts.length} items found</p>
+              <h2 className={`text-xs font-black uppercase tracking-widest ${textPrimary}`}>Results for "{query}"</h2>
+              <p className="text-[10px] font-bold text-slate-450 mt-1 uppercase tracking-widest">{filteredProducts.length} items found</p>
            </div>
-           <div className="flex items-center gap-4">
-              <button className="p-2 bg-white/5 rounded-lg border border-white/10 text-[var(--color-gold)]">
-                 <Filter size={18} />
+           <div className="flex items-center gap-3">
+              <button className="p-2 bg-white rounded-lg border border-slate-150 text-slate-700 shadow-sm active:scale-95 transition-all">
+                 <Filter size={16} />
               </button>
-              <div className="flex bg-white/5 p-1 rounded-lg border border-white/10">
+              <div className="flex bg-white p-1 rounded-lg border border-slate-150 shadow-sm">
                  <button 
                    onClick={() => setViewMode('grid')}
-                   className={`p-1.5 rounded-md transition-all ${viewMode === 'grid' ? 'bg-[var(--color-gold)] text-black' : 'text-gray-500'}`}
+                   className={`p-1 rounded-md transition-all ${viewMode === 'grid' ? 'bg-[#084224] text-white' : 'text-slate-400'}`}
                  >
-                    <LayoutGrid size={16} />
+                    <LayoutGrid size={14} />
                  </button>
                  <button 
                    onClick={() => setViewMode('list')}
-                   className={`p-1.5 rounded-md transition-all ${viewMode === 'list' ? 'bg-[var(--color-gold)] text-black' : 'text-gray-500'}`}
+                   className={`p-1 rounded-md transition-all ${viewMode === 'list' ? 'bg-[#084224] text-white' : 'text-slate-400'}`}
                  >
-                    <List size={16} />
+                    <List size={14} />
                  </button>
               </div>
            </div>
         </div>
 
         {/* Sorting Tags */}
-        <div className="flex gap-2 mb-8 overflow-x-auto no-scrollbar">
+        <div className="flex gap-1.5 mb-5 overflow-x-auto no-scrollbar">
            {['Relevance', 'Newest', 'Price: Low-High', 'Price: High-Low', 'Top Rated'].map(tag => (
              <button 
                key={tag}
-               className="whitespace-nowrap px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-white/10 bg-white/5 hover:border-[var(--color-gold)]/30 transition-all active:scale-95"
+               className={`whitespace-nowrap px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border border-slate-150 bg-white text-slate-700 hover:${borderPrimary} transition-all active:scale-95 shadow-sm`}
              >
                 {tag}
              </button>
@@ -104,7 +112,7 @@ const Search = () => {
         </div>
 
         {/* Product Grid */}
-        <div className={viewMode === 'grid' ? "grid grid-cols-2 md:grid-cols-3 gap-4" : "space-y-4"}>
+        <div className={viewMode === 'grid' ? "grid grid-cols-2 md:grid-cols-3 gap-2.5 md:gap-4" : "space-y-3"}>
            <AnimatePresence mode="popLayout">
              {filteredProducts.map((product) => (
                <motion.div 
@@ -122,13 +130,13 @@ const Search = () => {
         </div>
 
         {filteredProducts.length === 0 && (
-          <div className="text-center py-20 bg-white/5 rounded-3xl border border-dashed border-white/10 mt-10">
-             <SearchIcon size={48} className="mx-auto text-gray-700 mb-4 opacity-20" />
-             <h3 className="text-lg font-black uppercase tracking-widest text-[var(--color-gold)]">No results found</h3>
-             <p className="text-xs text-gray-500 font-bold uppercase tracking-widest mt-2 max-w-xs mx-auto">Try checking your spelling or use more general keywords</p>
+          <div className="text-center py-16 bg-white rounded-3xl border border-slate-100 shadow-sm mt-8">
+             <SearchIcon size={40} className="mx-auto text-slate-300 mb-3 opacity-50" />
+             <h3 className={`text-base font-black uppercase tracking-widest ${textPrimary}`}>No results found</h3>
+             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-2 max-w-xs mx-auto">Try checking your spelling or use more general keywords</p>
              <button 
-               onClick={() => navigate('/vendor/home')}
-               className="mt-6 px-8 py-3 bg-[var(--color-gold)] text-black rounded-xl font-black uppercase tracking-widest text-[10px]"
+               onClick={() => navigate('/home')}
+               className={`mt-5 px-6 py-2.5 ${headerBg} ${isFreshGroceryFlow ? 'text-black' : 'text-white'} rounded-xl font-black uppercase tracking-widest text-[9px] shadow-md`}
              >
                 Go Back Home
              </button>

@@ -18,6 +18,7 @@ import LanguageSelector from '../components/common/LanguageSelector';
 import useAccountStore from '../../../store/useAccountStore';
 import useVendorStore from '../../../store/useVendorStore';
 import { useTranslation } from 'react-i18next';
+import { parsePrice, formatPrice } from '../../../shared/utils/priceFormatter';
 
 const getMithilakartHeaderBg = (category) => {
   switch (category) {
@@ -90,6 +91,7 @@ const VendorLayout = () => {
     location.pathname.includes('/profile') ||
     location.pathname.includes('/deals') ||
     location.pathname.includes('/search') ||
+    location.pathname.includes('/category') ||
     location.pathname.includes('wishlist');
 
   const hideHeader = isImmersivePage;
@@ -98,9 +100,14 @@ const VendorLayout = () => {
   const isCartOrCheckoutPage = location.pathname.includes('/cart') || location.pathname.includes('/checkout');
   const cartTotalItems = cartItems.reduce((acc, item) => acc + (item.qty || 1), 0);
   const cartTotalPrice = cartItems.reduce((acc, item) => {
-    const priceStr = String(item.price || '0').replace(/,/g, '');
-    return acc + (Number(priceStr) || 0) * (item.qty || 1);
+    return acc + parsePrice(item.price) * parsePrice(item.qty || 1);
   }, 0);
+  const isDarkHeader = (
+    localStorage.getItem('isMithilakFlow') === 'true' || 
+    location.pathname.includes('/mithilak') || 
+    (location.pathname.includes('/quick-shop') && !location.pathname.includes('/fresh-grocery')) ||
+    (!location.pathname.includes('/quick-shop') && !location.pathname.includes('/fresh-grocery') && (selectedCategory === 'For You' || selectedCategory === 'Home' || !selectedCategory))
+  );
 
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-300 bg-gray-50 text-slate-900">
@@ -109,16 +116,20 @@ const VendorLayout = () => {
 
       {/* Desktop Header */}
       {!hideHeader && (
-        <div className={`hidden md:flex items-center justify-between px-8 py-4 border-b border-gray-200/80 sticky top-0 z-50 shadow-sm transition-colors duration-300 ${
+        <div className={`hidden md:flex items-center justify-between px-8 py-2.5 border-b border-gray-200/80 sticky top-0 z-50 shadow-sm transition-colors duration-300 ${
           (localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak'))
             ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1] text-white'
             : location.pathname.includes('/fresh-grocery')
               ? 'bg-gradient-to-r from-[#F5B014] to-[#FFF0A0] text-slate-800'
               : location.pathname.includes('/quick-shop')
                 ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f] text-white'
-                : 'bg-[#E2F0E7] text-slate-800'
+                : `${getMithilakartHeaderBg(selectedCategory)} ${
+                    selectedCategory === 'For You' || selectedCategory === 'Home' || !selectedCategory
+                      ? 'text-white'
+                      : 'text-slate-800'
+                  }`
         }`}>
-          <div className="flex items-center gap-8 max-w-7xl mx-auto w-full">
+          <div className="flex items-center gap-8 max-w-[1600px] mx-auto w-full">
             <Link to="/home" className="flex items-center gap-2 flex-shrink-0">
               <span className="text-2xl font-black tracking-tight">Mithilakart</span>
             </Link>
@@ -128,17 +139,28 @@ const VendorLayout = () => {
               <HeaderTabs />
             </div>
 
-            <nav className="flex items-center gap-8 ml-2">
-              <Link to="/home" className="text-[15px] font-bold hover:opacity-80 transition-opacity">{t('nav.home')}</Link>
-              <Link to="/categories" className="text-[15px] font-bold hover:opacity-80 transition-opacity">{t('nav.categories')}</Link>
-              <Link to="/cart" className="text-[15px] font-bold hover:opacity-80 transition-opacity">{t('nav.cart')} ({cartCount})</Link>
-              <Link to="/profile" className="text-[15px] font-bold hover:opacity-80 transition-opacity">{t('nav.you')}</Link>
+            <nav className="flex items-center gap-3 ml-4">
+              <Link to="/home" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 ${
+                isDarkHeader ? 'hover:bg-white/10 text-white/90 hover:text-white' : 'hover:bg-black/5 text-slate-700 hover:text-[#084224]'
+              }`}>{t('nav.home')}</Link>
+              <Link to="/categories" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 ${
+                isDarkHeader ? 'hover:bg-white/10 text-white/90 hover:text-white' : 'hover:bg-black/5 text-slate-700 hover:text-[#084224]'
+              }`}>{t('nav.categories')}</Link>
+              <Link to="/cart" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 flex items-center gap-2 ${
+                isDarkHeader ? 'hover:bg-white/10 text-white/90 hover:text-white' : 'hover:bg-black/5 text-slate-700 hover:text-[#084224]'
+              }`}>
+                <span>{t('nav.cart')}</span>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-black ${
+                  isDarkHeader ? 'bg-white text-slate-900' : 'bg-[#084224] text-white'
+                }`}>{cartCount}</span>
+              </Link>
+              <Link to="/profile" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 ${
+                isDarkHeader ? 'hover:bg-white/10 text-white/90 hover:text-white' : 'hover:bg-black/5 text-slate-700 hover:text-[#084224]'
+              }`}>Profile</Link>
             </nav>
 
             <div className="ml-auto flex items-center gap-6">
-              <LanguageSelector isDarkHeader={
-                (localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak') || (location.pathname.includes('/quick-shop') && !location.pathname.includes('/fresh-grocery')))
-              } />
+              <LanguageSelector isDarkHeader={isDarkHeader} />
               <div className="text-sm font-semibold flex items-center gap-1 opacity-90">
                 <span>📍 {t('nav.deliverTo')}</span>
                 <span className="font-bold truncate max-w-[200px]">{selectedAddress?.name || 'Indrapuri Colony, Indore'}</span>
@@ -148,7 +170,7 @@ const VendorLayout = () => {
         </div>
       )}
 
-      {/* ── Sticky Header ── */}
+      {/* Sticky Header */}
       {!hideHeader && (
         <motion.header
           animate={{
@@ -192,7 +214,7 @@ const VendorLayout = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col">
         <div className="flex-1 flex">
-          <div className="container mx-auto flex h-full">
+          <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 flex h-full">
             <main className="flex-1 min-w-0 pb-16">
               <Outlet />
             </main>
@@ -249,7 +271,7 @@ const VendorLayout = () => {
       {!isCartOrCheckoutPage && cartTotalItems > 0 && (
         <div 
           onClick={() => navigate('/vendor/cart')}
-          className={`fixed bottom-[76px] left-4 right-4 z-[1000] rounded-2xl px-5 py-3.5 flex items-center justify-between shadow-[0_8px_30px_rgba(0,0,0,0.15)] text-white cursor-pointer active:scale-[0.98] transition-all duration-300 animate-in slide-in-from-bottom-6 ${
+          className={`fixed bottom-[76px] left-4 right-4 md:bottom-8 md:right-8 md:left-auto md:w-[380px] md:px-6 md:py-4 md:rounded-2xl z-[1000] rounded-2xl px-5 py-3.5 flex items-center justify-between shadow-[0_8px_30px_rgba(0,0,0,0.15)] text-white cursor-pointer active:scale-[0.98] transition-all duration-300 animate-in slide-in-from-bottom-6 ${
             localStorage.getItem('isFreshGroceryFlow') === 'true'
               ? 'bg-gradient-to-r from-[#7A3E17] to-[#b45309] hover:brightness-110'
               : localStorage.getItem('isMithilakFlow') === 'true'
@@ -267,10 +289,10 @@ const VendorLayout = () => {
             </div>
             <div>
               <p className="text-[13.5px] font-black leading-none">
-                {cartTotalItems} {cartTotalItems === 1 ? 'item' : 'items'}
+                {cartTotalItems} {cartTotalItems === 1 ? t('cart.item') : t('cart.items')}
               </p>
               <p className="text-[11.5px] font-bold text-white/85 mt-0.5">
-                ₹{cartTotalPrice}
+                {formatPrice(cartTotalPrice)}
               </p>
             </div>
           </div>
@@ -279,7 +301,7 @@ const VendorLayout = () => {
               ? 'bg-white text-[#d6186d]'
               : 'bg-white/20 text-white'
           }`}>
-            <span>View Cart</span>
+            <span>{t('nav.viewCart')}</span>
             <ChevronRight size={13} strokeWidth={3} />
           </div>
         </div>

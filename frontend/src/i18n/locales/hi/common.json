@@ -7,6 +7,7 @@
     "deliverTo": "डिलीवर करें:",
     "viewCart": "कार्ट देखें",
     "searchPlaceholder": "उत्पाद, श्रेणियाँ खोजें...",
+    "searchInGrocery": "किराना में खोजें",
     "quickShop": "क्विक शॉप",
     "mithilak": "मिथिलाक",
     "xtraSaver": "एक्स्ट्रा सेवर",
@@ -22,7 +23,33 @@
     "myWallet": "मेरा वॉलेट",
     "myOrders": "मेरे ऑर्डर्स",
     "logout": "लॉगआउट",
-    "login": "लॉगिन / साइनअप"
+    "login": "लॉगिन / साइनअप",
+    "hello": "नमस्ते, {{name}}",
+    "trending": "ट्रेंडिंग",
+    "bestsellers": "सर्वाधिक बिकने वाले",
+    "newReleases": "नए रिलीज",
+    "moversAndShakers": "मूवर्स और शेकर्स",
+    "digitalContent": "डिजिटल सामग्री और डिवाइस",
+    "echoAlexa": "इको और एलेक्सा",
+    "fireTv": "फायर टीवी",
+    "kindleBooks": "किंडल ई-रीडर्स और ई-बुक्स",
+    "audibleAudiobooks": "ऑडिबल ऑडियोबुक्स",
+    "primeVideo": "अमेज़न प्राइम वीडियो",
+    "primeMusic": "अमेज़न प्राइम म्यूजिक",
+    "mobilesComputers": "मोबाइल, कंप्यूटर",
+    "tvAppliancesElectronics": "टीवी, उपकरण, इलेक्ट्रॉनिक्स",
+    "mensFashion": "पुरुषों का फैशन",
+    "womensFashion": "महिलाओं का फैशन",
+    "seeAll": "सभी देखें",
+    "programsAndFeatures": "कार्यक्रम और विशेषताएं",
+    "giftCards": "गिफ्ट कार्ड और मोबाइल रिचार्ज",
+    "launchpad": "अमेज़न लॉन्चपैड",
+    "business": "अमेज़न बिजनेस",
+    "handloomHandicrafts": "हथकरघा और हस्तशिल्प",
+    "helpAndSettings": "सहायता और सेटिंग्स",
+    "yourAccount": "आपका खाता",
+    "customerService": "ग्राहक सेवा",
+    "signOut": "Sign Out"
   },
   "home": {
     "title": "मिथिलाकार्ट",
@@ -96,13 +123,16 @@
     "subtotal": "उप-योग",
     "shippingAndTax": "शिपिंग और कर",
     "items": "आइटम",
+    "item": "आइटम",
     "deliveryCharges": "डिनीवरी शुल्क",
     "free": "मुफ़्त",
     "couponDiscount": "कूपन छूट",
     "applyCoupon": "कूपन लागू करें",
     "savings": "आपने बचाए",
     "safePayments": "100% सुरक्षित भुगतान",
-    "paymentsSubtitle": "मिथिलाकार्ट पे। सुरक्षित लेनदेन। आसान वापसी।"
+    "paymentsSubtitle": "मिथिलाकार्ट पे। सुरक्षित लेनदेन। आसान वापसी।",
+    "addToCart": "बैग में जोड़ें",
+    "buyNow": "अभी खरीदें"
   },
   "profile": {
     "title": "मेरा खाता",
@@ -137,11 +167,14 @@
   "checkout": {
     "title": "चेकआउट",
     "selectAddress": "डिलीवरी का पता चुनें",
-    "paymentMethod": "भुगतान विधि चुनें",
+    "paymentMethod": "भुगतान",
     "placeOrder": "ऑर्डर दें",
     "cod": "कैश ऑन डिलीवरी",
     "online": "यूपीआई / कार्ड / नेटबैंकिंग",
-    "orderSummary": "ऑर्डर का सारांश"
+    "orderSummary": "विवरण",
+    "platformFees": "प्लेटफॉर्म शुल्क",
+    "productDiscount": "उत्पाद छूट",
+    "deliveryText": "2 दिनों में डिलीवरी"
   },
   "categories": {
     "beautyCare": "सौंदर्य और देखभाल",
@@ -153,7 +186,16 @@
     "trendyFashion": "ट्रेंडी फैशन",
     "electricals": "इलेक्ट्रिकल्स",
     "bestDeals": "सर्वश्रेष्ठ सौदे",
-    "lipCare": "होंठों की देखभाल"
+    "lipCare": "होंठों की देखभाल",
+    "for-you": "आपके लिए",
+    "beauty": "सौंदर्य",
+    "gifting": "उपहार",
+    "electronics": "इलेक्ट्रॉनिक्स",
+    "jewellery": "आभूषण",
+    "toys": "खिलौने",
+    "stationery": "स्टेशनरी",
+    "fashion": "फैशन",
+    "electrical": "इलेक्ट्रिकल"
   },
   "common": {
     "loading": "लोड हो रहा है...",
@@ -162,6 +204,14 @@
     "submit": "जमा करें",
     "cancel": "रद्द करें",
     "save": "सहेजें",
-    "confirm": "क्या आप निश्चित हैं?"
+    "confirm": "क्या आप निश्चित हैं?",
+    "ad": "विज्ञापन",
+    "sponsored": "प्रायोजित"
+  },
+  "product": {
+    "mrp": "एमआरपी",
+    "off": "छूट",
+    "deliveryTomorrow": "कल तक प्राप्त करें",
+    "selectSize": "आकार चुनें"
   }
 }

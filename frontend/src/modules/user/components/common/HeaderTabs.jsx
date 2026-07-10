@@ -33,12 +33,12 @@ const HeaderTabs = () => {
   };
 
   return (
-    <div className="px-3 pt-2 pb-1.5 md:px-4 md:pt-4 md:pb-2.5 grid grid-cols-4 gap-2 md:gap-3">
+    <div className="px-2 pt-1.5 pb-1 md:px-4 md:pt-4 md:pb-2.5 grid grid-cols-4 gap-1.5 md:gap-3">
       {/* ── Tab 1: Mithilakart ── */}
       <motion.div
         whileTap={{ scale: 0.95 }}
         onClick={() => handleTabClick('/home', false)}
-        className={`flex flex-col items-center justify-between py-1.5 rounded-lg border h-[50px] md:h-[60px] cursor-pointer transition-all duration-300 ${
+        className={`flex flex-col items-center justify-center py-1 md:py-1.5 rounded-lg border h-[42px] md:h-[60px] gap-0.5 md:gap-1.5 cursor-pointer transition-all duration-300 ${
           isMithilakartActive
             ? 'bg-[#084224] text-white border-[#084224] shadow-md scale-102 z-10'
             : isFreshGroceryActive
@@ -48,11 +48,11 @@ const HeaderTabs = () => {
                 : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
         }`}
       >
-        <div className="w-[20px] h-[20px] md:w-[26px] md:h-[26px] overflow-hidden flex items-center justify-start">
+        <div className="w-[16px] h-[14px] md:w-[26px] md:h-[26px] overflow-hidden flex items-center justify-start">
           <img
             src="/mithilakartbglogo.png"
             alt="Icon"
-            className={`h-5 min-w-[50px] md:h-7 md:min-w-[70px] object-cover object-left transition-all duration-300 ${
+            className={`h-4 min-w-[40px] md:h-7 md:min-w-[70px] object-cover object-left transition-all duration-300 ${
               isMithilakartActive 
                 ? 'brightness-0 invert' 
                 : isFreshGroceryActive 
@@ -63,7 +63,7 @@ const HeaderTabs = () => {
             }`}
           />
         </div>
-        <span className={`font-extrabold text-[9px] md:text-[10px] italic tracking-tight leading-none mb-0.5 transition-colors duration-300 ${
+        <span className={`font-extrabold text-[8px] md:text-[10px] italic tracking-tight leading-none mb-0.5 transition-colors duration-300 ${
           isMithilakartActive 
             ? 'text-white' 
             : isFreshGroceryActive
@@ -80,7 +80,7 @@ const HeaderTabs = () => {
       <motion.div
         whileTap={{ scale: 0.95 }}
         onClick={() => handleTabClick('/quick-shop', true)}
-        className={`flex flex-col items-center justify-between py-1.5 rounded-lg border h-[50px] md:h-[60px] cursor-pointer transition-all duration-300 ${
+        className={`flex flex-col items-center justify-center py-1 md:py-1.5 rounded-lg border h-[42px] md:h-[60px] gap-0.5 md:gap-1.5 cursor-pointer transition-all duration-300 ${
           isQuickShopActive
             ? 'bg-white text-[#d6186d] border-white shadow-md scale-102 z-10'
             : isFreshGroceryActive
@@ -93,7 +93,7 @@ const HeaderTabs = () => {
         }`}
       >
         <div
-          className={`w-[20px] h-[20px] md:w-[26px] md:h-[26px] rounded-full flex items-center justify-center shadow-xs transition-all duration-300 ${
+          className={`w-[16px] h-[16px] md:w-[26px] md:h-[26px] rounded-full flex items-center justify-center shadow-xs transition-all duration-300 ${
             isQuickShopActive 
               ? 'bg-[#d6186d] text-white' 
               : isFreshGroceryActive
@@ -105,10 +105,10 @@ const HeaderTabs = () => {
                     : 'bg-white text-[#d6186d]'
           }`}
         >
-          <Zap size={13} className="fill-current" />
+          <Zap size={10} className="fill-current w-[10px] h-[10px] md:w-[13px] md:h-[13px]" />
         </div>
         <span
-          className={`text-[9px] md:text-[10px] font-extrabold tracking-tight leading-none mb-0.5 whitespace-nowrap transition-colors duration-300 ${
+          className={`text-[8px] md:text-[10px] font-extrabold tracking-tight leading-none mb-0.5 whitespace-nowrap transition-colors duration-300 ${
             isQuickShopActive 
               ? 'text-[#d6186d]' 
               : isFreshGroceryActive
@@ -128,7 +128,7 @@ const HeaderTabs = () => {
       <motion.div
         whileTap={{ scale: 0.95 }}
         onClick={() => handleTabClick('/mithilak', false)}
-        className={`flex flex-col items-center justify-between py-1.5 rounded-lg border h-[50px] md:h-[60px] cursor-pointer transition-all duration-300 ${
+        className={`flex flex-col items-center justify-center py-1 md:py-1.5 rounded-lg border h-[42px] md:h-[60px] gap-0.5 md:gap-1.5 cursor-pointer transition-all duration-300 ${
           isMithilakActive
             ? 'bg-white text-[#7c3aed] border-white shadow-md scale-102 z-10'
             : isFreshGroceryActive
@@ -140,10 +140,10 @@ const HeaderTabs = () => {
                   : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
         }`}
       >
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex items-center justify-center">
           <Plane 
             size={22} 
-            className={`w-[18px] h-[18px] md:w-[22px] md:h-[22px] transition-all duration-300 ${
+            className={`w-[14px] h-[14px] md:w-[22px] md:h-[22px] transition-all duration-300 ${
               isMithilakActive 
                 ? "text-[#7c3aed] fill-[#7c3aed]/20" 
                 : isFreshGroceryActive
@@ -156,7 +156,7 @@ const HeaderTabs = () => {
             }`} 
           />
         </div>
-        <span className={`text-[9px] md:text-[10px] font-extrabold tracking-tight leading-none mb-0.5 transition-colors duration-300 ${
+        <span className={`text-[8px] md:text-[10px] font-extrabold tracking-tight leading-none mb-0.5 transition-colors duration-300 ${
           isMithilakActive 
             ? 'text-[#7c3aed]' 
             : isFreshGroceryActive
@@ -175,7 +175,7 @@ const HeaderTabs = () => {
       <motion.div
         whileTap={{ scale: 0.95 }}
         onClick={() => handleTabClick('/fresh-grocery', true)}
-        className={`flex flex-col items-center justify-center py-1 rounded-lg border h-[50px] md:h-[60px] cursor-pointer transition-all duration-300 ${
+        className={`flex flex-col items-center justify-center py-0.5 md:py-1 rounded-lg border h-[42px] md:h-[60px] cursor-pointer transition-all duration-300 ${
           isFreshGroceryActive
             ? 'bg-white text-[#7A3E17] border-white shadow-md scale-102 z-10'
             : isMithilakartActive
@@ -185,7 +185,7 @@ const HeaderTabs = () => {
                 : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
         }`}
       >
-        <span className={`text-[8px] md:text-[9.5px] font-black italic tracking-tight leading-none transition-colors duration-300 ${
+        <span className={`text-[7px] md:text-[9.5px] font-black italic tracking-tight leading-none transition-colors duration-300 ${
           isFreshGroceryActive
             ? 'text-[#7A3E17]'
             : isMithilakartActive
@@ -196,7 +196,7 @@ const HeaderTabs = () => {
         }`}>
           {t('nav.xtraSaver')}
         </span>
-        <span className={`text-[10px] md:text-[11px] font-black tracking-tight leading-none mt-0.5 whitespace-nowrap transition-colors duration-300 ${
+        <span className={`text-[9px] md:text-[11px] font-black tracking-tight leading-none mt-0.5 whitespace-nowrap transition-colors duration-300 ${
           isFreshGroceryActive 
             ? 'text-[#7A3E17]' 
             : isMithilakartActive

@@ -115,11 +115,13 @@ const Home = () => {
 
       {/* SubCategory Showcase Grid (Directly below Banner) */}
       {(selectedCategory === 'For You' || selectedCategory === 'Home') && (
-        <SubCategoryGrid />
+        <div className="md:mb-12">
+          <SubCategoryGrid />
+        </div>
       )}
 
       {selectedCategory !== 'For You' && selectedCategory !== 'Home' && (
-        <div className="py-4">
+        <div className="py-4 md:mb-12">
           <div className="flex justify-between items-center px-4 mb-4">
             <h2 className="text-xl font-black text-[var(--card-text)]">{selectedCategory} Specials</h2>
             <div className="h-1 flex-1 bg-gray-100 mx-4 rounded-full" />
@@ -130,38 +132,48 @@ const Home = () => {
 
       {(selectedCategory === 'For You' || selectedCategory === 'Home') && (
         <>
-          <LazySection height="240px">
-            <StillLookingSection items={homeSections.stillLooking} />
-          </LazySection>
+          <div className="md:mb-12">
+            <LazySection height="240px">
+              <StillLookingSection items={homeSections.stillLooking} />
+            </LazySection>
+          </div>
 
-          <LazySection height="350px">
-            <BrandsSpotlight items={homeSections.brandsSpotlight} />
-          </LazySection>
+          <div className="md:mb-12">
+            <LazySection height="350px">
+              <BrandsSpotlight items={homeSections.brandsSpotlight} />
+            </LazySection>
+          </div>
 
-          <LazySection height="400px">
-            <TopSelection items={homeSections.topSelection} />
-          </LazySection>
+          <div className="md:mb-12">
+            <LazySection height="400px">
+              <TopSelection items={homeSections.topSelection} />
+            </LazySection>
+          </div>
 
-          <LazySection height="250px">
-            <KeepShopping items={homeSections.keepShopping} />
-          </LazySection>
+          <div className="md:mb-12">
+            <LazySection height="250px">
+              <KeepShopping items={homeSections.keepShopping} />
+            </LazySection>
+          </div>
 
-          <LazySection height="500px">
-            <BestQuality items={homeSections.bestQuality} />
-          </LazySection>
+          <div className="md:mb-12">
+            <LazySection height="500px">
+              <BestQuality items={homeSections.bestQuality} />
+            </LazySection>
+          </div>
 
-
-
-          <LazySection height="150px">
-            <CategoryTabs
-              tabs={data.tabs}
-              activeTab={activeTab}
-              onTabClick={handleTabClick}
-            />
-          </LazySection>
+          <div className="md:mb-12">
+            <LazySection height="150px">
+              <CategoryTabs
+                tabs={data.tabs}
+                activeTab={activeTab}
+                onTabClick={handleTabClick}
+              />
+            </LazySection>
+          </div>
 
           {/* Dynamic Products Section based on Bottom Tabs */}
-          <div className="pb-20">
+          <div className="pb-20 md:mb-12">
             <CategoryProductsSection selectedCategory={activeTab} />
           </div>
         </>

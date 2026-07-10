@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Globe, Check } from 'lucide-react';
 
 const languages = [
-  { code: 'en', name: 'English' },
-  { code: 'hi', name: 'हिन्दी' },
-  { code: 'mai', name: 'मैथिली' },
-  { code: 'bn', name: 'বাংলা' }
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'hi', name: 'हिन्दी', flag: '🇮🇳' },
+  { code: 'mai', name: 'मैथिली', flag: '🇮🇳' }
 ];
 
 const LanguageSelector = ({ isDarkHeader = false }) => {
@@ -16,8 +15,6 @@ const LanguageSelector = ({ isDarkHeader = false }) => {
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
 
   const handleLanguageChange = (code) => {
-    // TODO:
-    // Replace frontend JSON translations with backend language API.
     i18n.changeLanguage(code);
     localStorage.setItem('user_language', code);
     setIsOpen(false);
@@ -27,14 +24,14 @@ const LanguageSelector = ({ isDarkHeader = false }) => {
     <div className="relative inline-block text-left z-[9999]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-bold transition-all duration-300 ${
+        className={`flex items-center gap-1 px-1.5 py-1 md:px-2.5 md:py-1.5 rounded-lg border text-[10px] md:text-xs font-bold transition-all duration-300 ${
           isDarkHeader
             ? 'bg-white/10 text-white border-white/20 hover:bg-white/20'
             : 'bg-white text-slate-800 border-gray-200 shadow-xs hover:bg-gray-50'
         }`}
       >
-        <Globe size={14} className={isDarkHeader ? 'text-white' : 'text-slate-500'} />
-        <span>{currentLanguage.name}</span>
+        <Globe className={`${isDarkHeader ? 'text-white' : 'text-slate-500'} w-3 h-3 md:w-3.5 md:h-3.5`} />
+        <span>{currentLanguage.flag} {currentLanguage.name}</span>
       </button>
 
       {isOpen && (
@@ -52,7 +49,7 @@ const LanguageSelector = ({ isDarkHeader = false }) => {
                       : 'text-slate-700 hover:bg-slate-50'
                   }`}
                 >
-                  <span>{lang.name}</span>
+                  <span>{lang.flag} {lang.name}</span>
                   {i18n.language === lang.code && <Check size={12} className="text-emerald-800 stroke-[3px]" />}
                 </button>
               ))}

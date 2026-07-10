@@ -3,8 +3,10 @@ import {
   ArrowLeft, Search, ShoppingCart, Star, Heart, Send,
   Share2, ChevronRight, X, MapPin, Truck, RotateCcw, IndianRupee
 } from 'lucide-react';
+import { formatPrice } from '../../../shared/utils/priceFormatter';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import useAccountStore from '../../../store/useAccountStore';
+import { useTranslation } from 'react-i18next';
 
 // Import Assets
 import PlumShampoo from '../../../assets/products/product05.jpg';
@@ -20,6 +22,7 @@ import SplitAC from '../../../assets/products/product08.jpg';
 import TowerFan from '../../../assets/products/product09.jpg';
 
 const ProductDetail = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
@@ -288,14 +291,14 @@ const ProductDetail = () => {
         </h1>
         
         {/* Luxury Pricing Layout */}
-        <div className="flex items-center gap-3 mt-1.5">
+        <div className="flex items-center gap-3 mt-1.5 flex-wrap">
           <span className="text-[26px] font-black text-slate-900 leading-none">
-            ₹{product.price}
+            {formatPrice(product.price)}
           </span>
           <span className="text-[15px] text-slate-400 line-through">
-            ₹{product.oldPrice}
+            MRP {formatPrice(product.oldPrice)}
           </span>
-          <span className="text-[11px] font-black tracking-wider uppercase border border-[var(--color-gold)] text-[var(--color-gold)] bg-amber-50/20 px-2 py-0.5 rounded-full">
+          <span className="text-[11px] font-black tracking-wider uppercase border border-[#e47911] text-[#e47911] px-2 py-0.5 rounded-full">
             {product.discount || 'Special Offer'}
           </span>
         </div>
@@ -304,7 +307,7 @@ const ProductDetail = () => {
       {/* Variant Selector (Premium Circles) */}
       <div className="px-4 py-3 mt-1">
         <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block mb-2.5">
-          Select Size
+          {t('product.selectSize') || 'Select Size'}
         </span>
         <div className="flex gap-2.5">
           {['XS', 'S', 'M', 'L', 'XL'].map((size) => (
@@ -329,13 +332,13 @@ const ProductDetail = () => {
             onClick={handleAddToCart}
             className="flex-1 bg-white border border-slate-200 text-slate-800 font-bold py-3.5 rounded-full active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-[13px] hover:bg-slate-50 cursor-pointer"
           >
-            Add to Bag
+            {t('cart.addToCart')}
           </button>
           <button 
             onClick={handleBuyNow}
             className={`flex-1 ${primaryBg} text-white font-black py-3.5 rounded-full active:scale-[0.98] transition-all flex items-center justify-center text-[13px] ${shadowColor} ${primaryBgHover} cursor-pointer`}
           >
-            Buy Now • ₹{product.price}
+            {t('cart.buyNow')} • {formatPrice(product.price)}
           </button>
         </div>
 
@@ -520,12 +523,12 @@ const ProductDetail = () => {
               </div>
               <div className="px-2.5 pb-2.5 pt-0.5">
                 <h4 className="text-[11px] font-black text-slate-800 truncate uppercase tracking-tight">{item.name}</h4>
-                <div className="text-[9px] font-black text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded-full w-fit mt-1">
+                <div className="text-[9px] font-black text-[#e47911] border border-[#e47911] px-1.5 py-0.5 rounded-full w-fit mt-1 uppercase">
                   55% OFF
                 </div>
-                <div className="flex items-baseline gap-1.5 mt-2">
-                  <span className="text-[13px] font-black text-slate-900">₹{item.price}</span>
-                  <span className="text-[9.5px] text-gray-400 line-through">₹{item.oldPrice}</span>
+                <div className="flex items-baseline gap-1.5 mt-2 flex-wrap">
+                  <span className="text-[13px] font-black text-slate-900">{formatPrice(item.price)}</span>
+                  <span className="text-[9.5px] text-gray-400 line-through">MRP {formatPrice(item.oldPrice)}</span>
                 </div>
               </div>
             </div>
@@ -547,7 +550,7 @@ const ProductDetail = () => {
           ].map((item, i) => (
             <div 
               key={i} 
-              onClick={() => navigate('/vendor/product-detail', { state: { product: { ...item, image: item.img, rating: 4.3, discount: '60% off' } } })}
+              onClick={() => navigate('/product-detail', { state: { product: { ...item, image: item.img, rating: 4.3, discount: '60% off' } } })}
               className="flex-shrink-0 w-[130px] bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_12px_rgba(0,0,0,0.02)] active:scale-95 transition-all cursor-pointer hover:shadow-sm"
             >
               <div className="aspect-square m-1.5 rounded-xl overflow-hidden relative bg-slate-50 border border-slate-100/55 flex items-center justify-center">
@@ -555,12 +558,12 @@ const ProductDetail = () => {
               </div>
               <div className="px-2.5 pb-2.5 pt-0.5">
                 <h4 className="text-[11px] font-black text-slate-800 truncate uppercase tracking-tight">{item.name}</h4>
-                <div className="text-[9px] font-black text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded-full w-fit mt-1">
-                  60% off
+                <div className="text-[9px] font-black text-[#e47911] border border-[#e47911] px-1.5 py-0.5 rounded-full w-fit mt-1 uppercase">
+                  60% OFF
                 </div>
-                <div className="flex items-baseline gap-1.5 mt-2">
-                  <span className="text-[13px] font-black text-slate-900">₹{item.price}</span>
-                  <span className="text-[9.5px] text-gray-400 line-through">₹{item.oldPrice}</span>
+                <div className="flex items-baseline gap-1.5 mt-2 flex-wrap">
+                  <span className="text-[13px] font-black text-slate-900">{formatPrice(item.price)}</span>
+                  <span className="text-[9.5px] text-gray-400 line-through">MRP {formatPrice(item.oldPrice)}</span>
                 </div>
               </div>
             </div>
@@ -879,13 +882,13 @@ const ProductDetail = () => {
           onClick={handleAddToCart}
           className="flex-1 bg-white border border-slate-200 text-slate-800 font-bold py-3.5 rounded-full active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-[13px] hover:bg-slate-50"
         >
-          Add to Bag
+          {t('cart.addToCart')}
         </button>
         <button 
           onClick={handleBuyNow}
           className={`flex-1 ${primaryBg} text-white font-black py-3.5 rounded-full active:scale-[0.98] transition-all flex items-center justify-center text-[13px] ${shadowColor} ${primaryBgHover}`}
         >
-          Buy Now • ₹{product.price}
+          {t('cart.buyNow')} • ₹{product.price}
         </button>
       </div>
 

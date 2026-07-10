@@ -7,6 +7,7 @@
     "deliverTo": "Deliver to",
     "viewCart": "View Cart",
     "searchPlaceholder": "Search for products, categories...",
+    "searchInGrocery": "Search in Grocery",
     "quickShop": "Quick Shop",
     "mithilak": "Mithilak",
     "xtraSaver": "Xtra Saver",
@@ -22,7 +23,33 @@
     "myWallet": "My Wallet",
     "myOrders": "My Orders",
     "logout": "Logout",
-    "login": "Login / Signup"
+    "login": "Login / Signup",
+    "hello": "Hello, {{name}}",
+    "trending": "Trending",
+    "bestsellers": "Bestsellers",
+    "newReleases": "New Releases",
+    "moversAndShakers": "Movers and Shakers",
+    "digitalContent": "Digital Content and Devices",
+    "echoAlexa": "Echo & Alexa",
+    "fireTv": "Fire TV",
+    "kindleBooks": "Kindle E-Readers & eBooks",
+    "audibleAudiobooks": "Audible Audiobooks",
+    "primeVideo": "Amazon Prime Video",
+    "primeMusic": "Amazon Prime Music",
+    "mobilesComputers": "Mobiles, Computers",
+    "tvAppliancesElectronics": "TV, Appliances, Electronics",
+    "mensFashion": "Men's Fashion",
+    "womensFashion": "Women's Fashion",
+    "seeAll": "See all",
+    "programsAndFeatures": "Programs & Features",
+    "giftCards": "Gift Cards & Mobile Recharges",
+    "launchpad": "Amazon Launchpad",
+    "business": "Amazon Business",
+    "handloomHandicrafts": "Handloom and Handicrafts",
+    "helpAndSettings": "Help & Settings",
+    "yourAccount": "Your Account",
+    "customerService": "Customer Service",
+    "signOut": "Sign Out"
   },
   "home": {
     "title": "Mithilakart",
@@ -96,13 +123,16 @@
     "subtotal": "Sub total",
     "shippingAndTax": "Shipping & tax",
     "items": "Items",
+    "item": "item",
     "deliveryCharges": "Delivery Charges",
     "free": "FREE",
     "couponDiscount": "Coupon Discount",
     "applyCoupon": "Apply Coupon",
     "savings": "You saved",
     "safePayments": "100% Safe Payments",
-    "paymentsSubtitle": "Mithilakart Pay. Secure transactions. Easy Returns."
+    "paymentsSubtitle": "Mithilakart Pay. Secure transactions. Easy Returns.",
+    "addToCart": "Add to Bag",
+    "buyNow": "Buy Now"
   },
   "profile": {
     "title": "My Account",
@@ -136,12 +166,15 @@
   },
   "checkout": {
     "title": "Checkout",
-    "selectAddress": "Select Delivery Address",
-    "paymentMethod": "Select Payment Method",
+    "selectAddress": "Delivery Address",
+    "paymentMethod": "Payment",
     "placeOrder": "Place Order",
     "cod": "Cash on Delivery",
     "online": "UPI / Card / NetBanking",
-    "orderSummary": "Order Summary"
+    "orderSummary": "Summary",
+    "platformFees": "Platform Fees",
+    "productDiscount": "Product Discount",
+    "deliveryText": "Delivery in 2 days"
   },
   "categories": {
     "beautyCare": "Beauty & Care",
@@ -153,7 +186,16 @@
     "trendyFashion": "Trendy Fashion",
     "electricals": "Electricals",
     "bestDeals": "Best Deals",
-    "lipCare": "Lip Care"
+    "lipCare": "Lip Care",
+    "for-you": "For You",
+    "beauty": "Beauty",
+    "gifting": "Gifting",
+    "electronics": "Electronics",
+    "jewellery": "Jewellery",
+    "toys": "Toys",
+    "stationery": "Stationery",
+    "fashion": "Fashion",
+    "electrical": "Electrical"
   },
   "common": {
     "loading": "Loading...",
@@ -162,6 +204,14 @@
     "submit": "Submit",
     "cancel": "Cancel",
     "save": "Save",
-    "confirm": "Are you sure?"
+    "confirm": "Are you sure?",
+    "ad": "AD",
+    "sponsored": "Sponsored"
+  },
+  "product": {
+    "mrp": "MRP",
+    "off": "off",
+    "deliveryTomorrow": "Get it by Tomorrow",
+    "selectSize": "Select Size"
   }
 }

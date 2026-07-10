@@ -370,8 +370,8 @@ const CategoryProducts = () => {
               
               <div className="flex items-center gap-1.5 mt-1 flex-wrap">
                 <span className="text-[12px] font-black text-slate-900">₹{product.price}</span>
-                <span className="text-[9px] text-slate-400 line-through tracking-tighter">₹{product.oldPrice}</span>
-                <span className="text-[9px] font-bold text-[#388e3c] tracking-tighter">{product.off}</span>
+                <span className="text-[9px] text-slate-400 line-through tracking-tighter">MRP ₹{product.oldPrice}</span>
+                <span className="border border-[#e47911] text-[#e47911] text-[8px] px-1 py-0.2 rounded-full font-bold uppercase tracking-tight">{product.off || '50% OFF'}</span>
               </div>
 
               <div className="mt-0.5 flex items-center gap-1">
@@ -444,8 +444,8 @@ const CategoryProducts = () => {
               
               <div className="flex items-center gap-1.5 mt-1 flex-wrap">
                 <span className="text-[12px] font-black text-slate-900">₹{product.price}</span>
-                <span className="text-[9px] text-slate-400 line-through tracking-tighter">₹{product.oldPrice}</span>
-                <span className="text-[9px] font-bold text-[#388e3c] tracking-tighter">{product.off}</span>
+                <span className="text-[9px] text-slate-400 line-through tracking-tighter">MRP ₹{product.oldPrice}</span>
+                <span className="border border-[#e47911] text-[#e47911] text-[8px] px-1 py-0.2 rounded-full font-bold uppercase tracking-tight">{product.off || '50% OFF'}</span>
               </div>
 
               <div className="mt-0.5 flex items-center gap-1">

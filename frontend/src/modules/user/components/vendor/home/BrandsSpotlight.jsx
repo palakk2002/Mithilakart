@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const BrandsSpotlight = ({ items }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleBrandClick = useCallback((card) => {
     navigate('/vendor/product-detail', { 
@@ -27,7 +29,7 @@ const BrandsSpotlight = ({ items }) => {
       {/* Mobile view (Untouched layout, only hidden on desktop) */}
       <div className="px-2 mt-2 mb-1 md:hidden">
         <h2 className="text-slate-900 mb-2 px-0.5 text-[15px] font-black uppercase tracking-tight">
-          Brands in Spotlight
+          {t('home.brandsSpotlight')}
         </h2>
         <div className="grid grid-cols-3 gap-2">
           {items.map((card, idx) => (
@@ -44,17 +46,17 @@ const BrandsSpotlight = ({ items }) => {
                   loading="lazy"
                   onError={(e) => {
                     e.target.style.display = 'none';
-                    e.target.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-[8px]">No Image</div>';
+                    e.target.parentElement.innerHTML = `<div class="w-full h-full flex items-center justify-center text-gray-400 text-[8px]">${t('common.noImage') || 'No Image'}</div>`;
                   }}
                 />
-                <div className="absolute top-1 right-1 bg-black/10 backdrop-blur-sm text-white text-[6px] px-1 py-0.5 rounded-sm font-bold border border-white/20">AD</div>
+                <div className="absolute top-1 right-1 bg-black/10 backdrop-blur-sm text-white text-[6px] px-1 py-0.5 rounded-sm font-bold border border-white/20">{t('common.ad') || 'AD'}</div>
                 <div className="absolute bottom-0 left-0 right-0 bg-[#ff0000] text-white text-center py-0.5 text-[8.5px] font-black leading-tight">
                   {card.title}
                 </div>
               </div>
               <div className="text-center px-0.5">
                 <p className="text-[9px] font-bold text-slate-800 leading-tight line-clamp-1">{card.sub}</p>
-                <p className="text-[8px] font-medium text-gray-400 line-clamp-1">Sponsored</p>
+                <p className="text-[8px] font-medium text-gray-400 line-clamp-1">{t('common.sponsored')}</p>
               </div>
             </div>
           ))}
@@ -62,14 +64,14 @@ const BrandsSpotlight = ({ items }) => {
       </div>
 
       {/* Desktop view (Purple/Indigo style banner layout mimicking the "People also viewed" container structure) */}
-      <div className="hidden md:block md:max-w-6xl md:mx-auto md:px-2 md:mt-6">
+      <div className="hidden md:block md:max-w-[1600px] md:mx-auto md:px-2 md:mt-6">
         {/* Banner Header with background color and rounded-t corners */}
         <div className="bg-[#7c3aed] text-white px-6 py-4 rounded-t-3xl flex items-center justify-between shadow-sm">
           <h2 className="text-[17px] font-black uppercase tracking-wider">
-            Brands in Spotlight
+            {t('home.brandsSpotlight')}
           </h2>
           <div className="flex items-center gap-1.5 opacity-80 text-[11px] font-black">
-            <span>⭐ SPONSORED</span>
+            <span>⭐ {t('common.sponsored').toUpperCase()}</span>
           </div>
         </div>
 
@@ -90,7 +92,7 @@ const BrandsSpotlight = ({ items }) => {
                     className="h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
-                  <div className="absolute top-3 right-3 bg-black/10 backdrop-blur-sm text-white text-[8px] px-1.5 py-0.5 rounded font-black border border-white/20">AD</div>
+                  <div className="absolute top-3 right-3 bg-black/10 backdrop-blur-sm text-white text-[8px] px-1.5 py-0.5 rounded font-black border border-white/20">{t('common.ad') || 'AD'}</div>
                 </div>
 
                 {/* Content placed below the image box */}

@@ -23,23 +23,23 @@ const KeepShopping = ({ items }) => {
   }, [navigate]);
 
   return (
-    <div className="px-3 mt-4 md:max-w-6xl md:mx-auto">
-      <div className="bg-gradient-to-br from-orange-50 to-pink-50 rounded-2xl p-4 md:p-6 shadow-sm border border-white">
-        <h2 className="text-slate-800 mb-3 md:text-center md:mb-5" style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 700, fontSize: '18px', lineHeight: 1.2, letterSpacing: '-0.3px' }}>
+    <div className="px-3 mt-4 md:max-w-[1600px] md:mx-auto">
+      <div className="bg-gradient-to-br from-orange-50 to-pink-50 rounded-2xl p-4 md:p-8 shadow-sm border border-white">
+        <h2 className="text-slate-800 mb-3 md:text-center md:mb-6" style={{ fontFamily: "'Inter', Arial, sans-serif", fontWeight: 800, fontSize: '20px', lineHeight: 1.2, letterSpacing: '-0.3px' }}>
           Keep shopping for these
         </h2>
-        <div className="flex overflow-x-auto gap-3 no-scrollbar pb-1 touch-pan-y md:justify-center md:gap-6 md:overflow-x-visible" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <div className="flex overflow-x-auto gap-3 no-scrollbar pb-1 touch-pan-y md:justify-center md:gap-8 md:overflow-x-visible" style={{ WebkitOverflowScrolling: 'touch' }}>
           {items.map((item, idx) => (
             <div
               key={idx}
               onClick={() => handleItemClick(item)}
-              className="bg-white rounded-xl overflow-hidden min-w-[110px] w-[110px] shadow-sm flex flex-col active:scale-95 cursor-pointer transition-transform"
+              className="bg-white rounded-2xl overflow-hidden min-w-[110px] w-[110px] md:w-[220px] md:min-w-[220px] shadow-sm hover:shadow-md flex flex-col active:scale-95 cursor-pointer transition-all duration-300 transform hover:-translate-y-1"
             >
-              <div className="aspect-square bg-white flex items-center justify-center p-2">
+              <div className="aspect-square bg-white flex items-center justify-center p-2 md:p-4">
                 <img
                   src={item.img}
                   alt={item.label}
-                  className="w-full h-full object-contain mix-blend-multiply"
+                  className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
                   loading="lazy"
                   width="110"
                   height="110"
@@ -49,9 +49,9 @@ const KeepShopping = ({ items }) => {
                   }}
                 />
               </div>
-              <div className="p-2 border-t border-gray-50">
-                <p className="text-[10px] font-bold text-gray-500 leading-tight truncate uppercase tracking-tight">{item.label}</p>
-                <p className="text-[11px] font-bold text-[#084224] uppercase tracking-wider mt-0.5">View More</p>
+              <div className="p-2.5 md:p-4 border-t border-gray-50 flex-1 flex flex-col justify-between">
+                <p className="text-[10px] md:text-[12px] font-bold text-gray-500 leading-tight truncate uppercase tracking-tight">{item.label}</p>
+                <p className="text-[11px] md:text-[13px] font-black text-[#084224] uppercase tracking-wider mt-1 md:mt-2">View More</p>
               </div>
             </div>
           ))}

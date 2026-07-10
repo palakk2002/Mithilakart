@@ -35,7 +35,7 @@ const StillLookingSection = ({ items }) => {
 
   return (
     <div className="px-2 mt-1.5 mb-1">
-      <div className="bg-[#084224] rounded-xl p-2 md:p-6 shadow-sm relative overflow-hidden md:max-w-6xl md:mx-auto">
+      <div className="bg-[#084224] rounded-xl p-2 md:p-6 shadow-sm relative overflow-hidden md:max-w-[1600px] md:mx-auto">
         {/* Diagonal Stripe Pattern */}
         <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{
           backgroundImage: 'linear-gradient(135deg, #fff 25%, transparent 25%, transparent 50%, #fff 50%, #fff 75%, transparent 75%, transparent)',

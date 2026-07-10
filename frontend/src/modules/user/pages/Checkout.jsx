@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   ArrowLeft, CheckCircle2, ChevronRight, ShieldCheck, 
   Star, Truck, CheckCircle, Zap, Loader2, IndianRupee, CreditCard
 } from 'lucide-react';
+import { parsePrice, formatPrice } from '../../../shared/utils/priceFormatter';
 import useAccountStore from '../../../store/useAccountStore';
 import ElectronicsImg from '../../../assets/products/product04.jpg';
 
 const Checkout = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(2); // 1: Address, 2: Order Summary, 3: Payment
@@ -26,15 +29,45 @@ const Checkout = () => {
   const primaryBorder = isMithilakFlow ? 'border-[#7c3aed]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#084224]');
   const shopNowLink = isMithilakFlow ? '/mithilak' : isFreshGroceryFlow ? '/fresh-grocery' : (isQuickShopFlow ? '/quick-shop' : '/vendor/home');
 
-  const product = location.state?.product || {
+  const defaultProduct = {
     name: 'EVOFOX Blaze Wired Ambidextrous Gaming Mouse',
     price: 622,
     oldPrice: 1299,
     discount: '52%',
     image: ElectronicsImg,
     rating: '4.5',
-    reviews: '5,960'
+    reviews: '5,960',
+    qty: 1
   };
+
+  const [checkoutItems, setCheckoutItems] = useState([defaultProduct]);
+
+  useEffect(() => {
+    if (location.state?.product) {
+      setCheckoutItems([location.state.product]);
+    } else {
+      try {
+        const items = JSON.parse(localStorage.getItem('userCart') || '[]');
+        if (items.length > 0) {
+          setCheckoutItems(items);
+        } else {
+          setCheckoutItems([defaultProduct]);
+        }
+      } catch (e) {
+        setCheckoutItems([defaultProduct]);
+      }
+    }
+  }, [location.state]);
+
+  const totalPrice = checkoutItems.reduce((acc, item) => {
+    return acc + parsePrice(item.price) * parsePrice(item.qty || 1);
+  }, 0);
+
+  const totalOldPrice = checkoutItems.reduce((acc, item) => {
+    return acc + parsePrice(item.oldPrice || item.price) * parsePrice(item.qty || 1);
+  }, 0);
+
+  const firstItem = checkoutItems[0] || defaultProduct;
 
   const address = {
     name: 'Mukesh Jinodiya',
@@ -57,11 +90,11 @@ const Checkout = () => {
         id: `OD${Math.floor(Math.random() * 1000000000)}`,
         status: 'Confirmed',
         date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
-        items: [{
-          name: product.name,
-          price: product.price,
-          image: product.image
-        }]
+        items: checkoutItems.map(item => ({
+          name: item.name,
+          price: item.price,
+          image: item.image || item.img
+        }))
       };
 
       setTimeout(() => {
@@ -87,7 +120,7 @@ const Checkout = () => {
           <div className={`w-7 h-7 rounded-full ${primaryBg} text-white flex items-center justify-center text-[11px] font-black shadow-xs`}>
             <CheckCircle2 size={15} />
           </div>
-          <span className="text-[10px] font-black text-slate-550 uppercase tracking-wider">Address</span>
+          <span className="text-[10px] font-black text-slate-550 uppercase tracking-wider">{t('address.title')}</span>
         </div>
 
         {/* Step 2: Order Summary */}
@@ -95,7 +128,7 @@ const Checkout = () => {
           <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-black transition-all shadow-xs ${currentStep >= 2 ? `${primaryBg} text-white` : 'bg-white text-slate-400'}`}>
             {currentStep > 2 ? <CheckCircle2 size={15} /> : '2'}
           </div>
-          <span className={`text-[10px] font-black uppercase tracking-wider ${currentStep === 2 ? primaryText : 'text-slate-450'}`}>Summary</span>
+          <span className={`text-[10px] font-black uppercase tracking-wider ${currentStep === 2 ? primaryText : 'text-slate-450'}`}>{t('checkout.orderSummary')}</span>
         </div>
 
         {/* Step 3: Payment */}
@@ -103,7 +136,7 @@ const Checkout = () => {
           <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-black transition-all shadow-xs ${currentStep === 3 ? `${primaryBg} text-white` : 'bg-white text-slate-400'}`}>
             3
           </div>
-          <span className={`text-[10px] font-black uppercase tracking-wider ${currentStep === 3 ? primaryText : 'text-slate-450'}`}>Payment</span>
+          <span className={`text-[10px] font-black uppercase tracking-wider ${currentStep === 3 ? primaryText : 'text-slate-450'}`}>{t('checkout.paymentMethod')}</span>
         </div>
       </div>
     </div>
@@ -114,71 +147,85 @@ const Checkout = () => {
       {/* Deliver To */}
       <div className="bg-white rounded-[24px] p-4 border border-slate-100/50 shadow-[0_4px_16px_rgba(0,0,0,0.01)]">
         <div className="flex justify-between items-center mb-3">
-          <h3 className="text-[13px] font-black text-slate-800 uppercase tracking-wider">Delivery Address</h3>
-          <button className={`${primaryText} text-[11px] font-black uppercase border border-slate-150 px-4 py-1.5 rounded-full hover:bg-slate-50 active:scale-95 transition-transform`}>Change</button>
+          <h3 className="text-[13px] font-black text-slate-800 uppercase tracking-wider">{t('checkout.selectAddress')}</h3>
+          <button 
+            onClick={() => navigate('/profile/addresses')}
+            className={`${primaryText} text-[11px] font-black uppercase border border-slate-150 px-4 py-1.5 rounded-full hover:bg-slate-50 active:scale-95 transition-transform`}
+          >
+            {t('address.edit')}
+          </button>
         </div>
         <p className="text-[13.5px] font-black text-slate-800">
-          {address.name} <span className="text-[9px] bg-slate-100 text-slate-400 px-1.5 py-0.5 rounded ml-1 font-black uppercase">HOME</span>
+          {address.name} <span className="text-[9px] bg-slate-100 text-slate-400 px-1.5 py-0.5 rounded ml-1 font-black uppercase">{t('sidebar.home').toUpperCase()}</span>
         </p>
         <p className="text-[12.5px] text-slate-500 font-medium leading-relaxed mt-1.5">{address.address}</p>
         <p className="text-[12.5px] text-slate-800 font-black mt-2 tracking-tight">{address.phone}</p>
       </div>
 
-      {/* Product Item */}
-      <div className="bg-white rounded-[24px] p-4 border border-slate-100/50 shadow-[0_4px_16px_rgba(0,0,0,0.01)]">
-        <div className="flex gap-4">
-          <div className="w-20 h-20 bg-slate-50 border border-slate-100 rounded-[16px] p-1.5 flex-shrink-0 flex items-center justify-center">
-            <img src={product.image} className="w-full h-full object-contain mix-blend-multiply" alt="product" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <h4 className="text-[13.5px] font-black text-slate-800 line-clamp-1 leading-snug">{product.name}</h4>
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mt-0.5">Gaming Accessory</p>
-            <div className="flex items-center gap-1.5 mt-1.5">
-              <div className="flex items-center bg-green-700 text-white px-1.5 py-0.5 rounded-full text-[9px] font-black">
-                {product.rating} <Star size={7} fill="white" className="ml-0.5" />
+      {/* Product Items */}
+      <div className="space-y-3">
+        {checkoutItems.map((item, idx) => (
+          <div key={idx} className="bg-white rounded-[24px] p-4 border border-slate-100/50 shadow-[0_4px_16px_rgba(0,0,0,0.01)]">
+            <div className="flex gap-4">
+              <div className="w-20 h-20 bg-slate-50 border border-slate-100 rounded-[16px] p-1.5 flex-shrink-0 flex items-center justify-center">
+                <img src={item.image || item.img} className="w-full h-full object-contain mix-blend-multiply" alt="product" />
               </div>
-              <span className="text-[10.5px] text-slate-400 font-bold">({product.reviews} reviews)</span>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-[13.5px] font-black text-slate-800 line-clamp-1 leading-snug">{item.name}</h4>
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mt-0.5">{item.brand || 'Premium Brand'}</p>
+                <div className="flex items-center gap-1.5 mt-1.5">
+                  <div className="flex items-center bg-green-700 text-white px-1.5 py-0.5 rounded-full text-[9px] font-black">
+                    {item.rating || '4.3'} <Star size={7} fill="white" className="ml-0.5" />
+                  </div>
+                  <span className="text-[10.5px] text-slate-400 font-bold">({item.reviews || '120'} {t('home.ratingsTitle').toLowerCase()})</span>
+                </div>
+                <div className="flex items-center gap-2 mt-2 flex-wrap">
+                  <span className="text-[16px] font-black text-slate-900">{formatPrice(item.price)}</span>
+                  {item.oldPrice && <span className="text-[13px] text-slate-405 line-through">{t('product.mrp')} {formatPrice(item.oldPrice)}</span>}
+                  {item.discount && (
+                    <span className="border border-[#e47911] text-[#e47911] text-[9px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-tight">
+                      {item.discount}
+                    </span>
+                  )}
+                  <span className="text-[11px] text-slate-500 ml-auto font-bold">{t('common.quantity') || 'Qty'}: {item.qty || 1}</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-2 mt-2">
-              <span className="text-[14px] font-bold text-green-755">↓ {product.discount}</span>
-              <span className="text-[13px] text-slate-400 line-through">₹{product.oldPrice}</span>
-              <span className="text-[16px] font-black text-slate-900">₹{product.price}</span>
+            <div className="flex items-center gap-2 pt-3.5 border-t border-slate-50 mt-4">
+              <Truck size={16} className={primaryText} />
+              <p className="text-[12px] text-slate-800 font-medium"><span className={`italic font-black text-[10px] uppercase tracking-tighter mr-1 ${primaryText}`}>Quick</span> {t('checkout.deliveryText') || 'Delivery in 2 days'}</p>
             </div>
           </div>
-        </div>
-        <div className="flex items-center gap-2 pt-3.5 border-t border-slate-50 mt-4">
-          <Truck size={16} className={primaryText} />
-          <p className="text-[12px] text-slate-800 font-medium"><span className={`italic font-black text-[10px] uppercase tracking-tighter mr-1 ${primaryText}`}>Quick</span> Delivery in 2 days, Fri</p>
-        </div>
+        ))}
       </div>
 
       {/* Price Summary */}
       <div className="bg-white rounded-[24px] p-5 shadow-[0_4px_16px_rgba(0,0,0,0.01)] border border-slate-100/50 space-y-3.5 mb-28">
         <div className="flex justify-between items-center text-[13px] text-slate-500 font-bold">
-          <span>MRP</span>
-          <span className="text-slate-800 font-black">₹{product.oldPrice}</span>
+          <span>{t('product.mrp')}</span>
+          <span className="text-slate-800 font-black">{formatPrice(totalOldPrice)}</span>
         </div>
         <div className="flex justify-between items-center text-[13px] text-slate-500 font-bold">
-          <span>Platform Fees</span>
+          <span>{t('checkout.platformFees') || 'Platform Fees'}</span>
           <span className="text-slate-800 font-black">₹19</span>
         </div>
         <div className="flex justify-between items-center text-[13px] text-slate-500 font-bold">
-          <span>Product Discount</span>
-          <span className="text-green-750 font-black">- ₹{product.oldPrice - product.price}</span>
+          <span>{t('checkout.productDiscount') || 'Product Discount'}</span>
+          <span className="text-green-750 font-black">-{formatPrice(totalOldPrice - totalPrice)}</span>
         </div>
         <div className="border-t border-dashed border-slate-200 my-2" />
         <div className="flex justify-between items-center text-[14.5px] font-black text-slate-800">
-          <span>Total Amount</span>
-          <span className="text-[18px] text-slate-900">₹{product.price + 19}</span>
+          <span>{t('cart.totalAmount')}</span>
+          <span className="text-[18px] text-slate-900">{formatPrice(totalPrice + 19)}</span>
         </div>
         
         <div className="bg-emerald-50/50 px-4 py-2.5 rounded-full border border-emerald-100 flex items-center justify-center gap-2 mt-4 shadow-2xs">
            <Zap size={13} className="text-emerald-700 fill-emerald-700" />
-           <p className="text-[11.5px] font-black text-emerald-800">You'll save ₹{product.oldPrice - product.price} on this order!</p>
+           <p className="text-[11.5px] font-black text-emerald-800">{t('cart.savings')} {formatPrice(totalOldPrice - totalPrice)}!</p>
         </div>
 
         <p className="text-[10px] text-slate-404 text-center leading-relaxed font-bold pt-2">
-          By continuing with the order, you confirm that you agree to Mithilakart's <span className={`${primaryText} underline`}>Terms of Use</span> and <span className={`${primaryText} underline`}>Privacy Policy</span>
+          {t('auth.termsText')} <span className={`${primaryText} underline`}>{t('auth.termsOfUse')}</span> {t('auth.and')} <span className={`${primaryText} underline`}>{t('auth.privacyPolicy')}</span>
         </p>
       </div>
     </div>
@@ -190,7 +237,7 @@ const Checkout = () => {
       <div className="bg-[#f4faf6] px-4 py-4 border border-[#e1f0e7] shadow-[0_4px_16px_rgba(8,66,36,0.02)] mx-4 mt-2 rounded-[24px]">
         <div className="flex justify-between items-center mb-3">
           <span className="text-[13.5px] font-black text-slate-600">Total Amount</span>
-          <span className="text-[18px] font-black text-slate-900 tracking-tight">₹{product.price + 19}</span>
+          <span className="text-[18px] font-black text-slate-900 tracking-tight">{formatPrice(totalPrice + 19)}</span>
         </div>
         <div className="flex justify-between items-center mb-3 border-t border-slate-200/50 pt-3">
           <span className="text-[13px] text-slate-400 font-bold border-b border-dashed border-slate-350">Bank cashback</span>
@@ -198,7 +245,7 @@ const Checkout = () => {
         </div>
         <div className="flex justify-between items-center border-t border-slate-100 pt-3">
           <span className="text-[13.5px] font-black text-slate-650">Final Amount</span>
-          <span className="text-[17px] font-black text-slate-800">₹{product.price + 19 - 50}</span>
+          <span className="text-[17px] font-black text-slate-800">{formatPrice(totalPrice + 19 - 50)}</span>
         </div>
       </div>
 
@@ -252,7 +299,7 @@ const Checkout = () => {
                                 onClick={handleContinue}
                                 className={`w-full ${primaryBgHover} text-white py-3.5 rounded-full font-black uppercase text-[12px] tracking-widest mt-4 shadow-md active:scale-95 transition-transform`}
                              >
-                               Pay ₹{product.price + 19 - 50}
+                               Pay {formatPrice(totalPrice + 19 - 50)}
                              </button>
                           )}
                        </div>
@@ -378,13 +425,13 @@ const Checkout = () => {
             <div className="bg-slate-50/80 rounded-2xl p-4 border border-slate-100 text-left space-y-4">
               <div className="flex gap-4 items-center">
                 <div className="w-16 h-16 bg-white border border-slate-100 rounded-xl p-1.5 flex-shrink-0 flex items-center justify-center">
-                  <img src={product.image} className="w-full h-full object-contain mix-blend-multiply" alt="product" />
+                  <img src={firstItem.image || firstItem.img} className="w-full h-full object-contain mix-blend-multiply" alt="product" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-[13.5px] font-black text-slate-800 line-clamp-2 leading-snug">{product.name}</h4>
+                  <h4 className="text-[13.5px] font-black text-slate-800 line-clamp-2 leading-snug">{firstItem.name}</h4>
                   <div className="flex justify-between items-center mt-2">
-                    <span className="text-[14px] font-black text-slate-900">₹{product.price}</span>
-                    <span className="text-[11px] text-slate-400 font-bold">Qty: 1</span>
+                    <span className="text-[14px] font-black text-slate-900">{formatPrice(firstItem.price)}</span>
+                    <span className="text-[11px] text-slate-400 font-bold">Qty: {firstItem.qty || 1}</span>
                   </div>
                 </div>
               </div>
@@ -449,7 +496,7 @@ const Checkout = () => {
           <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Total Amount</span>
           <div className="flex items-baseline gap-1">
             <span className="text-[18px] font-black text-slate-900">
-              ₹{currentStep === 3 ? (product.price + 19 - 50) : (product.price + 19)}
+              {currentStep === 3 ? formatPrice(totalPrice + 19 - 50) : formatPrice(totalPrice + 19)}
             </span>
           </div>
         </div>

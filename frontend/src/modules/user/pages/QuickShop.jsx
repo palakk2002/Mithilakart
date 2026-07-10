@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, ChevronRight, Search, Mic, Star } from 'lucide-react';
+import { formatPrice } from '../../../shared/utils/priceFormatter';
 import CategoryCard from '../components/vendor/CategoryCard';
 
 // Import Assets (aligned with categories)
@@ -178,7 +179,10 @@ const QuickShop = () => {
     }`}>
       {/* Location Picker Bar */}
       {!isFreshGrocery && (
-        <div className="flex items-center justify-between gap-2 mb-4 bg-white/60 p-2.5 rounded-2xl border border-pink-100/30">
+        <div 
+          onClick={() => navigate('/profile/addresses')}
+          className="flex items-center justify-between gap-2 mb-4 bg-white/60 p-2.5 rounded-2xl border border-pink-100/30 cursor-pointer active:scale-98 transition-transform"
+        >
           <div className="flex items-center gap-1.5 min-w-0">
             <div className="w-6 h-6 rounded-full bg-slate-900 flex items-center justify-center text-white flex-shrink-0">
               <MapPin size={11} />
@@ -205,6 +209,7 @@ const QuickShop = () => {
           <input 
             type="text" 
             placeholder="Search in Minutes" 
+            onFocus={() => navigate('/search')}
             className="w-full bg-white border-2 border-[#ffb3c6]/40 focus:border-[#d6186d] rounded-2xl pl-10 pr-10 py-2.5 text-[13px] font-medium text-slate-800 placeholder:text-slate-455 outline-none shadow-xs transition-colors"
           />
           <div className="absolute inset-y-0 right-3 flex items-center cursor-pointer">
@@ -296,7 +301,10 @@ const QuickShop = () => {
           {/* Horizontal scrollable products row */}
           <div className="flex overflow-x-auto gap-3 pb-1 no-scrollbar">
             {/* Product 1 */}
-            <div className="min-w-[125px] bg-white rounded-2xl p-2 flex flex-col justify-between text-slate-800 shadow-sm relative">
+            <div 
+              onClick={() => navigate('/vendor/product-detail', { state: { product: { id: 'sd1', name: "L'Oréal Paris Hyaluron Shampoo", price: 225, oldPrice: 230, image: LorealShampoo, rating: '4.3', label: 'Assured', brand: 'L\'Oréal' } } })}
+              className="min-w-[125px] bg-white rounded-2xl p-2 flex flex-col justify-between text-slate-800 shadow-sm relative cursor-pointer active:scale-95 transition-transform"
+            >
               <div className="absolute top-2 left-2 bg-emerald-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none">
                 ↓ 2%
               </div>
@@ -308,7 +316,7 @@ const QuickShop = () => {
                   localStorage.setItem('userCart', JSON.stringify(cart));
                   window.dispatchEvent(new Event('cartUpdated'));
                 }}
-                className="w-[20px] h-[20px] absolute top-2 right-2 border border-[#d6186d]/20 bg-pink-50 rounded-full flex items-center justify-center text-[#d6186d] text-[12px] font-black cursor-pointer active:scale-90 transition-transform"
+                className="w-[20px] h-[20px] absolute top-2 right-2 border border-[#d6186d]/20 bg-pink-50 rounded-full flex items-center justify-center text-[#d6186d] text-[12px] font-black cursor-pointer active:scale-90 transition-transform z-20"
               >
                 +
               </div>
@@ -317,7 +325,7 @@ const QuickShop = () => {
               </div>
               <div>
                 <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-[8.5px] bg-slate-100 text-slate-550 px-1.5 py-0.5 rounded font-bold leading-none">200 ml</span>
+                  <span className="text-[8.5px] bg-slate-100 text-slate-555 px-1.5 py-0.5 rounded font-bold leading-none">200 ml</span>
                   <div className="flex items-center bg-emerald-100 text-emerald-800 px-1 rounded-sm text-[8px] font-black leading-none">
                     4.3 <Star size={6} fill="currentColor" className="ml-0.5" />
                   </div>
@@ -331,7 +339,10 @@ const QuickShop = () => {
             </div>
 
             {/* Product 2 */}
-            <div className="min-w-[125px] bg-white rounded-2xl p-2 flex flex-col justify-between text-slate-800 shadow-sm relative">
+            <div 
+              onClick={() => navigate('/vendor/product-detail', { state: { product: { id: 'sd2', name: "Wellcore Micronised Creatine Monohydrate", price: 530, oldPrice: 699, image: PlumShampoo, rating: '4.3', label: 'Assured', brand: 'Wellcore' } } })}
+              className="min-w-[125px] bg-white rounded-2xl p-2 flex flex-col justify-between text-slate-800 shadow-sm relative cursor-pointer active:scale-95 transition-transform"
+            >
               <div className="absolute top-2 left-2 bg-emerald-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none">
                 ↓ 24% <span className="bg-slate-800/20 px-0.5 rounded-sm">AD</span>
               </div>
@@ -343,7 +354,7 @@ const QuickShop = () => {
                   localStorage.setItem('userCart', JSON.stringify(cart));
                   window.dispatchEvent(new Event('cartUpdated'));
                 }}
-                className="w-[20px] h-[20px] absolute top-2 right-2 border border-[#d6186d]/20 bg-pink-50 rounded-full flex items-center justify-center text-[#d6186d] text-[12px] font-black cursor-pointer active:scale-90 transition-transform"
+                className="w-[20px] h-[20px] absolute top-2 right-2 border border-[#d6186d]/20 bg-pink-50 rounded-full flex items-center justify-center text-[#d6186d] text-[12px] font-black cursor-pointer active:scale-90 transition-transform z-20"
               >
                 +
               </div>
@@ -352,7 +363,7 @@ const QuickShop = () => {
               </div>
               <div>
                 <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-[8.5px] bg-slate-100 text-slate-550 px-1.5 py-0.5 rounded font-bold leading-none">122 g</span>
+                  <span className="text-[8.5px] bg-slate-100 text-slate-555 px-1.5 py-0.5 rounded font-bold leading-none">122 g</span>
                   <div className="flex items-center bg-emerald-100 text-emerald-800 px-1 rounded-sm text-[8px] font-black leading-none">
                     4.3 <Star size={6} fill="currentColor" className="ml-0.5" />
                   </div>
@@ -369,7 +380,10 @@ const QuickShop = () => {
             </div>
 
             {/* Product 3 */}
-            <div className="min-w-[125px] bg-white rounded-2xl p-2 flex flex-col justify-between text-slate-800 shadow-sm relative">
+            <div 
+              onClick={() => navigate('/vendor/product-detail', { state: { product: { id: 'sd3', name: "Pilgrim 10% Vitamin C Face Serum", price: 202, oldPrice: 249, image: LipGloss, rating: '4.1', label: 'Assured', brand: 'Pilgrim' } } })}
+              className="min-w-[125px] bg-white rounded-2xl p-2 flex flex-col justify-between text-slate-800 shadow-sm relative cursor-pointer active:scale-95 transition-transform"
+            >
               <div className="absolute top-2 left-2 bg-emerald-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none">
                 ↓ 19%
               </div>
@@ -381,7 +395,7 @@ const QuickShop = () => {
                   localStorage.setItem('userCart', JSON.stringify(cart));
                   window.dispatchEvent(new Event('cartUpdated'));
                 }}
-                className="w-[20px] h-[20px] absolute top-2 right-2 border border-[#d6186d]/20 bg-pink-50 rounded-full flex items-center justify-center text-[#d6186d] text-[12px] font-black cursor-pointer active:scale-90 transition-transform"
+                className="w-[20px] h-[20px] absolute top-2 right-2 border border-[#d6186d]/20 bg-pink-50 rounded-full flex items-center justify-center text-[#d6186d] text-[12px] font-black cursor-pointer active:scale-90 transition-transform z-20"
               >
                 +
               </div>
@@ -390,7 +404,7 @@ const QuickShop = () => {
               </div>
               <div>
                 <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-[8.5px] bg-slate-100 text-slate-550 px-1.5 py-0.5 rounded font-bold leading-none">10 ml</span>
+                  <span className="text-[8.5px] bg-slate-100 text-slate-555 px-1.5 py-0.5 rounded font-bold leading-none">10 ml</span>
                   <div className="flex items-center bg-emerald-100 text-emerald-800 px-1 rounded-sm text-[8px] font-black leading-none">
                     4.1 <Star size={6} fill="currentColor" className="ml-0.5" />
                   </div>
@@ -438,7 +452,10 @@ const QuickShop = () => {
           <div className="bg-white border-x border-b border-slate-100 rounded-b-3xl p-6 shadow-md">
             <div className="grid grid-cols-3 gap-6">
               {/* Product 1 */}
-              <div className="flex flex-col gap-3.5 cursor-pointer group active:scale-95 transition-transform relative">
+              <div 
+                onClick={() => navigate('/vendor/product-detail', { state: { product: { id: 'sd1', name: "L'Oréal Paris Hyaluron Shampoo", price: 225, oldPrice: 230, image: LorealShampoo, rating: '4.3', label: 'Assured', brand: 'L\'Oréal' } } })}
+                className="flex flex-col gap-3.5 cursor-pointer group active:scale-95 transition-transform relative"
+              >
                 <div className="absolute top-3 left-3 z-10 bg-emerald-600 text-white text-[8.5px] font-black px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none">
                   ↓ 2%
                 </div>
@@ -480,7 +497,10 @@ const QuickShop = () => {
               </div>
 
               {/* Product 2 */}
-              <div className="flex flex-col gap-3.5 cursor-pointer group active:scale-95 transition-transform relative">
+              <div 
+                onClick={() => navigate('/vendor/product-detail', { state: { product: { id: 'sd2', name: "Wellcore Micronised Creatine Monohydrate", price: 530, oldPrice: 699, image: PlumShampoo, rating: '4.3', label: 'Assured', brand: 'Wellcore' } } })}
+                className="flex flex-col gap-3.5 cursor-pointer group active:scale-95 transition-transform relative"
+              >
                 <div className="absolute top-3 left-3 z-10 bg-emerald-600 text-white text-[8.5px] font-black px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none">
                   ↓ 24% <span className="bg-slate-800/20 px-0.5 rounded-sm ml-0.5">AD</span>
                 </div>
@@ -508,7 +528,7 @@ const QuickShop = () => {
                 {/* Content placed below the image box */}
                 <div className="px-1">
                   <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-[8.5px] bg-slate-100 text-slate-550 px-1.5 py-0.5 rounded font-bold leading-none">122 g</span>
+                    <span className="text-[8.5px] bg-slate-100 text-slate-555 px-1.5 py-0.5 rounded font-bold leading-none">122 g</span>
                     <div className="flex items-center bg-emerald-100 text-emerald-800 px-1 rounded-sm text-[8px] font-black leading-none">
                       4.3 <Star size={6} fill="currentColor" className="ml-0.5" />
                     </div>
@@ -518,14 +538,17 @@ const QuickShop = () => {
                     <span className="text-[11px] text-slate-400 line-through">₹699</span>
                     <span className="text-[13px] font-black text-slate-900">₹530</span>
                   </div>
-                  <div className="mt-2 bg-amber-500/10 px-2 py-1 rounded text-[10px] font-bold text-amber-800 w-fit">
+                  <div className="mt-2 bg-amber-550/10 px-2 py-1 rounded text-[10px] font-bold text-amber-800 w-fit">
                     ₹400 with UPI offer
                   </div>
                 </div>
               </div>
 
               {/* Product 3 */}
-              <div className="flex flex-col gap-3.5 cursor-pointer group active:scale-95 transition-transform relative">
+              <div 
+                onClick={() => navigate('/vendor/product-detail', { state: { product: { id: 'sd3', name: "Pilgrim 10% Vitamin C Face Serum", price: 202, oldPrice: 249, image: LipGloss, rating: '4.1', label: 'Assured', brand: 'Pilgrim' } } })}
+                className="flex flex-col gap-3.5 cursor-pointer group active:scale-95 transition-transform relative"
+              >
                 <div className="absolute top-3 left-3 z-10 bg-emerald-600 text-white text-[8.5px] font-black px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none">
                   ↓ 19%
                 </div>
@@ -553,7 +576,7 @@ const QuickShop = () => {
                 {/* Content placed below the image box */}
                 <div className="px-1">
                   <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-[8.5px] bg-slate-100 text-slate-550 px-1.5 py-0.5 rounded font-bold leading-none">10 ml</span>
+                    <span className="text-[8.5px] bg-slate-100 text-slate-555 px-1.5 py-0.5 rounded font-bold leading-none">10 ml</span>
                     <div className="flex items-center bg-emerald-100 text-emerald-800 px-1 rounded-sm text-[8px] font-black leading-none">
                       4.1 <Star size={6} fill="currentColor" className="ml-0.5" />
                     </div>
@@ -585,7 +608,7 @@ const QuickShop = () => {
       </div>
 
       {/* Today's special deals section */}
-      <div className={`p-4 rounded-3xl mb-6 shadow-[0_4px_12px_rgba(0,0,0,0.015)] transition-colors duration-200 md:max-w-6xl md:mx-auto md:w-full md:p-6 ${
+      <div className={`p-4 rounded-3xl mb-6 shadow-[0_4px_12px_rgba(0,0,0,0.015)] transition-colors duration-200 md:max-w-[1600px] md:mx-auto md:w-full md:p-6 ${
         isFreshGrocery ? 'bg-[#FFF0A0]/40 border border-[#7A3E17]/10' : 'bg-[#fbe8f3]'
       }`}>
         <h2 className="text-[17px] font-black text-slate-800 mb-4 pl-1">
@@ -593,31 +616,31 @@ const QuickShop = () => {
         </h2>
 
         {/* Sub-tabs List */}
-        <div className="flex overflow-x-auto gap-4 mb-5 no-scrollbar md:justify-center md:gap-6 md:overflow-x-visible">
+        <div className="flex overflow-x-auto gap-4 mb-5 no-scrollbar md:justify-center md:gap-14 md:overflow-x-visible">
           {SPECIAL_DEALS_TABS.map((tab) => {
             const isSelected = activeSpecialTab === tab.id;
             return (
               <div 
                 key={tab.id} 
                 onClick={() => setActiveSpecialTab(tab.id)} 
-                className="flex flex-col items-center cursor-pointer flex-shrink-0 w-[72px]"
+                className="flex flex-col items-center cursor-pointer flex-shrink-0 w-[72px] md:w-[110px] group"
               >
-                <div className={`w-14 h-14 rounded-full overflow-hidden flex items-center justify-center p-0.5 transition-all ${
+                <div className={`w-14 h-14 md:w-20 md:h-20 rounded-2xl md:rounded-full overflow-hidden flex items-center justify-center p-0.5 transition-all duration-300 ${
                   isSelected 
-                    ? (isFreshGrocery ? 'bg-[#FFF0A0] shadow-xs' : 'bg-[#ffd3e8] shadow-sm scale-105')
-                    : 'bg-white'
+                    ? (isFreshGrocery ? 'bg-[#FFF0A0] shadow-xs md:ring-2 md:ring-offset-2 md:ring-[#7A3E17]' : 'bg-[#ffd3e8] shadow-sm scale-105 md:ring-2 md:ring-offset-2 md:ring-[#d6186d]')
+                    : 'bg-white hover:scale-105 shadow-xs'
                 }`}>
-                  <img src={tab.img} alt={tab.name} className="w-full h-full rounded-full object-cover" />
+                  <img src={tab.img} alt={tab.name} className="w-full h-full rounded-2xl md:rounded-full object-cover" />
                 </div>
-                <span className={`text-[9px] font-black text-center mt-2 leading-tight line-clamp-2 h-[24px] ${
+                <span className={`text-[9px] md:text-[12px] font-black text-center mt-2 leading-tight line-clamp-2 h-[24px] md:h-auto md:max-w-[100px] transition-colors ${
                   isSelected 
                     ? (isFreshGrocery ? 'text-[#7A3E17]' : 'text-[#d6186d]') 
-                    : 'text-slate-600'
+                    : 'text-slate-600 group-hover:text-slate-900'
                 }`}>
                   {tab.name}
                 </span>
                 {isSelected && (
-                  <div className={`w-8 h-[2.5px] rounded-full mt-1.5 ${
+                  <div className={`w-8 md:w-12 h-[2.5px] md:h-[3px] rounded-full mt-1.5 md:mt-2 ${
                     isFreshGrocery ? 'bg-[#7A3E17]' : 'bg-[#d6186d]'
                   }`} />
                 )}
@@ -635,7 +658,7 @@ const QuickShop = () => {
                 localStorage.setItem('isQuickShopFlow', 'true');
                 navigate('/vendor/product-detail', { state: { product: { ...prod, image: prod.img, qty: 1 } } });
               }}
-              className="min-w-[130px] bg-white rounded-2xl p-2.5 flex flex-col justify-between relative shadow-xs cursor-pointer active:scale-[0.99] transition-transform"
+              className="min-w-[130px] bg-white rounded-2xl p-1.5 md:p-2.5 flex flex-col justify-between relative shadow-xs cursor-pointer active:scale-[0.99] transition-transform"
             >
               {/* Discount Badge */}
               <div className="absolute top-2 left-2 bg-[#008542] text-white text-[8px] font-black px-1.5 py-0.5 rounded-md flex items-center gap-0.5 leading-none">
@@ -643,7 +666,7 @@ const QuickShop = () => {
               </div>
               
               {/* Product Image */}
-              <div className="h-20 flex items-center justify-center my-3.5">
+              <div className="h-16 md:h-20 flex items-center justify-center my-2 md:my-3.5">
                 <img src={prod.img} alt={prod.name} className="max-h-full object-contain mix-blend-multiply" />
               </div>
               
@@ -676,13 +699,13 @@ const QuickShop = () => {
                 <span className="text-[8.5px] bg-slate-100 text-slate-555 px-1.5 py-0.5 rounded font-bold leading-none">{prod.weight}</span>
                 <h4 className="text-[10px] font-black leading-tight text-slate-800 mt-1.5 line-clamp-2 h-7">{prod.name}</h4>
                 <div className="flex items-baseline gap-1 mt-1.5">
-                  <span className="text-[9px] text-slate-400 line-through">₹{prod.oldPrice}</span>
-                  <span className="text-[11.5px] font-black text-slate-900">₹{prod.price}</span>
+                  <span className="text-[9px] text-slate-400 line-through">{formatPrice(prod.oldPrice)}</span>
+                  <span className="text-[11.5px] font-black text-slate-900">{formatPrice(prod.price)}</span>
                 </div>
                 
                 {/* XtraSaver */}
                 <div className="mt-2 bg-yellow-100 text-yellow-900 border border-yellow-200/50 px-2 py-1 rounded-lg text-[8.5px] font-black flex justify-between items-center cursor-pointer leading-none">
-                  <span>🔒 ₹{prod.xtraPrice} XtraSaver</span>
+                  <span>🔒 {formatPrice(prod.xtraPrice)} XtraSaver</span>
                   <span className="text-[7px] text-yellow-755 font-bold">&gt;</span>
                 </div>
               </div>
@@ -730,7 +753,7 @@ const QuickShop = () => {
       </div>
 
       {/* Existing category sections (Desktop View - copy style & structure of Categories banner + white panel) */}
-      <div className="hidden md:block md:max-w-6xl md:mx-auto md:px-4 md:py-6 space-y-8">
+      <div className="hidden md:block md:max-w-[1600px] md:mx-auto md:px-4 md:py-6 space-y-8">
         {filteredSections.map((section, sIdx) => (
           <div key={sIdx} className="flex flex-col">
             {/* Header Banner */}
@@ -741,10 +764,10 @@ const QuickShop = () => {
                 {section.title}
               </h2>
             </div>
-
+ 
             {/* White container panel containing the category cards */}
             <div className="bg-white border-x border-b border-slate-100 rounded-b-3xl p-6 shadow-md">
-              <div className="grid grid-cols-4 gap-6 justify-items-center">
+              <div className="grid grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-x-8 gap-y-8 justify-items-center">
                 {section.items.map((item, itemIdx) => (
                   <div
                     key={itemIdx}
@@ -752,14 +775,14 @@ const QuickShop = () => {
                       localStorage.setItem('isQuickShopFlow', 'true');
                       navigate(isFreshGrocery ? '/fresh-grocery/category' : '/quick-shop/category', { state: { category: item.name } });
                     }}
-                    className="flex flex-col items-center gap-3 cursor-pointer group active:scale-95 transition-transform w-[180px]"
+                    className="flex flex-col items-center gap-3.5 cursor-pointer group active:scale-95 transition-transform w-full max-w-[160px]"
                   >
                     {/* Soft grey rounded image container box */}
-                    <div className="relative w-full aspect-square rounded-[24px] overflow-hidden bg-slate-50 border border-slate-100/60 flex items-center justify-center p-5 group-hover:bg-slate-100/65 transition-colors duration-300">
+                    <div className="relative w-full aspect-square rounded-[24px] overflow-hidden bg-slate-50 border border-slate-100/60 flex items-center justify-center p-0 group-hover:bg-slate-100/65 transition-colors duration-300">
                       <img
                         src={item.img}
                         alt={item.name}
-                        className="h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
                     </div>

@@ -7,6 +7,7 @@
     "deliverTo": "पहुंचाबी:",
     "viewCart": "कार्ट देखी",
     "searchPlaceholder": "उत्पाद, श्रेणी सभ खोजी...",
+    "searchInGrocery": "राशन में खोजी",
     "quickShop": "त्वरित दुकान (क्विक शॉप)",
     "mithilak": "मिथिलाक",
     "xtraSaver": "एक्स्ट्रा सेवर",
@@ -22,7 +23,33 @@
     "myWallet": "हमर बटुआ (वॉलेट)",
     "myOrders": "हमर ऑर्डर्स",
     "logout": "बाहर निकलू (लॉगआउट)",
-    "login": "लॉगिन / साइनअप"
+    "login": "लॉगिन / साइनअप",
+    "hello": "नमस्ते, {{name}}",
+    "trending": "ट्रेंडिंग",
+    "bestsellers": "सबसे बेसी बिकय बला",
+    "newReleases": "नबका रिलीज",
+    "moversAndShakers": "मूवर्स आ शेकर्स",
+    "digitalContent": "डिजिटल सामग्री आ डिवाइस",
+    "echoAlexa": "इको आ एलेक्सा",
+    "fireTv": "फायर टीवी",
+    "kindleBooks": "किंडल ई-रीडर्स आ ई-बुक्स",
+    "audibleAudiobooks": "ऑडिबल ऑडियोबुक्स",
+    "primeVideo": "अमेज़न प्राइम वीडियो",
+    "primeMusic": "अमेज़न प्राइम म्यूजिक",
+    "mobilesComputers": "मोबाइल, कंप्यूटर",
+    "tvAppliancesElectronics": "टीवी, उपकरण, इलेक्ट्रॉनिक्स",
+    "mensFashion": "पुरुष सभक फैशन",
+    "womensFashion": "महिला सभक फैशन",
+    "seeAll": "सभ देखी",
+    "programsAndFeatures": "कार्यक्रम आ विशेषताएं",
+    "giftCards": "गिफ्ट कार्ड आ मोबाइल रिचार्ज",
+    "launchpad": "अमेज़न लॉन्चपैड",
+    "business": "अमेज़न बिजनेस",
+    "handloomHandicrafts": "हथकरघा आ हस्तशिल्प",
+    "helpAndSettings": "मदद आ सेटिंग्स",
+    "yourAccount": "अपनेक खाता",
+    "customerService": "ग्राहक सेवा",
+    "signOut": "बाहर निकलू"
   },
   "home": {
     "title": "मिथिलाकार्ट",
@@ -96,13 +123,16 @@
     "subtotal": "उप-कुल दाम",
     "shippingAndTax": "पहुंचावेक दाम आ टैक्स",
     "items": "सामान",
+    "item": "सामान",
     "deliveryCharges": "पहुंचायब शुल्क",
     "free": "मुफ़्त",
     "couponDiscount": "कूपन छूट",
     "applyCoupon": "कूपन लागू करू",
     "savings": "अहाँ बचेली",
     "safePayments": "१००% सुरक्षित भुगतान",
-    "paymentsSubtitle": "मिथिलाकार्ट पे। सुरक्षित भुगतान। आसान वापसी।"
+    "paymentsSubtitle": "मिथिलाकार्ट पे। सुरक्षित भुगतान। आसान वापसी।",
+    "addToCart": "बैग में जोड़ी",
+    "buyNow": "एखन खरीदू"
   },
   "profile": {
     "title": "हमर खाता",
@@ -137,11 +167,14 @@
   "checkout": {
     "title": "चेकआउट",
     "selectAddress": "पहुंचावेक पता चुनी",
-    "paymentMethod": "भुगतानक तरीका चुनी",
+    "paymentMethod": "भुगतान",
     "placeOrder": "ऑर्डर सबमिट करू",
     "cod": "पहुंचला पर दाम (COD)",
     "online": "यूपीआई / कार्ड / नेटबैंकिंग",
-    "orderSummary": "ऑर्डरक सारांश"
+    "orderSummary": "ऑर्डरक सारांश",
+    "platformFees": "प्लेटफॉर्म शुल्क",
+    "productDiscount": "सामान पर छूट",
+    "deliveryText": "२ दिन में पहुंचावेब"
   },
   "categories": {
     "beautyCare": "सौंदर्य आ देखभाल",
@@ -153,7 +186,16 @@
     "trendyFashion": "ट्रेंडी फैशन",
     "electricals": "इलेक्ट्रिकल्स",
     "bestDeals": "सर्वश्रेष्ठ सौदे",
-    "lipCare": "ओठक देखभाल"
+    "lipCare": "ओठक देखभाल",
+    "for-you": "अहाँक लेल",
+    "beauty": "सौंदर्य",
+    "gifting": "उपहार",
+    "electronics": "इलेक्ट्रॉनिक्स",
+    "jewellery": "आभूषण",
+    "toys": "खिलौना सभ",
+    "stationery": "स्टेशनरी",
+    "fashion": "फैशन",
+    "electrical": "इलेक्ट्रिकल"
   },
   "common": {
     "loading": "लोड भ रहल अछि...",
@@ -162,6 +204,14 @@
     "submit": "जमा करू",
     "cancel": "रद्द करू",
     "save": "सुरक्षित करू",
-    "confirm": "की अहाँ निश्चित छी?"
+    "confirm": "की अहाँ निश्चित छी?",
+    "ad": "विज्ञापन",
+    "sponsored": "प्रायोजित"
+  },
+  "product": {
+    "mrp": "एमआरपी",
+    "off": "छूट",
+    "deliveryTomorrow": "काल्ह धरि भेटत",
+    "selectSize": "साइज चुनी"
   }
 }

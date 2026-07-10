@@ -176,7 +176,7 @@ const Categories = () => {
             <h2 className="text-[16px] font-black text-slate-900 mb-3 tracking-tight pl-1">
               {section.title}
             </h2>
-            <div className="grid grid-cols-4 gap-x-2 gap-y-4 justify-items-center">
+            <div className="flex overflow-x-auto no-scrollbar gap-3.5 pb-1">
               {section.items.map((item, idx) => {
                 if (isQuickShopFlow || isMithilakFlow) {
                   return (

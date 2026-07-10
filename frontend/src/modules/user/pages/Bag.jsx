@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShoppingBag, Heart, ChevronRight } from 'lucide-react';
+import { formatPrice } from '../../../shared/utils/priceFormatter';
 
 const Bag = () => {
   const wishlistItems = [
@@ -28,7 +29,7 @@ const Bag = () => {
                 <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-md" />
                 <div className="flex-1">
                   <h3 className="font-bold text-slate-800">{item.name}</h3>
-                  <p className="text-primary font-bold mt-1">₹{item.price}</p>
+                  <p className="text-primary font-bold mt-1">{formatPrice(item.price)}</p>
                   <div className="mt-3 flex gap-4">
                     <button className="text-xs text-primary-dark font-bold hover:underline">Move to Cart</button>
                     <button className="text-xs text-red-500 font-bold hover:underline">Remove</button>

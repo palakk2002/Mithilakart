@@ -12,7 +12,7 @@ const ProductCard = React.memo(({ product, onProductClick, onAddToCart }) => {
 
   return (
     <div
-      className="flex flex-col cursor-pointer group"
+      className="flex flex-col cursor-pointer group w-full md:w-[240px] md:flex-shrink-0"
       onClick={() => onProductClick(product)}
     >
       <div className="relative aspect-square rounded-xl overflow-hidden bg-gray-50 border border-gray-100">
@@ -40,9 +40,12 @@ const ProductCard = React.memo(({ product, onProductClick, onAddToCart }) => {
         </h3>
 
         <div className="mt-1 flex flex-col gap-0.5">
-          <div className="flex items-center gap-1.5">
-            <span className="text-[12px] text-gray-400 line-through font-medium">₹{product.oldPrice || '1,999'}</span>
+          <div className="flex items-center gap-1.5 flex-wrap">
             <span className="text-[13px] font-black text-slate-900">₹{product.price}</span>
+            <span className="text-[10px] text-gray-400 line-through font-medium">MRP ₹{product.oldPrice || '1,999'}</span>
+            <span className="border border-[#e47911] text-[#e47911] text-[8px] px-1 py-0.2 rounded-full font-bold uppercase tracking-tight">
+              {Math.round(((parseInt((product.oldPrice || '1999').toString().replace(/,/g, '')) - parseInt(product.price?.toString().replace(/,/g, ''))) / parseInt((product.oldPrice || '1999').toString().replace(/,/g, ''))) * 100)}% OFF
+            </span>
           </div>
           <p className="text-[10px] font-bold text-[#084224] tracking-tight">
             ₹{Math.round(product.price * 0.9)} with UPI offer + more
@@ -123,7 +126,7 @@ const CategoryProductsSection = ({ selectedCategory }) => {
   if (!selectedCategory) return null;
 
   return (
-    <div id="category-products-section" className="py-2 px-3 bg-white mt-0 transition-all duration-300 relative md:max-w-6xl md:mx-auto md:py-6">
+    <div id="category-products-section" className="py-2 px-3 bg-white mt-0 transition-all duration-300 relative md:max-w-[1600px] md:mx-auto md:py-6">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[100] bg-black text-white px-6 py-3 rounded-full shadow-xl flex items-center gap-3">
@@ -138,7 +141,7 @@ const CategoryProductsSection = ({ selectedCategory }) => {
         </div>
       ) : (
         <>
-          <div className={`grid grid-cols-2 md:grid-cols-4 md:gap-x-6 md:gap-y-8 md:max-w-6xl md:mx-auto gap-x-3 gap-y-6 transition-all duration-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className={`grid grid-cols-2 md:flex md:flex-wrap md:justify-center xl:justify-between md:gap-x-8 md:gap-y-10 md:max-w-[1600px] md:mx-auto gap-x-3 gap-y-6 transition-all duration-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             {products.map((product) => (
               <ProductCard
                 key={product.id}

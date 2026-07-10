@@ -3,15 +3,11 @@ import { initReactI18next } from 'react-i18next';
 import commonEn from './locales/en/common.json';
 import commonHi from './locales/hi/common.json';
 import commonMai from './locales/mai/common.json';
-import commonBn from './locales/bn/common.json';
 
-// TODO:
-// Replace frontend JSON translations with backend language API.
 const resources = {
   en: { common: commonEn },
   hi: { common: commonHi },
-  mai: { common: commonMai },
-  bn: { common: commonBn }
+  mai: { common: commonMai }
 };
 
 const savedLanguage = localStorage.getItem('user_language') || 'en';

@@ -1,12 +1,14 @@
 import React, { useCallback } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const TopSelection = ({ items }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleProductClick = useCallback((product) => {
-    navigate('/vendor/product-detail', {
+    navigate('/product-detail', {
       state: {
         product: {
           id: Math.random().toString(36).substr(2, 9),
@@ -26,30 +28,30 @@ const TopSelection = ({ items }) => {
   return (
     <>
       {/* Mobile view (Untouched layout, only hidden on desktop) */}
-      <div className="px-3 mt-3 mb-2 md:hidden">
-        <div className="bg-gradient-to-br from-[#0a3a21] to-[#041a0f] rounded-[28px] p-4.5 shadow-[0_12px_32px_rgba(8,66,36,0.12)] border border-emerald-900/30">
+      <div className="px-2 mt-2 mb-1.5 md:hidden">
+        <div className="bg-gradient-to-br from-[#0a3a21] to-[#041a0f] rounded-[16px] p-3 shadow-[0_12px_32px_rgba(8,66,36,0.12)] border border-emerald-900/30">
           {/* Compact Header */}
-          <div className="flex justify-between items-center mb-3.5 px-1">
-            <h2 className="text-white text-[15px] font-black uppercase tracking-[0.18em]">
-              Top Selection
+          <div className="flex justify-between items-center mb-2 px-0.5">
+            <h2 className="text-white text-[12px] font-black uppercase tracking-[0.18em]">
+              {t('home.topSelection')}
             </h2>
             <button
-              onClick={() => navigate('/vendor/all-offers')}
-              className="bg-white/95 backdrop-blur-md text-[#084224] p-1.5 rounded-full shadow-sm active:scale-90 transition-transform flex items-center justify-center"
+              onClick={() => navigate('/all-offers')}
+              className="bg-white/95 backdrop-blur-md text-[#084224] p-1 rounded-full shadow-sm active:scale-90 transition-transform flex items-center justify-center"
             >
-              <ChevronRight size={16} strokeWidth={3} />
+              <ChevronRight size={13} strokeWidth={3} />
             </button>
           </div>
 
           {/* Compact 2×2 grid */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2 px-2">
             {items.map((product, idx) => (
               <div
                 key={idx}
                 onClick={() => handleProductClick(product)}
-                className="bg-white rounded-[20px] p-2 shadow-sm flex flex-col justify-between gap-2 group cursor-pointer active:scale-[0.97] transition-all border border-slate-100/50"
+                className="bg-white rounded-[12px] p-1 shadow-sm flex flex-col justify-between gap-1 group cursor-pointer active:scale-[0.97] transition-all border border-slate-100/50"
               >
-                <div className="aspect-square rounded-[14px] overflow-hidden bg-slate-50 border border-slate-100/80 flex items-center justify-center p-2 relative">
+                <div className="aspect-square rounded-[8px] overflow-hidden bg-slate-50 border border-slate-100/80 flex items-center justify-center p-0.5 relative">
                   <img
                     src={product.img}
                     alt={product.name}
@@ -61,9 +63,9 @@ const TopSelection = ({ items }) => {
                     }}
                   />
                 </div>
-                <div className="px-1 pb-1">
-                  <p className="text-[9.5px] font-black text-slate-400 uppercase tracking-wider truncate leading-none">{product.name}</p>
-                  <p className="text-[12px] font-black text-slate-800 leading-snug mt-1">{product.tag}</p>
+                <div className="px-0.5 pb-0.5">
+                  <p className="text-[8px] font-black text-slate-400 uppercase tracking-wider truncate leading-none">{product.name}</p>
+                  <p className="text-[10px] font-black text-slate-800 leading-snug mt-1">{product.tag}</p>
                 </div>
               </div>
             ))}
@@ -72,14 +74,14 @@ const TopSelection = ({ items }) => {
       </div>
 
       {/* Desktop view (Green/Emerald theme mimicking the "Trending Gadgets & Appliances" structure) */}
-      <div className="hidden md:block md:max-w-6xl md:mx-auto md:px-2 md:mt-6">
+      <div className="hidden md:block md:max-w-[1600px] md:mx-auto md:px-2 md:mt-6">
         {/* Banner Header with background color and rounded-t corners */}
         <div className="bg-[#084224] text-white px-6 py-4 rounded-t-3xl flex items-center justify-between shadow-sm">
           <h2 className="text-[17px] font-black uppercase tracking-wider">
-            Top Selection
+            {t('home.topSelection')}
           </h2>
           <button
-            onClick={() => navigate('/vendor/all-offers')}
+            onClick={() => navigate('/all-offers')}
             className="bg-white/95 backdrop-blur-md text-[#084224] p-1.5 rounded-full shadow-sm active:scale-90 transition-transform flex items-center justify-center"
           >
             <ChevronRight size={16} strokeWidth={3} />

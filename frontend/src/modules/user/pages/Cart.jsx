@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { parsePrice, formatPrice } from '../../../shared/utils/priceFormatter';
 
 const Cart = () => {
   const { t } = useTranslation();
@@ -48,13 +49,11 @@ const Cart = () => {
   };
 
   const totalPrice = cartItems.reduce((acc, item) => {
-    const priceStr = String(item.price || '0').replace(/,/g, '');
-    return acc + (Number(priceStr) || 0) * (item.qty || 1);
+    return acc + parsePrice(item.price) * parsePrice(item.qty || 1);
   }, 0);
 
   const totalOldPrice = cartItems.reduce((acc, item) => {
-    const priceStr = String(item.oldPrice || '0').replace(/,/g, '');
-    return acc + (Number(priceStr) || 0) * (item.qty || 1);
+    return acc + parsePrice(item.oldPrice) * parsePrice(item.qty || 1);
   }, 0);
 
   const savings = totalOldPrice - totalPrice;
@@ -160,7 +159,7 @@ const Cart = () => {
                       <div className="flex-1 min-w-0 pr-6">
                         <h3 className="text-[13.5px] font-black text-slate-800 truncate leading-snug">{item.name}</h3>
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider mt-0.5">{item.brand || 'Premium Brand'}</p>
-                        <p className="text-[15px] font-black text-slate-900 mt-1">₹{item.price}</p>
+                        <p className="text-[15px] font-black text-slate-900 mt-1">{formatPrice(item.price)}</p>
                         
                         {/* Quantity Pill Capsule */}
                         <div className="flex items-center gap-3 border border-slate-150 rounded-full px-2.5 py-1 w-fit mt-2 bg-white select-none">
@@ -201,12 +200,12 @@ const Cart = () => {
               <div className="bg-white rounded-[28px] p-5 shadow-[0_4px_20px_rgba(0,0,0,0.01)] border border-slate-100/50 space-y-3.5">
                 <div className="flex justify-between items-center text-[13px] text-slate-500 font-bold">
                   <span>{t('cart.subtotal')}</span>
-                  <span className="text-slate-800 font-black">₹{totalPrice.toLocaleString('en-IN')}</span>
+                  <span className="text-slate-800 font-black">{formatPrice(totalPrice)}</span>
                 </div>
                 <div className="flex justify-between items-center text-[13px] text-slate-500 font-bold">
                   <span>{t('cart.shippingAndTax')}</span>
                   <span className="text-slate-800 font-black">
-                    {shippingCost === 0 ? t('cart.free') : `₹${shippingCost}`}
+                    {shippingCost === 0 ? t('cart.free') : formatPrice(shippingCost)}
                   </span>
                 </div>
                 
@@ -214,7 +213,7 @@ const Cart = () => {
 
                 <div className="flex justify-between items-center text-[15px] font-black text-slate-800">
                   <span>{t('cart.total')}</span>
-                  <span className="text-[18px] text-slate-900">₹{(totalPrice + shippingCost).toLocaleString('en-IN')}</span>
+                  <span className="text-[18px] text-slate-900">{formatPrice(totalPrice + shippingCost)}</span>
                 </div>
               </div>
 
@@ -235,7 +234,7 @@ const Cart = () => {
         <div className="fixed bottom-3 left-4 right-4 bg-white/95 backdrop-blur-md border border-slate-100 px-5 py-3.5 flex items-center justify-between z-50 shadow-[0_10px_30px_rgba(8,66,36,0.08)] rounded-[24px] md:hidden">
           <div className="flex flex-col">
             <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{t('cart.totalAmount')}</span>
-            <span className="text-[18px] font-black text-slate-905 leading-none mt-1">₹{(totalPrice + shippingCost).toLocaleString('en-IN')}</span>
+            <span className="text-[18px] font-black text-slate-905 leading-none mt-1">{formatPrice(totalPrice + shippingCost)}</span>
           </div>
           <button 
             onClick={() => navigate('/vendor/checkout', { state: { product: cartItems[0] } })}
