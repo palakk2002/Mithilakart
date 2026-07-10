@@ -13,12 +13,20 @@ import Settings from '../pages/Settings';
 import Support from '../pages/Support';
 import About from '../pages/About';
 
+const DeliveryProtectedRoute = () => {
+  const isDeliveryAuthenticated = localStorage.getItem('isDeliveryAuthenticated') === 'true';
+  if (!isDeliveryAuthenticated) {
+    return <Navigate to="/delivery/auth" replace />;
+  }
+  return <DeliveryLayout />;
+};
+
 const DeliveryRoutes = () => {
   return (
     <Routes>
       <Route path="auth" element={<DeliveryAuth />} />
       <Route path="signup" element={<DeliverySignup />} />
-      <Route element={<DeliveryLayout />}>
+      <Route element={<DeliveryProtectedRoute />}>
         <Route path="dashboard" element={<DeliveryDashboard />} />
         <Route path="orders" element={<DeliveryOrders />} />
         <Route path="orders/:orderId" element={<DeliveryOrderDetail />} />

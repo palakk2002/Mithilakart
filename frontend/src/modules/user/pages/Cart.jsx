@@ -12,6 +12,29 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
 
+  // Authentication and address flow states
+  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('isAuthenticated') === 'true');
+  const [address, setAddress] = useState(() => {
+    const saved = localStorage.getItem('cartAddress');
+    if (saved) return JSON.parse(saved);
+    // If user is already logged in on mount, auto-assign default address
+    if (localStorage.getItem('isAuthenticated') === 'true') {
+      const defaultAddr = {
+        name: 'Harsh Pandey',
+        phone: '9876543210',
+        address: '83 Kishan Pura Mataji Mandir, Sector No. 5 New Harsud Chh...'
+      };
+      localStorage.setItem('cartAddress', JSON.stringify(defaultAddr));
+      return defaultAddr;
+    }
+    return null;
+  });
+
+  const [showAddressModal, setShowAddressModal] = useState(false);
+  const [addrName, setAddrName] = useState('');
+  const [addrPhone, setAddrPhone] = useState('');
+  const [addrDetails, setAddrDetails] = useState('');
+
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
@@ -20,13 +43,18 @@ const Cart = () => {
   const shopNowLink = isMithilakFlow ? '/mithilak' : (isFreshGroceryFlow ? '/fresh-grocery' : (isQuickShopFlow ? '/quick-shop' : '/vendor/home'));
 
   useEffect(() => {
+    if (localStorage.getItem('isAuthenticated') !== 'true') {
+      navigate('/login', { state: { from: '/cart' } });
+      return;
+    }
+
     try {
       const items = JSON.parse(localStorage.getItem('userCart') || '[]');
       setCartItems(items);
     } catch (e) {
       console.error("Failed to load cart", e);
     }
-  }, []);
+  }, [navigate]);
 
   const handleRemove = (cartId) => {
     const updated = cartItems.filter(item => item.cartId !== cartId);
@@ -136,12 +164,35 @@ const Cart = () => {
               {/* Delivery Address Card */}
               <div className="bg-white rounded-[24px] p-4 flex items-center justify-between border border-slate-100/50 shadow-[0_4px_16px_rgba(0,0,0,0.01)]">
                 <div className="flex-1 min-w-0 pr-4">
-                  <p className="text-[11px] font-black text-slate-800 uppercase tracking-wider">Deliver to Home</p>
-                  <p className="text-[12px] text-slate-500 font-medium truncate mt-1">83 Kishan Pura Mataji Mandir, Sector N...</p>
+                  <p className="text-[11px] font-black text-slate-800 uppercase tracking-wider">
+                    {address ? 'Deliver to Home' : 'Delivery Address'}
+                  </p>
+                  <p className="text-[12px] text-slate-500 font-medium mt-1 leading-normal">
+                    {address ? `${address.name} | ${address.address} | Phone: ${address.phone}` : 'Please login and add an address to proceed.'}
+                  </p>
                 </div>
-                <button className={`${primaryText} text-[11px] font-black uppercase tracking-wider border border-slate-100 hover:bg-slate-50 px-4 py-2 rounded-full active:scale-95 transition-transform`}>
-                  Change
-                </button>
+                {address ? (
+                  <button 
+                    onClick={() => {
+                      setAddrName(address.name || '');
+                      setAddrPhone(address.phone || '');
+                      setAddrDetails(address.address || '');
+                      setShowAddressModal(true);
+                    }}
+                    className={`${primaryText} text-[11px] font-black uppercase tracking-wider border border-slate-100 hover:bg-slate-50 px-4 py-2 rounded-full active:scale-95 transition-transform`}
+                  >
+                    Change
+                  </button>
+                ) : (
+                  isAuthenticated && (
+                    <button 
+                      onClick={() => setShowAddressModal(true)}
+                      className={`${primaryText} text-[11px] font-black uppercase tracking-wider border border-slate-150 hover:bg-slate-50 px-4 py-2 rounded-full active:scale-95 transition-transform`}
+                    >
+                      Add Address
+                    </button>
+                  )
+                )}
               </div>
 
               {/* Populated Items Card */}
@@ -218,30 +269,126 @@ const Cart = () => {
               </div>
 
               {/* Desktop Checkout button */}
-              <button 
-                onClick={() => navigate('/vendor/checkout')}
-                className={`hidden md:flex w-full ${primaryBg} text-white font-black py-4 rounded-full active:scale-[0.98] transition-all items-center justify-center text-[14px] shadow-md cursor-pointer`}
-              >
-                {t('cart.checkout')}
-              </button>
+              {!isAuthenticated ? (
+                <button 
+                  onClick={() => navigate('/login', { state: { from: '/cart' } })}
+                  className={`hidden md:flex w-full ${primaryBg} text-white font-black py-4 rounded-full active:scale-[0.98] transition-all items-center justify-center text-[14px] shadow-md cursor-pointer`}
+                >
+                  Login to Proceed
+                </button>
+              ) : !address ? (
+                <button 
+                  onClick={() => setShowAddressModal(true)}
+                  className={`hidden md:flex w-full ${primaryBg} text-white font-black py-4 rounded-full active:scale-[0.98] transition-all items-center justify-center text-[14px] shadow-md cursor-pointer`}
+                >
+                  Add Address
+                </button>
+              ) : (
+                <button 
+                  onClick={() => navigate('/vendor/checkout', { state: { product: cartItems[0] } })}
+                  className={`hidden md:flex w-full ${primaryBg} text-white font-black py-4 rounded-full active:scale-[0.98] transition-all items-center justify-center text-[14px] shadow-md cursor-pointer`}
+                >
+                  Proceed to Checkout
+                </button>
+              )}
             </div>
           </div>
         )}
       </div>
 
-      {/* Fixed Bottom Action Bar */}
+      {/* Fixed Bottom Action Bar (Mobile Only) */}
       {cartItems.length > 0 && (
         <div className="fixed bottom-3 left-4 right-4 bg-white/95 backdrop-blur-md border border-slate-100 px-5 py-3.5 flex items-center justify-between z-50 shadow-[0_10px_30px_rgba(8,66,36,0.08)] rounded-[24px] md:hidden">
-          <div className="flex flex-col">
+          <div className="flex flex-col pr-2">
             <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{t('cart.totalAmount')}</span>
             <span className="text-[18px] font-black text-slate-905 leading-none mt-1">{formatPrice(totalPrice + shippingCost)}</span>
           </div>
-          <button 
-            onClick={() => navigate('/vendor/checkout', { state: { product: cartItems[0] } })}
-            className={`${primaryBg} text-white rounded-full px-8 py-3.5 font-black uppercase text-[12px] tracking-widest shadow-[0_4px_16px_rgba(8,66,36,0.22)] active:scale-95 transition-transform`}
-          >
-            {t('cart.checkoutNow')}
-          </button>
+          {!isAuthenticated ? (
+            <button 
+              onClick={() => navigate('/login', { state: { from: '/cart' } })}
+              className={`${primaryBg} text-white rounded-full px-6 py-3.5 font-black uppercase text-[11px] tracking-wider shadow-[0_4px_16px_rgba(8,66,36,0.22)] active:scale-95 transition-transform`}
+            >
+              Login to Proceed
+            </button>
+          ) : !address ? (
+            <button 
+              onClick={() => setShowAddressModal(true)}
+              className={`${primaryBg} text-white rounded-full px-6 py-3.5 font-black uppercase text-[11px] tracking-wider shadow-[0_4px_16px_rgba(8,66,36,0.22)] active:scale-95 transition-transform`}
+            >
+              Add Address
+            </button>
+          ) : (
+            <button 
+              onClick={() => navigate('/vendor/checkout', { state: { product: cartItems[0] } })}
+              className={`${primaryBg} text-white rounded-full px-6 py-3.5 font-black uppercase text-[11px] tracking-wider shadow-[0_4px_16px_rgba(8,66,36,0.22)] active:scale-95 transition-transform`}
+            >
+              Proceed to Checkout
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Address Form Modal */}
+      {showAddressModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1000] flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-[32px] w-full max-w-[400px] p-6 shadow-2xl border border-slate-100/50 relative transform animate-in zoom-in-95 duration-200">
+            <button 
+              onClick={() => setShowAddressModal(false)}
+              className="absolute right-6 top-6 text-slate-400 hover:text-slate-700 p-1.5 rounded-full hover:bg-slate-100 transition-colors"
+            >
+              <X size={20} />
+            </button>
+            <h3 className="text-[20px] font-black text-slate-800 tracking-tight mb-5">
+              Add Delivery Address
+            </h3>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              const newAddress = { name: addrName, phone: addrPhone, address: addrDetails };
+              localStorage.setItem('cartAddress', JSON.stringify(newAddress));
+              setAddress(newAddress);
+              setShowAddressModal(false);
+            }} className="space-y-4">
+              <div>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Receiver's Name</label>
+                <input 
+                  type="text" 
+                  value={addrName} 
+                  onChange={(e) => setAddrName(e.target.value)} 
+                  placeholder="e.g. Harsh Pandey"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-[14px] font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 transition-all"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Phone Number</label>
+                <input 
+                  type="tel" 
+                  value={addrPhone} 
+                  onChange={(e) => setAddrPhone(e.target.value)} 
+                  placeholder="e.g. 9876543210"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-[14px] font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 transition-all"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Full Address</label>
+                <textarea 
+                  value={addrDetails} 
+                  onChange={(e) => setAddrDetails(e.target.value)} 
+                  placeholder="Street, Landmark, City, Pincode"
+                  rows="3"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-[14px] font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 transition-all resize-none"
+                  required
+                />
+              </div>
+              <button 
+                type="submit"
+                className={`w-full py-4 mt-2 ${primaryBg} text-white font-black rounded-2xl text-[13px] uppercase tracking-wider shadow-md hover:shadow-lg transition-all active:scale-[0.98] cursor-pointer`}
+              >
+                Save & Continue
+              </button>
+            </form>
+          </div>
         </div>
       )}
 

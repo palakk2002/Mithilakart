@@ -66,12 +66,20 @@ import RoleManagement from '../pages/system/RoleManagement';
 // Vendors
 import SellerDetail from '../pages/vendors/SellerDetail';
 
+const AdminProtectedRoute = () => {
+  const isAdminAuthenticated = localStorage.getItem('isAdminAuthenticated') === 'true';
+  if (!isAdminAuthenticated) {
+    return <Navigate to="/admin/auth" replace />;
+  }
+  return <AdminLayout />;
+};
+
 const AdminRoutes = () => {
   return (
     <Routes>
       <Route path="auth" element={<Auth />} />
 
-      <Route element={<AdminLayout />}>
+      <Route element={<AdminProtectedRoute />}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="analytics" element={<Analytics />} />
         <Route path="users" element={<Users />} />

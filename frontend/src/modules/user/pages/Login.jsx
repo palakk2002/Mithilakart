@@ -1,58 +1,94 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { X } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { X, Mail, Phone, Lock, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 const Login = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [useEmail, setUseEmail] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Mock login - navigate to home
-    navigate('/vendor/home');
+    if (phoneNumber === '9111966732' && password === '123456') {
+      setError('');
+      localStorage.setItem('isAuthenticated', 'true');
+      const redirectTo = location.state?.from || '/home';
+      const redirectState = location.state?.checkoutProduct ? { product: location.state.checkoutProduct } : undefined;
+      navigate(redirectTo, { state: redirectState });
+    } else {
+      setError('Invalid email/phone or password');
+    }
   };
 
+  // Inline SVG pattern for background
+  const backgroundPattern = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><path d="M10 20c2-3 5-5 8-5s6 2 8 5-2 8-5 8-6-2-8-5zm30 20c2-3 5-5 8-5s6 2 8 5-2 8-5 8-6-2-8-5zM25 45c1-2 3-3 5-3s4 1 5 3-1 4-3 4-4-1-5-3zM45 15c1-2 3-3 5-3s4 1 5 3-1 4-3 4-4-1-5-3z" fill="%23ffffff" fill-opacity="0.12" fill-rule="evenodd"/></svg>`;
+
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      {/* Blue Header with Logo */}
-      <div className="bg-[#084224] px-4 py-4 flex items-center justify-between shadow-md">
-        <button 
-          onClick={() => navigate(-1)}
-          className="text-white active:scale-90 transition-transform"
-        >
-          <X size={24} strokeWidth={2.5} />
-        </button>
-        
-        <div className="flex items-center gap-2">
-          <img 
-            src="/mithilakartbglogo.png" 
-            alt="Mithilakart" 
-            className="h-14 w-auto object-contain brightness-0 invert"
-          />
-        </div>
-        
-        <div className="w-6"></div> {/* Spacer for centering */}
+    <div 
+      className="min-h-screen flex flex-col items-center justify-between p-4 md:p-6 bg-gradient-to-br from-[#77eba3] to-[#42c585] relative overflow-hidden"
+      style={{ backgroundImage: `radial-gradient(circle at 20% 30%, #77eba3 0%, #42c585 100%), url('${backgroundPattern}')` }}
+    >
+      {/* Background organic elements */}
+      <div className="absolute top-10 left-10 opacity-20 pointer-events-none">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 0C35 25 15 35 0 50C15 65 35 75 50 100C65 75 85 65 100 50C85 35 65 25 50 0Z" fill="white" />
+        </svg>
+      </div>
+      <div className="absolute bottom-20 right-10 opacity-15 pointer-events-none">
+        <svg width="140" height="140" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 80C40 80 60 60 80 20C60 20 40 40 20 80Z" fill="white" />
+          <circle cx="50" cy="50" r="10" fill="white" />
+        </svg>
       </div>
 
-      {/* Login Form Content */}
-      <div className="flex-1 px-6 pt-8 pb-6">
-        <h1 className="text-[20px] font-bold text-slate-900 mb-8">
-          {t('auth.loginTitle')}
-        </h1>
+      {/* Top Header Row */}
+      <div className="w-full max-w-[420px] flex items-center justify-between z-10">
+        <button 
+          onClick={() => navigate(-1)}
+          className="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full backdrop-blur-md active:scale-95 transition-all"
+        >
+          <X size={20} strokeWidth={2.5} />
+        </button>
+        <span className="text-white font-bold tracking-wider text-sm">MITHILAKART</span>
+        <div className="w-9"></div> {/* Spacer for symmetry */}
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Phone Number / Email Input */}
+      {/* Main card */}
+      <div className="w-full max-w-[420px] bg-[#f2fff5] rounded-[32px] px-6 py-8 shadow-2xl border border-white/40 z-10 my-6">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-extrabold text-[#0a4a17]">
+            Welcome back
+          </h2>
+          <p className="text-[#3b8a53] text-[13px] font-semibold mt-1">
+            Fresh Food & Handcrafted Items Delivered
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {error && (
+            <div className="bg-red-50 border border-red-100 text-red-500 text-[11px] font-bold p-3.5 rounded-2xl text-center uppercase tracking-wider">
+              {error}
+            </div>
+          )}
+          {/* Email / Phone Field */}
           <div>
-            <label className="block text-[13px] font-medium text-gray-600 mb-2">
-              {useEmail ? t('auth.emailLabel') : t('auth.mobileLabel')}
+            <label className="block text-[12px] font-bold text-[#1f592c] mb-1.5 px-1 uppercase tracking-wider">
+              {useEmail ? t('auth.emailLabel') || 'Email' : t('auth.mobileLabel') || 'Phone Number'}
             </label>
             <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#3b8a53]">
+                {useEmail ? <Mail size={18} /> : <Phone size={18} />}
+              </span>
               {!useEmail && (
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[15px] text-gray-600 font-medium pointer-events-none">
+                <span className="absolute left-11 top-1/2 -translate-y-1/2 text-[14px] text-[#1f592c] font-bold">
                   +91
                 </span>
               )}
@@ -60,8 +96,8 @@ const Login = () => {
                 type={useEmail ? 'email' : 'tel'}
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder={useEmail ? t('auth.emailPlaceholder') : ''}
-                className={`w-full ${!useEmail ? 'pl-16' : 'pl-4'} pr-4 py-3 border-2 border-[#084224] rounded-sm text-[15px] font-medium text-slate-900 placeholder:text-gray-400 focus:outline-none focus:border-[#084224] focus:ring-2 focus:ring-[#084224]/20 transition-all`}
+                placeholder={useEmail ? t('auth.emailPlaceholder') || 'example@gmail.com' : '9876543210'}
+                className={`w-full ${!useEmail ? 'pl-20' : 'pl-11'} pr-4 py-3 bg-[#e8fced] border-2 border-transparent focus:border-[#42c585] rounded-[16px] text-[14px] font-semibold text-[#0a4a17] placeholder-[#81b29a] focus:outline-none transition-all shadow-inner`}
                 required
                 maxLength={useEmail ? undefined : 10}
                 pattern={useEmail ? undefined : '[0-9]*'}
@@ -69,49 +105,96 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Use Email/Phone Toggle */}
-          <div className="text-right">
+          {/* Password Field */}
+          <div>
+            <label className="block text-[12px] font-bold text-[#1f592c] mb-1.5 px-1 uppercase tracking-wider">
+              {t('auth.passwordLabel') || 'Password'}
+            </label>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#3b8a53]">
+                <Lock size={18} />
+              </span>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••••••"
+                className="w-full pl-11 pr-11 py-3 bg-[#e8fced] border-2 border-transparent focus:border-[#42c585] rounded-[16px] text-[14px] font-semibold text-[#0a4a17] placeholder-[#81b29a] focus:outline-none transition-all shadow-inner"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#3b8a53] hover:text-[#0a4a17] transition-colors"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Remember me & Forget password */}
+          <div className="flex items-center justify-between text-[12px] font-bold px-1">
+            <label className="flex items-center gap-2 text-[#3b8a53] cursor-pointer">
+              <input 
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="rounded border-[#81b29a] text-[#0a4a17] focus:ring-[#42c585] bg-[#e8fced]"
+              />
+              Remember me
+            </label>
+            <Link to="/forgot-password" className="text-[#0a4a17] hover:underline">
+              Forgot your password?
+            </Link>
+          </div>
+
+          {/* Switch Phone/Email Option */}
+          <div className="text-right px-1">
             <button
               type="button"
-              onClick={() => setUseEmail(!useEmail)}
-              className="text-[13px] font-bold text-[#084224] hover:underline"
+              onClick={() => {
+                setUseEmail(!useEmail);
+                setPhoneNumber('');
+              }}
+              className="text-[12px] font-bold text-[#0a4a17] hover:underline"
             >
-              {useEmail ? t('auth.usePhone') : t('auth.useEmail')}
+              {useEmail ? 'Use Phone Number Instead' : 'Use Email Address Instead'}
             </button>
           </div>
 
-          {/* Terms and Conditions */}
-          <p className="text-[10px] text-gray-400 leading-relaxed">
-            {t('auth.termsText')}{' '}
-            <Link to="/vendor/terms" className="text-[#084224] hover:underline">
-              {t('auth.termsOfUse')}
-            </Link>{' '}
-            {t('auth.and')}{' '}
-            <Link to="/vendor/privacy" className="text-[#084224] hover:underline">
-              {t('auth.privacyPolicy')}
-            </Link>
-          </p>
+          {/* Log in Button */}
+          <motion.button
+            type="submit"
+            whileTap={{ scale: 0.97 }}
+            className="w-full py-4 bg-[#0c5c20] hover:bg-[#073f15] text-white rounded-[16px] text-[15px] font-bold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all cursor-pointer"
+          >
+            {t('auth.loginTitle') || 'Log in'}
+          </motion.button>
         </form>
+
+        {/* Link to Register */}
+        <div className="text-center mt-6 text-[12px] font-bold text-[#3b8a53]">
+          Don't have an account?{' '}
+          <Link to="/signup" className="text-[#0a4a17] hover:underline">
+            Register here!
+          </Link>
+        </div>
       </div>
 
-      {/* Fixed Bottom Continue Button */}
-      <div className="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
-        <motion.button
-          onClick={handleSubmit}
-          whileTap={{ scale: 0.98 }}
-          disabled={!phoneNumber}
-          className={`w-full py-4 rounded-sm text-[15px] font-bold uppercase tracking-wide transition-all ${
-            phoneNumber
-              ? 'bg-[#084224] text-white shadow-md active:shadow-sm'
-              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-          }`}
-        >
-          {t('auth.continue')}
-        </motion.button>
+      {/* Footer Logo & Styling */}
+      <div className="flex flex-col items-center gap-1 my-4 z-10">
+        <img 
+          src="/mithilakartbglogo.png" 
+          alt="Mithilakart" 
+          className="h-10 w-auto object-contain brightness-0 filter invert opacity-90"
+        />
+        <div className="flex items-center gap-1 text-[18px] font-bold text-white tracking-wide italic">
+          <span className="opacity-90">Mithila</span>
+          <span className="text-[#073f15]">kart</span>
+        </div>
       </div>
     </div>
   );
 };
 
 export default Login;
-

@@ -1,234 +1,173 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Phone, ShieldCheck, ArrowRight, ChevronLeft, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, Lock, Eye, EyeOff, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const DeliveryAuth = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState('phone'); // 'phone' | 'otp'
-  const [phone, setPhone] = useState('');
-  const [otp, setOtp] = useState(['', '', '', '']);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const [showPolicy, setShowPolicy] = useState(null); // null | 'terms' | 'privacy'
+  useEffect(() => {
+    localStorage.removeItem('isDeliveryAuthenticated');
+  }, []);
 
-  const handleSendOTP = () => {
-    if (phone.length < 10) {
-      setError('Enter a valid 10-digit phone number');
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      setError('Please fill in all fields');
       return;
     }
-    setError('');
+    
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setStep('otp');
-    }, 1500);
+      // Validate credentials: 9111966732 / 123456
+      if (email === '9111966732' && password === '123456') {
+        setError('');
+        localStorage.setItem('isDeliveryAuthenticated', 'true');
+        navigate('/delivery/dashboard');
+      } else {
+        setError('Invalid username/phone or password');
+      }
+    }, 800);
   };
 
-  const handleOtpChange = (index, value) => {
-    if (!/^\d*$/.test(value)) return;
-    const newOtp = [...otp];
-    newOtp[index] = value.slice(-1);
-    setOtp(newOtp);
-    // Auto-focus next
-    if (value && index < 3) {
-      document.getElementById(`otp-${index + 1}`)?.focus();
-    }
-  };
-
-  const handleVerify = () => {
-    if (otp.join('').length < 4) {
-      setError('Enter all 4 digits');
-      return;
-    }
-    setError('');
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      navigate('/delivery/dashboard');
-    }, 1500);
-  };
-
-  const PolicyModal = ({ type, onClose }) => (
-    <motion.div 
-      initial={{ opacity: 0 }} 
-      animate={{ opacity: 1 }} 
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-end justify-center px-4 pb-4 sm:p-6"
-    >
-      <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={onClose} />
-      <motion.div 
-        initial={{ y: '100%' }} 
-        animate={{ y: 0 }} 
-        exit={{ y: '100%' }}
-        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        className="relative w-full max-w-md bg-white rounded-[32px] overflow-hidden shadow-2xl"
-      >
-        <div className="p-6 border-b border-slate-50 flex items-center justify-between">
-          <h3 className="text-xl font-black text-slate-900 tracking-tight">
-            {type === 'terms' ? 'Terms & Conditions' : 'Privacy Policy'}
-          </h3>
-          <button onClick={onClose} className="p-2 bg-slate-50 rounded-xl text-slate-400"><X size={20} /></button>
-        </div>
-        <div className="p-6 max-h-[60vh] overflow-y-auto space-y-4 text-sm text-slate-600 font-medium leading-relaxed">
-          {type === 'terms' ? (
-            <>
-              <p>Welcome to Cocio Delivery Partner Network. By joining our platform, you agree to the following terms:</p>
-              <h4 className="font-black text-slate-900 uppercase text-[10px] tracking-widest pt-2">1. Role & Responsibility</h4>
-              <p>As a delivery partner, you are an independent contractor. You are responsible for safe delivery of items and maintaining professional conduct.</p>
-              <h4 className="font-black text-slate-900 uppercase text-[10px] tracking-widest pt-2">2. Earnings & Payouts</h4>
-              <p>Payouts are processed weekly. Any disputes regarding earnings must be reported within 48 hours of the transaction.</p>
-              <h4 className="font-black text-slate-900 uppercase text-[10px] tracking-widest pt-2">3. Termination</h4>
-              <p>Cocio reserves the right to terminate partnership in case of multiple negative feedbacks, safety violations, or fraudulent activity.</p>
-            </>
-          ) : (
-            <>
-              <p>Your privacy is important to us. Here is how we handle your data:</p>
-              <h4 className="font-black text-slate-900 uppercase text-[10px] tracking-widest pt-2">1. Data Collection</h4>
-              <p>We collect your location data while you are "Online" to assign orders and track delivery progress for customers.</p>
-              <h4 className="font-black text-slate-900 uppercase text-[10px] tracking-widest pt-2">2. Document Safety</h4>
-              <p>Your identity documents (License, PAN, Aadhaar) are stored securely and only used for verification purposes.</p>
-              <h4 className="font-black text-slate-900 uppercase text-[10px] tracking-widest pt-2">3. Third-Party Sharing</h4>
-              <p>We do not sell your data. We only share necessary info (Name, Phone) with the customer you are delivering to.</p>
-            </>
-          )}
-        </div>
-        <div className="p-6 pt-2">
-          <button onClick={onClose} className="w-full bg-slate-900 text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest">I Understand</button>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
+  // Inline SVG pattern for background
+  const backgroundPattern = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><path d="M10 20c2-3 5-5 8-5s6 2 8 5-2 8-5 8-6-2-8-5zm30 20c2-3 5-5 8-5s6 2 8 5-2 8-5 8-6-2-8-5zM25 45c1-2 3-3 5-3s4 1 5 3-1 4-3 4-4-1-5-3zM45 15c1-2 3-3 5-3s4 1 5 3-1 4-3 4-4-1-5-3z" fill="%23ffffff" fill-opacity="0.12" fill-rule="evenodd"/></svg>`;
 
   return (
-    <div className="min-h-screen bg-white flex flex-col font-nunito max-w-md mx-auto">
-      <AnimatePresence>
-        {showPolicy && <PolicyModal type={showPolicy} onClose={() => setShowPolicy(null)} />}
-      </AnimatePresence>
-
-      {/* Header - Centered Logo */}
-      <div className="px-6 pt-16 pb-12 flex flex-col items-center">
-        <img src="/Logo (4).png" alt="Cocio Logo" className="h-20 object-contain" />
+    <div 
+      className="min-h-screen flex flex-col items-center justify-between p-4 md:p-6 bg-gradient-to-br from-[#77eba3] to-[#42c585] relative overflow-hidden"
+      style={{ backgroundImage: `radial-gradient(circle at 20% 30%, #77eba3 0%, #42c585 100%), url('${backgroundPattern}')` }}
+    >
+      {/* Background organic elements */}
+      <div className="absolute top-10 left-10 opacity-20 pointer-events-none">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 0C35 25 15 35 0 50C15 65 35 75 50 100C65 75 85 65 100 50C85 35 65 25 50 0Z" fill="white" />
+        </svg>
+      </div>
+      <div className="absolute bottom-20 right-10 opacity-15 pointer-events-none">
+        <svg width="140" height="140" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 80C40 80 60 60 80 20C60 20 40 40 20 80Z" fill="white" />
+          <circle cx="50" cy="50" r="10" fill="white" />
+        </svg>
       </div>
 
-      {/* Form Area */}
-      <div className="flex-1 px-6">
-        <AnimatePresence mode="wait">
-          {step === 'phone' ? (
-            <motion.div
-              key="phone"
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              className="space-y-6"
-            >
-              <div>
-                <h2 className="text-xl font-black text-slate-900 tracking-tight">Enter your mobile number</h2>
-              </div>
+      {/* Top Header Row */}
+      <div className="w-full max-w-[420px] flex items-center justify-between z-10">
+        <button 
+          onClick={() => navigate('/')}
+          className="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full backdrop-blur-md active:scale-95 transition-all"
+        >
+          <X size={20} strokeWidth={2.5} />
+        </button>
+        <span className="text-white font-bold tracking-wider text-sm">DELIVERY PARTNER</span>
+        <div className="w-9"></div>
+      </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Phone Number</label>
-                <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-50 transition-all">
-                  <span className="text-slate-500 font-bold text-sm">+91</span>
-                  <div className="w-px h-5 bg-slate-200" />
-                  <input
-                    type="tel"
-                    maxLength={10}
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                    placeholder="98765 43210"
-                    className="flex-1 bg-transparent text-slate-900 font-bold text-base placeholder:text-slate-300 outline-none tracking-widest"
-                  />
-                  <Phone size={18} className="text-slate-300" />
-                </div>
-              </div>
+      {/* Main card */}
+      <div className="w-full max-w-[420px] bg-[#f2fff5] rounded-[32px] px-6 py-8 shadow-2xl border border-white/40 z-10 my-6">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-extrabold text-[#0a4a17]">
+            Welcome back
+          </h2>
+          <p className="text-[#3b8a53] text-[13px] font-semibold mt-1">
+            Mithilakart Delivery Network
+          </p>
+        </div>
 
-              {error && <p className="text-red-500 text-xs font-bold">{error}</p>}
-
-              <button
-                onClick={handleSendOTP}
-                disabled={loading}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-blue-100 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-60"
-              >
-                {loading ? (
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : (
-                  <>Send OTP <ArrowRight size={18} /></>
-                )}
-              </button>
-
-              <p className="text-center text-sm font-bold text-slate-400">
-                New partner? <button onClick={() => navigate('/delivery/signup')} className="text-blue-600">Register here</button>
-              </p>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="otp"
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              className="space-y-6"
-            >
-              <div>
-                <button onClick={() => setStep('phone')} className="flex items-center gap-1 text-blue-600 text-sm font-bold mb-4">
-                  <ChevronLeft size={18} /> Back
-                </button>
-                <h2 className="text-xl font-black text-slate-900 tracking-tight">Enter OTP</h2>
-                <p className="text-sm text-slate-400 font-medium mt-1">Sent to <span className="text-slate-700 font-bold">+91 {phone}</span></p>
-              </div>
-
-              <div className="flex items-center justify-between gap-3">
-                {otp.map((digit, i) => (
-                  <input
-                    key={i}
-                    id={`otp-${i}`}
-                    type="tel"
-                    maxLength={1}
-                    value={digit}
-                    onChange={(e) => handleOtpChange(i, e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Backspace' && !otp[i] && i > 0) {
-                        document.getElementById(`otp-${i - 1}`)?.focus();
-                      }
-                    }}
-                    className="w-16 h-16 text-center text-2xl font-black text-slate-900 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-50 outline-none transition-all"
-                  />
-                ))}
-              </div>
-
-              <p className="text-xs text-slate-400 font-medium">
-                Didn't receive OTP? <button className="text-blue-600 font-bold" onClick={() => setOtp(['', '', '', ''])}>Resend in 30s</button>
-              </p>
-
-              {error && <p className="text-red-500 text-xs font-bold">{error}</p>}
-
-              <button
-                onClick={handleVerify}
-                disabled={loading}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-blue-100 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-60"
-              >
-                {loading ? (
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : (
-                  <>Verify & Login <ArrowRight size={18} /></>
-                )}
-              </button>
-            </motion.div>
+        <form onSubmit={handleLogin} className="space-y-5">
+          {error && (
+            <div className="bg-red-50 border border-red-100 text-red-500 text-[11px] font-bold p-3.5 rounded-2xl text-center uppercase tracking-wider">
+              {error}
+            </div>
           )}
-        </AnimatePresence>
 
-        <div className="mt-12 flex items-center justify-center gap-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-          <button onClick={() => setShowPolicy('terms')} className="hover:text-blue-600">Terms & Conditions</button>
-          <div className="w-1 h-1 bg-slate-200 rounded-full" />
-          <button onClick={() => setShowPolicy('privacy')} className="hover:text-blue-600">Privacy Policy</button>
+          {/* Username / Phone Field */}
+          <div>
+            <label className="block text-[12px] font-bold text-[#1f592c] mb-1.5 px-1 uppercase tracking-wider">
+              Username / Phone
+            </label>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#3b8a53]">
+                <Mail size={18} />
+              </span>
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="e.g. 9111966732"
+                className="w-full pl-11 pr-4 py-3 bg-[#e8fced] border-2 border-transparent focus:border-[#42c585] rounded-[16px] text-[14px] font-semibold text-[#0a4a17] placeholder-[#81b29a] focus:outline-none transition-all shadow-inner"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Password Field */}
+          <div>
+            <label className="block text-[12px] font-bold text-[#1f592c] mb-1.5 px-1 uppercase tracking-wider">
+              Password
+            </label>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#3b8a53]">
+                <Lock size={18} />
+              </span>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••••••"
+                className="w-full pl-11 pr-11 py-3 bg-[#e8fced] border-2 border-transparent focus:border-[#42c585] rounded-[16px] text-[14px] font-semibold text-[#0a4a17] placeholder-[#81b29a] focus:outline-none transition-all shadow-inner"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#3b8a53] hover:text-[#0a4a17] transition-colors"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Sign In Button */}
+          <motion.button
+            type="submit"
+            disabled={loading}
+            whileTap={{ scale: 0.97 }}
+            className="w-full py-4 bg-[#0c5c20] hover:bg-[#073f15] text-white rounded-[16px] text-[15px] font-bold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2"
+          >
+            {loading ? (
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              'Verify & Login'
+            )}
+          </motion.button>
+        </form>
+
+        <div className="text-center mt-6 text-[12px] font-bold text-[#3b8a53]">
+          New partner?{' '}
+          <button onClick={() => navigate('/delivery/signup')} className="text-[#0a4a17] hover:underline">
+            Register here
+          </button>
         </div>
       </div>
 
-      <div className="pb-8">
-        <p className="text-center text-[10px] text-slate-300 font-bold uppercase tracking-widest">
-          Cocio Partner Network • Secure Login
-        </p>
+      {/* Footer Logo & Styling */}
+      <div className="flex flex-col items-center gap-1 my-4 z-10">
+        <img 
+          src="/mithilakartbglogo.png" 
+          alt="Mithilakart" 
+          className="h-10 w-auto object-contain brightness-0 filter invert opacity-90"
+        />
+        <div className="flex items-center gap-1 text-[18px] font-bold text-white tracking-wide italic">
+          <span className="opacity-90">Mithila</span>
+          <span className="text-[#073f15]">kart</span>
+        </div>
       </div>
     </div>
   );

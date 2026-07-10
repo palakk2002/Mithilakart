@@ -179,7 +179,11 @@ const ProductDetail = () => {
   }, [product]);
 
   const handleBuyNow = useCallback(() => {
-    navigate('/vendor/checkout', { state: { product } });
+    if (localStorage.getItem('isAuthenticated') !== 'true') {
+      navigate('/login', { state: { from: '/vendor/checkout', checkoutProduct: product } });
+    } else {
+      navigate('/vendor/checkout', { state: { product } });
+    }
   }, [product, navigate]);
 
   return (

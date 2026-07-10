@@ -20,7 +20,10 @@ const DeliveryProfile = () => {
   const isOnline = context ? context.isOnline : localOnline;
   const setIsOnline = context ? context.setIsOnline : setLocalOnline;
 
-  const handleLogout = () => navigate('/delivery/auth');
+  const handleLogout = () => {
+    localStorage.removeItem('isDeliveryAuthenticated');
+    navigate('/delivery/auth');
+  };
 
   const menuItems = [
     { icon: User, label: 'Profile', path: '/delivery/profile/edit' },

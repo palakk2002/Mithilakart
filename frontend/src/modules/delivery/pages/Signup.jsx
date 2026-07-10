@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Phone, Mail, Lock, Truck, MapPin, ArrowRight, ChevronLeft, ShieldCheck, Camera } from 'lucide-react';
+import { User, Phone, Mail, Lock, Truck, MapPin, ArrowRight, ChevronLeft, ShieldCheck, Camera, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
 import useDeliveryStore from '../../../store/useDeliveryStore';
 
 const SectionTitle = ({ title }) => (
-  <div className="border-b border-slate-100 pb-1 mb-3 mt-6">
-    <h3 className="text-[9px] font-black text-slate-400 uppercase tracking-[2px]">{title}</h3>
+  <div className="border-b border-[#c6e9d0] pb-1.5 mb-4 mt-6">
+    <h3 className="text-[10px] font-extrabold text-[#3b8a53] uppercase tracking-wider">{title}</h3>
   </div>
 );
 
 const InputField = ({ label, name, type = "text", placeholder, required = false, value, onChange }) => (
-  <div className="flex-1 min-w-[130px]">
-    <label className="text-[9px] font-bold text-slate-500 mb-1 block">
+  <div className="flex-grow min-w-[200px]">
+    <label className="text-[11px] font-bold text-[#1f592c] mb-1 block">
       {label} {required && <span className="text-red-500">*</span>}
     </label>
     <input
@@ -24,7 +24,7 @@ const InputField = ({ label, name, type = "text", placeholder, required = false,
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className="w-full bg-slate-50 border border-slate-100 rounded-lg px-3 py-2 text-[13px] font-bold text-slate-800 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50 transition-all placeholder:text-slate-300"
+      className="w-full bg-[#e8fced] border-2 border-transparent focus:border-[#42c585] rounded-[16px] px-4 py-2.5 text-[13px] font-semibold text-[#0a4a17] placeholder-[#81b29a] focus:outline-none transition-all shadow-inner"
     />
   </div>
 );
@@ -44,13 +44,13 @@ const FileUpload = ({ label, required = false, value, onChange }) => {
   };
 
   return (
-    <div className="flex-1 min-w-[130px]">
-      <label className="text-[9px] font-bold text-slate-500 mb-1 block">
+    <div className="flex-grow min-w-[200px]">
+      <label className="text-[11px] font-bold text-[#1f592c] mb-1 block">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       <div 
         onClick={() => fileInputRef.current?.click()}
-        className="w-full bg-slate-50 border-2 border-dashed border-slate-200 rounded-lg p-3 flex flex-col items-center justify-center gap-1 cursor-pointer hover:bg-slate-100 transition-colors relative min-h-[60px] overflow-hidden"
+        className="w-full bg-[#e8fced] border-2 border-dashed border-[#a5dcb5] rounded-[16px] p-4 flex flex-col items-center justify-center gap-1.5 cursor-pointer hover:bg-[#e8fced]/80 transition-colors relative min-h-[70px] overflow-hidden shadow-inner"
       >
         <input 
           type="file" 
@@ -60,11 +60,17 @@ const FileUpload = ({ label, required = false, value, onChange }) => {
           accept="image/*"
         />
         {value ? (
-          <img src={value} alt="Preview" className="absolute inset-0 w-full h-full object-cover rounded-md" />
+          <div className="absolute inset-0 bg-[#e8fced] flex items-center justify-between px-4">
+            <span className="text-xs font-bold text-[#0a4a17] truncate max-w-[80%]">Uploaded Successfully</span>
+            <X size={16} className="text-red-500 cursor-pointer" onClick={(e) => {
+              e.stopPropagation();
+              onChange(null);
+            }} />
+          </div>
         ) : (
           <>
-            <Camera size={14} className="text-slate-400" />
-            <span className="text-[9px] font-black text-slate-400 uppercase">Upload</span>
+            <Camera size={20} className="text-[#3b8a53]" />
+            <span className="text-[11px] font-bold text-[#3b8a53] uppercase tracking-wider">Choose File</span>
           </>
         )}
       </div>
@@ -74,28 +80,51 @@ const FileUpload = ({ label, required = false, value, onChange }) => {
 
 const DeliverySignup = () => {
   const navigate = useNavigate();
-  const updateProfile = useDeliveryStore(state => state.updateProfile);
+  const addDeliveryPartner = useDeliveryStore((state) => state.addDeliveryPartner);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    // Personal
-    fullName: '', mobile: '', altMobile: '', email: '', dob: '', age: '', fathersName: '',
-    currAddress: '', permAddress: '', city: '', state: '', pinCode: '', emergencyContact: '',
-    // Identity
-    aadhaar: '', pan: '', policeVerification: 'No',
-    // Vehicle
-    vehicleType: '', vehicleNumber: '', licenseNumber: '', rcNumber: '', insuranceNumber: '', insuranceExpiry: '',
-    // Bank
-    bankName: '', accHolder: '', accNumber: '', ifsc: '', branch: '', upiId: '',
-    // Documents
-    profilePhoto: null, idCard: null, educationMarksheet: null, drivingLicenseDoc: null, applicantSignature: null
+    fullName: '',
+    mobile: '',
+    altMobile: '',
+    email: '',
+    dob: '',
+    age: '',
+    fathersName: '',
+    currAddress: '',
+    permAddress: '',
+    city: '',
+    state: '',
+    pinCode: '',
+    emergencyContact: '',
+    aadhaar: '',
+    pan: '',
+    profilePhoto: null,
+    idCard: null,
+    educationMarksheet: null,
+    policeVerification: 'No',
+    vehicleType: '',
+    vehicleNumber: '',
+    licenseNumber: '',
+    rcNumber: '',
+    insuranceNumber: '',
+    insuranceExpiry: '',
+    drivingLicenseDoc: null,
+    bankName: '',
+    accHolder: '',
+    accNumber: '',
+    ifsc: '',
+    branch: '',
+    upiId: '',
+    applicantSignature: null
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleDocChange = (key, value) => {
-    setFormData({ ...formData, [key]: value });
+  const handleDocChange = (field, base64) => {
+    setFormData(prev => ({ ...prev, [field]: base64 }));
   };
 
   const handleSubmit = (e) => {
@@ -103,138 +132,179 @@ const DeliverySignup = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      updateProfile(formData);
-      toast.success('Application submitted successfully!');
+      addDeliveryPartner(formData);
+      toast.success('Registration request submitted successfully!');
       navigate('/delivery/auth');
     }, 2000);
   };
 
+  // Inline SVG pattern for background
+  const backgroundPattern = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><path d="M10 20c2-3 5-5 8-5s6 2 8 5-2 8-5 8-6-2-8-5zm30 20c2-3 5-5 8-5s6 2 8 5-2 8-5 8-6-2-8-5zM25 45c1-2 3-3 5-3s4 1 5 3-1 4-3 4-4-1-5-3zM45 15c1-2 3-3 5-3s4 1 5 3-1 4-3 4-4-1-5-3z" fill="%23ffffff" fill-opacity="0.12" fill-rule="evenodd"/></svg>`;
+
   return (
-    <div className="min-h-screen bg-white flex flex-col font-nunito max-w-md mx-auto relative pb-8">
-      {/* Header */}
-      <div className="px-6 pt-6 pb-2 relative flex flex-col items-center text-center">
-        <button 
-          onClick={() => navigate(-1)} 
-          className="absolute left-4 top-6 p-2 text-slate-400 hover:text-blue-600 transition-colors"
-        >
-          <ChevronLeft size={20} />
-        </button>
-        
-        <div className="mb-3">
-          <img src="/Logo (4).png" alt="Cocia Logo" className="h-16 object-contain" />
-        </div>
-        
-        <h1 className="text-xl font-black text-slate-900 tracking-tight font-montserrat uppercase leading-tight">
-          Sign Up
-        </h1>
-        <p className="text-xs font-bold text-slate-400 mt-0.5">Complete profile to join the network</p>
+    <div 
+      className="min-h-screen flex flex-col items-center justify-between p-4 md:p-6 bg-gradient-to-br from-[#77eba3] to-[#42c585] relative overflow-hidden"
+      style={{ backgroundImage: `radial-gradient(circle at 20% 30%, #77eba3 0%, #42c585 100%), url('${backgroundPattern}')` }}
+    >
+      {/* Background organic elements */}
+      <div className="absolute top-10 left-10 opacity-20 pointer-events-none">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 0C35 25 15 35 0 50C15 65 35 75 50 100C65 75 85 65 100 50C85 35 65 25 50 0Z" fill="white" />
+        </svg>
+      </div>
+      <div className="absolute bottom-20 right-10 opacity-15 pointer-events-none">
+        <svg width="140" height="140" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 80C40 80 60 60 80 20C60 20 40 40 20 80Z" fill="white" />
+          <circle cx="50" cy="50" r="10" fill="white" />
+        </svg>
       </div>
 
-      <form onSubmit={handleSubmit} className="px-6 pb-16">
-        {/* 1. PERSONAL DETAILS */}
-        <SectionTitle title="Personal Details" />
-        <div className="space-y-3">
-          <InputField label="Full Name" name="fullName" placeholder="Full name" required value={formData.fullName} onChange={handleChange} />
-          <InputField label="Mobile Number" name="mobile" type="tel" placeholder="Mobile" required value={formData.mobile} onChange={handleChange} />
-          <InputField label="Alt Mobile" name="altMobile" type="tel" placeholder="Optional" value={formData.altMobile} onChange={handleChange} />
-          <InputField label="Email ID" name="email" type="email" placeholder="Email" required value={formData.email} onChange={handleChange} />
-          <InputField label="Date of Birth" name="dob" type="date" required value={formData.dob} onChange={handleChange} />
-          <InputField label="Age" name="age" type="number" placeholder="Age" value={formData.age} onChange={handleChange} />
-          <InputField label="Father's Name" name="fathersName" placeholder="Father's name" value={formData.fathersName} onChange={handleChange} />
-          <InputField label="Current Address" name="currAddress" placeholder="Full address" required value={formData.currAddress} onChange={handleChange} />
-          <InputField label="Permanent Address" name="permAddress" placeholder="Permanent address" value={formData.permAddress} onChange={handleChange} />
-          <InputField label="City" name="city" placeholder="City" required value={formData.city} onChange={handleChange} />
-          <InputField label="State" name="state" placeholder="State" value={formData.state} onChange={handleChange} />
-          <InputField label="PIN Code" name="pinCode" placeholder="PIN" required value={formData.pinCode} onChange={handleChange} />
-          <InputField label="Emergency Contact" name="emergencyContact" type="tel" placeholder="Emergency #" value={formData.emergencyContact} onChange={handleChange} />
+      {/* Top Header Row */}
+      <div className="w-full max-w-[460px] flex items-center justify-between z-10">
+        <button 
+          onClick={() => navigate(-1)}
+          className="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full backdrop-blur-md active:scale-95 transition-all"
+        >
+          <ChevronLeft size={20} strokeWidth={2.5} />
+        </button>
+        <span className="text-white font-bold tracking-wider text-sm">DELIVERY PARTNER</span>
+        <div className="w-9"></div>
+      </div>
+
+      {/* Main card */}
+      <div className="w-full max-w-[460px] bg-[#f2fff5] rounded-[32px] px-6 py-8 shadow-2xl border border-white/40 z-10 my-6">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl font-extrabold text-[#0a4a17]">
+            Sign Up
+          </h2>
+          <p className="text-[#3b8a53] text-[13px] font-semibold mt-1">
+            Complete details to join the delivery network
+          </p>
         </div>
 
-        {/* 2. IDENTITY DETAILS */}
-        <SectionTitle title="Identity Details" />
-        <div className="space-y-3">
-          <InputField label="Aadhaar Number" name="aadhaar" placeholder="12 digits" required value={formData.aadhaar} onChange={handleChange} />
-          <InputField label="PAN Number" name="pan" placeholder="10 digits" required value={formData.pan} onChange={handleChange} />
-          <FileUpload label="Photo" required value={formData.profilePhoto} onChange={(val) => handleDocChange('profilePhoto', val)} />
-          <FileUpload label="ID Card" required value={formData.idCard} onChange={(val) => handleDocChange('idCard', val)} />
-          <FileUpload label="Higher Education Marksheet" required value={formData.educationMarksheet} onChange={(val) => handleDocChange('educationMarksheet', val)} />
-          <div className="flex items-center gap-4 py-1">
-            <span className="text-[9px] font-bold text-slate-500 uppercase">Police Verification:</span>
-            <div className="flex items-center gap-3">
-              {['Yes', 'No'].map(val => (
-                <label key={val} className="flex items-center gap-1.5 cursor-pointer">
-                  <input 
-                    type="radio" 
-                    name="policeVerification" 
-                    value={val} 
-                    checked={formData.policeVerification === val}
-                    onChange={handleChange}
-                    className="accent-blue-600 w-3 h-3"
-                  />
-                  <span className="text-[11px] font-bold text-slate-700">{val}</span>
-                </label>
-              ))}
+        <form onSubmit={handleSubmit} className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+          {/* 1. PERSONAL DETAILS */}
+          <SectionTitle title="Personal Details" />
+          <div className="space-y-3.5">
+            <InputField label="Full Name" name="fullName" placeholder="Full name" required value={formData.fullName} onChange={handleChange} />
+            <InputField label="Mobile Number" name="mobile" type="tel" placeholder="Mobile" required value={formData.mobile} onChange={handleChange} />
+            <InputField label="Alt Mobile" name="altMobile" type="tel" placeholder="Optional" value={formData.altMobile} onChange={handleChange} />
+            <InputField label="Email ID" name="email" type="email" placeholder="Email" required value={formData.email} onChange={handleChange} />
+            <InputField label="Date of Birth" name="dob" type="date" required value={formData.dob} onChange={handleChange} />
+            <InputField label="Age" name="age" type="number" placeholder="Age" value={formData.age} onChange={handleChange} />
+            <InputField label="Father's Name" name="fathersName" placeholder="Father's name" value={formData.fathersName} onChange={handleChange} />
+            <InputField label="Current Address" name="currAddress" placeholder="Full address" required value={formData.currAddress} onChange={handleChange} />
+            <InputField label="Permanent Address" name="permAddress" placeholder="Permanent address" value={formData.permAddress} onChange={handleChange} />
+            <InputField label="City" name="city" placeholder="City" required value={formData.city} onChange={handleChange} />
+            <InputField label="State" name="state" placeholder="State" value={formData.state} onChange={handleChange} />
+            <InputField label="PIN Code" name="pinCode" placeholder="PIN" required value={formData.pinCode} onChange={handleChange} />
+            <InputField label="Emergency Contact" name="emergencyContact" type="tel" placeholder="Emergency #" value={formData.emergencyContact} onChange={handleChange} />
+          </div>
+
+          {/* 2. IDENTITY DETAILS */}
+          <SectionTitle title="Identity Details" />
+          <div className="space-y-3.5">
+            <InputField label="Aadhaar Number" name="aadhaar" placeholder="12 digits" required value={formData.aadhaar} onChange={handleChange} />
+            <InputField label="PAN Number" name="pan" placeholder="10 digits" required value={formData.pan} onChange={handleChange} />
+            <FileUpload label="Photo" required value={formData.profilePhoto} onChange={(val) => handleDocChange('profilePhoto', val)} />
+            <FileUpload label="ID Card" required value={formData.idCard} onChange={(val) => handleDocChange('idCard', val)} />
+            <FileUpload label="Higher Education Marksheet" required value={formData.educationMarksheet} onChange={(val) => handleDocChange('educationMarksheet', val)} />
+            
+            <div className="flex items-center gap-4 py-1">
+              <span className="text-[11px] font-bold text-[#1f592c] uppercase">Police Verification:</span>
+              <div className="flex items-center gap-3">
+                {['Yes', 'No'].map(val => (
+                  <label key={val} className="flex items-center gap-1.5 cursor-pointer">
+                    <input 
+                      type="radio" 
+                      name="policeVerification" 
+                      value={val} 
+                      checked={formData.policeVerification === val}
+                      onChange={handleChange}
+                      className="accent-[#0c5c20] w-3.5 h-3.5"
+                    />
+                    <span className="text-[12px] font-bold text-[#0a4a17]">{val}</span>
+                  </label>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* 3. VEHICLE DETAILS */}
-        <SectionTitle title="Vehicle Details" />
-        <div className="space-y-3">
-          <div className="flex-1">
-            <label className="text-[9px] font-bold text-slate-500 mb-1 block">Vehicle Type</label>
-            <select name="vehicleType" value={formData.vehicleType} onChange={handleChange} className="w-full bg-slate-50 border border-slate-100 rounded-lg px-3 py-2 text-[13px] font-bold text-slate-800 outline-none">
-              <option value="">Select</option>
-              <option value="Bike">Bike</option>
-              <option value="E-Bike">Electric</option>
-              <option value="Cycle">Cycle</option>
-            </select>
+          {/* 3. VEHICLE DETAILS */}
+          <SectionTitle title="Vehicle Details" />
+          <div className="space-y-3.5">
+            <div className="flex-1">
+              <label className="text-[11px] font-bold text-[#1f592c] mb-1 block">Vehicle Type</label>
+              <select 
+                name="vehicleType" 
+                value={formData.vehicleType} 
+                onChange={handleChange} 
+                className="w-full bg-[#e8fced] border-2 border-transparent focus:border-[#42c585] rounded-[16px] px-4 py-2.5 text-[13px] font-semibold text-[#0a4a17] outline-none"
+              >
+                <option value="">Select</option>
+                <option value="Bike">Bike</option>
+                <option value="E-Bike">Electric</option>
+                <option value="Cycle">Cycle</option>
+              </select>
+            </div>
+            <InputField label="Vehicle Number" name="vehicleNumber" placeholder="DL 01 ..." value={formData.vehicleNumber} onChange={handleChange} />
+            <InputField label="DL Number" name="licenseNumber" placeholder="DL Number" value={formData.licenseNumber} onChange={handleChange} />
+            <InputField label="RC Number" name="rcNumber" placeholder="RC Number" value={formData.rcNumber} onChange={handleChange} />
+            <InputField label="Insurance #" name="insuranceNumber" placeholder="Insurance #" value={formData.insuranceNumber} onChange={handleChange} />
+            <InputField label="Valid Till" name="insuranceExpiry" type="date" value={formData.insuranceExpiry} onChange={handleChange} />
+            <FileUpload label="Upload DL" required value={formData.drivingLicenseDoc} onChange={(val) => handleDocChange('drivingLicenseDoc', val)} />
           </div>
-          <InputField label="Vehicle Number" name="vehicleNumber" placeholder="DL 01 ..." value={formData.vehicleNumber} onChange={handleChange} />
-          <InputField label="DL Number" name="licenseNumber" placeholder="DL Number" value={formData.licenseNumber} onChange={handleChange} />
-          <InputField label="RC Number" name="rcNumber" placeholder="RC Number" value={formData.rcNumber} onChange={handleChange} />
-          <InputField label="Insurance #" name="insuranceNumber" placeholder="Insurance #" value={formData.insuranceNumber} onChange={handleChange} />
-          <InputField label="Valid Till" name="insuranceExpiry" type="date" value={formData.insuranceExpiry} onChange={handleChange} />
-          <FileUpload label="Upload DL" required value={formData.drivingLicenseDoc} onChange={(val) => handleDocChange('drivingLicenseDoc', val)} />
+
+          {/* 4. BANK DETAILS */}
+          <SectionTitle title="Bank Details" />
+          <div className="space-y-3.5">
+            <InputField label="Bank Name" name="bankName" placeholder="Bank" required value={formData.bankName} onChange={handleChange} />
+            <InputField label="Holder Name" name="accHolder" placeholder="Name" required value={formData.accHolder} onChange={handleChange} />
+            <InputField label="Acc Number" name="accNumber" placeholder="Number" required value={formData.accNumber} onChange={handleChange} />
+            <InputField label="IFSC Code" name="ifsc" placeholder="IFSC" required value={formData.ifsc} onChange={handleChange} />
+            <InputField label="Branch" name="branch" placeholder="Branch" value={formData.branch} onChange={handleChange} />
+            <InputField label="UPI ID" name="upiId" placeholder="upi@bank" value={formData.upiId} onChange={handleChange} />
+          </div>
+
+          {/* 5. VERIFICATION */}
+          <SectionTitle title="Verification" />
+          <FileUpload label="Applicant Signature" required value={formData.applicantSignature} onChange={(val) => handleDocChange('applicantSignature', val)} />
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-[#0c5c20] hover:bg-[#073f15] text-white py-4 rounded-[16px] text-[15px] font-bold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2 mt-4"
+          >
+            {loading ? (
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              'Submit Application'
+            )}
+          </button>
+        </form>
+
+        <div className="text-center mt-6 text-[12px] font-bold text-[#3b8a53]">
+          Already registered?{' '}
+          <button type="button" onClick={() => navigate('/delivery/auth')} className="text-[#0a4a17] hover:underline">
+            Login
+          </button>
         </div>
+      </div>
 
-        {/* 4. BANK DETAILS */}
-        <SectionTitle title="Bank Details" />
-        <div className="space-y-3">
-          <InputField label="Bank Name" name="bankName" placeholder="Bank" required value={formData.bankName} onChange={handleChange} />
-          <InputField label="Holder Name" name="accHolder" placeholder="Name" required value={formData.accHolder} onChange={handleChange} />
-          <InputField label="Acc Number" name="accNumber" placeholder="Number" required value={formData.accNumber} onChange={handleChange} />
-          <InputField label="IFSC Code" name="ifsc" placeholder="IFSC" required value={formData.ifsc} onChange={handleChange} />
-          <InputField label="Branch" name="branch" placeholder="Branch" value={formData.branch} onChange={handleChange} />
-          <InputField label="UPI ID" name="upiId" placeholder="upi@bank" value={formData.upiId} onChange={handleChange} />
+      {/* Footer Logo & Styling */}
+      <div className="flex flex-col items-center gap-1 my-4 z-10">
+        <img 
+          src="/mithilakartbglogo.png" 
+          alt="Mithilakart" 
+          className="h-10 w-auto object-contain brightness-0 filter invert opacity-90"
+        />
+        <div className="flex items-center gap-1 text-[18px] font-bold text-white tracking-wide italic">
+          <span className="opacity-90">Mithila</span>
+          <span className="text-[#073f15]">kart</span>
         </div>
-
-        {/* 5. VERIFICATION */}
-        <SectionTitle title="Verification" />
-        <FileUpload label="Applicant Signature" required value={formData.applicantSignature} onChange={(val) => handleDocChange('applicantSignature', val)} />
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-[#084224] hover:bg-blue-700 text-white py-3.5 rounded-xl font-black text-sm uppercase tracking-widest shadow-lg shadow-blue-50 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-8 disabled:opacity-60"
-        >
-          {loading ? (
-            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-          ) : (
-            <>Submit Application</>
-          )}
-        </button>
-
-        <p className="text-center text-xs font-bold text-slate-400 pt-5">
-          Already registered? <button type="button" onClick={() => navigate('/delivery/auth')} className="text-blue-600">Login</button>
-        </p>
-      </form>
-
-      <p className="text-center text-[9px] text-slate-300 font-bold uppercase tracking-[4px] p-6">
-        Cocia Partner Network
-      </p>
+      </div>
     </div>
   );
 };
 
 export default DeliverySignup;
-
