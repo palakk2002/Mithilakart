@@ -69,12 +69,21 @@ const Checkout = () => {
 
   const firstItem = checkoutItems[0] || defaultProduct;
 
-  const address = {
-    name: 'Mukesh Jinodiya',
+  // Read address from localStorage (saved by Cart's address modal)
+  const savedAddr = localStorage.getItem('cartAddress');
+  const address = savedAddr ? { ...JSON.parse(savedAddr), type: 'HOME' } : {
+    name: 'Guest',
     type: 'HOME',
-    address: '83 kishan pura mataji mandir, sector no. 5 new harsud chhanera, New Harsud, Nehru Marg, Mangal Pandey Ward, Harsud, Khandwa 450116',
-    phone: '9302841832'
+    address: 'No address provided',
+    phone: '—'
   };
+
+  // Auth guard — redirect unauthenticated users to login
+  useEffect(() => {
+    if (localStorage.getItem('isAuthenticated') !== 'true') {
+      navigate('/login', { state: { from: location.pathname } });
+    }
+  }, [navigate, location.pathname]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

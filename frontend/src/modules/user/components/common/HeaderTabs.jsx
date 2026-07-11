@@ -48,11 +48,11 @@ const HeaderTabs = () => {
                 : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
         }`}
       >
-        <div className="w-[16px] h-[14px] md:w-[26px] md:h-[26px] overflow-hidden flex items-center justify-start">
+        <div className="w-[32px] h-[14px] md:w-[48px] md:h-[22px] flex items-center justify-center">
           <img
-            src="/mithilakartbglogo.png"
+            src="/mthibg.png"
             alt="Icon"
-            className={`h-4 min-w-[40px] md:h-7 md:min-w-[70px] object-cover object-left transition-all duration-300 ${
+            className={`h-full w-full object-contain transition-all duration-300 ${
               isMithilakartActive 
                 ? 'brightness-0 invert' 
                 : isFreshGroceryActive 

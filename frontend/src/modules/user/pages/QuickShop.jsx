@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { MapPin, ChevronRight, Search, Mic, Star } from 'lucide-react';
 import { formatPrice } from '../../../shared/utils/priceFormatter';
 import CategoryCard from '../components/vendor/CategoryCard';
+import closedShutter from '../../../assets/closed_shutter.png';
 
 // Import Assets (aligned with categories)
 import SamsungS24 from '../../../assets/products/product01.jpg';
@@ -122,6 +123,17 @@ const CATEGORIES_DATA = [
 const QuickShop = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = React.useState('For You');
+
+  const isClosed = React.useMemo(() => {
+    const force = localStorage.getItem('forceShopClosed');
+    if (force === 'true') return true;
+    if (force === 'false') return false;
+    
+    const now = new Date();
+    const hours = now.getHours();
+    return hours >= 0 && hours < 6;
+  }, []);
+
   const [activeSpecialTab, setActiveSpecialTab] = React.useState('juices');
   const [cartItems, setCartItems] = React.useState([]);
 
@@ -177,6 +189,44 @@ const QuickShop = () => {
         ? 'bg-gradient-to-b from-[#FFF0A0]/45 via-[#FFFDF3] to-[#FFF]'
         : 'bg-gradient-to-b from-[#ffe5ec]/60 via-[#fff5f7] to-[#eaf5ee]'
     }`}>
+      {isClosed && (
+        <div className="bg-gradient-to-br from-[#781140] via-[#581c87] to-[#3b0764] rounded-[28px] p-6 text-center mb-6 shadow-xl relative overflow-hidden flex flex-col items-center justify-center">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-purple-500/15 rounded-full blur-xl pointer-events-none" />
+          
+          <div className="flex flex-col items-center justify-center space-y-3.5 w-full z-10">
+            {/* Elegant crescent moon */}
+            <div className="text-amber-300 flex items-center justify-center pt-2">
+              <svg className="w-9 h-9 drop-shadow-[0_0_8px_rgba(251,191,36,0.4)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            </div>
+            
+            <div className="space-y-1">
+              <h2 className="text-xl font-extrabold tracking-tight text-white leading-tight">
+                Closed for the day!
+              </h2>
+              <p className="text-sm font-bold text-purple-200">
+                We'll be back at 6 AM.
+              </p>
+            </div>
+
+            {/* Shop Closed image nested in a premium white container */}
+            <div className="w-full flex items-center justify-center pt-2">
+              <div className="bg-white p-3 rounded-2xl shadow-md max-w-[280px]">
+                <img 
+                  src="/closed.jpg" 
+                  alt="Shop Closed" 
+                  className="w-full h-auto object-contain rounded-xl" 
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className={isClosed ? "filter grayscale opacity-65 pointer-events-none select-none" : ""}>
+
       {/* Location Picker Bar */}
       {!isFreshGrocery && (
         <div 
@@ -200,7 +250,7 @@ const QuickShop = () => {
         </div>
       )}
 
-      {/* Search in Minutes Input Bar */}
+      {/* Search in QuickShop Input Bar */}
       {!isFreshGrocery && (
         <div className="relative mb-4">
           <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
@@ -208,7 +258,7 @@ const QuickShop = () => {
           </div>
           <input 
             type="text" 
-            placeholder="Search in Minutes" 
+            placeholder="Search in QuickShop" 
             onFocus={() => navigate('/search')}
             className="w-full bg-white border-2 border-[#ffb3c6]/40 focus:border-[#d6186d] rounded-2xl pl-10 pr-10 py-2.5 text-[13px] font-medium text-slate-800 placeholder:text-slate-455 outline-none shadow-xs transition-colors"
           />
@@ -600,7 +650,7 @@ const QuickShop = () => {
       {/* Location reminder banner matching screenshot exactly */}
       <div className="mb-6 bg-rose-50/40 border border-rose-100/60 rounded-xl p-3 flex justify-between items-center cursor-pointer shadow-2xs hover:bg-rose-50/70 transition-colors">
         <span className="text-[11px] font-semibold text-rose-900 leading-snug">
-          Share your location to access Minutes & explore offers trending in your area.
+          Share your location to access QuickShop & explore offers trending in your area.
         </span>
         <svg className="w-4 h-4 text-rose-800 flex-shrink-0 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -795,6 +845,7 @@ const QuickShop = () => {
             </div>
           </div>
         ))}
+      </div>
       </div>
 
     </div>

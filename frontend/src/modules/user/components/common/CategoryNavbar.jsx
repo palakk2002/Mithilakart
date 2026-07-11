@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 /* ─────────────────────────────────────────────
-   Custom SVG icons — pixel-perfect Flipkart style
+   Custom SVG icons
 ───────────────────────────────────────────── */
 const IconForYou = ({ size = 24, active, className }) => (
   <svg width={size} height={size} className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2 : 1.5} strokeLinecap="round" strokeLinejoin="round">

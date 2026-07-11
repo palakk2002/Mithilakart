@@ -42,19 +42,49 @@ const Cart = () => {
   const primaryText = isMithilakFlow ? 'text-[#7c3aed]' : (isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#084224]'));
   const shopNowLink = isMithilakFlow ? '/mithilak' : (isFreshGroceryFlow ? '/fresh-grocery' : (isQuickShopFlow ? '/quick-shop' : '/vendor/home'));
 
+  // Load cart items for all users (authenticated or not)
   useEffect(() => {
-    if (localStorage.getItem('isAuthenticated') !== 'true') {
-      navigate('/login', { state: { from: '/cart' } });
-      return;
-    }
-
     try {
       const items = JSON.parse(localStorage.getItem('userCart') || '[]');
       setCartItems(items);
     } catch (e) {
       console.error("Failed to load cart", e);
     }
-  }, [navigate]);
+  }, []);
+
+  // Re-sync auth & address state when returning from login page
+  useEffect(() => {
+    const syncAuthState = () => {
+      const authNow = localStorage.getItem('isAuthenticated') === 'true';
+      setIsAuthenticated(authNow);
+      if (authNow) {
+        const savedAddr = localStorage.getItem('cartAddress');
+        if (savedAddr) {
+          setAddress(JSON.parse(savedAddr));
+        } else {
+          // Auto-assign default address for logged-in users without one
+          const defaultAddr = {
+            name: 'Harsh Pandey',
+            phone: '9876543210',
+            address: '83 Kishan Pura Mataji Mandir, Sector No. 5 New Harsud Chh...'
+          };
+          localStorage.setItem('cartAddress', JSON.stringify(defaultAddr));
+          setAddress(defaultAddr);
+        }
+      }
+    };
+
+    // Listen for popstate (back/forward navigation) and focus (tab switch back)
+    window.addEventListener('popstate', syncAuthState);
+    window.addEventListener('focus', syncAuthState);
+    // Also run on mount in case we just returned from login
+    syncAuthState();
+
+    return () => {
+      window.removeEventListener('popstate', syncAuthState);
+      window.removeEventListener('focus', syncAuthState);
+    };
+  }, []);
 
   const handleRemove = (cartId) => {
     const updated = cartItems.filter(item => item.cartId !== cartId);

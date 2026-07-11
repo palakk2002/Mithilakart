@@ -31,10 +31,11 @@ const DeliveryLayout = () => {
       {showHeader && (
         <div className="sticky top-0 z-40 bg-white border-b border-slate-100 px-5 py-3 flex items-center justify-between shadow-sm animate-in slide-in-from-top duration-300">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center">
-              <Package size={16} className="text-white" />
-            </div>
-            <span className="text-[15px] font-black text-slate-900 tracking-tight font-montserrat">Cocio<span className="text-blue-600">.</span> Delivery</span>
+            <img 
+              src="/mthibg.png" 
+              alt="Mithilakart" 
+              className="h-8 w-auto object-contain"
+            />
           </div>
 
           {/* Online / Offline Toggle */}

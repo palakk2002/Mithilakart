@@ -52,13 +52,11 @@ const MobileMenu = ({ isOpen, onClose }) => {
             {/* Header */}
             <div className="h-16 flex items-center justify-between px-5 border-b border-slate-900">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center">
-                  <Store size={18} className="text-white" />
-                </div>
-                <div>
-                  <h2 className="text-sm font-bold text-slate-100">Seller Hub</h2>
-                  <p className="text-[10px] text-slate-400">Mithilakart</p>
-                </div>
+                <img 
+                  src="/mthibg.png" 
+                  alt="Mithilakart" 
+                  className="h-10 w-auto object-contain"
+                />
               </div>
               <button onClick={onClose} className="p-2 rounded-lg hover:bg-slate-900 transition-colors" aria-label="Close menu">
                 <X size={20} className="text-slate-400" />

@@ -52,7 +52,7 @@ const Login = () => {
       {/* Top Header Row */}
       <div className="w-full max-w-[420px] flex items-center justify-between z-10">
         <button 
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/home')}
           className="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full backdrop-blur-md active:scale-95 transition-all"
         >
           <X size={20} strokeWidth={2.5} />
@@ -168,7 +168,7 @@ const Login = () => {
             whileTap={{ scale: 0.97 }}
             className="w-full py-4 bg-[#0c5c20] hover:bg-[#073f15] text-white rounded-[16px] text-[15px] font-bold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all cursor-pointer"
           >
-            {t('auth.loginTitle') || 'Log in'}
+            Login
           </motion.button>
         </form>
 
@@ -184,9 +184,9 @@ const Login = () => {
       {/* Footer Logo & Styling */}
       <div className="flex flex-col items-center gap-1 my-4 z-10">
         <img 
-          src="/mithilakartbglogo.png" 
+          src="/mthibg.png" 
           alt="Mithilakart" 
-          className="h-10 w-auto object-contain brightness-0 filter invert opacity-90"
+          className="h-10 w-auto object-contain"
         />
         <div className="flex items-center gap-1 text-[18px] font-bold text-white tracking-wide italic">
           <span className="opacity-90">Mithila</span>

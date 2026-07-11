@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Search, Share2, ChevronDown, Heart } from 'lucide-react';
 import { formatPrice } from '../../../shared/utils/priceFormatter';
+import closedShutter from '../../../assets/closed_shutter.png';
+
 
 const DYNAMIC_DATA = {
   'Fruits & Vegetables': {
@@ -273,6 +275,17 @@ const QuickShopSubcategory = () => {
   const location = useLocation();
   const categoryName = location.state?.category || 'Fruits & Vegetables';
 
+  const isClosed = React.useMemo(() => {
+    const force = localStorage.getItem('forceShopClosed');
+    if (force === 'true') return true;
+    if (force === 'false') return false;
+    
+    const now = new Date();
+    const hours = now.getHours();
+    return hours >= 0 && hours < 6;
+  }, []);
+
+
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
   
@@ -364,6 +377,46 @@ const QuickShopSubcategory = () => {
           </button>
         </div>
       </div>
+
+      {/* Closed Banner */}
+      {isClosed && (
+        <div className="mx-4 my-3 bg-gradient-to-br from-[#781140] via-[#581c87] to-[#3b0764] rounded-[20px] p-5 text-center shadow-md relative overflow-hidden flex flex-col items-center justify-center">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-pink-500/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-20 h-20 bg-purple-500/15 rounded-full blur-xl pointer-events-none" />
+          
+          <div className="flex flex-col items-center justify-center space-y-3 w-full z-10">
+            {/* Elegant crescent moon */}
+            <div className="text-amber-300 flex items-center justify-center">
+              <svg className="w-7 h-7 drop-shadow-[0_0_6px_rgba(251,191,36,0.4)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            </div>
+            
+            <div className="space-y-0.5">
+              <h2 className="text-base font-extrabold tracking-tight text-white leading-tight">
+                Closed for the day!
+              </h2>
+              <p className="text-xs font-bold text-purple-200">
+                We'll be back at 6 AM.
+              </p>
+            </div>
+
+            {/* Shop Closed image nested in a premium white container */}
+            <div className="w-full flex items-center justify-center">
+              <div className="bg-white p-2.5 rounded-xl shadow-md max-w-[200px]">
+                <img 
+                  src="/closed.jpg" 
+                  alt="Shop Closed" 
+                  className="w-full h-auto object-contain rounded-lg" 
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className={`flex-1 flex flex-col overflow-hidden ${isClosed ? "filter grayscale opacity-65 pointer-events-none select-none" : ""}`}>
+
 
       {/* Filters & Sort Header */}
       <div className={`border-b border-gray-100/80 px-4 py-2 flex gap-2 overflow-x-auto no-scrollbar shadow-3xs transition-colors duration-300 ${
@@ -557,8 +610,10 @@ const QuickShopSubcategory = () => {
         </div>
 
       </div>
+      </div>
     </div>
   );
+
 };
 
 // Simple inline icon

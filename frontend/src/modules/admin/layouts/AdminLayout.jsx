@@ -217,9 +217,9 @@ const AdminLayout = () => {
         <div className="h-20 flex items-center px-6 gap-3">
           <Link to="/admin/dashboard" className="flex items-center gap-3 group">
             <img 
-              src="/mithilakartbglogo.png" 
+              src="/mthibg.png" 
               alt="Logo" 
-              className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105 brightness-0 invert" 
+              className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
             />
           </Link>
         </div>

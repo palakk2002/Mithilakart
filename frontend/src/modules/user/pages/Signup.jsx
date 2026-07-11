@@ -185,9 +185,9 @@ const Signup = () => {
       {/* Footer Logo & Styling */}
       <div className="flex flex-col items-center gap-1 my-3 z-10">
         <img 
-          src="/mithilakartbglogo.png" 
+          src="/mthibg.png" 
           alt="Mithilakart" 
-          className="h-10 w-auto object-contain brightness-0 filter invert opacity-90"
+          className="h-10 w-auto object-contain"
         />
         <div className="flex items-center gap-1 text-[18px] font-bold text-white tracking-wide italic">
           <span className="opacity-90">Mithila</span>

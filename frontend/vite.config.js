@@ -10,7 +10,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg", "icons.svg", "mithilakartbglogo.png", "hero_banner.png"],
+      includeAssets: ["favicon.svg", "favicon.ico", "apple-touch-icon.png", "icons.svg", "mithilakartbglogo.png", "hero_banner.png"],
       manifest: {
         name: "Mithilakart",
         short_name: "Mithilakart",

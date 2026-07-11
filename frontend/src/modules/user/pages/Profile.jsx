@@ -19,14 +19,18 @@ const VendorProfile = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { userProfile } = useAccountStore();
+  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
 
   const handleLogout = () => {
-    localStorage.removeItem('userCart');
     localStorage.removeItem('userWishlist');
     localStorage.removeItem('userToken');
     localStorage.removeItem('isAuthenticated');
     sessionStorage.clear();
-    navigate('/vendor/login', { replace: true });
+    navigate('/home', { replace: true });
+  };
+
+  const handleLogin = () => {
+    navigate('/login', { state: { from: '/profile' } });
   };
 
   const profileOptions = [
@@ -63,9 +67,11 @@ const VendorProfile = () => {
               <User size={28} className="text-white" />
             </div>
             <div>
-              <h1 className="text-[18px] font-black tracking-tight">{userProfile.name}</h1>
+              <h1 className="text-[18px] font-black tracking-tight">
+                {isAuthenticated ? userProfile.name : 'Guest User'}
+              </h1>
               <p className="text-[11px] font-medium text-emerald-100/80 mt-1 leading-normal">
-                {userProfile.email || 'mithilakart.user@gmail.com'}
+                {isAuthenticated ? (userProfile.email || 'mithilakart.user@gmail.com') : 'Please login to access all features'}
               </p>
             </div>
           </div>
@@ -74,12 +80,14 @@ const VendorProfile = () => {
             <div>
               <p className="text-[9px] font-black text-emerald-200/90 uppercase tracking-widest leading-none">Status</p>
               <p className="text-[13px] font-black text-yellow-400 mt-1 flex items-center gap-1.5">
-                ★ PRIME MEMBER
+                {isAuthenticated ? '★ PRIME MEMBER' : 'GUEST'}
               </p>
             </div>
-            <button className="bg-white/15 hover:bg-white/20 active:scale-95 transition-all text-white border border-white/10 px-4.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider">
-              {t('profile.loyaltyPoints') || 'Points'}
-            </button>
+            {isAuthenticated && (
+              <button className="bg-white/15 hover:bg-white/20 active:scale-95 transition-all text-white border border-white/10 px-4.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider">
+                {t('profile.loyaltyPoints') || 'Points'}
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -91,7 +99,13 @@ const VendorProfile = () => {
             {profileOptions.map((opt, idx) => (
               <div
                 key={idx}
-                onClick={() => navigate(opt.path)}
+                onClick={() => {
+                  if (isAuthenticated) {
+                    navigate(opt.path);
+                  } else {
+                    navigate('/login', { state: { from: '/profile' } });
+                  }
+                }}
                 className="px-5 py-4.5 flex items-center justify-between hover:bg-slate-50/50 cursor-pointer active:bg-slate-50 transition-colors group"
               >
                 <div className="flex items-center gap-4">
@@ -109,20 +123,35 @@ const VendorProfile = () => {
         </div>
       </div>
 
-      {/* Logout Button */}
+      {/* Logout / Login Button */}
       <div className="px-4 pt-6 pb-10">
-        <motion.button
-          onClick={handleLogout}
-          whileTap={{ scale: 0.97 }}
-          className="w-full bg-white border border-rose-200 hover:border-rose-300 text-rose-600 hover:bg-rose-50/30 py-4 rounded-2xl font-black text-[13.5px] uppercase tracking-wider transition-all flex items-center justify-center gap-2.5 shadow-2xs active:scale-[0.98]"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-            <polyline points="16 17 21 12 16 7"/>
-            <line x1="21" y1="12" x2="9" y2="12"/>
-          </svg>
-          {t('profile.logout')}
-        </motion.button>
+        {isAuthenticated ? (
+          <motion.button
+            onClick={handleLogout}
+            whileTap={{ scale: 0.97 }}
+            className="w-full bg-white border border-rose-200 hover:border-rose-300 text-rose-600 hover:bg-rose-50/30 py-4 rounded-2xl font-black text-[13.5px] uppercase tracking-wider transition-all flex items-center justify-center gap-2.5 shadow-2xs active:scale-[0.98]"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            {t('profile.logout')}
+          </motion.button>
+        ) : (
+          <motion.button
+            onClick={handleLogin}
+            whileTap={{ scale: 0.97 }}
+            className="w-full bg-[#084224] text-white hover:bg-[#06331b] py-4 rounded-2xl font-black text-[13.5px] uppercase tracking-wider transition-all flex items-center justify-center gap-2.5 shadow-md active:scale-[0.98]"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+              <polyline points="10 17 15 12 10 7"/>
+              <line x1="15" y1="12" x2="3" y2="12"/>
+            </svg>
+            Login
+          </motion.button>
+        )}
       </div>
     </div>
   );

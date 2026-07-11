@@ -32,7 +32,7 @@ const SearchBar = ({ selectedAddress }) => {
   return (
     <div className="px-2 pb-2 md:px-4 md:pb-3 flex flex-col gap-1 md:gap-3">
 
-      {/* ── Delivery Address Field (Flipkart Style) ── */}
+      {/* ── Delivery Address Field ── */}
       {!hideAddressRow && (
         <div className="flex items-center justify-between py-0.5 md:py-2 text-slate-800">
           <Link

@@ -48,13 +48,11 @@ const Sidebar = ({ collapsed, onToggle }) => {
           </div>
         ) : (
           <Link to="/seller/dashboard" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center shadow-md group-hover:bg-slate-800 transition-colors">
-              <Store size={18} className="text-white" />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold text-slate-100 leading-tight">Seller Hub</h2>
-              <p className="text-[10px] text-slate-400">Mithilakart</p>
-            </div>
+            <img 
+              src="/mthibg.png" 
+              alt="Mithilakart" 
+              className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            />
           </Link>
         )}
       </div>
