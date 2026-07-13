@@ -10,7 +10,18 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg", "favicon.ico", "apple-touch-icon.png", "icons.svg", "mithilakartbglogo.png", "hero_banner.png"],
+      includeAssets: [
+        "favicon.svg",
+        "favicon.ico",
+        "apple-touch-icon.png",
+        "icons.svg",
+        "mithilakartbglogo.png",
+        "hero_banner.png",
+        "IMG_MGI_48.png",
+        "IMG_MGI_96.png",
+        "IMG_MGI_144.png",
+        "IMG_MGI_192.png"
+      ],
       manifest: {
         name: "Mithilakart",
         short_name: "Mithilakart",
@@ -23,20 +34,24 @@ export default defineConfig({
         scope: "/",
         icons: [
           {
-            src: "/pwa-192x192.png",
+            src: "/IMG_MGI_48.png",
+            sizes: "48x48",
+            type: "image/png"
+          },
+          {
+            src: "/IMG_MGI_96.png",
+            sizes: "96x96",
+            type: "image/png"
+          },
+          {
+            src: "/IMG_MGI_144.png",
+            sizes: "144x144",
+            type: "image/png"
+          },
+          {
+            src: "/IMG_MGI_192.png",
             sizes: "192x192",
             type: "image/png"
-          },
-          {
-            src: "/pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png"
-          },
-          {
-            src: "/maskable-icon.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any maskable"
           }
         ]
       },
@@ -76,6 +91,9 @@ export default defineConfig({
             }
           }
         ]
+      },
+      devOptions: {
+        enabled: true
       }
     }),
     {

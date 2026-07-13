@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Footer from '../../../shared/components/Footer';
 
 const PrivacyPolicy = () => {
   const navigate = useNavigate();
@@ -214,6 +215,7 @@ const PrivacyPolicy = () => {
             </p>
           </div>
         </section>
+        <Footer />
       </div>
     </div>
   );

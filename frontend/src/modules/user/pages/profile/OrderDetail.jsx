@@ -60,7 +60,7 @@ const OrderDetail = () => {
         </span>
       </div>
 
-      <div className="max-w-xl mx-auto px-4 pt-5 space-y-5 pb-24">
+      <div className="w-full mx-auto px-4 pt-5 space-y-5 pb-24">
         {/* Modern Live Status Card */}
         <div className="bg-gradient-to-br from-[#084224] to-[#042112] rounded-3xl p-6 text-white shadow-[0_8px_30px_rgba(8,66,36,0.12)] relative overflow-hidden border border-emerald-800/30">
           <div className="absolute right-[-10px] top-[-10px] w-24 h-24 rounded-full bg-white/5 blur-xl pointer-events-none" />

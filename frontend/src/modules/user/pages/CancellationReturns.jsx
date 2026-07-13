@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Package, RotateCcw, Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import Footer from '../../../shared/components/Footer';
 
 const CancellationReturns = () => {
   const navigate = useNavigate();
@@ -246,6 +247,7 @@ const CancellationReturns = () => {
             </div>
           </div>
         </section>
+        <Footer />
       </div>
     </div>
   );

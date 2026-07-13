@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Footer from '../../../shared/components/Footer';
 
 const TermsOfUse = () => {
   const navigate = useNavigate();
@@ -168,6 +169,7 @@ const TermsOfUse = () => {
             <p>Address: Mithilakart Pvt Ltd, Mumbai, India</p>
           </div>
         </section>
+        <Footer />
       </div>
     </div>
   );

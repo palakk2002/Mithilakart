@@ -243,7 +243,7 @@ const MyOrders = () => {
         <h1 className="text-[18px] font-bold text-slate-900 font-montserrat">My Orders</h1>
       </div>
 
-      <div className="max-w-2xl mx-auto">
+      <div className="w-full mx-auto">
         {/* Working Banner Carousel - Optimized for Performance */}
         <BannerCarousel />
 
@@ -385,7 +385,7 @@ const MyOrders = () => {
                animate={{ y: 0 }}
                exit={{ y: "100%" }}
                transition={{ type: "spring", damping: 25, stiffness: 300 }}
-               className="relative w-full max-w-xl bg-white rounded-t-[32px] overflow-hidden shadow-2xl"
+               className="relative w-full w-full bg-white rounded-t-[32px] overflow-hidden shadow-2xl"
              >
                 <div className="p-6">
                    <div className="flex justify-between items-center mb-8">

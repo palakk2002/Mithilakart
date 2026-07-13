@@ -19,6 +19,7 @@ import useAccountStore from '../../../store/useAccountStore';
 import useVendorStore from '../../../store/useVendorStore';
 import { useTranslation } from 'react-i18next';
 import { parsePrice, formatPrice } from '../../../shared/utils/priceFormatter';
+import Footer from '../../../shared/components/Footer';
 
 const getMithilakartHeaderBg = (category) => {
   switch (category) {
@@ -220,6 +221,7 @@ const VendorLayout = () => {
             </main>
           </div>
         </div>
+        <Footer />
       </div>
 
       {/* Mobile-First Bottom Navbar (Fixed) */}

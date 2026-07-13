@@ -45,7 +45,7 @@ const QuestionsAnswers = () => {
         <h1 className="text-lg font-black uppercase tracking-widest">Q & A</h1>
       </div>
 
-      <div className="container mx-auto px-4 py-8 max-w-2xl space-y-6">
+      <div className="container mx-auto px-4 py-8 w-full space-y-6">
         <div className="flex gap-2 mb-4 overflow-x-auto no-scrollbar">
            {['All', 'Answered', 'Pending'].map(tab => (
              <button 

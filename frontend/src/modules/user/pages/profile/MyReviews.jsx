@@ -39,7 +39,7 @@ const MyReviews = () => {
         <h1 className="text-lg font-black uppercase tracking-widest">My Reviews</h1>
       </div>
 
-      <div className="container mx-auto px-4 py-8 max-w-2xl space-y-6">
+      <div className="container mx-auto px-4 py-8 w-full space-y-6">
         <div className="bg-black/20 border border-[var(--card-border)] rounded-2xl p-6 flex items-center justify-between">
            <div className="text-center flex-1 border-r border-[var(--card-border)]">
               <h3 className="text-3xl font-black text-[var(--color-gold)]">4.5</h3>

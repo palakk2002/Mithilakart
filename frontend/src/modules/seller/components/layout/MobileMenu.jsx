@@ -53,7 +53,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
             <div className="h-16 flex items-center justify-between px-5 border-b border-slate-900">
               <div className="flex items-center gap-3">
                 <img 
-                  src="/mthibg.png" 
+                  src="/logomith-removebg-preview.png" 
                   alt="Mithilakart" 
                   className="h-10 w-auto object-contain"
                 />

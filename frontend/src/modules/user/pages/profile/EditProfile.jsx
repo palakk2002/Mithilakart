@@ -60,7 +60,7 @@ const EditProfile = () => {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="bg-[var(--card-bg)] min-h-screen text-[var(--card-text)]"
+      className="bg-[#fbfcff] min-h-screen text-slate-800 font-sans"
     >
       {/* Hidden File Input */}
       <input 
@@ -72,42 +72,42 @@ const EditProfile = () => {
       />
 
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-[var(--card-bg)]/90 backdrop-blur-md border-b border-[var(--card-border)] p-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <button onClick={() => navigate(-1)} className="hover:text-[var(--color-gold)] transition-colors">
-            <ArrowLeft size={24} />
+      <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 p-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <button onClick={() => navigate(-1)} className="p-1 rounded-full hover:bg-slate-50 transition-colors text-slate-800" aria-label="Go back">
+            <ArrowLeft size={22} />
           </button>
-          <h1 className="text-lg font-black uppercase tracking-widest">Edit Profile</h1>
+          <h1 className="text-[17px] font-black uppercase tracking-widest text-slate-800">Edit Profile</h1>
         </div>
-        <button onClick={handleSave} className="text-[var(--color-gold)] font-black text-xs uppercase tracking-widest bg-[var(--color-gold)]/10 px-4 py-2 rounded-lg border border-[var(--color-gold)]/30">
+        <button onClick={handleSave} className="bg-[#084224] text-white font-black text-xs uppercase tracking-widest px-5 py-2 rounded-xl shadow-sm hover:bg-[#06331b] active:scale-95 transition-all">
           Save
         </button>
       </div>
 
-      <div className="container mx-auto px-4 py-8 max-w-2xl space-y-8">
+      <div className="container mx-auto px-4 py-8 w-full space-y-8">
         {/* Profile Picture */}
         <div className="flex flex-col items-center">
           <div className="relative group">
             <div 
               onClick={() => fileInputRef.current.click()}
-              className="w-32 h-32 bg-[var(--color-gold)] rounded-full flex items-center justify-center text-black font-black text-5xl shadow-[0_0_40px_rgba(226,167,80,0.3)] border-4 border-black overflow-hidden cursor-pointer active:scale-95 transition-transform"
+              className="w-32 h-32 bg-emerald-50 rounded-full flex items-center justify-center text-[#084224] font-black text-5xl shadow-md border-4 border-white overflow-hidden cursor-pointer active:scale-95 transition-transform"
             >
               {formData.avatar ? (
                 <img src={formData.avatar} alt="Profile" className="w-full h-full object-cover" />
               ) : (
-                formData.name.charAt(0)
+                formData.name ? formData.name.charAt(0).toUpperCase() : 'H'
               )}
             </div>
             <button 
               onClick={() => fileInputRef.current.click()}
-              className="absolute bottom-0 right-0 bg-black border border-[var(--color-gold)] p-2 rounded-full text-[var(--color-gold)] shadow-lg hover:bg-[var(--color-gold)] hover:text-black transition-all active:scale-90"
+              className="absolute bottom-0 right-0 bg-[#084224] border-2 border-white p-2.5 rounded-full text-white shadow-md hover:bg-[#06331b] transition-all active:scale-90"
             >
-              <Camera size={20} />
+              <Camera size={18} />
             </button>
           </div>
           <button 
             onClick={() => fileInputRef.current.click()}
-            className="mt-4 text-[10px] font-black text-[var(--color-gold)] uppercase tracking-[3px] hover:opacity-70 transition-opacity"
+            className="mt-4 text-[10px] font-black text-[#084224] uppercase tracking-[3px] hover:opacity-70 transition-opacity"
           >
             Change Photo
           </button>
@@ -117,14 +117,14 @@ const EditProfile = () => {
         <div className="space-y-6">
           {/* Full Name */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-[var(--color-gold)] uppercase tracking-[3px] ml-1">Full Name</label>
+            <label className="text-[10px] font-black text-[#084224] uppercase tracking-[3px] ml-1">Full Name</label>
             <div className={`relative ${errors.name ? 'animate-shake' : ''}`}>
-              <User size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 ${errors.name ? 'text-red-500' : 'text-[var(--card-sub)]'}`} />
+              <User size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 ${errors.name ? 'text-red-500' : 'text-slate-400'}`} />
               <input 
                 type="text" 
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className={`w-full bg-black/20 border ${errors.name ? 'border-red-500' : 'border-[var(--card-border)]'} rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:border-[var(--color-gold)]/50 transition-all`}
+                className={`w-full bg-white border ${errors.name ? 'border-red-500' : 'border-slate-200'} rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#084224]/50 transition-all shadow-sm`}
               />
             </div>
             {errors.name && <p className="text-[10px] text-red-500 font-black uppercase tracking-wider ml-1">{errors.name}</p>}
@@ -132,14 +132,14 @@ const EditProfile = () => {
 
           {/* Email */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-[var(--color-gold)] uppercase tracking-[3px] ml-1">Email Address</label>
+            <label className="text-[10px] font-black text-[#084224] uppercase tracking-[3px] ml-1">Email Address</label>
             <div className={`relative ${errors.email ? 'animate-shake' : ''}`}>
-              <Mail size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 ${errors.email ? 'text-red-500' : 'text-[var(--card-sub)]'}`} />
+              <Mail size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 ${errors.email ? 'text-red-500' : 'text-slate-400'}`} />
               <input 
                 type="email" 
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className={`w-full bg-black/20 border ${errors.email ? 'border-red-500' : 'border-[var(--card-border)]'} rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:border-[var(--color-gold)]/50 transition-all`}
+                className={`w-full bg-white border ${errors.email ? 'border-red-500' : 'border-slate-200'} rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#084224]/50 transition-all shadow-sm`}
               />
             </div>
             {errors.email && <p className="text-[10px] text-red-500 font-black uppercase tracking-wider ml-1">{errors.email}</p>}
@@ -147,14 +147,14 @@ const EditProfile = () => {
 
           {/* Phone */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-[var(--color-gold)] uppercase tracking-[3px] ml-1">Phone Number</label>
+            <label className="text-[10px] font-black text-[#084224] uppercase tracking-[3px] ml-1">Phone Number</label>
             <div className={`relative ${errors.phone ? 'animate-shake' : ''}`}>
-              <Phone size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 ${errors.phone ? 'text-red-500' : 'text-[var(--card-sub)]'}`} />
+              <Phone size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 ${errors.phone ? 'text-red-500' : 'text-slate-400'}`} />
               <input 
                 type="tel" 
                 value={formData.phone}
                 onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                className={`w-full bg-black/20 border ${errors.phone ? 'border-red-500' : 'border-[var(--card-border)]'} rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:border-[var(--color-gold)]/50 transition-all`}
+                className={`w-full bg-white border ${errors.phone ? 'border-red-500' : 'border-slate-200'} rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#084224]/50 transition-all shadow-sm`}
               />
             </div>
             {errors.phone && <p className="text-[10px] text-red-500 font-black uppercase tracking-wider ml-1">{errors.phone}</p>}
@@ -163,13 +163,13 @@ const EditProfile = () => {
           {/* Gender & DOB Row */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-[var(--color-gold)] uppercase tracking-[3px] ml-1">Gender</label>
+              <label className="text-[10px] font-black text-[#084224] uppercase tracking-[3px] ml-1">Gender</label>
               <div className="relative">
-                <Users size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--card-sub)]" />
+                <Users size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                 <select 
                   value={formData.gender}
                   onChange={(e) => setFormData({...formData, gender: e.target.value})}
-                  className="w-full bg-black/20 border border-[var(--card-border)] rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:border-[var(--color-gold)]/50 transition-all appearance-none"
+                  className="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#084224]/50 transition-all appearance-none shadow-sm"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -179,14 +179,14 @@ const EditProfile = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-[var(--color-gold)] uppercase tracking-[3px] ml-1">Date of Birth</label>
+              <label className="text-[10px] font-black text-[#084224] uppercase tracking-[3px] ml-1">Date of Birth</label>
               <div className="relative">
-                <Calendar size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--card-sub)]" />
+                <Calendar size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input 
                   type="date" 
                   value={formData.dob}
                   onChange={(e) => setFormData({...formData, dob: e.target.value})}
-                  className="w-full bg-black/20 border border-[var(--card-border)] rounded-2xl py-4 pl-12 pr-4 text-[10px] font-bold focus:outline-none focus:border-[var(--color-gold)]/50 transition-all [color-scheme:dark]"
+                  className="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#084224]/50 transition-all shadow-sm"
                 />
               </div>
             </div>
@@ -196,7 +196,7 @@ const EditProfile = () => {
         <div className="pt-8 pb-12">
           <button 
             onClick={handleSave}
-            className="w-full bg-[var(--color-gold)] text-black py-4 rounded-2xl font-black uppercase tracking-[3px] shadow-[0_10px_20px_rgba(226,167,80,0.2)] hover:scale-[1.02] transition-all active:scale-95 group relative overflow-hidden"
+            className="w-full bg-[#084224] text-white py-4 rounded-2xl font-black uppercase tracking-[3px] shadow-lg shadow-emerald-100 hover:scale-[1.02] transition-all active:scale-95 group relative overflow-hidden"
           >
             <span className="relative z-10">Save Changes</span>
             <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>

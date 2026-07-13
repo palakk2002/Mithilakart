@@ -57,7 +57,10 @@ const Login = () => {
         >
           <X size={20} strokeWidth={2.5} />
         </button>
-        <span className="text-white font-bold tracking-wider text-sm">MITHILAKART</span>
+        <div className="flex items-center gap-2">
+          <img src="/logomith-removebg-preview.png" alt="Mithilakart" className="h-8 w-auto object-contain" />
+          <span className="text-white font-bold tracking-wider text-sm">MITHILAKART</span>
+        </div>
         <div className="w-9"></div> {/* Spacer for symmetry */}
       </div>
 
@@ -188,9 +191,8 @@ const Login = () => {
           alt="Mithilakart" 
           className="h-10 w-auto object-contain"
         />
-        <div className="flex items-center gap-1 text-[18px] font-bold text-white tracking-wide italic">
-          <span className="opacity-90">Mithila</span>
-          <span className="text-[#073f15]">kart</span>
+        <div className="flex items-center text-[18px] font-bold text-white tracking-wide italic">
+          <span className="opacity-90">Mithila</span><span className="text-[#073f15]">kart</span>
         </div>
       </div>
     </div>

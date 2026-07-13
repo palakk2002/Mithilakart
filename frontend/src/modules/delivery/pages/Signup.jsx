@@ -298,9 +298,8 @@ const DeliverySignup = () => {
           alt="Mithilakart" 
           className="h-10 w-auto object-contain"
         />
-        <div className="flex items-center gap-1 text-[18px] font-bold text-white tracking-wide italic">
-          <span className="opacity-90">Mithila</span>
-          <span className="text-[#073f15]">kart</span>
+        <div className="flex items-center text-[18px] font-bold text-white tracking-wide italic">
+          <span className="opacity-90">Mithila</span><span className="text-[#073f15]">kart</span>
         </div>
       </div>
     </div>

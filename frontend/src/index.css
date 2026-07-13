@@ -107,3 +107,80 @@
     object-position: center;
   }
 }
+
+/* --- Premium Night Sky Animations --- */
+@keyframes twinkle-star {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+    filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.2));
+  }
+}
+
+@keyframes cloud-move-slow {
+  0% {
+    transform: translate3d(-10%, 0, 0);
+  }
+  50% {
+    transform: translate3d(10%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-10%, 0, 0);
+  }
+}
+
+@keyframes cloud-move-slower {
+  0% {
+    transform: translate3d(5%, 0, 0);
+  }
+  50% {
+    transform: translate3d(-15%, 0, 0);
+  }
+  100% {
+    transform: translate3d(5%, 0, 0);
+  }
+}
+
+@keyframes soft-pulse-glow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.15);
+  }
+}
+
+.animate-twinkle-s1 {
+  animation: twinkle-star 2s infinite ease-in-out;
+}
+.animate-twinkle-s2 {
+  animation: twinkle-star 3.5s infinite ease-in-out;
+}
+.animate-twinkle-s3 {
+  animation: twinkle-star 5s infinite ease-in-out;
+}
+.animate-twinkle-s4 {
+  animation: twinkle-star 2.8s infinite ease-in-out;
+}
+.animate-twinkle-s5 {
+  animation: twinkle-star 4.2s infinite ease-in-out;
+}
+
+.animate-cloud-slow {
+  animation: cloud-move-slow 28s infinite ease-in-out;
+}
+
+.animate-cloud-slower {
+  animation: cloud-move-slower 38s infinite ease-in-out;
+}
+
+.animate-glow-pulse {
+  animation: soft-pulse-glow 5s infinite ease-in-out;
+}

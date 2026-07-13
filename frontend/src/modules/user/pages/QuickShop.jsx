@@ -190,36 +190,172 @@ const QuickShop = () => {
         : 'bg-gradient-to-b from-[#ffe5ec]/60 via-[#fff5f7] to-[#eaf5ee]'
     }`}>
       {isClosed && (
-        <div className="bg-gradient-to-br from-[#781140] via-[#581c87] to-[#3b0764] rounded-[28px] p-6 text-center mb-6 shadow-xl relative overflow-hidden flex flex-col items-center justify-center">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-full blur-2xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-purple-500/15 rounded-full blur-xl pointer-events-none" />
+        <div className="relative w-full rounded-[28px] overflow-hidden bg-gradient-to-b from-[#0b0c1e] via-[#151833] to-[#251b45] p-6 text-center mb-6 shadow-2xl border border-white/5 flex flex-col items-center min-h-[480px]">
+          {/* Night Sky Background Components */}
+          {/* Glowing Radial Moon Backdrop */}
+          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-48 h-48 bg-amber-400/10 rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
           
-          <div className="flex flex-col items-center justify-center space-y-3.5 w-full z-10">
-            {/* Elegant crescent moon */}
-            <div className="text-amber-300 flex items-center justify-center pt-2">
-              <svg className="w-9 h-9 drop-shadow-[0_0_8px_rgba(251,191,36,0.4)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          {/* Clouds Layer - Behind Moon */}
+          <div className="absolute inset-0 opacity-15 pointer-events-none overflow-hidden select-none">
+            <svg className="absolute -top-5 -left-10 w-64 h-32 text-purple-300/40 animate-cloud-slow" fill="currentColor" viewBox="0 0 100 100">
+              <path d="M10 50 C20 40, 40 40, 50 50 C60 40, 80 40, 90 50 C95 55, 95 65, 90 70 C80 80, 20 80, 10 70 C5 65, 5 55, 10 50 Z" />
+            </svg>
+            <svg className="absolute bottom-5 -right-10 w-72 h-36 text-blue-300/30 animate-cloud-slower" fill="currentColor" viewBox="0 0 100 100">
+              <path d="M10 50 C20 40, 40 40, 50 50 C60 40, 80 40, 90 50 C95 55, 95 65, 90 70 C80 80, 20 80, 10 70 C5 65, 5 55, 10 50 Z" />
+            </svg>
+          </div>
+
+          {/* Twinkling Stars */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {/* Small Stars */}
+            <div className="absolute top-8 left-[15%] w-1 h-1 bg-white rounded-full animate-twinkle-s1" />
+            <div className="absolute top-24 left-[80%] w-1.5 h-1.5 bg-white rounded-full animate-twinkle-s2" />
+            <div className="absolute top-44 left-[12%] w-1 h-1 bg-white rounded-full animate-twinkle-s3" />
+            <div className="absolute top-16 left-[65%] w-1 h-1 bg-white rounded-full animate-twinkle-s4" />
+            <div className="absolute top-36 left-[72%] w-1.5 h-1.5 bg-white rounded-full animate-twinkle-s5" />
+            <div className="absolute bottom-32 left-[22%] w-1 h-1 bg-white rounded-full animate-twinkle-s2" />
+            <div className="absolute bottom-40 right-[15%] w-1.5 h-1.5 bg-white rounded-full animate-twinkle-s4" />
+            <div className="absolute top-[48%] left-[48%] w-1 h-1 bg-white rounded-full animate-twinkle-s3" />
+            
+            {/* Larger 4-Point Stars */}
+            <svg className="absolute top-12 right-[25%] w-3.5 h-3.5 text-amber-100/80 animate-twinkle-s3" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
+            </svg>
+            <svg className="absolute top-40 left-[25%] w-4 h-4 text-amber-200/90 animate-twinkle-s1" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
+            </svg>
+            <svg className="absolute bottom-[40%] left-[45%] w-3 h-3 text-white/70 animate-twinkle-s5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
+            </svg>
+            <svg className="absolute top-[50%] right-[10%] w-3 h-3 text-amber-100/80 animate-twinkle-s2" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
+            </svg>
+            <svg className="absolute top-[28%] left-[8%] w-3.5 h-3.5 text-amber-150/90 animate-twinkle-s4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
+            </svg>
+          </div>
+
+          {/* Floating Clouds Layer - Foreground / Midground (Positioned in lower half) */}
+          <div className="absolute top-[40%] inset-x-0 h-36 pointer-events-none overflow-hidden select-none z-10 opacity-80">
+            <svg className="absolute top-0 -left-12 w-64 h-24 text-purple-900/40 blur-[1px]" fill="currentColor" viewBox="0 0 100 100">
+              <path d="M10 60 C20 45, 45 45, 55 60 C65 45, 85 45, 95 60 C100 65, 100 75, 95 85 C85 95, 15 95, 5 85 C0 75, 0 65, 5 60 Z" />
+            </svg>
+            <svg className="absolute top-4 -right-10 w-72 h-28 text-indigo-900/50 blur-[2px]" fill="currentColor" viewBox="0 0 100 100">
+              <path d="M10 60 C20 45, 45 45, 55 60 C65 45, 85 45, 95 60 C100 65, 100 75, 95 85 C85 95, 15 95, 5 85 C0 75, 0 65, 5 60 Z" />
+            </svg>
+            <svg className="absolute top-12 left-10 w-80 h-28 text-[#1c143c]/85" fill="currentColor" viewBox="0 0 100 100">
+              <path d="M10 60 C20 45, 45 45, 55 60 C65 45, 85 45, 95 60 C100 65, 100 75, 95 85 C85 95, 15 95, 5 85 C0 75, 0 65, 5 60 Z" />
+            </svg>
+          </div>
+
+          {/* Crescent Moon Container */}
+          <div className="relative z-20 flex items-center justify-center pt-4 mb-5">
+            <div className="relative">
+              {/* Moon Glow effect */}
+              <div className="absolute inset-0 bg-yellow-250/20 rounded-full blur-2xl scale-150 animate-glow-pulse" />
+              {/* Golden Symmetrical Crescent Arc Moon SVG */}
+              <svg className="w-24 h-24 relative" viewBox="0 0 100 100" fill="currentColor">
+                <defs>
+                  <linearGradient id="moonArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#fffbeb" />
+                    <stop offset="35%" stopColor="#fef08a" />
+                    <stop offset="70%" stopColor="#f59e0b" />
+                    <stop offset="100%" stopColor="#d97706" />
+                  </linearGradient>
+                  {/* Intense inner shadow/depth filter */}
+                  <filter id="moonGlowShadow">
+                    <feDropShadow dx="-1" dy="1" stdDeviation="3" floodColor="#f59e0b" floodOpacity="0.8" />
+                  </filter>
+                </defs>
+                {/* A beautifully thick, clean, tilted crescent arc path */}
+                <path 
+                  d="M 68 18 
+                     A 34 34 0 1 0 74 76 
+                     A 30 30 0 1 1 68 18 Z" 
+                  fill="url(#moonArcGrad)" 
+                  filter="url(#moonGlowShadow)"
+                  className="drop-shadow-[0_0_12px_rgba(251,191,36,0.6)]"
+                />
               </svg>
             </div>
-            
-            <div className="space-y-1">
-              <h2 className="text-xl font-extrabold tracking-tight text-white leading-tight">
-                Closed for the day!
-              </h2>
-              <p className="text-sm font-bold text-purple-200">
-                We'll be back at 6 AM.
-              </p>
+          </div>
+
+          {/* Header text exactly like reference */}
+          <div className="relative z-20 space-y-2 mb-8">
+            <h2 className="text-2xl font-bold tracking-tight text-white font-montserrat">
+              Closed for the day!
+            </h2>
+            <p className="text-[13px] font-medium text-slate-200/90 px-4">
+              Our quick shop is currently closed.
+            </p>
+            <p className="text-[13px] font-medium text-slate-200/90">
+              We'll be back at <span className="text-yellow-400 font-extrabold text-sm">6:00 AM</span>
+            </p>
+          </div>
+
+          {/* Separate Premium Dark Alarm Countdown Card at the bottom */}
+          <div className="relative z-20 w-full max-w-[340px] bg-[#0c0d21]/80 backdrop-blur-md rounded-3xl border border-white/5 p-5 shadow-2xl flex flex-col items-center gap-3.5 mt-auto">
+            <div className="w-full flex items-center justify-center gap-4 py-2 px-1">
+              {/* Sleeping/Alarm Clock Icon on the left */}
+              <div className="flex-shrink-0 text-indigo-400">
+                <svg className="w-14 h-14 drop-shadow-[0_0_8px_rgba(129,140,248,0.4)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 5.636l1.414-1.414M5.636 18.364l-1.414 1.414M20.5 12h1M2.5 12h1M12 2.5v1M12 20.5v1" />
+                </svg>
+              </div>
+
+              {/* Digital countdown timer on the right */}
+              <div className="flex flex-col items-start gap-0.5">
+                <div className="text-[11px] font-bold text-slate-400 tracking-wide">We open in</div>
+                {(() => {
+                  const [timeLeft, setTimeLeft] = React.useState({ h: '00', m: '00', s: '00' });
+                  React.useEffect(() => {
+                    const calculateTimeLeft = () => {
+                      const now = new Date();
+                      let target = new Date();
+                      target.setHours(6, 0, 0, 0);
+                      if (now.getHours() >= 6) {
+                        target.setDate(target.getDate() + 1);
+                      }
+                      const diff = target.getTime() - now.getTime();
+                      if (diff <= 0) {
+                        return { h: '00', m: '00', s: '00' };
+                      }
+                      const hrs = Math.floor(diff / (1000 * 60 * 60));
+                      const mins = Math.floor((diff / (1000 * 60)) % 60);
+                      const secs = Math.floor((diff / 1000) % 60);
+                      return {
+                        h: String(hrs).padStart(2, '0'),
+                        m: String(mins).padStart(2, '0'),
+                        s: String(secs).padStart(2, '0')
+                      };
+                    };
+                    setTimeLeft(calculateTimeLeft());
+                    const timer = setInterval(() => {
+                      setTimeLeft(calculateTimeLeft());
+                    }, 1000);
+                    return () => clearInterval(timer);
+                  }, []);
+                  return (
+                    <div className="flex flex-col items-start">
+                      <div className="font-mono text-2xl font-black text-white tracking-wide">
+                        {timeLeft.h} : {timeLeft.m} : {timeLeft.s}
+                      </div>
+                      <div className="flex items-center gap-2.5 text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">
+                        <span>Hours</span>
+                        <span>Minutes</span>
+                        <span>Seconds</span>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
             </div>
 
-            {/* Shop Closed image nested in a premium white container */}
-            <div className="w-full flex items-center justify-center pt-2">
-              <div className="bg-white p-3 rounded-2xl shadow-md max-w-[280px]">
-                <img 
-                  src="/closed.jpg" 
-                  alt="Shop Closed" 
-                  className="w-full h-auto object-contain rounded-xl" 
-                />
-              </div>
+            {/* Thanks for your patience tagline */}
+            <div className="w-full border-t border-white/5 pt-2.5 flex items-center justify-center gap-1 text-[11px] font-semibold text-slate-400/90">
+              <span className="text-yellow-400">✦</span>
+              <span>Thanks for your patience!</span>
             </div>
           </div>
         </div>

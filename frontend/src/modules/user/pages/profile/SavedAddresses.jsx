@@ -80,7 +80,7 @@ const SavedAddresses = () => {
         </button>
       </div>
 
-      <div className="px-4 py-5 max-w-2xl mx-auto space-y-5">
+      <div className="px-4 py-5 w-full mx-auto space-y-5">
 
         {/* ── Add Button ── */}
         <button

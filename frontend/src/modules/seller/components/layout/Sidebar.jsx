@@ -49,7 +49,7 @@ const Sidebar = ({ collapsed, onToggle }) => {
         ) : (
           <Link to="/seller/dashboard" className="flex items-center gap-3 group">
             <img 
-              src="/mthibg.png" 
+              src="/logomith-removebg-preview.png" 
               alt="Mithilakart" 
               className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />

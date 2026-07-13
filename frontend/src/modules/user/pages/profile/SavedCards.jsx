@@ -82,7 +82,7 @@ const SavedCards = () => {
         </button>
       </div>
 
-      <div className="container mx-auto px-4 py-8 max-w-2xl space-y-8">
+      <div className="container mx-auto px-4 py-8 w-full space-y-8">
         <div className="space-y-6">
           <AnimatePresence>
             {savedCards.map((card) => (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Truck, MapPin, Clock, Package, CheckCircle, AlertCircle, IndianRupee } from 'lucide-react';
+import Footer from '../../../shared/components/Footer';
 
 const ShippingPolicy = () => {
   const navigate = useNavigate();
@@ -319,6 +320,7 @@ const ShippingPolicy = () => {
             </div>
           </div>
         </section>
+        <Footer />
       </div>
     </div>
   );
