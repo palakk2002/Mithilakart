@@ -9,6 +9,7 @@ import {
   Banknote, Percent, AlertCircle, CheckCircle2, Lock
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SearchInput from '../../../shared/components/SearchInput';
 
 const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -340,9 +341,8 @@ const AdminLayout = () => {
           </div>
 
           <div className="flex items-center gap-6">
-            <div className="relative hidden md:block group">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-slate-800 transition-colors" size={18} />
-              <input
+            <div className="hidden md:block w-full max-w-[180px] sm:max-w-[260px] md:max-w-[320px] lg:w-96">
+              <SearchInput
                 type="text"
                 value={searchQuery}
                 onChange={(e) => {
@@ -352,7 +352,6 @@ const AdminLayout = () => {
                 onFocus={() => searchQuery.length > 0 && setShowSearchDropdown(true)}
                 onBlur={() => setTimeout(() => setShowSearchDropdown(false), 200)}
                 placeholder="Search global records..."
-                className="bg-slate-100/70 border-none rounded-[20px] py-3.5 pl-14 pr-8 text-[14px] font-bold focus:ring-4 focus:ring-slate-200 w-full max-w-[180px] sm:max-w-[260px] md:max-w-[320px] lg:w-96 shadow-inner transition-all text-slate-900 animate-none"
               />
 
               {/* Search Dropdown */}

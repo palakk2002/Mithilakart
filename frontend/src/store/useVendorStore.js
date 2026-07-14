@@ -50,7 +50,7 @@ const PRODUCT_IMAGES = {
 };
 
 const useVendorStore = create((set) => ({
-  selectedCategory: 'For You',
+  selectedCategory: 'You Buy',
   setSelectedCategory: (category) => set({ selectedCategory: category }),
   
   // Header visibility state

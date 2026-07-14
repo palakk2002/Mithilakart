@@ -1,3 +1,4 @@
+import SearchInput from '../../../../shared/components/SearchInput';
 import React, { useState } from 'react';
 import { 
   HelpCircle, Search, Filter, MoreVertical, 
@@ -81,10 +82,7 @@ const Tickets = () => {
                   </button>
                 ))}
               </div>
-              <div className="relative group">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
-                <input type="text" placeholder="Search tickets..." className="w-full bg-slate-50 border-none rounded-lg py-2.5 pl-10 pr-4 text-[11px] font-bold outline-none" />
-              </div>
+              <SearchInput type="text" placeholder="Search tickets..." />
            </div>
            <div className="flex-1 overflow-y-auto no-scrollbar divide-y divide-slate-50">
               {tickets.map((ticket) => (

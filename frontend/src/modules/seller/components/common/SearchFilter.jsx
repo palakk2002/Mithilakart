@@ -5,6 +5,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SearchInput from '../../../../shared/components/SearchInput';
 
 const SearchFilter = ({
   searchValue = '',
@@ -34,27 +35,25 @@ const SearchFilter = ({
   return (
     <div className={`flex flex-col sm:flex-row items-stretch sm:items-center gap-3 ${className}`}>
       {/* Search Input */}
-      <div className="relative flex-1 max-w-md">
-        <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
-        <input
+      <div className="flex-1 max-w-md">
+        <SearchInput
           type="text"
           value={searchValue}
           onChange={(e) => onSearchChange?.(e.target.value)}
           placeholder={placeholder}
-          className="w-full pl-10 pr-4 py-2.5 text-sm bg-white border border-gray-200 rounded-xl
-                     focus:ring-2 focus:ring-blue-100 focus:border-blue-300 outline-none transition-all
-                     placeholder:text-gray-400"
           aria-label="Search"
+          rightElement={
+            searchValue && (
+              <button
+                onClick={() => onSearchChange?.('')}
+                className="text-gray-300 hover:text-gray-500"
+                aria-label="Clear search"
+              >
+                <X size={16} />
+              </button>
+            )
+          }
         />
-        {searchValue && (
-          <button
-            onClick={() => onSearchChange?.('')}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300 hover:text-gray-500"
-            aria-label="Clear search"
-          >
-            <X size={16} />
-          </button>
-        )}
       </div>
 
       {/* Filter Button */}

@@ -34,7 +34,7 @@ import CoolerWhite from '../assets/products/product12.jpg';
 import CookwareHero from '../assets/products/product13.jpg';
 
 export const allCategoryProducts = {
-  'For You': [
+  'You Buy': [
     { id: 'fy1', name: 'Premium Gifting Box', category: 'Gifting', price: 699, oldPrice: 999, discount: '30% OFF', rating: 4.8, image: GiftingImg, shortDescription: 'Assorted luxury collection' },
     { id: 'fy2', name: 'Samsung Galaxy S24', category: 'Electronics', price: 79999, oldPrice: 89999, discount: '11% OFF', rating: 4.9, image: SamsungS24, shortDescription: 'Flagship AI smartphone' },
     { id: 'fy3', name: 'Luxury Matte Lipstick', category: 'Beauty', price: 499, oldPrice: 999, discount: '50% OFF', rating: 4.8, image: LipstickDeal, shortDescription: 'Long-lasting matte finish' },

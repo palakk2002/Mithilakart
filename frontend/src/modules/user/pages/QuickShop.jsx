@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { MapPin, ChevronRight, Search, Mic, Star } from 'lucide-react';
 import { formatPrice } from '../../../shared/utils/priceFormatter';
 import CategoryCard from '../components/vendor/CategoryCard';
+import SearchInput from '../../../shared/components/SearchInput';
 import closedShutter from '../../../assets/closed_shutter.png';
 
 // Import Assets (aligned with categories)
@@ -122,7 +123,7 @@ const CATEGORIES_DATA = [
 
 const QuickShop = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = React.useState('For You');
+  const [activeTab, setActiveTab] = React.useState('You Buy');
 
   const isClosed = React.useMemo(() => {
     const force = localStorage.getItem('forceShopClosed');
@@ -154,7 +155,7 @@ const QuickShop = () => {
 
   const filteredSections = React.useMemo(() => {
     const tab = activeTab.toLowerCase();
-    if (tab === 'for you' || tab === 'more') {
+    if (tab === 'you buy' || tab === 'more') {
       return CATEGORIES_DATA;
     }
     return CATEGORIES_DATA.filter(section => {
@@ -367,14 +368,14 @@ const QuickShop = () => {
       {!isFreshGrocery && (
         <div 
           onClick={() => navigate('/profile/addresses')}
-          className="flex items-center justify-between gap-2 mb-4 bg-white/60 p-2.5 rounded-2xl border border-pink-100/30 cursor-pointer active:scale-98 transition-transform"
+          className="hidden md:flex items-center justify-between gap-2 mb-4 bg-white/60 p-2.5 rounded-2xl border border-pink-100/30 cursor-pointer active:scale-98 transition-transform"
         >
           <div className="flex items-center gap-1.5 min-w-0">
             <div className="w-6 h-6 rounded-full bg-slate-900 flex items-center justify-center text-white flex-shrink-0">
               <MapPin size={11} />
             </div>
             <div className="text-[11.5px] font-bold text-slate-800 truncate leading-snug">
-              <span className="font-black uppercase text-[10px] tracking-tight mr-1 text-slate-500">HOME</span>
+              <span className="font-black uppercase text-[10px] tracking-tight mr-1 text-slate-555">HOME</span>
               Sarvanad nagar, near pe...
             </div>
             <ChevronRight size={14} className="text-slate-400 flex-shrink-0" />
@@ -388,25 +389,19 @@ const QuickShop = () => {
 
       {/* Search in QuickShop Input Bar */}
       {!isFreshGrocery && (
-        <div className="relative mb-4">
-          <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-            <Search size={16} className="text-[#d6186d]" />
-          </div>
-          <input 
-            type="text" 
-            placeholder="Search in QuickShop" 
+        <div className="hidden md:block mb-4">
+          <SearchInput
+            type="text"
+            placeholder="Search in QuickShop"
             onFocus={() => navigate('/search')}
-            className="w-full bg-white border-2 border-[#ffb3c6]/40 focus:border-[#d6186d] rounded-2xl pl-10 pr-10 py-2.5 text-[13px] font-medium text-slate-800 placeholder:text-slate-455 outline-none shadow-xs transition-colors"
+            rightElement={<Mic size={16} className="text-slate-400" />}
           />
-          <div className="absolute inset-y-0 right-3 flex items-center cursor-pointer">
-            <Mic size={16} className="text-slate-555" />
-          </div>
         </div>
       )}
 
       {/* Subcategory Tabs Header Horizontal Scroll */}
       <div className="flex overflow-x-auto gap-4 pb-2 mb-4 no-scrollbar border-b border-slate-100/50">
-        {['For You', 'Fresh', 'Grocery', 'Electronics', 'Beauty', 'More'].map((tab, idx) => {
+        {['You Buy', 'Fresh', 'Grocery', 'Electronics', 'Beauty', 'More'].map((tab, idx) => {
           const isActive = activeTab === tab;
           return (
             <div 

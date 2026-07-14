@@ -1,3 +1,4 @@
+import SearchInput from '../../../../shared/components/SearchInput';
 import React, { useState } from 'react';
 import { 
   RotateCcw, Search, Filter, MoreVertical, 
@@ -117,16 +118,12 @@ const Refunds = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <div className="relative flex-1 group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
-              <input 
-                type="text" 
-                placeholder="Search by Refund ID, Order ID, or Customer..."
-                className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3.5 pl-12 pr-6 text-sm font-bold focus:ring-4 focus:ring-blue-50 transition-all outline-none text-slate-900 placeholder:text-slate-300"
-                value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-              />
-            </div>
+            <SearchInput 
+              type="text" 
+              placeholder="Search by Refund ID, Order ID, or Customer..."
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+            />
             <button className="h-[52px] px-6 bg-slate-50 border border-slate-100 rounded-xl text-slate-400 hover:text-slate-900 transition-all shadow-sm flex items-center justify-center gap-2 font-black text-[10px] uppercase tracking-widest w-full sm:w-auto">
               <Filter size={16} />
               Filters

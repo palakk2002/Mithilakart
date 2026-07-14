@@ -5,6 +5,7 @@ import {
   ShoppingBag, ChevronRight
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SearchInput from '../../../../shared/components/SearchInput';
 
 const MOCK_ALERTS = [
   { id: 1, name: 'Premium Leather Satchel', category: 'Fashion', stock: 2, threshold: 5, status: 'Critical', vendor: 'Fashion Hub' },
@@ -65,10 +66,9 @@ const StockAlerts = () => {
       {/* Table */}
       <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-slate-50 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
-           <div className="relative w-full sm:max-w-md group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500" size={18} />
-              <input type="text" placeholder="Search by product or vendor..." className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3.5 pl-12 pr-6 text-sm font-bold outline-none" />
-           </div>
+            <div className="w-full sm:max-w-md">
+               <SearchInput type="text" placeholder="Search by product or vendor..." />
+            </div>
            <div className="flex gap-3 justify-end">
               <button className="p-3 bg-slate-50 text-slate-400 rounded-xl hover:text-slate-900 transition-all border border-slate-100 w-full sm:w-auto flex items-center justify-center">
                  <Filter size={18} />

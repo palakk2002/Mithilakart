@@ -44,7 +44,7 @@ const VendorProfile = () => {
   ];
 
   return (
-    <div className="bg-[#fbfcff] min-h-screen pb-24 font-sans text-slate-800">
+    <div className="bg-[#fbfcff] min-h-screen pb-6 font-sans text-slate-800">
       {/* Header Sticky */}
       <div className="sticky top-0 z-45 bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-4 flex items-center gap-3">
         <motion.button
@@ -124,9 +124,9 @@ const VendorProfile = () => {
       </div>
 
       {/* Bottom Footer Section (FAQs, Terms, Privacy, Logout, Socials, Logo, Version) */}
-      <div className="px-6 pt-6 pb-12 flex flex-col gap-6 select-none bg-white border-t border-slate-105 mt-6">
+      <div className="px-6 pt-5 pb-6 flex flex-col gap-4 select-none bg-white border-t border-slate-100 mt-4">
         {/* Link List */}
-        <div className="flex flex-col gap-4 text-[14px] font-bold text-gray-500 pl-2">
+        <div className="flex flex-col gap-3.5 text-[14px] font-bold text-gray-500 pl-2">
           <div onClick={() => navigate('/profile/help-center')} className="cursor-pointer active:text-[#084224] transition-colors">
             FAQs
           </div>
@@ -139,7 +139,7 @@ const VendorProfile = () => {
         </div>
 
         {/* Centered Login / Logout */}
-        <div className="flex justify-center mt-2">
+        <div className="flex justify-center mt-1">
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
@@ -168,7 +168,7 @@ const VendorProfile = () => {
         </div>
 
         {/* Social Media Icons */}
-        <div className="flex items-center justify-center gap-5 mt-2">
+        <div className="flex items-center justify-center gap-5 mt-1">
           {/* Facebook */}
           <a
             href="https://facebook.com"
@@ -236,19 +236,19 @@ const VendorProfile = () => {
         </div>
 
         {/* Logo Branding */}
-        <div className="flex flex-col items-center justify-center gap-0 mt-3">
+        <div className="flex flex-col items-center justify-center gap-1 mt-2">
           <img
-            src="/logomith-removebg-preview.png"
+            src="/mthibg.png"
             alt="Mithilakart Logo"
-            className="h-28 w-auto object-contain"
+            className="h-16 w-auto object-contain"
           />
-          <span className="text-[18px] font-black text-slate-800 tracking-wider mt-[-2px]">
-            Mithilakart™
-          </span>
+          <div className="flex items-center text-[14px] font-bold text-black tracking-wide italic">
+            Mithilakart<span className="text-[10px] align-super ml-0.5">™</span>
+          </div>
         </div>
 
         {/* App Version */}
-        <div className="text-[11px] font-bold text-gray-450 text-center tracking-wide mt-2">
+        <div className="text-[10px] font-bold text-gray-450 text-center tracking-wide mt-1">
           v1.0.0 (build 1)-p1
         </div>
       </div>

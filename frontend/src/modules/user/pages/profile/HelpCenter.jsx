@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowLeft, Search, MessageCircle, Phone, Mail, HelpCircle, ChevronRight, FileText, Send, MapPin, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import SearchInput from '../../../../shared/components/SearchInput';
 
 const HelpCenter = () => {
   const navigate = useNavigate();
@@ -75,13 +76,11 @@ const HelpCenter = () => {
         
         {/* Search Bar */}
         <div className="relative">
-          <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input 
+          <SearchInput
             type="text" 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search for help..." 
-            className="w-full bg-white rounded-lg py-3 pl-12 pr-4 text-[14px] font-medium text-slate-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white/30"
           />
         </div>
       </div>

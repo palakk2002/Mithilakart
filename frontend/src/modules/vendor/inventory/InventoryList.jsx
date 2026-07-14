@@ -6,6 +6,7 @@ import {
   TrendingUp, Layers, AlertTriangle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SearchInput from '../../../shared/components/SearchInput';
 
 const InventoryList = () => {
   const { allProducts } = useSelector(state => state.products);
@@ -41,12 +42,10 @@ const InventoryList = () => {
           <p className="text-slate-400 font-medium text-sm mt-1 font-raleway">Monitor and manage all B2B stock across the platform.</p>
         </div>
         <div className="flex flex-wrap gap-3 w-full lg:w-auto">
-          <div className="relative flex-1 md:w-80">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-            <input 
+          <div className="flex-1 md:w-80">
+            <SearchInput 
               type="text" 
               placeholder="Search products, category..."
-              className="w-full bg-white border border-slate-200 rounded-2xl py-3.5 pl-12 pr-6 text-sm font-medium focus:ring-4 focus:ring-blue-50 transition-all outline-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />

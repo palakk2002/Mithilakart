@@ -6,6 +6,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import useAccountStore from '../../../../store/useAccountStore';
+import SearchInput from '../../../../shared/components/SearchInput';
 
 // Real Images from Assets
 // Real Images from Assets
@@ -250,21 +251,19 @@ const MyOrders = () => {
         {/* Search & Filters */}
         <div className="px-4 pb-4 sticky top-[68px] z-40 bg-[#f1f2f4]/80 backdrop-blur-md">
            <div className="flex gap-3">
-              <div className="flex-1 bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center gap-3 shadow-sm focus-within:ring-2 focus-within:ring-blue-500 transition-all">
-                 <Search size={18} className="text-gray-400" />
-                 <input 
-                   type="text" 
-                   placeholder="Search your order here" 
-                   className="flex-1 bg-transparent border-none outline-none text-[14px] text-slate-800 placeholder:text-gray-400 font-medium"
-                   value={searchQuery}
-                   onChange={(e) => setSearchQuery(e.target.value)}
-                 />
-                 {searchQuery && (
-                   <button onClick={() => setSearchQuery('')} className="text-gray-400 hover:text-slate-600">
-                     <X size={16} />
-                   </button>
-                 )}
-              </div>
+              <SearchInput
+                type="text" 
+                placeholder="Search your order here" 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                rightElement={
+                  searchQuery && (
+                    <button onClick={() => setSearchQuery('')} className="text-gray-400 hover:text-slate-600">
+                      <X size={16} />
+                    </button>
+                  )
+                }
+              />
               <button 
                 onClick={() => setShowFilterSheet(true)}
                 className={`bg-white border border-gray-200 rounded-xl px-4 flex items-center gap-2 shadow-sm active:scale-95 transition-all ${activeFilters.status !== 'All' ? 'border-blue-500 bg-primary-light' : ''}`}

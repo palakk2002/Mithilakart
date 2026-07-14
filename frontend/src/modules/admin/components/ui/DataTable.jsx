@@ -3,6 +3,7 @@ import { Search, Filter, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Pagination from './Pagination';
 import EmptyState from './EmptyState';
+import SearchInput from '../../../../shared/components/SearchInput';
 
 /**
  * Premium Reusable DataTable
@@ -92,17 +93,13 @@ const DataTable = ({
       {/* Search Bar */}
       {showSearch && (
         <div className="p-6 border-b border-slate-50">
-          <div className="relative group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
-            <input
-              type="text"
-              placeholder={searchPlaceholder}
-              className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3.5 pl-12 pr-6 text-sm font-bold focus:ring-4 focus:ring-blue-50 transition-all outline-none text-slate-900 placeholder:text-slate-300"
-              value={searchQuery}
-              onChange={(e) => handleSearch(e.target.value)}
-              aria-label="Search table"
-            />
-          </div>
+          <SearchInput
+            type="text"
+            placeholder={searchPlaceholder}
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
+            aria-label="Search table"
+          />
         </div>
       )}
 

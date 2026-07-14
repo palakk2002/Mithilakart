@@ -47,7 +47,7 @@ import ImageBanner4 from '../../../assets/TopBanner/ImageBanner4.jpg';
 import useVendorStore from '../../../store/useVendorStore';
 
 const Home = () => {
-  const [activeTab, setActiveTab] = useState('For You');
+  const [activeTab, setActiveTab] = useState('You Buy');
   const navigate = useNavigate();
   const { selectedCategory, homeSections } = useVendorStore();
 
@@ -76,7 +76,7 @@ const Home = () => {
       { name: 'LAKME...', fullName: 'LAKME 9TO5 VITAMIN C+...', date: 'Delivered on Apr 10, 2026', img: MakeupHero }
     ],
     tabs: [
-      { label: 'For You', img: ForYouProduct },
+      { label: 'You Buy', img: ForYouProduct },
       { label: 'Stationery', img: StationeryTab },
       { label: 'Fashion', img: FashionTabProduct },
       { label: 'Beauty', img: BeautyTab },
@@ -105,7 +105,7 @@ const Home = () => {
     >
       {/* 🔴 REDESIGNED PROMOTIONAL AREA */}
       <div className="flex flex-col bg-primary-green">
-        {(selectedCategory === 'For You' || selectedCategory === 'Home') && <SaleBanner />}
+        {(selectedCategory === 'You Buy' || selectedCategory === 'Home') && <SaleBanner />}
       </div>
 
       {/* Banner Carousel */}
@@ -114,14 +114,14 @@ const Home = () => {
       </div>
 
       {/* SubCategory Showcase Grid (Directly below Banner) */}
-      {(selectedCategory === 'For You' || selectedCategory === 'Home') && (
-        <div className="md:mb-12">
+      {(selectedCategory === 'You Buy' || selectedCategory === 'Home') && (
+        <div className="mb-6 md:mb-10">
           <SubCategoryGrid />
         </div>
       )}
 
-      {selectedCategory !== 'For You' && selectedCategory !== 'Home' && (
-        <div className="py-4 md:mb-12">
+      {selectedCategory !== 'You Buy' && selectedCategory !== 'Home' && (
+        <div className="py-4 mb-6 md:mb-10">
           <div className="flex justify-between items-center px-4 mb-4">
             <h2 className="text-xl font-black text-[var(--card-text)]">{selectedCategory} Specials</h2>
             <div className="h-1 flex-1 bg-gray-100 mx-4 rounded-full" />
@@ -130,39 +130,39 @@ const Home = () => {
         </div>
       )}
 
-      {(selectedCategory === 'For You' || selectedCategory === 'Home') && (
+      {(selectedCategory === 'You Buy' || selectedCategory === 'Home') && (
         <>
-          <div className="md:mb-12">
+          <div className="mb-6 md:mb-10">
             <LazySection height="240px">
               <StillLookingSection items={homeSections.stillLooking} />
             </LazySection>
           </div>
 
-          <div className="md:mb-12">
+          <div className="mb-6 md:mb-10">
             <LazySection height="350px">
               <BrandsSpotlight items={homeSections.brandsSpotlight} />
             </LazySection>
           </div>
 
-          <div className="md:mb-12">
+          <div className="mb-6 md:mb-10">
             <LazySection height="400px">
               <TopSelection items={homeSections.topSelection} />
             </LazySection>
           </div>
 
-          <div className="md:mb-12">
+          <div className="mb-6 md:mb-10">
             <LazySection height="250px">
               <KeepShopping items={homeSections.keepShopping} />
             </LazySection>
           </div>
 
-          <div className="md:mb-12">
+          <div className="mb-6 md:mb-10">
             <LazySection height="500px">
               <BestQuality items={homeSections.bestQuality} />
             </LazySection>
           </div>
 
-          <div className="md:mb-12">
+          <div className="mb-6 md:mb-10">
             <LazySection height="150px">
               <CategoryTabs
                 tabs={data.tabs}
@@ -173,7 +173,7 @@ const Home = () => {
           </div>
 
           {/* Dynamic Products Section based on Bottom Tabs */}
-          <div className="pb-20 md:mb-12">
+          <div className="pb-20 mb-6 md:mb-10">
             <CategoryProductsSection selectedCategory={activeTab} />
           </div>
         </>

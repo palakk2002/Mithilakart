@@ -1,3 +1,4 @@
+import SearchInput from '../../../shared/components/SearchInput';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -40,12 +41,10 @@ const VendorList = () => {
           <p className="text-slate-400 font-medium text-sm mt-1 font-raleway">Manage and monitor all platform partners.</p>
         </div>
         <div className="flex gap-3 w-full md:w-auto">
-          <div className="relative flex-1 md:w-80">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-            <input 
+          <div className="flex-1 md:w-80">
+            <SearchInput 
               type="text" 
               placeholder="Search vendor, email or owner..."
-              className="w-full bg-white border border-slate-200 rounded-2xl py-3 pl-12 pr-6 text-sm font-medium focus:ring-4 focus:ring-blue-50 transition-all outline-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />

@@ -1,3 +1,4 @@
+import SearchInput from '../../../../shared/components/SearchInput';
 import React, { useState } from 'react';
 import { 
   ShieldCheck, Search, Plus, Trash2, 
@@ -37,9 +38,8 @@ const TaxConfig = () => {
             <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
                <div className="p-6 border-b border-slate-50 flex justify-between items-center">
                   <h3 className="text-sm font-black text-slate-900 font-montserrat uppercase tracking-widest">Category Tax Matrix</h3>
-                  <div className="relative w-64">
-                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
-                     <input type="text" placeholder="Search category..." className="w-full bg-slate-50 border-none rounded-lg py-2 pl-9 pr-4 text-[11px] font-bold outline-none" />
+                  <div className="w-64">
+                     <SearchInput type="text" placeholder="Search category..." />
                   </div>
                </div>
                <div className="overflow-x-auto">

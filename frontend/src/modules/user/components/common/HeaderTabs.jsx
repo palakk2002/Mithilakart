@@ -40,7 +40,7 @@ const HeaderTabs = () => {
         onClick={() => handleTabClick('/home', false)}
         className={`flex flex-col items-center justify-center py-1 md:py-1.5 rounded-lg border h-[42px] md:h-[60px] gap-0.5 md:gap-1.5 cursor-pointer transition-all duration-300 ${
           isMithilakartActive
-            ? 'bg-[#084224] text-white border-[#084224] shadow-md scale-102 z-10'
+            ? 'bg-[#052b17] text-white border-[#052b17] shadow-md scale-102 z-10'
             : isFreshGroceryActive
               ? 'bg-white/35 text-[#7A3E17]/85 border-white/15 hover:bg-white/45'
               : isHeaderLight
@@ -63,7 +63,7 @@ const HeaderTabs = () => {
             }`}
           />
         </div>
-        <span className={`font-extrabold text-[8px] md:text-[10px] italic tracking-tight leading-none mb-0.5 transition-colors duration-300 ${
+        <span className={`font-extrabold text-[11px] md:text-[14px] italic tracking-tight leading-none mb-0.5 transition-colors duration-300 ${
           isMithilakartActive 
             ? 'text-white' 
             : isFreshGroceryActive
@@ -86,7 +86,7 @@ const HeaderTabs = () => {
             : isFreshGroceryActive
               ? 'bg-white/35 text-[#7A3E17]/85 border-white/15 hover:bg-white/45'
               : isMithilakartActive
-                ? 'bg-white/35 text-[#084224]/85 border-white/15 hover:bg-white/45'
+                ? 'bg-[#084224]/12 text-[#084224]/90 border-[#084224]/15 hover:bg-[#084224]/20'
                 : isHeaderLight
                   ? 'bg-black/5 text-[#d6186d]/85 border-black/5 hover:bg-black/10'
                   : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
@@ -108,7 +108,7 @@ const HeaderTabs = () => {
           <Zap size={10} className="fill-current w-[10px] h-[10px] md:w-[13px] md:h-[13px]" />
         </div>
         <span
-          className={`text-[8px] md:text-[10px] font-extrabold tracking-tight leading-none mb-0.5 whitespace-nowrap transition-colors duration-300 ${
+          className={`text-[11px] md:text-[14px] font-extrabold tracking-tight leading-none mb-0.5 whitespace-nowrap transition-colors duration-300 ${
             isQuickShopActive 
               ? 'text-[#d6186d]' 
               : isFreshGroceryActive
@@ -134,7 +134,7 @@ const HeaderTabs = () => {
             : isFreshGroceryActive
               ? 'bg-white/35 text-[#7A3E17]/85 border-white/15 hover:bg-white/45'
               : isMithilakartActive
-                ? 'bg-white/35 text-[#084224]/85 border-white/15 hover:bg-white/45'
+                ? 'bg-[#084224]/12 text-[#084224]/90 border-[#084224]/15 hover:bg-[#084224]/20'
                 : isHeaderLight
                   ? 'bg-black/5 text-[#7c3aed]/80 border-black/5 hover:bg-black/10'
                   : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
@@ -156,7 +156,7 @@ const HeaderTabs = () => {
             }`} 
           />
         </div>
-        <span className={`text-[8px] md:text-[10px] font-extrabold tracking-tight leading-none mb-0.5 transition-colors duration-300 ${
+        <span className={`text-[11px] md:text-[14px] font-extrabold tracking-tight leading-none mb-0.5 transition-colors duration-300 ${
           isMithilakActive 
             ? 'text-[#7c3aed]' 
             : isFreshGroceryActive
@@ -179,24 +179,13 @@ const HeaderTabs = () => {
           isFreshGroceryActive
             ? 'bg-white text-[#7A3E17] border-white shadow-md scale-102 z-10'
             : isMithilakartActive
-              ? 'bg-white/35 text-[#084224]/85 border-white/15 hover:bg-white/45'
+              ? 'bg-[#084224]/12 text-[#084224]/90 border-[#084224]/15 hover:bg-[#084224]/20'
               : isHeaderLight
                 ? 'bg-black/5 text-[#7A3E17]/85 border-black/5 hover:bg-black/10'
                 : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
         }`}
       >
-        <span className={`text-[7px] md:text-[9.5px] font-black italic tracking-tight leading-none transition-colors duration-300 ${
-          isFreshGroceryActive
-            ? 'text-[#7A3E17]'
-            : isMithilakartActive
-              ? 'text-[#084224]/75'
-              : isHeaderLight
-                ? 'text-[#7A3E17]/80'
-                : 'text-white/80'
-        }`}>
-          {t('nav.xtraSaver')}
-        </span>
-        <span className={`text-[9px] md:text-[11px] font-black tracking-tight leading-none mt-0.5 whitespace-nowrap transition-colors duration-300 ${
+        <span className={`text-[10px] md:text-[13.5px] font-extrabold tracking-tight leading-tight text-center px-0.5 transition-colors duration-300 flex flex-col items-center justify-center ${
           isFreshGroceryActive 
             ? 'text-[#7A3E17]' 
             : isMithilakartActive
@@ -205,7 +194,9 @@ const HeaderTabs = () => {
                 ? 'text-[#7A3E17]'
                 : 'text-white'
         }`}>
-          {t('nav.grocery')}
+          {t('nav.groceriesAndFresh').split(' ').map((word, idx) => (
+            <span key={idx} className="block leading-none">{word}</span>
+          ))}
         </span>
       </motion.div>
     </div>

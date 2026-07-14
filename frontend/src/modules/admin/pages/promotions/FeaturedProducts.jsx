@@ -1,3 +1,4 @@
+import SearchInput from '../../../../shared/components/SearchInput';
 import React, { useState } from 'react';
 import { 
   Star, TrendingUp, Search, Plus, 
@@ -46,10 +47,7 @@ const FeaturedProducts = () => {
             </div>
             <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
                <div className="p-4 border-b border-slate-50 flex gap-4">
-                  <div className="relative flex-1">
-                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
-                     <input type="text" placeholder="Search product..." className="w-full bg-slate-50 border-none rounded-lg py-2 pl-9 pr-4 text-[11px] font-bold outline-none" />
-                  </div>
+                  <SearchInput type="text" placeholder="Search product..." />
                </div>
                <div className="divide-y divide-slate-50">
                   {featured.map((item) => (
@@ -84,10 +82,7 @@ const FeaturedProducts = () => {
             </div>
             <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
                <div className="p-4 border-b border-slate-50 flex gap-4">
-                  <div className="relative flex-1">
-                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
-                     <input type="text" placeholder="Search product..." className="w-full bg-slate-50 border-none rounded-lg py-2 pl-9 pr-4 text-[11px] font-bold outline-none" />
-                  </div>
+                  <SearchInput type="text" placeholder="Search product..." />
                </div>
                <div className="divide-y divide-slate-50">
                   {trending.map((item) => (

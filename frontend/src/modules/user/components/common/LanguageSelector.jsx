@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Globe, Check } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 const languages = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -30,7 +30,6 @@ const LanguageSelector = ({ isDarkHeader = false }) => {
             : 'bg-white text-slate-800 border-gray-200 shadow-xs hover:bg-gray-50'
         }`}
       >
-        <Globe className={`${isDarkHeader ? 'text-white' : 'text-slate-500'} w-3 h-3 md:w-3.5 md:h-3.5`} />
         <span>{currentLanguage.flag} {currentLanguage.name}</span>
       </button>
 

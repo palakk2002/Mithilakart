@@ -76,18 +76,40 @@ const DealsPage = () => {
           <button onClick={() => navigate(-1)} className={isDarkMode ? 'text-[var(--color-gold)]' : 'text-slate-800'}>
             <ArrowLeft size={24} />
           </button>
-          <div className={`flex-1 flex items-center border rounded-xl px-4 py-2.5 transition-all ${isDarkMode ? 'bg-[#121212] border-[var(--color-gold)]/30' : 'bg-gray-100 border-gray-300'}`}>
-             <Search size={18} className={isDarkMode ? 'text-[var(--color-gold)]' : 'text-gray-400'} />
-             <input 
-               type="text" 
-               placeholder="Search items, brands, categories..."
-               className={`bg-transparent border-none outline-none flex-1 px-3 text-sm font-bold placeholder:text-gray-500 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
-             />
-             <div className="flex items-center gap-3 text-gray-500">
-                <Camera size={18} />
-                <Mic size={18} />
-                <Scan size={18} />
-             </div>
+          <div className="flex-1">
+            <SearchInput
+              type="text"
+              placeholder="Search items, brands, categories..."
+              rightElement={
+                <div className="flex items-center gap-3 text-gray-550">
+                  <Camera 
+                    size={18} 
+                    className="cursor-pointer hover:text-slate-750 transition-colors" 
+                    onClick={() => {
+                      toast.loading("Analyzing image search...", { id: "deals-img" });
+                      setTimeout(() => {
+                        toast.dismiss("deals-img");
+                        toast.success("Image search completed!");
+                        navigate('/search?q=Handicraft');
+                      }, 1500);
+                    }}
+                  />
+                  <Mic size={18} className="cursor-pointer hover:text-slate-750" />
+                  <Scan 
+                    size={18} 
+                    className="cursor-pointer hover:text-slate-750 transition-colors"
+                    onClick={() => {
+                      toast.loading("Simulating barcode scanner...", { id: "deals-scan" });
+                      setTimeout(() => {
+                        toast.dismiss("deals-scan");
+                        toast.success("Barcode recognized successfully!");
+                        navigate('/search?q=Painting');
+                      }, 1500);
+                    }}
+                  />
+                </div>
+              }
+            />
           </div>
         </div>
 

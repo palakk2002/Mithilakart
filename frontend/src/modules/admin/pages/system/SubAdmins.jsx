@@ -6,6 +6,7 @@ import {
   Activity, Clock
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SearchInput from '../../../../shared/components/SearchInput';
 
 const MOCK_ADMINS = [
   { id: 1, name: 'Prachi Gupta', email: 'prachi@admin.com', role: 'Super Admin', lastLogin: '2 mins ago', status: 'Active' },
@@ -58,10 +59,9 @@ const SubAdmins = () => {
       {/* Admin List Table */}
       <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-slate-50">
-           <div className="relative max-w-md group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500" size={18} />
-              <input type="text" placeholder="Search by name or email..." className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3.5 pl-12 pr-6 text-sm font-bold outline-none" />
-           </div>
+            <div className="max-w-md">
+               <SearchInput type="text" placeholder="Search by name or email..." />
+            </div>
         </div>
 
         <div className="overflow-x-auto">

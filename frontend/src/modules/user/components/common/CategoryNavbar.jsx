@@ -84,7 +84,7 @@ const IconElectrical = ({ size = 24, active, className }) => (
    Category list — project ki actual categories
    ───────────────────────────────────────────── */
 const CATEGORIES = [
-  { id: 'for-you',     label: 'For You',     Svg: IconForYou     },
+  { id: 'for-you',     label: 'You Buy',     Svg: IconForYou     },
   { id: 'beauty',      label: 'Beauty',      Svg: IconBeauty     },
   { id: 'gifting',     label: 'Gifting',     Svg: IconGifting    },
   { id: 'electronics', label: 'Electronics', Svg: IconElectronics},
@@ -113,7 +113,7 @@ const getMithilakartHeaderBg = (category) => {
       return 'bg-[#FCA5A5]'; // Soft Red
     case 'Electrical':
       return 'bg-[#FEF08A]'; // Soft Yellow
-    case 'For You':
+    case 'You Buy':
     default:
       return 'bg-primary-green'; // Default Green (Mithilakart default brand color)
   }

@@ -1,3 +1,4 @@
+import SearchInput from '../../../../shared/components/SearchInput';
 import React, { useState } from 'react';
 import { 
   Terminal, Search, Filter, Calendar, 
@@ -78,16 +79,12 @@ const AuditLogs = () => {
           </div>
 
           <div className="flex gap-4">
-            <div className="relative flex-1 group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={18} />
-              <input 
-                type="text" 
-                placeholder="Search audit trail..."
-                className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3.5 pl-12 pr-6 text-sm font-bold focus:ring-4 focus:ring-blue-50 transition-all outline-none text-slate-900 placeholder:text-slate-300"
-                value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-              />
-            </div>
+            <SearchInput 
+              type="text" 
+              placeholder="Search audit trail..."
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+            />
           </div>
         </div>
 

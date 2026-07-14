@@ -39,7 +39,7 @@ const getMithilakartHeaderBg = (category) => {
       return 'bg-[#FCA5A5]'; // Soft Red
     case 'Electrical':
       return 'bg-[#FEF08A]'; // Soft Yellow
-    case 'For You':
+    case 'You Buy':
     default:
       return 'bg-primary-green'; // Default Green (Mithilakart default brand color)
   }
@@ -107,7 +107,7 @@ const VendorLayout = () => {
     localStorage.getItem('isMithilakFlow') === 'true' || 
     location.pathname.includes('/mithilak') || 
     (location.pathname.includes('/quick-shop') && !location.pathname.includes('/fresh-grocery')) ||
-    (!location.pathname.includes('/quick-shop') && !location.pathname.includes('/fresh-grocery') && (selectedCategory === 'For You' || selectedCategory === 'Home' || !selectedCategory))
+    (!location.pathname.includes('/quick-shop') && !location.pathname.includes('/fresh-grocery') && (selectedCategory === 'You Buy' || selectedCategory === 'Home' || !selectedCategory))
   );
 
   return (
@@ -125,7 +125,7 @@ const VendorLayout = () => {
               : location.pathname.includes('/quick-shop')
                 ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f] text-white'
                 : `${getMithilakartHeaderBg(selectedCategory)} ${
-                    selectedCategory === 'For You' || selectedCategory === 'Home' || !selectedCategory
+                    selectedCategory === 'You Buy' || selectedCategory === 'Home' || !selectedCategory
                       ? 'text-white'
                       : 'text-slate-800'
                   }`
@@ -194,9 +194,7 @@ const VendorLayout = () => {
           <HeaderTabs />
 
           {/* Row 3 : Search + QR */}
-          {!location.pathname.includes('quick-shop') && (
-            <SearchBar selectedAddress={selectedAddress} />
-          )}
+          <SearchBar selectedAddress={selectedAddress} />
 
           {/* Row 4 : Category strip */}
           {!location.pathname.includes('quick-shop') &&

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Search, ShoppingCart, X, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import SearchInput from '../../../shared/components/SearchInput';
 
 // Assets
 import FlipFlops from '../../../assets/products/product07.jpg';
@@ -67,24 +68,22 @@ const AllOffers = () => {
                }} className="p-1 hover:bg-white/10 rounded-full">
                   <ArrowLeft size={22} className="text-white" />
                </button>
-               <div className="flex-1 bg-white rounded-full px-3.5 py-1.5 flex items-center gap-2">
-                  <Search size={16} className="text-gray-400" />
-                  <input 
-                    autoFocus
-                    type="text" 
-                    placeholder="Search in offers..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-transparent border-none outline-none text-[12.5px] w-full text-slate-800 placeholder:text-gray-400 font-bold"
-                  />
-                  {searchQuery && (
-                    <X 
-                      size={16} 
-                      className="text-gray-405 cursor-pointer hover:text-gray-600" 
-                      onClick={() => setSearchQuery('')}
-                    />
-                  )}
-               </div>
+                <SearchInput
+                  autoFocus
+                  type="text" 
+                  placeholder="Search in offers..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  rightElement={
+                    searchQuery && (
+                      <X 
+                        size={16} 
+                        className="text-gray-400 cursor-pointer hover:text-gray-600" 
+                        onClick={() => setSearchQuery('')}
+                      />
+                    )
+                  }
+                />
             </div>
           )}
         </div>

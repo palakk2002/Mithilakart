@@ -33,13 +33,13 @@ const ContinueShopping = () => {
 
   // Get another related product for the "Recently Viewed" section
   const relatedRecentlyViewed = useMemo(() => {
-    const categoryProducts = allCategoryProducts[clickedProduct.category] || allCategoryProducts['For You'];
+    const categoryProducts = allCategoryProducts[clickedProduct.category] || allCategoryProducts['You Buy'];
     return categoryProducts.find(p => p.id !== clickedProduct.id) || categoryProducts[0];
   }, [clickedProduct]);
 
   // Similar products for the bottom section
   const similarProducts = useMemo(() => {
-    let products = allCategoryProducts[clickedProduct.category] || allCategoryProducts['For You'];
+    let products = allCategoryProducts[clickedProduct.category] || allCategoryProducts['You Buy'];
     products = products.filter(p => p.id !== clickedProduct.id);
 
     if (activeFilter === 'High rated') {

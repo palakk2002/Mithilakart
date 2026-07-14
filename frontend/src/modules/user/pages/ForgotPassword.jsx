@@ -147,10 +147,10 @@ const ForgotPassword = () => {
         <img 
           src="/mthibg.png" 
           alt="Mithilakart" 
-          className="h-44 w-auto object-contain"
+          className="h-16 w-auto object-contain"
         />
-        <div className="flex items-center text-[18px] font-bold text-black tracking-wide italic">
-          Mithilakart™
+        <div className="flex items-center text-[14px] font-bold text-black tracking-wide italic">
+          Mithilakart<span className="text-[10px] align-super ml-0.5">™</span>
         </div>
       </div>
     </div>

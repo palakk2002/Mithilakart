@@ -1,3 +1,4 @@
+import SearchInput from '../../../shared/components/SearchInput';
 import React, { useState } from 'react';
 import { 
   Plus, Search, Edit2, Trash2, ChevronRight, 
@@ -61,12 +62,10 @@ const CategoryManager = () => {
 
       {/* Search & Filters - Compact Width */}
       <div className="flex gap-3 items-center max-w-xl">
-        <div className="relative flex-1 group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={14} />
-          <input 
+        <div className="flex-1">
+          <SearchInput 
             type="text" 
             placeholder="Search catalog..."
-            className="w-full bg-white border border-slate-200 rounded-xl py-2 pl-10 pr-5 text-[12px] font-bold focus:ring-2 focus:ring-blue-50 transition-all outline-none text-slate-900"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Search as SearchIcon, Filter, ArrowLeft, LayoutGrid, List } from 'lucide-react';
+import { Search as SearchIcon, Filter, ArrowLeft, LayoutGrid, List, Mic } from 'lucide-react';
 import ProductCard from '../components/common/ProductCard';
 import { motion, AnimatePresence } from 'framer-motion';
+import SearchInput from '../../../shared/components/SearchInput';
 
 // Import local assets for search page
 import SamsungImg from '../../../assets/products/product01.jpg';
@@ -18,6 +19,46 @@ const Search = () => {
   const query = searchParams.get('q') || '';
   
   const [viewMode, setViewMode] = useState('grid');
+  const [isListening, setIsListening] = useState(false);
+  const [searchValue, setSearchValue] = useState(query);
+
+  useEffect(() => {
+    setSearchValue(query);
+  }, [query]);
+
+  const handleVoiceSearch = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Voice recognition is not supported in this browser. Please use Chrome or Safari.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-IN';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event) => {
+      const speechToText = event.results[0][0].transcript;
+      setSearchValue(speechToText);
+      navigate(`/search?q=${encodeURIComponent(speechToText)}`);
+    };
+
+    recognition.onerror = (e) => {
+      console.error(e);
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognition.start();
+  };
 
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
@@ -55,20 +96,26 @@ const Search = () => {
         <button onClick={() => navigate(-1)} className={isFreshGroceryFlow ? 'text-black' : 'text-white'}>
           <ArrowLeft size={24} />
         </button>
-        <div className="flex-1 flex items-center bg-white rounded-xl px-4 py-2 border border-slate-100/50 shadow-sm">
-           <SearchIcon size={18} className="text-slate-400" />
-           <input 
-             type="text" 
-             defaultValue={query}
-             onKeyDown={(e) => {
-               if (e.key === 'Enter') {
-                 navigate(`/search?q=${e.target.value}`);
-               }
-             }}
-             className="bg-transparent border-none outline-none flex-1 px-3 text-sm font-bold text-slate-850 placeholder:text-slate-400"
-             placeholder="Search Mithilakart..."
-           />
-        </div>
+        <SearchInput
+          type="text"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              navigate(`/search?q=${e.target.value}`);
+            }
+          }}
+          placeholder={isListening ? "Listening..." : "Search Mithilakart..."}
+          rightElement={
+            <Mic 
+              size={18} 
+              onClick={handleVoiceSearch}
+              className={`cursor-pointer hover:text-opacity-80 transition-colors ${
+                isListening ? 'text-red-500 animate-pulse' : 'text-gray-400 hover:text-gray-600'
+              }`} 
+            />
+          }
+        />
       </div>
 
       <div className="container mx-auto px-2 py-4 md:px-4 md:py-6 max-w-4xl">

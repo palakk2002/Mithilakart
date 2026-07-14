@@ -11,7 +11,8 @@
     "quickShop": "Quick Shop",
     "mithilak": "Mithilak",
     "xtraSaver": "Xtra Saver",
-    "grocery": "Grocery"
+    "grocery": "Grocery",
+    "groceriesAndFresh": "Groceries & Fresh"
   },
   "sidebar": {
     "title": "Mithilakart Menu",
@@ -187,7 +188,7 @@
     "electricals": "Electricals",
     "bestDeals": "Best Deals",
     "lipCare": "Lip Care",
-    "for-you": "For You",
+    "for-you": "You Buy",
     "beauty": "Beauty",
     "gifting": "Gifting",
     "electronics": "Electronics",

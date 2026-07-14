@@ -176,10 +176,6 @@ const Login = () => {
         >
           <X size={20} strokeWidth={2.5} />
         </button>
-        <div className="flex items-center gap-2">
-          <img src="/logomith-removebg-preview.png" alt="Mithilakart" className="h-8 w-auto object-contain" />
-          <span className="text-white font-bold tracking-wider text-sm">MITHILAKART</span>
-        </div>
         <div className="w-9"></div> {/* Spacer for symmetry */}
       </div>
 
@@ -206,7 +202,7 @@ const Login = () => {
               setSuccess('');
               setOtp('');
             }}
-            className={`flex-1 py-2.5 text-center text-[12px] font-bold rounded-xl transition-all uppercase tracking-wider ${
+            className={`flex-1 py-2.5 text-center text-[10px] font-bold rounded-xl transition-all capitalize tracking-normal ${
               !useEmail 
                 ? 'bg-[#0c5c20] text-white shadow-md' 
                 : 'text-[#3b8a53] hover:text-[#0a4a17]'
@@ -224,7 +220,7 @@ const Login = () => {
               setSuccess('');
               setOtp('');
             }}
-            className={`flex-1 py-2.5 text-center text-[12px] font-bold rounded-xl transition-all uppercase tracking-wider ${
+            className={`flex-1 py-2.5 text-center text-[10px] font-bold rounded-xl transition-all capitalize tracking-normal ${
               useEmail 
                 ? 'bg-[#0c5c20] text-white shadow-md' 
                 : 'text-[#3b8a53] hover:text-[#0a4a17]'
@@ -375,10 +371,10 @@ const Login = () => {
         <img 
           src="/mthibg.png" 
           alt="Mithilakart" 
-          className="h-44 w-auto object-contain"
+          className="h-16 w-auto object-contain"
         />
-        <div className="flex items-center text-[18px] font-bold text-black tracking-wide italic">
-          Mithilakart™
+        <div className="flex items-center text-[14px] font-bold text-black tracking-wide italic">
+          Mithilakart<span className="text-[10px] align-super ml-0.5">™</span>
         </div>
       </div>
     </div>
