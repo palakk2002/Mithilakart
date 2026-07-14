@@ -20,7 +20,9 @@ export default defineConfig({
         "IMG_MGI_48.png",
         "IMG_MGI_96.png",
         "IMG_MGI_144.png",
-        "IMG_MGI_192.png"
+        "IMG_MGI_192.png",
+        "IMG_MGI_512.png",
+        "maskable-icon.png"
       ],
       manifest: {
         name: "Mithilakart",
@@ -36,22 +38,38 @@ export default defineConfig({
           {
             src: "/IMG_MGI_48.png",
             sizes: "48x48",
-            type: "image/png"
+            type: "image/png",
+            purpose: "any"
           },
           {
             src: "/IMG_MGI_96.png",
             sizes: "96x96",
-            type: "image/png"
+            type: "image/png",
+            purpose: "any"
           },
           {
             src: "/IMG_MGI_144.png",
             sizes: "144x144",
-            type: "image/png"
+            type: "image/png",
+            purpose: "any"
           },
           {
             src: "/IMG_MGI_192.png",
             sizes: "192x192",
-            type: "image/png"
+            type: "image/png",
+            purpose: "any"
+          },
+          {
+            src: "/IMG_MGI_512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any"
+          },
+          {
+            src: "/maskable-icon.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable"
           }
         ]
       },

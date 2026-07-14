@@ -42,12 +42,15 @@ import MyReviews from '../pages/profile/MyReviews';
 import QuestionsAnswers from '../pages/profile/QuestionsAnswers';
 import OrderDetail from '../pages/profile/OrderDetail';
 
+import ForgotPassword from '../pages/ForgotPassword';
+
 const MarketRoutes = () => {
   return (
     <Routes>
       {/* Auth routes without layout */}
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/terms" element={<TermsOfUse />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />

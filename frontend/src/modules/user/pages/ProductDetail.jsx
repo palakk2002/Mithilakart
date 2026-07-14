@@ -294,17 +294,22 @@ const ProductDetail = () => {
           {product.name}
         </h1>
         
-        {/* Luxury Pricing Layout */}
-        <div className="flex items-center gap-3 mt-1.5 flex-wrap">
-          <span className="text-[26px] font-black text-slate-900 leading-none">
-            {formatPrice(product.price)}
-          </span>
-          <span className="text-[15px] text-slate-400 line-through">
-            MRP {formatPrice(product.oldPrice)}
-          </span>
-          <span className="text-[11px] font-black tracking-wider uppercase border border-[#e47911] text-[#e47911] px-2 py-0.5 rounded-full">
+        {/* Strike Prices / Coupon Layout */}
+        <div className="mt-2.5">
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="bg-[#FFD633] text-slate-900 text-[20px] font-black px-3 py-1.5 rounded-[4px] relative flex items-center shadow-[0_1px_3px_rgba(0,0,0,0.05)] select-none">
+              {/* Coupon style side cutouts */}
+              <div className="absolute left-[-4px] top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full border-r border-slate-100"></div>
+              <div className="absolute right-[-4px] top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full border-l border-slate-100"></div>
+              {formatPrice(product.price)}
+            </div>
+            <span className="text-[14px] text-gray-400 font-medium line-through">
+              MRP {formatPrice(product.oldPrice)}
+            </span>
+          </div>
+          <div className="text-[12px] font-extrabold text-[#2b6cb0] mt-1.5 pl-0.5">
             {product.discount || 'Special Offer'}
-          </span>
+          </div>
         </div>
       </div>
 
@@ -880,19 +885,34 @@ const ProductDetail = () => {
         </div>
       )}
 
-      {/* Floating Bottom Action Bar */}
-      <div className={`fixed bottom-3 left-4 right-4 bg-white/90 backdrop-blur-md border border-slate-100 px-4 py-3.5 flex gap-3.5 z-50 ${shadowColorLight} rounded-[24px] md:hidden`}>
+      {/* Sticky Bottom Action Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-4 py-3 flex justify-between items-center z-50 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] md:hidden">
+        {/* Left Side: Unit and Price Details */}
+        <div className="flex flex-col justify-center select-none">
+          <span className="text-[10px] font-extrabold text-slate-500 leading-none mb-1">
+            {product.pack || '1 unit'}
+          </span>
+          <div className="flex items-center gap-1.5">
+            <div className="bg-[#FFD633] text-slate-900 text-[14px] font-black px-2 py-0.5 rounded-[3px] relative flex items-center shadow-3xs">
+              <div className="absolute left-[-2px] top-1/2 -translate-y-1/2 w-1 h-1 bg-white rounded-full"></div>
+              <div className="absolute right-[-2px] top-1/2 -translate-y-1/2 w-1 h-1 bg-white rounded-full"></div>
+              {formatPrice(product.price)}
+            </div>
+            <span className="text-[11px] text-slate-400 font-bold line-through leading-none">
+              MRP {formatPrice(product.oldPrice)}
+            </span>
+          </div>
+          <span className="text-[9px] text-slate-400 font-bold mt-0.5 leading-none">
+            Inclusive of all taxes
+          </span>
+        </div>
+
+        {/* Right Side: Add to Cart Button */}
         <button 
           onClick={handleAddToCart}
-          className="flex-1 bg-white border border-slate-200 text-slate-800 font-bold py-3.5 rounded-full active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-[13px] hover:bg-slate-50"
+          className="bg-[#2e7d32] hover:bg-[#1b5e20] text-white font-extrabold px-6 py-2.5 rounded-[6px] active:scale-95 transition-all text-[13px] flex items-center justify-center cursor-pointer shadow-[0_2px_4px_rgba(46,125,50,0.15)]"
         >
-          {t('cart.addToCart')}
-        </button>
-        <button 
-          onClick={handleBuyNow}
-          className={`flex-1 ${primaryBg} text-white font-black py-3.5 rounded-full active:scale-[0.98] transition-all flex items-center justify-center text-[13px] ${shadowColor} ${primaryBgHover}`}
-        >
-          {t('cart.buyNow')} • ₹{product.price}
+          {t('cart.addToCart') || 'Add to cart'}
         </button>
       </div>
 

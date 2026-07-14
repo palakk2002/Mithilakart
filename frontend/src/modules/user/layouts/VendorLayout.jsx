@@ -215,13 +215,13 @@ const VendorLayout = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col">
         <div className="flex-1 flex">
-          <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 flex h-full">
+          <div className="w-full max-w-[1600px] mx-auto px-0 md:px-8 xl:px-12 flex h-full">
             <main className="flex-1 min-w-0 pb-16">
               <Outlet />
             </main>
           </div>
         </div>
-        <Footer />
+        {!location.pathname.includes('/profile') && <Footer />}
       </div>
 
       {/* Mobile-First Bottom Navbar (Fixed) */}

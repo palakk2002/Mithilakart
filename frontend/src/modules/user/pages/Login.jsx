@@ -1,31 +1,150 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { X, Mail, Phone, Lock, Eye, EyeOff } from 'lucide-react';
+import { X, Mail, Phone, Lock, MessageSquare } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { sendPhoneOtp, verifyPhoneOtp, sendEmailOtp, verifyEmailOtp } from '../services/authApi';
 
 const Login = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  
   const [useEmail, setUseEmail] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [countryCode, setCountryCode] = useState('+91');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [timer, setTimer] = useState(60);
+  const [isSendingOtp, setIsSendingOtp] = useState(false);
+  const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  // 60-second countdown timer for resending OTP
+  useEffect(() => {
+    let interval = null;
+    if (otpSent && timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (timer === 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [otpSent, timer]);
+
+  const handleSendOtp = async () => {
+    setError('');
+    setSuccess('');
+    
+    if (useEmail) {
+      const trimmedEmail = email.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!trimmedEmail) {
+        setError('Email address is required');
+        return;
+      }
+      if (!emailRegex.test(trimmedEmail)) {
+        setError('Please enter a valid email address');
+        return;
+      }
+      
+      setIsSendingOtp(true);
+      try {
+        await sendEmailOtp(trimmedEmail);
+        setOtpSent(true);
+        setTimer(60);
+        setSuccess('OTP sent successfully to your email');
+      } catch (err) {
+        setError(err.message || 'Failed to send OTP');
+      } finally {
+        setIsSendingOtp(false);
+      }
+    } else {
+      if (!countryCode) {
+        setError('Country code is required');
+        return;
+      }
+      if (!/^\+?\d{1,4}$/.test(countryCode)) {
+        setError('Invalid country code');
+        return;
+      }
+      if (!phoneNumber) {
+        setError('Phone number is required');
+        return;
+      }
+      if (phoneNumber.length < 8 || phoneNumber.length > 11) {
+        setError('Phone number must be between 8 and 11 digits');
+        return;
+      }
+      
+      setIsSendingOtp(true);
+      try {
+        await sendPhoneOtp(countryCode, phoneNumber);
+        setOtpSent(true);
+        setTimer(60);
+        setSuccess('OTP sent successfully to your phone');
+      } catch (err) {
+        setError(err.message || 'Failed to send OTP');
+      } finally {
+        setIsSendingOtp(false);
+      }
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    setError('');
+    setSuccess('');
+    
+    if (!otp) {
+      setError('OTP cannot be empty');
+      return;
+    }
+    if (!/^\d{6}$/.test(otp)) {
+      setError('OTP must be a 6-digit number');
+      return;
+    }
+    
+    setIsVerifyingOtp(true);
+    try {
+      let response;
+      if (useEmail) {
+        response = await verifyEmailOtp(email.trim(), otp);
+      } else {
+        response = await verifyPhoneOtp(countryCode, phoneNumber, otp);
+      }
+      
+      if (response && response.success) {
+        setSuccess('Authentication successful! Logging in...');
+        localStorage.setItem('isAuthenticated', 'true');
+        setTimeout(() => {
+          const redirectTo = location.state?.from || '/home';
+          const redirectState = location.state?.checkoutProduct ? { product: location.state.checkoutProduct } : undefined;
+          navigate(redirectTo, { state: redirectState });
+        }, 800);
+      }
+    } catch (err) {
+      setError(err.message || 'Invalid OTP. Please try again.');
+    } finally {
+      setIsVerifyingOtp(false);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (phoneNumber === '9111966732' && password === '123456') {
-      setError('');
-      localStorage.setItem('isAuthenticated', 'true');
-      const redirectTo = location.state?.from || '/home';
-      const redirectState = location.state?.checkoutProduct ? { product: location.state.checkoutProduct } : undefined;
-      navigate(redirectTo, { state: redirectState });
+    if (isSendingOtp || isVerifyingOtp) return;
+    if (!otpSent) {
+      handleSendOtp();
     } else {
-      setError('Invalid email/phone or password');
+      handleVerifyOtp();
     }
+  };
+
+  const handleResendOtp = () => {
+    if (timer > 0 || isSendingOtp || isVerifyingOtp) return;
+    handleSendOtp();
   };
 
   // Inline SVG pattern for background
@@ -75,103 +194,170 @@ const Login = () => {
           </p>
         </div>
 
+        {/* Authentication Toggle */}
+        <div className="flex bg-[#e8fced] p-1 rounded-2xl mb-6">
+          <button
+            type="button"
+            disabled={isSendingOtp || isVerifyingOtp}
+            onClick={() => {
+              setUseEmail(false);
+              setOtpSent(false);
+              setError('');
+              setSuccess('');
+              setOtp('');
+            }}
+            className={`flex-1 py-2.5 text-center text-[12px] font-bold rounded-xl transition-all uppercase tracking-wider ${
+              !useEmail 
+                ? 'bg-[#0c5c20] text-white shadow-md' 
+                : 'text-[#3b8a53] hover:text-[#0a4a17]'
+            }`}
+          >
+            Continue with Phone
+          </button>
+          <button
+            type="button"
+            disabled={isSendingOtp || isVerifyingOtp}
+            onClick={() => {
+              setUseEmail(true);
+              setOtpSent(false);
+              setError('');
+              setSuccess('');
+              setOtp('');
+            }}
+            className={`flex-1 py-2.5 text-center text-[12px] font-bold rounded-xl transition-all uppercase tracking-wider ${
+              useEmail 
+                ? 'bg-[#0c5c20] text-white shadow-md' 
+                : 'text-[#3b8a53] hover:text-[#0a4a17]'
+            }`}
+          >
+            Continue with Email
+          </button>
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-5">
           {error && (
             <div className="bg-red-50 border border-red-100 text-red-500 text-[11px] font-bold p-3.5 rounded-2xl text-center uppercase tracking-wider">
               {error}
             </div>
           )}
+          {success && (
+            <div className="bg-green-50 border border-green-100 text-green-600 text-[11px] font-bold p-3.5 rounded-2xl text-center uppercase tracking-wider">
+              {success}
+            </div>
+          )}
+
           {/* Email / Phone Field */}
-          <div>
-            <label className="block text-[12px] font-bold text-[#1f592c] mb-1.5 px-1 uppercase tracking-wider">
-              {useEmail ? t('auth.emailLabel') || 'Email' : t('auth.mobileLabel') || 'Phone Number'}
-            </label>
-            <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#3b8a53]">
-                {useEmail ? <Mail size={18} /> : <Phone size={18} />}
-              </span>
-              {!useEmail && (
-                <span className="absolute left-11 top-1/2 -translate-y-1/2 text-[14px] text-[#1f592c] font-bold">
-                  +91
+          {!useEmail ? (
+            <div>
+              <label className="block text-[12px] font-bold text-[#1f592c] mb-1.5 px-1 uppercase tracking-wider">
+                Phone Number
+              </label>
+              <div className="flex gap-2">
+                <div className="w-[80px] relative">
+                  <input
+                    type="text"
+                    value={countryCode}
+                    onChange={(e) => setCountryCode(e.target.value)}
+                    placeholder="+91"
+                    className="w-full px-3 py-3 bg-[#e8fced] border-2 border-transparent focus:border-[#42c585] rounded-[16px] text-[14px] font-semibold text-[#0a4a17] focus:outline-none transition-all shadow-inner text-center"
+                    disabled={otpSent || isSendingOtp || isVerifyingOtp}
+                    required
+                  />
+                </div>
+                <div className="flex-1 relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#3b8a53]">
+                    <Phone size={18} />
+                  </span>
+                  <input
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
+                    placeholder="9876543210"
+                    className="w-full pl-11 pr-4 py-3 bg-[#e8fced] border-2 border-transparent focus:border-[#42c585] rounded-[16px] text-[14px] font-semibold text-[#0a4a17] placeholder-[#81b29a] focus:outline-none transition-all shadow-inner"
+                    disabled={otpSent || isSendingOtp || isVerifyingOtp}
+                    required
+                    maxLength={10}
+                  />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <label className="block text-[12px] font-bold text-[#1f592c] mb-1.5 px-1 uppercase tracking-wider">
+                Email Address
+              </label>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#3b8a53]">
+                  <Mail size={18} />
                 </span>
-              )}
-              <input
-                type={useEmail ? 'email' : 'tel'}
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder={useEmail ? t('auth.emailPlaceholder') || 'example@gmail.com' : '9876543210'}
-                className={`w-full ${!useEmail ? 'pl-20' : 'pl-11'} pr-4 py-3 bg-[#e8fced] border-2 border-transparent focus:border-[#42c585] rounded-[16px] text-[14px] font-semibold text-[#0a4a17] placeholder-[#81b29a] focus:outline-none transition-all shadow-inner`}
-                required
-                maxLength={useEmail ? undefined : 10}
-                pattern={useEmail ? undefined : '[0-9]*'}
-              />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="example@gmail.com"
+                  className="w-full pl-11 pr-4 py-3 bg-[#e8fced] border-2 border-transparent focus:border-[#42c585] rounded-[16px] text-[14px] font-semibold text-[#0a4a17] placeholder-[#81b29a] focus:outline-none transition-all shadow-inner"
+                  disabled={otpSent || isSendingOtp || isVerifyingOtp}
+                  required
+                />
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Password Field */}
-          <div>
-            <label className="block text-[12px] font-bold text-[#1f592c] mb-1.5 px-1 uppercase tracking-wider">
-              {t('auth.passwordLabel') || 'Password'}
-            </label>
-            <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#3b8a53]">
-                <Lock size={18} />
-              </span>
-              <input
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••••••"
-                className="w-full pl-11 pr-11 py-3 bg-[#e8fced] border-2 border-transparent focus:border-[#42c585] rounded-[16px] text-[14px] font-semibold text-[#0a4a17] placeholder-[#81b29a] focus:outline-none transition-all shadow-inner"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#3b8a53] hover:text-[#0a4a17] transition-colors"
-              >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
+          {/* OTP Field & Resend Timer */}
+          {otpSent && (
+            <div className="space-y-3">
+              <div>
+                <label className="block text-[12px] font-bold text-[#1f592c] mb-1.5 px-1 uppercase tracking-wider">
+                  6-Digit OTP
+                </label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#3b8a53]">
+                    <MessageSquare size={18} />
+                  </span>
+                  <input
+                    type="text"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                    placeholder="••••••"
+                    maxLength={6}
+                    className="w-full pl-11 pr-4 py-3 bg-[#e8fced] border-2 border-transparent focus:border-[#42c585] rounded-[16px] text-[14px] font-semibold text-[#0a4a17] placeholder-[#81b29a] focus:outline-none transition-all shadow-inner tracking-widest text-center"
+                    disabled={isVerifyingOtp}
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Resend Timer */}
+              <div className="flex items-center justify-between text-[12px] font-bold px-1 text-[#3b8a53]">
+                <span>OTP expires in: {timer}s</span>
+                <button
+                  type="button"
+                  onClick={handleResendOtp}
+                  disabled={timer > 0 || isSendingOtp || isVerifyingOtp}
+                  className={`text-[#0a4a17] hover:underline font-bold transition-all ${
+                    timer > 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+                  }`}
+                >
+                  Resend OTP
+                </button>
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Remember me & Forget password */}
-          <div className="flex items-center justify-between text-[12px] font-bold px-1">
-            <label className="flex items-center gap-2 text-[#3b8a53] cursor-pointer">
-              <input 
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="rounded border-[#81b29a] text-[#0a4a17] focus:ring-[#42c585] bg-[#e8fced]"
-              />
-              Remember me
-            </label>
-            <Link to="/forgot-password" className="text-[#0a4a17] hover:underline">
-              Forgot your password?
-            </Link>
-          </div>
-
-          {/* Switch Phone/Email Option */}
-          <div className="text-right px-1">
-            <button
-              type="button"
-              onClick={() => {
-                setUseEmail(!useEmail);
-                setPhoneNumber('');
-              }}
-              className="text-[12px] font-bold text-[#0a4a17] hover:underline"
-            >
-              {useEmail ? 'Use Phone Number Instead' : 'Use Email Address Instead'}
-            </button>
-          </div>
-
-          {/* Log in Button */}
+          {/* Log in / Send OTP Button */}
           <motion.button
             type="submit"
             whileTap={{ scale: 0.97 }}
-            className="w-full py-4 bg-[#0c5c20] hover:bg-[#073f15] text-white rounded-[16px] text-[15px] font-bold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all cursor-pointer"
+            disabled={isSendingOtp || isVerifyingOtp}
+            className="w-full py-4 bg-[#0c5c20] hover:bg-[#073f15] text-white rounded-[16px] text-[15px] font-bold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2"
           >
-            Login
+            {isSendingOtp || isVerifyingOtp ? (
+              <span>Processing...</span>
+            ) : otpSent ? (
+              <span>Verify OTP & Login</span>
+            ) : (
+              <span>Send OTP</span>
+            )}
           </motion.button>
         </form>
 
@@ -189,10 +375,10 @@ const Login = () => {
         <img 
           src="/mthibg.png" 
           alt="Mithilakart" 
-          className="h-10 w-auto object-contain"
+          className="h-44 w-auto object-contain"
         />
-        <div className="flex items-center text-[18px] font-bold text-white tracking-wide italic">
-          <span className="opacity-90">Mithila</span><span className="text-[#073f15]">kart</span>
+        <div className="flex items-center text-[18px] font-bold text-black tracking-wide italic">
+          Mithilakart™
         </div>
       </div>
     </div>
