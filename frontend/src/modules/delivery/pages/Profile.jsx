@@ -39,7 +39,7 @@ const DeliveryProfile = () => {
       <div className="px-4 pt-4 mb-6">
         <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-[#084224] rounded-full flex items-center justify-center shadow-md shadow-blue-50">
+            <div className="w-12 h-12 bg-[#6FAE4A] rounded-full flex items-center justify-center shadow-md shadow-blue-50">
               <User size={24} className="text-white" />
             </div>
             <div>
@@ -75,7 +75,7 @@ const DeliveryProfile = () => {
             className="w-full bg-white rounded-xl p-3.5 border border-slate-100 shadow-sm flex items-center gap-3 active:scale-[0.98] transition-all group"
           >
             <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center group-hover:bg-blue-100 transition-colors">
-              <item.icon size={16} className="text-[#084224]" />
+              <item.icon size={16} className="text-[#6FAE4A]" />
             </div>
             <span className="text-[14px] font-bold text-slate-700">{item.label}</span>
             <ChevronRight size={16} className="text-slate-300 ml-auto" />

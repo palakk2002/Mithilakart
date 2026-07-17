@@ -44,7 +44,7 @@ const Settings = () => {
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
-                      <item.icon size={18} className="text-[#084224]" />
+                      <item.icon size={18} className="text-[#6FAE4A]" />
                     </div>
                     <span className="text-[15px] font-bold text-slate-700">{item.label}</span>
                   </div>

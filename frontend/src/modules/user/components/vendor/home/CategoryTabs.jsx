@@ -14,7 +14,7 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
             >
               {/* Background Capsule */}
               <div className={`relative w-[70px] h-[34px] md:w-[90px] md:h-[40px] rounded-full transition-all duration-300 ${
-                isActive ? 'bg-[#084224]' : 'bg-[#084224]/10 hover:bg-[#084224]/20'
+                isActive ? 'bg-[#6FAE4A]' : 'bg-[#6FAE4A]/10 hover:bg-[#6FAE4A]/20'
               }`}>
                 {isActive && <div className="absolute inset-0 bg-white/10 rounded-full" />}
               </div>
@@ -34,11 +34,11 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
               {/* Label and Indicator */}
               <div className="flex flex-col items-center gap-1.5 mt-1">
                 <span className={`text-[12px] md:text-[14px] font-bold tracking-tight transition-colors duration-300 ${
-                  isActive ? 'text-[#084224]' : 'text-slate-600 group-hover:text-slate-800'
+                  isActive ? 'text-[#6FAE4A]' : 'text-slate-600 group-hover:text-slate-800'
                 }`}>
                   {tab.label}
                 </span>
-                {isActive && <div className="w-8 h-1 bg-[#084224] rounded-full" />}
+                {isActive && <div className="w-8 h-1 bg-[#6FAE4A] rounded-full" />}
               </div>
             </div>
           );

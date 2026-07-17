@@ -1,9 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import footerBorder from '../../assets/footer-border.png';
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-white pt-10 pb-20 mt-auto border-t border-gray-100 flex flex-col items-center">
+    <footer className="w-full bg-white pb-20 mt-auto border-t border-gray-100 flex flex-col items-center">
+      {/* Decorative Mithila painting border with opacity */}
+      <div className="w-full h-10 md:h-14 mb-8 opacity-75 overflow-hidden border-b border-gray-100">
+        <img
+          src={footerBorder}
+          alt="Mithila Art Footer Border"
+          className="w-full h-full object-cover"
+        />
+      </div>
       {/* 4-Column Desktop Footer Link Grid (Hidden on Mobile) */}
       <div className="hidden md:grid grid-cols-4 gap-12 w-full max-w-[1200px] px-6 mb-8 pb-8 border-b border-gray-100">
         {/* Column 1: About */}

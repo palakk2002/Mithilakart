@@ -110,8 +110,22 @@ const VendorLayout = () => {
     (!location.pathname.includes('/quick-shop') && !location.pathname.includes('/fresh-grocery') && (selectedCategory === 'You Buy' || selectedCategory === 'Home' || !selectedCategory))
   );
 
+  const isMithilakartFlow = 
+    !location.pathname.includes('/mithilak') && 
+    !location.pathname.includes('/quick-shop') && 
+    !location.pathname.includes('/fresh-grocery');
+
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-gray-50 text-slate-900">
+    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-bg-cream text-primary-dark relative">
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+        style={{
+          backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+          backgroundSize: '360px',
+        }}
+      />
+
       {/* Drawer Sidebar */}
       <MainSidebar isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
 
@@ -141,23 +155,13 @@ const VendorLayout = () => {
             </div>
 
             <nav className="flex items-center gap-3 ml-4">
-              <Link to="/home" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 ${
-                isDarkHeader ? 'hover:bg-white/10 text-white/90 hover:text-white' : 'hover:bg-black/5 text-slate-700 hover:text-[#084224]'
-              }`}>{t('nav.home')}</Link>
-              <Link to="/categories" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 ${
-                isDarkHeader ? 'hover:bg-white/10 text-white/90 hover:text-white' : 'hover:bg-black/5 text-slate-700 hover:text-[#084224]'
-              }`}>{t('nav.categories')}</Link>
-              <Link to="/cart" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 flex items-center gap-2 ${
-                isDarkHeader ? 'hover:bg-white/10 text-white/90 hover:text-white' : 'hover:bg-black/5 text-slate-700 hover:text-[#084224]'
-              }`}>
+              <Link to="/home" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 hover:bg-black/5 text-[#3F2A20]`}>{t('nav.home')}</Link>
+              <Link to="/categories" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 hover:bg-black/5 text-[#3F2A20]`}>{t('nav.categories')}</Link>
+              <Link to="/cart" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 flex items-center gap-2 hover:bg-black/5 text-[#3F2A20]`}>
                 <span>{t('nav.cart')}</span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-black ${
-                  isDarkHeader ? 'bg-white text-slate-900' : 'bg-[#084224] text-white'
-                }`}>{cartCount}</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full font-black bg-[#F26522] text-white">{cartCount}</span>
               </Link>
-              <Link to="/profile" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 ${
-                isDarkHeader ? 'hover:bg-white/10 text-white/90 hover:text-white' : 'hover:bg-black/5 text-slate-700 hover:text-[#084224]'
-              }`}>Profile</Link>
+              <Link to="/profile" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 hover:bg-black/5 text-[#3F2A20]`}>Profile</Link>
             </nav>
 
             <div className="ml-auto flex items-center gap-6">
@@ -176,11 +180,11 @@ const VendorLayout = () => {
         <motion.header
           animate={{
             boxShadow: scrolled
-              ? '0 2px 12px rgba(0,0,0,0.10)'
-              : '0 1px 0px rgba(0,0,0,0.06)',
+              ? '0 2px 12px rgba(0,0,0,0.08)'
+              : '0 1px 0px rgba(0,0,0,0.02)',
           }}
           transition={{ duration: 0.22 }}
-          className={`md:hidden sticky top-0 z-50 pb-0 transition-colors duration-300 ${
+          className={`md:hidden sticky top-0 z-50 pb-2.5 rounded-b-[24px] shadow-sm transition-colors duration-300 ${
             (localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak'))
               ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]'
               : location.pathname.includes('/fresh-grocery')
@@ -190,28 +194,18 @@ const VendorLayout = () => {
                   : getMithilakartHeaderBg(selectedCategory)
           }`}
         >
-          {/* Row 0: Top Header Tabs (Mithilakart, 8 Mins, Travel, Grocery) */}
+          {/* Restored HeaderTabs as requested */}
           <HeaderTabs />
 
           {/* Row 3 : Search + QR */}
           <SearchBar selectedAddress={selectedAddress} />
-
-          {/* Row 4 : Category strip */}
-          {!location.pathname.includes('quick-shop') &&
-           !location.pathname.includes('fresh-grocery') &&
-           !location.pathname.includes('mithilak') && (
-            <CategoryNavbar
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-            />
-          )}
         </motion.header>
       )}
 
       {/* SaleBanner is now rendered inside Home.jsx or specifically based on visibility store */}
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col bg-transparent relative z-10">
         <div className="flex-1 flex">
           <div className="w-full max-w-[1600px] mx-auto px-0 md:px-8 xl:px-12 flex h-full">
             <main className="flex-1 min-w-0 pb-16">
@@ -224,7 +218,7 @@ const VendorLayout = () => {
 
       {/* Mobile-First Bottom Navbar (Fixed) */}
       {!hideFooter && (
-        <nav className={`md:hidden fixed bottom-0 left-0 right-0 border-t px-6 py-2 flex justify-between items-center z-50 transition-colors duration-300 ${isDarkMode ? 'bg-black border-[var(--color-gold)]/20 text-[var(--color-gold)] shadow-[0_-2px_20px_rgba(212,175,55,0.1)]' : 'bg-white border-gray-200 text-slate-900 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]'}`}>
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t px-6 py-2 flex justify-between items-center z-50 bg-[#FFF8EE] border-[#EADCC9]/55 text-[#3F2A20] shadow-[0_-2px_10px_rgba(63,42,32,0.05)]">
         <Link 
           to="/home" 
           onClick={() => {
@@ -232,37 +226,44 @@ const VendorLayout = () => {
             localStorage.setItem('isMithilakFlow', 'false');
             localStorage.setItem('isFreshGroceryFlow', 'false');
           }}
-          className={`flex flex-col items-center transition-transform active:scale-90`}
+          className={`flex flex-col items-center transition-transform active:scale-90 ${
+            location.pathname === '/home' ? 'text-[#6FAE4A]' : 'text-[#3F2A20]/80'
+          }`}
         >
-          <HomeIcon size={22} strokeWidth={1.5} />
-          <span className={`text-[10px] ${location.pathname === '/home' ? 'font-black' : 'font-medium'}`}>{t('nav.home')}</span>
-          {location.pathname === '/home' && <div className="w-1 h-1 bg-current rounded-full mt-0.5 animate-pulse" />}
+          <HomeIcon size={22} strokeWidth={2.2} />
+          <span className={`text-[10px] ${location.pathname === '/home' ? 'font-black' : 'font-semibold'}`}>Home</span>
         </Link>
         <Link 
           to="/categories"
           className={`flex flex-col items-center transition-transform active:scale-90 ${
-            location.pathname === '/categories' 
-              ? (localStorage.getItem('isMithilakFlow') === 'true' 
-                  ? 'text-[#7c3aed]' 
-                  : (localStorage.getItem('isQuickShopFlow') === 'true' 
-                      ? 'text-[#d6186d]' 
-                      : 'text-primary-dark')) 
-              : ''
+            location.pathname === '/categories' ? 'text-[#6FAE4A]' : 'text-[#3F2A20]/80'
           }`}
         >
-          <LayoutGrid size={22} strokeWidth={1.5} />
-          <span className={`text-[10px] ${location.pathname === '/categories' ? 'font-black' : 'font-medium'}`}>{t('nav.categories')}</span>
+          <LayoutGrid size={22} strokeWidth={2.2} />
+          <span className={`text-[10px] ${location.pathname === '/categories' ? 'font-black' : 'font-semibold'}`}>Categories</span>
         </Link>
-        <Link to="/cart" className={`flex flex-col items-center transition-transform active:scale-90`}>
+        <Link 
+          to="/cart" 
+          className={`flex flex-col items-center transition-transform active:scale-90 ${
+            location.pathname === '/cart' ? 'text-[#6FAE4A]' : 'text-[#3F2A20]/80'
+          }`}
+        >
           <div className="relative">
-            <ShoppingCart size={22} strokeWidth={1.5} />
-            <span className={`absolute -top-1 -right-1.5 text-[8px] font-black px-1 rounded-full border shadow-sm ${isDarkMode ? 'bg-[var(--color-gold)] text-black border-black' : 'bg-[#cc0c39] text-white border-white'}`}>{cartCount}</span>
+            <ShoppingCart size={22} strokeWidth={2.2} />
+            <span className="absolute -top-1.5 -right-2 text-[8px] font-black px-1 py-0.5 rounded-full bg-[#F26522] text-white border border-[#FFF8EE]">
+              {cartCount}
+            </span>
           </div>
-          <span className={`text-[10px] ${location.pathname === '/cart' ? 'font-black' : 'font-medium'}`}>{t('nav.cart')}</span>
+          <span className={`text-[10px] ${location.pathname === '/cart' ? 'font-black' : 'font-semibold'}`}>Cart</span>
         </Link>
-        <Link to="/profile" className={`flex flex-col items-center transition-transform active:scale-90`}>
-          <User size={22} strokeWidth={1.5} />
-          <span className={`text-[10px] ${location.pathname === '/profile' ? 'font-black' : 'font-medium'}`}>{t('nav.you')}</span>
+        <Link 
+          to="/profile" 
+          className={`flex flex-col items-center transition-transform active:scale-90 ${
+            location.pathname === '/profile' ? 'text-[#6FAE4A]' : 'text-[#3F2A20]/80'
+          }`}
+        >
+          <User size={22} strokeWidth={2.2} />
+          <span className={`text-[10px] ${location.pathname === '/profile' ? 'font-black' : 'font-semibold'}`}>You</span>
         </Link>
       </nav>
       )}
@@ -278,7 +279,7 @@ const VendorLayout = () => {
                 ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1] hover:brightness-110'
                   : localStorage.getItem('isQuickShopFlow') === 'true'
                     ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f] hover:brightness-110'
-                  : 'bg-[#084224] hover:bg-[#06331b]'
+                  : 'bg-[#6FAE4A] hover:bg-[#06331b]'
           }`}
         >
           <div className="flex items-center gap-3">

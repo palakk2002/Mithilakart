@@ -19,50 +19,60 @@ import StationeryTab from '../../../assets/products/product14.jpg';
 import prod4 from '../../../assets/products/product04.jpg';
 import ClothesImg from '../../../assets/products/product15.webp';
 
+// Import premium category illustrations to repeat on this page
+import beautyCareImg from '../../../assets/categories/beauty_red_blossom.png';
+import giftsHampersImg from '../../../assets/categories/gifts_green_package.png';
+import smartGadgetsImg from '../../../assets/categories/smart_gadgets.png';
+import artJewelleryImg from '../../../assets/categories/art_jewellery.png';
+import toysGamesImg from '../../../assets/categories/toys_games.png';
+import officeBooksImg from '../../../assets/products/product14.jpg';
+import trendyFashionImg from '../../../assets/products/product10.jpg';
+import electricalsImg from '../../../assets/products/product08.jpg';
+
 const SECTIONS = [
   {
     title: 'Beauty & Grooming',
     items: [
-      { name: 'Cosmetics', img: MakeupHero, path: '/vendor/category-products?category=Beauty' },
-      { name: 'Skin Care', img: BeautyTab, path: '/vendor/category-products?category=Beauty' },
-      { name: 'Hair Care', img: LorealShampoo, path: '/vendor/category-products?category=Beauty' },
-      { name: 'Fragrances', img: LipGloss, path: '/vendor/category-products?category=Beauty' },
+      { name: 'Cosmetics', img: beautyCareImg, path: '/vendor/category-products?category=Beauty' },
+      { name: 'Skin Care', img: beautyCareImg, path: '/vendor/category-products?category=Beauty' },
+      { name: 'Hair Care', img: beautyCareImg, path: '/vendor/category-products?category=Beauty' },
+      { name: 'Fragrances', img: beautyCareImg, path: '/vendor/category-products?category=Beauty' },
     ]
   },
   {
     title: 'Fashion & Jewellery',
     items: [
-      { name: 'Ethnic Wear', img: FashionHero, path: '/vendor/category-products?category=Fashion' },
-      { name: 'Modern Wear', img: FashionTabProduct, path: '/vendor/category-products?category=Fashion' },
-      { name: 'Art. Jewellery', img: JewelleryImg, path: '/vendor/category-products?category=Jewellery' },
-      { name: 'Bags & Wallets', img: FashionHero, path: '/vendor/category-products?category=Fashion' },
+      { name: 'Ethnic Wear', img: trendyFashionImg, path: '/vendor/category-products?category=Fashion' },
+      { name: 'Modern Wear', img: trendyFashionImg, path: '/vendor/category-products?category=Fashion' },
+      { name: 'Art. Jewellery', img: artJewelleryImg, path: '/vendor/category-products?category=Jewellery' },
+      { name: 'Bags & Wallets', img: trendyFashionImg, path: '/vendor/category-products?category=Fashion' },
     ]
   },
   {
     title: 'Kids & Play',
     items: [
-      { name: 'Soft Toys', img: ToysTab, path: '/vendor/toys' },
-      { name: 'Board Games', img: ToysTab, path: '/vendor/toys' },
-      { name: 'Learning', img: ToysTab, path: '/vendor/toys' },
-      { name: 'Kids Wear', img: ClothesImg, path: '/vendor/toys' },
+      { name: 'Soft Toys', img: toysGamesImg, path: '/vendor/toys' },
+      { name: 'Board Games', img: toysGamesImg, path: '/vendor/toys' },
+      { name: 'Learning', img: toysGamesImg, path: '/vendor/toys' },
+      { name: 'Kids Wear', img: toysGamesImg, path: '/vendor/toys' },
     ]
   },
   {
     title: 'Home & Stationery',
     items: [
-      { name: 'Notebooks', img: StationeryTab, path: '/vendor/category-products?category=Stationery' },
-      { name: 'Art & Craft', img: StationeryTab, path: '/vendor/category-products?category=Stationery' },
-      { name: 'Office Supply', img: StationeryTab, path: '/vendor/category-products?category=Stationery' },
-      { name: 'Gifts', img: LipGloss, path: '/vendor/category-products?category=Gifting' },
+      { name: 'Notebooks', img: officeBooksImg, path: '/vendor/category-products?category=Stationery' },
+      { name: 'Art & Craft', img: officeBooksImg, path: '/vendor/category-products?category=Stationery' },
+      { name: 'Office Supply', img: officeBooksImg, path: '/vendor/category-products?category=Stationery' },
+      { name: 'Gifts', img: giftsHampersImg, path: '/vendor/category-products?category=Gifting' },
     ]
   },
   {
     title: 'Electronics & Gadgets',
     items: [
-      { name: 'Smart Phones', img: SamsungS24, path: '/vendor/category-products?category=Electronics' },
-      { name: 'Earbuds', img: EarbudsDeal, path: '/vendor/category-products?category=Electronics' },
-      { name: 'Appliances', img: ElectronicsHero, path: '/vendor/category-products?category=Electronics' },
-      { name: 'Smart Watches', img: SamsungS24, path: '/vendor/category-products?category=Electronics' },
+      { name: 'Smart Phones', img: smartGadgetsImg, path: '/vendor/category-products?category=Electronics' },
+      { name: 'Earbuds', img: smartGadgetsImg, path: '/vendor/category-products?category=Electronics' },
+      { name: 'Appliances', img: electricalsImg, path: '/vendor/category-products?category=Electronics' },
+      { name: 'Smart Watches', img: smartGadgetsImg, path: '/vendor/category-products?category=Electronics' },
     ]
   }
 ];
@@ -150,30 +160,42 @@ const Categories = () => {
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
   const sectionsList = isMithilakFlow ? MITHILA_CATEGORIES : (isQuickShopFlow ? QUICK_SHOP_CATEGORIES : SECTIONS);
-  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-[#eaf5ee]');
-  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-gradient-to-r from-[#F5B014] to-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#084224]');
-  const textPrimary = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#084224]');
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-gradient-to-r from-[#F5B014] to-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
+  const textPrimary = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#6FAE4A]');
 
   return (
-    <div className={`${pageBg} min-h-screen pb-24 font-sans text-slate-800`}>
+    <div className={`${pageBg} min-h-screen pb-24 font-sans text-slate-800 relative`}>
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+      )}
+
       {/* Header */}
-      <div className={`sticky top-0 z-50 ${headerBg} px-4 py-3.5 flex items-center justify-between shadow-md transition-colors`}>
+      <div className={`sticky top-0 z-50 ${headerBg} px-4 py-3.5 flex items-center justify-between shadow-sm transition-colors`}>
         <div className="flex items-center gap-3">
-          <button onClick={() => navigate(-1)} className={`p-0.5 active:scale-95 transition-transform ${isFreshGroceryFlow ? 'text-black' : 'text-white'}`}>
+          <button onClick={() => navigate(-1)} className={`p-0.5 active:scale-95 transition-transform ${headerTextColor}`}>
             <ArrowLeft size={22} />
           </button>
-          <h1 className={`text-[19px] font-black tracking-tight ${isFreshGroceryFlow ? 'text-black' : 'text-white'}`}>Categories</h1>
+          <h1 className={`text-[19px] font-black tracking-tight ${headerTextColor}`}>Categories</h1>
         </div>
-        <button onClick={() => navigate('/vendor/search')} className={`p-1 active:scale-95 transition-transform ${isFreshGroceryFlow ? 'text-black' : 'text-white'}`}>
+        <button onClick={() => navigate('/vendor/search')} className={`p-1 active:scale-95 transition-transform ${headerTextColor}`}>
           <Search size={22} />
         </button>
       </div>
 
       {/* Sections and Grid (Mobile View) */}
-      <div className="px-4 py-3 space-y-6 md:hidden">
+      <div className="px-4 py-3 space-y-6 md:hidden relative z-10">
         {sectionsList.map((section, sIdx) => (
           <div key={sIdx} className="flex flex-col">
-            <h2 className="text-[16px] font-black text-slate-900 mb-3 tracking-tight pl-1">
+            <h2 className="text-[15px] font-black text-[#3F2A20] mb-3 tracking-tight pl-1">
               {section.title}
             </h2>
             <div className="flex overflow-x-auto no-scrollbar gap-3.5 pb-1">
@@ -197,20 +219,21 @@ const Categories = () => {
                     />
                   );
                 }
+                // Standard user flow: Arched cards matching home page style
                 return (
                   <div
                     key={idx}
                     onClick={() => navigate(item.path)}
-                    className="flex flex-col items-center justify-between pt-2 pb-1.5 px-1.5 w-[88px] h-[106px] flex-shrink-0 bg-white border border-[#d0edd8] rounded-[14px] shadow-[0_1.5px_4px_rgba(0,0,0,0.02)] cursor-pointer active:scale-95 transition-transform"
+                    className="flex-shrink-0 w-[92px] h-[108px] bg-white border border-[#EADCC9]/70 rounded-t-full rounded-b-[18px] overflow-hidden flex flex-col items-center justify-between pt-1 pb-1.5 px-1 shadow-[0_2px_6px_rgba(61,35,20,0.02)] cursor-pointer active:scale-95 transition-transform"
                   >
-                    <span className={`px-0.5 text-[10px] font-black text-center ${textPrimary} leading-tight tracking-tight h-[24px] flex items-center justify-center`}>
+                    <span className="px-0.5 text-[9.5px] font-black text-[#3F2A20] text-center mt-1.5 leading-tight tracking-tight h-[20px] flex items-center justify-center">
                       {item.name}
                     </span>
-                    <div className="w-[76px] h-[66px] rounded-[10px] overflow-hidden flex items-center justify-center">
+                    <div className="w-[78px] h-[66px] rounded-[12px] overflow-hidden bg-[#FFFDFB] border border-slate-100 flex items-center justify-center p-0.5 mb-0.5">
                       <img
                         src={item.img}
                         alt={item.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-lg"
                       />
                     </div>
                   </div>
@@ -222,12 +245,16 @@ const Categories = () => {
       </div>
 
       {/* Desktop view (Copying the banner + white panel structure) */}
-      <div className="hidden md:block md:max-w-6xl md:mx-auto md:px-4 md:py-8 space-y-10">
+      <div className="hidden md:block md:max-w-6xl md:mx-auto md:px-4 md:py-8 space-y-10 relative z-10">
         {sectionsList.map((section, sIdx) => (
           <div key={sIdx} className="flex flex-col">
             {/* Header Banner */}
-            <div className={`px-6 py-4 rounded-t-3xl flex items-center justify-between shadow-sm text-white ${headerBg}`}>
-              <h2 className="text-[17px] font-black uppercase tracking-wider">
+            <div className={`px-6 py-4 rounded-t-3xl flex items-center justify-between shadow-sm border-x border-t transition-colors ${
+              (isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow)
+                ? `text-white ${headerBg} border-transparent`
+                : 'bg-[#FCF7EE] text-[#3C2415] border-[#F3E3CD]/60 font-montserrat'
+            }`}>
+              <h2 className="text-[14px] md:text-[16px] font-black uppercase tracking-wider">
                 {section.title}
               </h2>
             </div>
@@ -236,40 +263,64 @@ const Categories = () => {
             <div className="bg-white border-x border-b border-slate-100 rounded-b-3xl p-6 shadow-md">
               <div className="grid grid-cols-4 gap-6">
                 {section.items.map((item, idx) => {
+                  const onClickHandler = () => {
+                    if (isMithilakFlow) {
+                      localStorage.setItem('isMithilakFlow', 'true');
+                      localStorage.setItem('isQuickShopFlow', 'false');
+                      navigate('/mithilak/category', { state: { category: item.name } });
+                    } else if (isQuickShopFlow) {
+                      localStorage.setItem('isQuickShopFlow', 'true');
+                      localStorage.setItem('isMithilakFlow', 'false');
+                      navigate(isFreshGroceryFlow ? '/fresh-grocery/category' : '/quick-shop/category', { state: { category: item.name } });
+                    } else {
+                      navigate(item.path);
+                    }
+                  };
+
+                  if (isQuickShopFlow || isMithilakFlow) {
+                    return (
+                      <div
+                        key={idx}
+                        onClick={onClickHandler}
+                        className="flex flex-col items-center gap-3 cursor-pointer group active:scale-95 transition-transform w-[180px] mx-auto"
+                      >
+                        <div className="relative w-full aspect-square rounded-[24px] overflow-hidden bg-slate-50 border border-slate-100/60 flex items-center justify-center p-5 group-hover:bg-slate-100/65 transition-colors duration-300">
+                          <img
+                            src={item.img}
+                            alt={item.name}
+                            className="h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="px-1 text-center">
+                          <h3 className={`text-[13px] font-black text-slate-800 leading-tight group-hover:${textPrimary} transition-colors line-clamp-2`}>
+                            {item.name}
+                          </h3>
+                          <p className="text-[11px] font-black text-slate-400 mt-1 uppercase tracking-wider">View Collection</p>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  // Standard user flow: Arched cards matching home page style
                   return (
                     <div
                       key={idx}
-                      onClick={() => {
-                        if (isMithilakFlow) {
-                          localStorage.setItem('isMithilakFlow', 'true');
-                          localStorage.setItem('isQuickShopFlow', 'false');
-                          navigate('/mithilak/category', { state: { category: item.name } });
-                        } else if (isQuickShopFlow) {
-                          localStorage.setItem('isQuickShopFlow', 'true');
-                          localStorage.setItem('isMithilakFlow', 'false');
-                          navigate(isFreshGroceryFlow ? '/fresh-grocery/category' : '/quick-shop/category', { state: { category: item.name } });
-                        } else {
-                          navigate(item.path);
-                        }
-                      }}
-                      className="flex flex-col items-center gap-3 cursor-pointer group active:scale-95 transition-transform w-[180px] mx-auto"
+                      onClick={onClickHandler}
+                      className="flex flex-col items-center cursor-pointer group active:scale-95 transition-transform w-[160px] mx-auto"
                     >
-                      {/* Soft grey rounded image box */}
-                      <div className="relative w-full aspect-square rounded-[24px] overflow-hidden bg-slate-50 border border-slate-100/60 flex items-center justify-center p-5 group-hover:bg-slate-100/65 transition-colors duration-300">
-                        <img
-                          src={item.img}
-                          alt={item.name}
-                          className="h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
-                          loading="lazy"
-                        />
-                      </div>
-
-                      {/* Content placed below the image box */}
-                      <div className="px-1 text-center">
-                        <h3 className={`text-[13px] font-black text-slate-800 leading-tight group-hover:${textPrimary} transition-colors line-clamp-2`}>
+                      <div className="w-full aspect-[1/1.12] bg-white border border-[#EADCC9]/70 rounded-t-full rounded-b-[24px] overflow-hidden flex flex-col items-center justify-between p-3 shadow-[0_4px_10px_rgba(61,35,20,0.02)] group-hover:shadow-[0_8px_20px_rgba(61,35,20,0.08)] group-hover:border-[#6FAE4A]/40 transition-all duration-300">
+                        <span className="text-[12px] md:text-sm font-black text-[#3F2A20] text-center mt-2.5 px-0.5 leading-tight tracking-tight h-[22px] flex items-center justify-center">
                           {item.name}
-                        </h3>
-                        <p className="text-[11px] font-black text-slate-400 mt-1 uppercase tracking-wider">View Collection</p>
+                        </span>
+                        <div className="w-[82%] aspect-square rounded-[16px] overflow-hidden bg-[#FFFDFB] border border-slate-100 flex items-center justify-center p-1 mb-1.5 relative">
+                          <img
+                            src={item.img}
+                            alt={item.name}
+                            className="w-full h-full object-cover rounded-xl group-hover:scale-[1.04] transition-transform duration-500"
+                            loading="lazy"
+                          />
+                        </div>
                       </div>
                     </div>
                   );

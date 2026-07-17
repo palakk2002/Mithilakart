@@ -53,46 +53,65 @@ const SavedAddresses = () => {
     toast.success('Address removed');
   };
 
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="bg-gray-50 min-h-screen relative pb-20"
+      className={`${pageBg} min-h-screen relative pb-20 transition-colors duration-300`}
     >
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+      )}
+
       {/* ── Header ── */}
-      <div className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm px-4 py-3 flex items-center justify-between">
+      <div className={`sticky top-0 z-50 p-4 flex items-center justify-between relative z-10 transition-colors duration-300 border-b ${headerBg}`}>
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
             className="p-1.5 rounded-full hover:bg-gray-100 transition-colors"
             aria-label="Go back"
           >
-            <ArrowLeft size={20} strokeWidth={2.5} className="text-gray-700" />
+            <ArrowLeft size={20} strokeWidth={2.5} className={headerTextColor} />
           </button>
-          <h1 className="text-[15px] font-black text-gray-800 uppercase tracking-widest">Saved Addresses</h1>
+          <h1 className={`text-[15px] font-black uppercase tracking-widest ${headerTextColor}`}>Saved Addresses</h1>
         </div>
         <button
           onClick={() => handleOpenModal()}
           className="p-1.5 rounded-full hover:bg-primary-light transition-colors"
           aria-label="Add address"
         >
-          <Plus size={22} strokeWidth={2} className="text-[#084224]" />
+          <Plus size={22} strokeWidth={2} className="text-[#6FAE4A]" />
         </button>
       </div>
 
-      <div className="px-4 py-5 w-full mx-auto space-y-5">
+      <div className="px-4 py-5 w-full mx-auto space-y-5 relative z-10">
 
         {/* ── Add Button ── */}
         <button
           onClick={() => handleOpenModal()}
-          className="w-full bg-[#084224] text-white py-3.5 rounded-2xl font-black uppercase tracking-widest text-[13px] shadow-md shadow-emerald-100 flex items-center justify-center gap-2 active:scale-95 transition-transform"
+          className="w-full bg-[#6FAE4A] text-white py-3.5 rounded-2xl font-black uppercase tracking-widest text-[13px] shadow-md shadow-emerald-100 flex items-center justify-center gap-2 active:scale-95 transition-transform"
         >
           <Plus size={18} strokeWidth={2.5} /> Add New Address
         </button>
 
         {/* ── Section label ── */}
         <div className="flex items-center justify-between px-1">
-          <span className="text-[10px] font-black text-[#084224] uppercase tracking-[3px]">Your Addresses</span>
+          <span className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[3px]">Your Addresses</span>
           <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Tap to select primary</span>
         </div>
 
@@ -113,17 +132,17 @@ const SavedAddresses = () => {
                 }}
                 className={`bg-white rounded-2xl p-4 border cursor-pointer transition-all duration-200 ${
                   isSelected
-                    ? 'border-[#084224] shadow-md shadow-blue-100 scale-[1.01]'
+                    ? 'border-[#6FAE4A] shadow-md shadow-blue-100 scale-[1.01]'
                     : 'border-gray-100 shadow-sm hover:border-blue-200'
                 }`}
               >
                 {/* Top row */}
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <div className={`p-1.5 rounded-lg ${isSelected ? 'bg-[#084224] text-white' : 'bg-primary-light text-[#084224]'}`}>
+                    <div className={`p-1.5 rounded-lg ${isSelected ? 'bg-[#6FAE4A] text-white' : 'bg-primary-light text-[#6FAE4A]'}`}>
                       {addr.type === 'HOME' ? <Home size={13} strokeWidth={2} /> : <Building2 size={13} strokeWidth={2} />}
                     </div>
-                    <span className={`text-[11px] font-black uppercase tracking-widest ${isSelected ? 'text-[#084224]' : 'text-gray-600'}`}>
+                    <span className={`text-[11px] font-black uppercase tracking-widest ${isSelected ? 'text-[#6FAE4A]' : 'text-gray-600'}`}>
                       {addr.type}
                     </span>
                     {isSelected && (
@@ -139,7 +158,7 @@ const SavedAddresses = () => {
                 </div>
 
                 {/* Address info */}
-                <h3 className={`text-[13px] font-black mb-1 ${isSelected ? 'text-[#084224]' : 'text-gray-800'}`}>
+                <h3 className={`text-[13px] font-black mb-1 ${isSelected ? 'text-[#6FAE4A]' : 'text-gray-800'}`}>
                   {addr.name}
                 </h3>
                 <p className="text-[12px] text-gray-500 font-medium leading-relaxed">{addr.address}</p>
@@ -149,7 +168,7 @@ const SavedAddresses = () => {
                 <div className="flex gap-4 pt-3 mt-3 border-t border-gray-100">
                   <button
                     onClick={(e) => { e.stopPropagation(); handleOpenModal(addr); }}
-                    className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-[#084224] hover:opacity-70 transition-opacity"
+                    className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-[#6FAE4A] hover:opacity-70 transition-opacity"
                   >
                     <Edit2 size={12} /> Edit
                   </button>
@@ -208,7 +227,7 @@ const SavedAddresses = () => {
               <div className="space-y-4">
                 {/* Name */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-[#084224] uppercase tracking-[2px] ml-1">Receiver Name</label>
+                  <label className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[2px] ml-1">Receiver Name</label>
                   <div className="relative">
                     <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
@@ -216,14 +235,14 @@ const SavedAddresses = () => {
                       placeholder="Enter full name"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-[13px] font-medium focus:outline-none focus:border-[#084224] transition-colors"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-[13px] font-medium focus:outline-none focus:border-[#6FAE4A] transition-colors"
                     />
                   </div>
                 </div>
 
                 {/* Phone */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-[#084224] uppercase tracking-[2px] ml-1">Phone Number</label>
+                  <label className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[2px] ml-1">Phone Number</label>
                   <div className="relative">
                     <Phone size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
@@ -231,14 +250,14 @@ const SavedAddresses = () => {
                       placeholder="Enter 10-digit number"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-[13px] font-medium focus:outline-none focus:border-[#084224] transition-colors"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-[13px] font-medium focus:outline-none focus:border-[#6FAE4A] transition-colors"
                     />
                   </div>
                 </div>
 
                 {/* Address */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-[#084224] uppercase tracking-[2px] ml-1">Complete Address</label>
+                  <label className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[2px] ml-1">Complete Address</label>
                   <div className="relative">
                     <MapPin size={16} className="absolute left-3.5 top-3.5 text-gray-400" />
                     <textarea
@@ -246,14 +265,14 @@ const SavedAddresses = () => {
                       rows="3"
                       value={formData.address}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-[13px] font-medium focus:outline-none focus:border-[#084224] transition-colors resize-none"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-[13px] font-medium focus:outline-none focus:border-[#6FAE4A] transition-colors resize-none"
                     />
                   </div>
                 </div>
 
                 {/* Type */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-[#084224] uppercase tracking-[2px] ml-1">Address Type</label>
+                  <label className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[2px] ml-1">Address Type</label>
                   <div className="flex gap-3">
                     {['HOME', 'WORK'].map((type) => (
                       <button
@@ -261,7 +280,7 @@ const SavedAddresses = () => {
                         onClick={() => setFormData({ ...formData, type })}
                         className={`flex-1 py-2.5 rounded-xl border font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all ${
                           formData.type === type
-                            ? 'bg-[#084224] text-white border-[#084224] shadow-md shadow-emerald-100'
+                            ? 'bg-[#6FAE4A] text-white border-[#6FAE4A] shadow-md shadow-emerald-100'
                             : 'bg-white border-gray-200 text-gray-500 hover:border-blue-300'
                         }`}
                       >
@@ -276,7 +295,7 @@ const SavedAddresses = () => {
                 <div className="pt-2 pb-6">
                   <button
                     onClick={handleSave}
-                    className="w-full bg-[#084224] text-white py-3.5 rounded-2xl font-black uppercase tracking-widest text-[13px] shadow-md shadow-emerald-100 active:scale-95 transition-transform"
+                    className="w-full bg-[#6FAE4A] text-white py-3.5 rounded-2xl font-black uppercase tracking-widest text-[13px] shadow-md shadow-emerald-100 active:scale-95 transition-transform"
                   >
                     {editingAddress ? 'Update Address' : 'Save Address'}
                   </button>

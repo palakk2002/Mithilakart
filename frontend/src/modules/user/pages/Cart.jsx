@@ -38,8 +38,8 @@ const Cart = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
-  const primaryBg = isMithilakFlow ? 'bg-[#7c3aed] hover:bg-[#6d28d9]' : (isFreshGroceryFlow ? 'bg-[#7A3E17] hover:bg-[#653313]' : (isQuickShopFlow ? 'bg-[#d6186d] hover:bg-[#b5125b]' : 'bg-[#084224] hover:bg-[#06331b]'));
-  const primaryText = isMithilakFlow ? 'text-[#7c3aed]' : (isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#084224]'));
+  const primaryBg = isMithilakFlow ? 'bg-[#7c3aed] hover:bg-[#6d28d9]' : (isFreshGroceryFlow ? 'bg-[#7A3E17] hover:bg-[#653313]' : (isQuickShopFlow ? 'bg-[#d6186d] hover:bg-[#b5125b]' : 'bg-[#6FAE4A] hover:bg-[#06331b]'));
+  const primaryText = isMithilakFlow ? 'text-[#7c3aed]' : (isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#6FAE4A]'));
   const shopNowLink = isMithilakFlow ? '/mithilak' : (isFreshGroceryFlow ? '/fresh-grocery' : (isQuickShopFlow ? '/quick-shop' : '/vendor/home'));
 
   // Load cart items for all users (authenticated or not)
@@ -118,12 +118,25 @@ const Cart = () => {
   const shippingCost = totalPrice > 500 ? 0 : 39;
 
   return (
-    <div className={`min-h-screen pb-32 font-sans text-slate-800 flex flex-col transition-colors duration-300 ${
-      isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : 'bg-[#f0f3f6]'
+    <div className={`min-h-screen pb-32 font-sans text-slate-800 flex flex-col transition-colors duration-300 relative ${
+      isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : 'bg-bg-cream'
     }`}>
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+      )}
+
       {/* Header */}
-      <div className={`sticky top-0 z-[100] px-4 py-3 flex items-center justify-between transition-colors duration-300 ${
-        isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-[#f0f3f6]'
+      <div className={`sticky top-0 z-[100] px-4 py-3 flex items-center justify-between border-b transition-colors duration-300 relative ${
+        isFreshGroceryFlow 
+          ? 'bg-[#FFF0A0] border-transparent' 
+          : 'bg-[#FCF7EE] border-[#F3E3CD]/60'
       }`}>
         <button 
           onClick={() => navigate(-1)} 
@@ -138,7 +151,7 @@ const Cart = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className={cartItems.length === 0 ? "flex-1 flex flex-col justify-center px-4 mt-2" : "px-4 mt-2"}>
+      <div className={`relative z-10 ${cartItems.length === 0 ? "flex-1 flex flex-col justify-center px-4 mt-2" : "px-4 mt-2"}`}>
         {cartItems.length === 0 ? (
           <div className="bg-white rounded-[28px] text-center py-20 px-6 flex flex-col items-center justify-center shadow-sm border border-slate-100/50 animate-in fade-in duration-300">
             {/* Custom Empty Cart Illustration */}

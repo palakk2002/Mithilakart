@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Camera, Mic, ScanLine, Home, ChevronDown, Zap, X } from 'lucide-react';
+import { Search, Camera, Mic, ScanLine, MapPin, ChevronDown, Zap, X, Star } from 'lucide-react';
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from 'react-i18next';
 import SearchInput from '../../../../shared/components/SearchInput';
@@ -31,6 +31,7 @@ const SearchBar = ({ selectedAddress }) => {
   const isQuickShopActive = location.pathname.includes('/quick-shop') && !isMithilakActive;
 
   const isDarkHeader = isMithilakActive || isQuickShopActive;
+  const isMithilakartFlow = !isMithilakActive && !isFreshGroceryActive && !isQuickShopActive;
 
   const handleSubmit = (e) => {
     e?.preventDefault();
@@ -138,32 +139,8 @@ const SearchBar = ({ selectedAddress }) => {
   }, [stream]);
 
   const displayAddress = selectedAddress?.address
-    ? selectedAddress.address.slice(0, 30) + '...'
-    : 'Sarvanad nagar ,near pe...';
-
-  // Dynamic styling based on current active flow
-  let addressPillClass = 'bg-white/30 border border-transparent hover:bg-white/50';
-  let homeIconClass = 'text-primary-dark fill-primary-dark/20';
-  let homeTextClass = 'text-primary-dark';
-  let addressTextClass = 'text-primary-dark';
-  let chevronClass = 'text-primary-dark';
-  let badgePillClass = 'bg-white border border-primary-green text-primary-dark';
-
-  if (isFreshGroceryActive) {
-    addressPillClass = 'bg-white/40 border border-[#7A3E17]/20 hover:bg-white/60';
-    homeIconClass = 'text-[#7A3E17] fill-[#7A3E17]/10';
-    homeTextClass = 'text-[#7A3E17]';
-    addressTextClass = 'text-slate-800';
-    chevronClass = 'text-[#7A3E17]';
-    badgePillClass = 'bg-[#7A3E17] text-white border-[#7A3E17]';
-  } else if (isMithilakActive || isQuickShopActive) {
-    addressPillClass = 'bg-white/15 border border-white/20 hover:bg-white/25';
-    homeIconClass = 'text-white fill-white/10';
-    homeTextClass = 'text-white';
-    addressTextClass = 'text-white/95';
-    chevronClass = 'text-white';
-    badgePillClass = 'bg-white/15 border border-white/20 text-white';
-  }
+    ? selectedAddress.address.slice(0, 32)
+    : '83 Kishan Pura Mataji Mandir, Indore';
 
   return (
     <div className="px-3 pb-3 md:px-4 md:pb-3 flex flex-col gap-2 md:gap-3">
@@ -176,34 +153,30 @@ const SearchBar = ({ selectedAddress }) => {
         className="hidden" 
       />
 
+
       {/* ── Delivery Address Field ── */}
       <div className="flex items-center justify-between py-1 md:py-2">
         <Link
           to="/profile/addresses"
-          className={`flex items-center gap-1.5 px-2.5 py-1.5 md:px-3 md:py-1.5 rounded-lg min-w-0 transition-colors ${addressPillClass}`}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full min-w-0 transition-colors bg-[#5E9E3C] hover:bg-[#528C32] text-white/95"
         >
-          <Home size={14} strokeWidth={2.5} className={`w-[13px] h-[13px] md:w-[14px] md:h-[14px] flex-shrink-0 fill-current ${homeIconClass}`} />
-          <span className={`text-[10px] md:text-[11px] font-black tracking-tight ${homeTextClass}`}>{t('nav.home').toUpperCase()}</span>
-          <span className={`text-[10px] md:text-[11px] font-medium truncate max-w-[150px] md:max-w-[170px] ${addressTextClass}`}>
+          <MapPin size={13} strokeWidth={2.5} className="w-[13px] h-[13px] md:w-[14px] md:h-[14px] flex-shrink-0" />
+          <span className="text-[10px] md:text-[11px] font-bold truncate max-w-[170px] md:max-w-[220px]">
             {displayAddress}
           </span>
-          <ChevronDown size={12} strokeWidth={3} className={`w-[11px] h-[11px] md:w-[12px] md:h-[12px] flex-shrink-0 ${chevronClass}`} />
+          <ChevronDown size={11} strokeWidth={3} className="w-[11px] h-[11px] md:w-[12px] md:h-[12px] flex-shrink-0" />
         </Link>
 
-        {/* Energy/Lightning Pill or 8 Min Badge */}
-        <div className="flex items-center gap-1.5">
-          <LanguageSelector isDarkHeader={isDarkHeader} />
-          {isFreshGroceryActive ? (
-            <div className={`flex items-center gap-1 px-2 py-0.5 rounded-lg shadow-sm border ${badgePillClass}`}>
-              <span className="text-[12px] md:text-[14px] font-black leading-none">8</span>
-              <span className="text-[8px] md:text-[9px] font-bold leading-none text-white/90">min</span>
-            </div>
-          ) : (
-            <div className={`flex items-center gap-0.5 md:gap-1 px-1.5 py-0.5 md:px-2 md:py-0.5 rounded-full shadow-xs border ${badgePillClass}`}>
-              <Zap size={12} className={`w-[10px] h-[10px] md:w-[12px] md:h-[12px] text-amber-555 fill-amber-555 ${isDarkHeader ? 'text-amber-300 fill-amber-300' : ''}`} />
-              <span className="text-[10px] md:text-[11px] font-extrabold">3</span>
-            </div>
-          )}
+        {/* Language Pill + Coin/Star Badge */}
+        <div className="flex items-center gap-2">
+          {/* Functional language selector button */}
+          <LanguageSelector isDarkHeader={false} />
+          
+          {/* Custom Coins/Stars Badge */}
+          <div className="flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-[#5E9E3C] text-white border border-[#FFF8EE]/20 shadow-xs">
+            <Star size={11} className="text-yellow-300 fill-yellow-300" />
+            <span className="text-[11px] font-extrabold">3</span>
+          </div>
         </div>
       </div>
 
@@ -221,42 +194,39 @@ const SearchBar = ({ selectedAddress }) => {
               }
             }}
             onBlur={() => setSearchFocused(false)}
-            placeholder={isAnalyzingImage ? "Analyzing image..." : (isListening ? "Listening..." : (isFreshGroceryActive ? t('nav.searchInGrocery') : t('nav.searchPlaceholder')))}
+            placeholder={isAnalyzingImage ? "Analyzing image..." : (isListening ? "Listening..." : (isFreshGroceryActive ? t('nav.searchInGrocery') : "Search for products, categories..."))}
             disabled={isAnalyzingImage}
+            className="rounded-full shadow-xs"
             rightElement={
-              <>
+              <div className="flex items-center gap-2.5 md:gap-4 pr-1 text-[#3F2A20]/60">
                 {!isFreshGroceryActive && (
                   <Camera 
-                    size={18} 
+                    size={16} 
                     strokeWidth={2.2} 
                     onClick={handleCameraClick}
-                    className="w-[15px] h-[15px] md:w-[18px] md:h-[18px] text-gray-400 cursor-pointer hover:text-gray-600 transition-colors" 
+                    className="cursor-pointer hover:text-[#3F2A20] transition-colors" 
                   />
                 )}
                 <Mic 
-                  size={18} 
+                  size={16} 
                   strokeWidth={2.2} 
                   onClick={handleVoiceSearch}
-                  className={`w-[15px] h-[15px] md:w-[18px] md:h-[18px] cursor-pointer hover:text-opacity-80 transition-colors ${
+                  className={`cursor-pointer hover:text-[#3F2A20] transition-colors ${
                     isListening
                       ? 'text-red-500 animate-pulse'
-                      : (isFreshGroceryActive ? 'text-[#7A3E17]' : 'text-gray-400 hover:text-gray-600')
+                      : ''
                   }`} 
                 />
-              </>
+                <ScanLine
+                  size={16}
+                  strokeWidth={2.2}
+                  onClick={startScanner}
+                  className="cursor-pointer hover:text-[#3F2A20] transition-colors"
+                />
+              </div>
             }
           />
         </form>
-
-        <motion.button
-          whileTap={{ scale: 0.92 }}
-          onClick={startScanner}
-          className={`p-2 md:p-3 rounded-xl flex-shrink-0 shadow-xs border transition-colors duration-200 ${
-            isFreshGroceryActive ? 'bg-[#FFF9DB] border-[#7A3E17] text-[#7A3E17]' : 'bg-white border-transparent text-primary-dark'
-          }`}
-        >
-          <ScanLine size={18} strokeWidth={2.2} className="w-[15px] h-[15px] md:w-[18px] md:h-[18px] text-current" />
-        </motion.button>
       </div>
 
       {/* ── Premium Barcode Scanner Modal Overlay ── */}

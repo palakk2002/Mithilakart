@@ -47,7 +47,7 @@ const ProductCard = React.memo(({ product, onProductClick, onAddToCart }) => {
               {Math.round(((parseInt((product.oldPrice || '1999').toString().replace(/,/g, '')) - parseInt(product.price?.toString().replace(/,/g, ''))) / parseInt((product.oldPrice || '1999').toString().replace(/,/g, ''))) * 100)}% OFF
             </span>
           </div>
-          <p className="text-[10px] font-bold text-[#084224] tracking-tight">
+          <p className="text-[10px] font-bold text-[#6FAE4A] tracking-tight">
             ₹{Math.round(product.price * 0.9)} with UPI offer + more
           </p>
         </div>

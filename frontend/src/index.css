@@ -17,10 +17,15 @@
   --color-black: #000000;
   --color-black-soft: #121212;
   --color-bg-luxury: #F4F4F4;
-  --color-primary-green: #b2eb99;
-  --color-primary-dark: #084224;
-  --color-primary-light: #e6f7e2;
-  --color-accent-orange: #ff5630;
+  --color-primary-green: #6FAE4A;
+  --color-primary-dark: #3F2A20;
+  --color-primary-light: #93C572;
+  --color-accent-orange: #F26522;
+  --color-bg-cream: #FFF8EE;
+}
+
+.bg-mithila-header-gradient {
+  background: #1c3613;
 }
 
 /* ── Global heading style ── */
@@ -56,14 +61,14 @@
 
 @layer base {
   :root {
-    --card-bg: #ffffff;
-    --card-text: #111827;
+    --card-bg: #FFF8EE;
+    --card-text: #3F2A20;
     --card-sub: #6b7280;
-    --card-border: #f3f4f6;
+    --card-border: #EADCC9;
   }
 
   body {
-    @apply bg-gray-50 text-blue-950 transition-colors duration-300;
+    @apply bg-bg-cream text-primary-dark transition-colors duration-300;
     font-family: 'Nunito', Arial, sans-serif;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
@@ -183,4 +188,4 @@
 
 .animate-glow-pulse {
   animation: soft-pulse-glow 5s infinite ease-in-out;
-}
+}

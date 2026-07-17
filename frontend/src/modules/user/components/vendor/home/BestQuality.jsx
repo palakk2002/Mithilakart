@@ -29,7 +29,7 @@ const BestQuality = ({ items }) => {
     <>
       {/* Mobile view (Untouched layout, only hidden on desktop) */}
       <div className="px-2 mt-2 mb-1.5 md:hidden">
-        <div className="bg-gradient-to-br from-[#0a3a21] to-[#041a0f] rounded-[16px] p-3 shadow-[0_12px_32px_rgba(8,66,36,0.12)] border border-emerald-900/30">
+        <div className="bg-[#6FAE4A] rounded-[16px] p-3 shadow-[0_12px_32px_rgba(8,66,36,0.06)] border border-[#6FAE4A]/25">
           {/* Compact Header */}
           <div className="flex justify-between items-center mb-2 px-0.5">
             <h2 className="text-white text-[12px] font-black uppercase tracking-[0.18em]">
@@ -37,7 +37,7 @@ const BestQuality = ({ items }) => {
             </h2>
             <button
               onClick={() => navigate('/vendor/all-offers')}
-              className="bg-white/95 backdrop-blur-md text-[#084224] p-1 rounded-full shadow-sm active:scale-90 transition-transform flex items-center justify-center"
+              className="bg-white/95 backdrop-blur-md text-[#6FAE4A] p-1 rounded-full shadow-sm active:scale-90 transition-transform flex items-center justify-center"
             >
               <ChevronRight size={13} strokeWidth={3} />
             </button>
@@ -76,13 +76,13 @@ const BestQuality = ({ items }) => {
       {/* Desktop view (Green/Emerald theme mimicking the "Trending Gadgets & Appliances" structure) */}
       <div className="hidden md:block md:max-w-[1600px] md:mx-auto md:px-2 md:mt-6">
         {/* Banner Header with background color and rounded-t corners */}
-        <div className="bg-[#084224] text-white px-6 py-4 rounded-t-3xl flex items-center justify-between shadow-sm">
+        <div className="bg-[#6FAE4A] text-white px-6 py-4 rounded-t-3xl flex items-center justify-between shadow-sm">
           <h2 className="text-[17px] font-black uppercase tracking-wider">
             {t('home.bestQuality') || 'Best Quality'}
           </h2>
           <button
             onClick={() => navigate('/vendor/all-offers')}
-            className="bg-white/95 backdrop-blur-md text-[#084224] p-1.5 rounded-full shadow-sm active:scale-90 transition-transform flex items-center justify-center"
+            className="bg-white/95 backdrop-blur-md text-[#6FAE4A] p-1.5 rounded-full shadow-sm active:scale-90 transition-transform flex items-center justify-center"
           >
             <ChevronRight size={16} strokeWidth={3} />
           </button>
@@ -109,8 +109,8 @@ const BestQuality = ({ items }) => {
 
                 {/* Content placed below the image box */}
                 <div className="px-1">
-                  <h3 className="text-[13px] font-black text-slate-800 leading-snug group-hover:text-[#084224] transition-colors">{product.name}</h3>
-                  <p className="text-[12px] font-black text-[#084224] mt-1 uppercase tracking-wider">{product.tag}</p>
+                  <h3 className="text-[13px] font-black text-slate-800 leading-snug group-hover:text-[#6FAE4A] transition-colors">{product.name}</h3>
+                  <p className="text-[12px] font-black text-[#6FAE4A] mt-1 uppercase tracking-wider">{product.tag}</p>
                 </div>
               </div>
             ))}

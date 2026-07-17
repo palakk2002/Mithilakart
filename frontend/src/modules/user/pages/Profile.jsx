@@ -43,10 +43,29 @@ const VendorProfile = () => {
     { label: t('profile.helpCenter'), icon: <HelpCircle size={18} />, path: '/profile/help-center' }
   ];
 
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+
   return (
-    <div className="bg-[#fbfcff] min-h-screen pb-6 font-sans text-slate-800">
+    <div className={`min-h-screen pb-6 font-sans text-slate-800 relative transition-colors duration-300 ${
+      isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : 'bg-bg-cream'
+    }`}>
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+      )}
+
       {/* Header Sticky */}
-      <div className="sticky top-0 z-45 bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-4 flex items-center gap-3">
+      <div className={`sticky top-0 z-45 border-b px-4 py-4 flex items-center gap-3 relative z-10 ${
+        isFreshGroceryFlow ? 'bg-[#FFF0A0] border-transparent' : 'bg-[#FCF7EE]/90 border-[#F3E3CD]/60 backdrop-blur-md'
+      }`}>
         <motion.button
           onClick={() => navigate(-1)}
           whileTap={{ scale: 0.88 }}
@@ -59,8 +78,8 @@ const VendorProfile = () => {
       </div>
 
       {/* User Card */}
-      <div className="px-4 pt-5">
-        <div className="bg-gradient-to-br from-[#084224] to-[#042112] rounded-3xl p-6 text-white shadow-[0_8px_30px_rgba(8,66,36,0.15)] relative overflow-hidden border border-emerald-800/30">
+      <div className="px-4 pt-5 relative z-10">
+        <div className="bg-gradient-to-br from-[#6FAE4A] to-[#042112] rounded-3xl p-6 text-white shadow-[0_8px_30px_rgba(8,66,36,0.15)] relative overflow-hidden border border-emerald-800/30">
           <div className="absolute right-[-20px] bottom-[-20px] w-36 h-36 rounded-full bg-white/5 blur-2xl pointer-events-none" />
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
@@ -109,10 +128,10 @@ const VendorProfile = () => {
                 className="px-5 py-4.5 flex items-center justify-between hover:bg-slate-50/50 cursor-pointer active:bg-slate-50 transition-colors group"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#084224] flex items-center justify-center transition-colors group-hover:bg-[#084224] group-hover:text-white">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#6FAE4A] flex items-center justify-center transition-colors group-hover:bg-[#6FAE4A] group-hover:text-white">
                     {opt.icon}
                   </div>
-                  <span className="text-[13.5px] font-black text-slate-800 transition-colors group-hover:text-[#084224]">
+                  <span className="text-[13.5px] font-black text-slate-800 transition-colors group-hover:text-[#6FAE4A]">
                     {opt.label}
                   </span>
                 </div>
@@ -127,13 +146,13 @@ const VendorProfile = () => {
       <div className="px-6 pt-5 pb-6 flex flex-col gap-4 select-none bg-white border-t border-slate-100 mt-4">
         {/* Link List */}
         <div className="flex flex-col gap-3.5 text-[14px] font-bold text-gray-500 pl-2">
-          <div onClick={() => navigate('/profile/help-center')} className="cursor-pointer active:text-[#084224] transition-colors">
+          <div onClick={() => navigate('/profile/help-center')} className="cursor-pointer active:text-[#6FAE4A] transition-colors">
             FAQs
           </div>
-          <div onClick={() => navigate('/terms')} className="cursor-pointer active:text-[#084224] transition-colors">
+          <div onClick={() => navigate('/terms')} className="cursor-pointer active:text-[#6FAE4A] transition-colors">
             Terms & Conditions
           </div>
-          <div onClick={() => navigate('/privacy')} className="cursor-pointer active:text-[#084224] transition-colors">
+          <div onClick={() => navigate('/privacy')} className="cursor-pointer active:text-[#6FAE4A] transition-colors">
             Privacy Policy
           </div>
         </div>
@@ -143,7 +162,7 @@ const VendorProfile = () => {
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="text-[#084224] hover:text-[#06331b] font-black text-[15px] flex items-center gap-1.5 active:scale-95 transition-transform"
+              className="text-[#6FAE4A] hover:text-[#06331b] font-black text-[15px] flex items-center gap-1.5 active:scale-95 transition-transform"
             >
               Log Out
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -155,7 +174,7 @@ const VendorProfile = () => {
           ) : (
             <button
               onClick={handleLogin}
-              className="text-[#084224] hover:text-[#06331b] font-black text-[15px] flex items-center gap-1.5 active:scale-95 transition-transform"
+              className="text-[#6FAE4A] hover:text-[#06331b] font-black text-[15px] flex items-center gap-1.5 active:scale-95 transition-transform"
             >
               Login
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

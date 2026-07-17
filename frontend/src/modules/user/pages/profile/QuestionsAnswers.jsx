@@ -31,21 +31,40 @@ const QuestionsAnswers = () => {
     return item.status === activeTab;
   });
 
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
+
   return (
     <motion.div 
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="bg-[var(--card-bg)] min-h-screen text-[var(--card-text)]"
+      className={`${pageBg} min-h-screen text-slate-800 relative transition-colors duration-300`}
     >
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+      )}
+
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-[var(--card-bg)]/90 backdrop-blur-md border-b border-[var(--card-border)] p-4 flex items-center gap-4">
-        <button onClick={() => navigate(-1)} className="hover:text-[var(--color-gold)] transition-colors">
+      <div className={`sticky top-0 z-50 p-4 flex items-center gap-4 shadow-sm relative z-10 transition-colors duration-300 border-b ${headerBg}`}>
+        <button onClick={() => navigate(-1)} className={`hover:opacity-80 transition-colors ${headerTextColor}`}>
           <ArrowLeft size={24} />
         </button>
-        <h1 className="text-lg font-black uppercase tracking-widest">Q & A</h1>
+        <h1 className={`text-lg font-black uppercase tracking-widest ${headerTextColor}`}>Q & A</h1>
       </div>
 
-      <div className="container mx-auto px-4 py-8 w-full space-y-6">
+      <div className="container mx-auto px-4 py-8 w-full space-y-6 relative z-10">
         <div className="flex gap-2 mb-4 overflow-x-auto no-scrollbar">
            {['All', 'Answered', 'Pending'].map(tab => (
              <button 

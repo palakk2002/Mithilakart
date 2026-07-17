@@ -23,10 +23,10 @@ const Checkout = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
-  const primaryBg = isMithilakFlow ? 'bg-[#7c3aed]' : isFreshGroceryFlow ? 'bg-[#7A3E17]' : (isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-[#084224]');
-  const primaryBgHover = isMithilakFlow ? 'bg-[#7c3aed] hover:bg-[#6d28d9]' : isFreshGroceryFlow ? 'bg-[#7A3E17] hover:bg-[#653313]' : (isQuickShopFlow ? 'bg-[#d6186d] hover:bg-[#b5125b]' : 'bg-[#084224] hover:bg-[#06331b]');
-  const primaryText = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#084224]');
-  const primaryBorder = isMithilakFlow ? 'border-[#7c3aed]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#084224]');
+  const primaryBg = isMithilakFlow ? 'bg-[#7c3aed]' : isFreshGroceryFlow ? 'bg-[#7A3E17]' : (isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-[#6FAE4A]');
+  const primaryBgHover = isMithilakFlow ? 'bg-[#7c3aed] hover:bg-[#6d28d9]' : isFreshGroceryFlow ? 'bg-[#7A3E17] hover:bg-[#653313]' : (isQuickShopFlow ? 'bg-[#d6186d] hover:bg-[#b5125b]' : 'bg-[#6FAE4A] hover:bg-[#06331b]');
+  const primaryText = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#6FAE4A]');
+  const primaryBorder = isMithilakFlow ? 'border-[#7c3aed]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#6FAE4A]');
   const shopNowLink = isMithilakFlow ? '/mithilak' : isFreshGroceryFlow ? '/fresh-grocery' : (isQuickShopFlow ? '/quick-shop' : '/vendor/home');
 
   const defaultProduct = {

@@ -55,13 +55,32 @@ const EditProfile = () => {
     }
   };
 
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
+
   return (
     <motion.div 
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="bg-[#fbfcff] min-h-screen text-slate-800 font-sans"
+      className={`${pageBg} min-h-screen text-slate-800 font-sans relative transition-colors duration-300`}
     >
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+      )}
+
       {/* Hidden File Input */}
       <input 
         type="file" 
@@ -72,25 +91,25 @@ const EditProfile = () => {
       />
 
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 p-4 flex items-center justify-between">
+      <div className={`sticky top-0 z-50 p-4 flex items-center justify-between relative z-10 transition-colors duration-300 ${headerBg}`}>
         <div className="flex items-center gap-3">
-          <button onClick={() => navigate(-1)} className="p-1 rounded-full hover:bg-slate-50 transition-colors text-slate-800" aria-label="Go back">
+          <button onClick={() => navigate(-1)} className={`p-1 rounded-full hover:bg-slate-50 transition-colors ${headerTextColor}`} aria-label="Go back">
             <ArrowLeft size={22} />
           </button>
-          <h1 className="text-[17px] font-black uppercase tracking-widest text-slate-800">Edit Profile</h1>
+          <h1 className={`text-[17px] font-black uppercase tracking-widest ${headerTextColor}`}>Edit Profile</h1>
         </div>
-        <button onClick={handleSave} className="bg-[#084224] text-white font-black text-xs uppercase tracking-widest px-5 py-2 rounded-xl shadow-sm hover:bg-[#06331b] active:scale-95 transition-all">
+        <button onClick={handleSave} className="bg-[#6FAE4A] text-white font-black text-xs uppercase tracking-widest px-5 py-2 rounded-xl shadow-sm hover:bg-[#06331b] active:scale-95 transition-all">
           Save
         </button>
       </div>
 
-      <div className="container mx-auto px-4 py-8 w-full space-y-8">
+      <div className="container mx-auto px-4 py-8 w-full space-y-8 relative z-10">
         {/* Profile Picture */}
         <div className="flex flex-col items-center">
           <div className="relative group">
             <div 
               onClick={() => fileInputRef.current.click()}
-              className="w-32 h-32 bg-emerald-50 rounded-full flex items-center justify-center text-[#084224] font-black text-5xl shadow-md border-4 border-white overflow-hidden cursor-pointer active:scale-95 transition-transform"
+              className="w-32 h-32 bg-emerald-50 rounded-full flex items-center justify-center text-[#6FAE4A] font-black text-5xl shadow-md border-4 border-white overflow-hidden cursor-pointer active:scale-95 transition-transform"
             >
               {formData.avatar ? (
                 <img src={formData.avatar} alt="Profile" className="w-full h-full object-cover" />
@@ -100,14 +119,14 @@ const EditProfile = () => {
             </div>
             <button 
               onClick={() => fileInputRef.current.click()}
-              className="absolute bottom-0 right-0 bg-[#084224] border-2 border-white p-2.5 rounded-full text-white shadow-md hover:bg-[#06331b] transition-all active:scale-90"
+              className="absolute bottom-0 right-0 bg-[#6FAE4A] border-2 border-white p-2.5 rounded-full text-white shadow-md hover:bg-[#06331b] transition-all active:scale-90"
             >
               <Camera size={18} />
             </button>
           </div>
           <button 
             onClick={() => fileInputRef.current.click()}
-            className="mt-4 text-[10px] font-black text-[#084224] uppercase tracking-[3px] hover:opacity-70 transition-opacity"
+            className="mt-4 text-[10px] font-black text-[#6FAE4A] uppercase tracking-[3px] hover:opacity-70 transition-opacity"
           >
             Change Photo
           </button>
@@ -117,14 +136,14 @@ const EditProfile = () => {
         <div className="space-y-6">
           {/* Full Name */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-[#084224] uppercase tracking-[3px] ml-1">Full Name</label>
+            <label className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[3px] ml-1">Full Name</label>
             <div className={`relative ${errors.name ? 'animate-shake' : ''}`}>
               <User size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 ${errors.name ? 'text-red-500' : 'text-slate-400'}`} />
               <input 
                 type="text" 
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className={`w-full bg-white border ${errors.name ? 'border-red-500' : 'border-slate-200'} rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#084224]/50 transition-all shadow-sm`}
+                className={`w-full bg-white border ${errors.name ? 'border-red-500' : 'border-slate-200'} rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#6FAE4A]/50 transition-all shadow-sm`}
               />
             </div>
             {errors.name && <p className="text-[10px] text-red-500 font-black uppercase tracking-wider ml-1">{errors.name}</p>}
@@ -132,14 +151,14 @@ const EditProfile = () => {
 
           {/* Email */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-[#084224] uppercase tracking-[3px] ml-1">Email Address</label>
+            <label className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[3px] ml-1">Email Address</label>
             <div className={`relative ${errors.email ? 'animate-shake' : ''}`}>
               <Mail size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 ${errors.email ? 'text-red-500' : 'text-slate-400'}`} />
               <input 
                 type="email" 
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className={`w-full bg-white border ${errors.email ? 'border-red-500' : 'border-slate-200'} rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#084224]/50 transition-all shadow-sm`}
+                className={`w-full bg-white border ${errors.email ? 'border-red-500' : 'border-slate-200'} rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#6FAE4A]/50 transition-all shadow-sm`}
               />
             </div>
             {errors.email && <p className="text-[10px] text-red-500 font-black uppercase tracking-wider ml-1">{errors.email}</p>}
@@ -147,14 +166,14 @@ const EditProfile = () => {
 
           {/* Phone */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-[#084224] uppercase tracking-[3px] ml-1">Phone Number</label>
+            <label className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[3px] ml-1">Phone Number</label>
             <div className={`relative ${errors.phone ? 'animate-shake' : ''}`}>
               <Phone size={18} className={`absolute left-4 top-1/2 -translate-y-1/2 ${errors.phone ? 'text-red-500' : 'text-slate-400'}`} />
               <input 
                 type="tel" 
                 value={formData.phone}
                 onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                className={`w-full bg-white border ${errors.phone ? 'border-red-500' : 'border-slate-200'} rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#084224]/50 transition-all shadow-sm`}
+                className={`w-full bg-white border ${errors.phone ? 'border-red-500' : 'border-slate-200'} rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#6FAE4A]/50 transition-all shadow-sm`}
               />
             </div>
             {errors.phone && <p className="text-[10px] text-red-500 font-black uppercase tracking-wider ml-1">{errors.phone}</p>}
@@ -163,13 +182,13 @@ const EditProfile = () => {
           {/* Gender & DOB Row */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-[#084224] uppercase tracking-[3px] ml-1">Gender</label>
+              <label className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[3px] ml-1">Gender</label>
               <div className="relative">
                 <Users size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                 <select 
                   value={formData.gender}
                   onChange={(e) => setFormData({...formData, gender: e.target.value})}
-                  className="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#084224]/50 transition-all appearance-none shadow-sm"
+                  className="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#6FAE4A]/50 transition-all appearance-none shadow-sm"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -179,14 +198,14 @@ const EditProfile = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-[#084224] uppercase tracking-[3px] ml-1">Date of Birth</label>
+              <label className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[3px] ml-1">Date of Birth</label>
               <div className="relative">
                 <Calendar size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input 
                   type="date" 
                   value={formData.dob}
                   onChange={(e) => setFormData({...formData, dob: e.target.value})}
-                  className="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#084224]/50 transition-all shadow-sm"
+                  className="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#6FAE4A]/50 transition-all shadow-sm"
                 />
               </div>
             </div>
@@ -196,7 +215,7 @@ const EditProfile = () => {
         <div className="pt-8 pb-12">
           <button 
             onClick={handleSave}
-            className="w-full bg-[#084224] text-white py-4 rounded-2xl font-black uppercase tracking-[3px] shadow-lg shadow-emerald-100 hover:scale-[1.02] transition-all active:scale-95 group relative overflow-hidden"
+            className="w-full bg-[#6FAE4A] text-white py-4 rounded-2xl font-black uppercase tracking-[3px] shadow-lg shadow-emerald-100 hover:scale-[1.02] transition-all active:scale-95 group relative overflow-hidden"
           >
             <span className="relative z-10">Save Changes</span>
             <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>

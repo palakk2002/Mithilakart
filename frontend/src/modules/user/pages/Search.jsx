@@ -65,9 +65,9 @@ const Search = () => {
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
   const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-[#eaf5ee]');
-  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-gradient-to-r from-[#F5B014] to-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#084224]');
-  const textPrimary = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#084224]');
-  const borderPrimary = isMithilakFlow ? 'border-[#7c3aed]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#084224]');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-gradient-to-r from-[#F5B014] to-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#6FAE4A]');
+  const textPrimary = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#6FAE4A]');
+  const borderPrimary = isMithilakFlow ? 'border-[#7c3aed]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#6FAE4A]');
 
   const allProducts = [
     { id: 1, name: 'Apple iPhone 15 (Blue, 128 GB)', price: '69,999', oldPrice: '79,900', rating: '4.6', reviews: '2,450', image: SamsungImg, brand: 'APPLE' },
@@ -132,13 +132,13 @@ const Search = () => {
               <div className="flex bg-white p-1 rounded-lg border border-slate-150 shadow-sm">
                  <button 
                    onClick={() => setViewMode('grid')}
-                   className={`p-1 rounded-md transition-all ${viewMode === 'grid' ? 'bg-[#084224] text-white' : 'text-slate-400'}`}
+                   className={`p-1 rounded-md transition-all ${viewMode === 'grid' ? 'bg-[#6FAE4A] text-white' : 'text-slate-400'}`}
                  >
                     <LayoutGrid size={14} />
                  </button>
                  <button 
                    onClick={() => setViewMode('list')}
-                   className={`p-1 rounded-md transition-all ${viewMode === 'list' ? 'bg-[#084224] text-white' : 'text-slate-400'}`}
+                   className={`p-1 rounded-md transition-all ${viewMode === 'list' ? 'bg-[#6FAE4A] text-white' : 'text-slate-400'}`}
                  >
                     <List size={14} />
                  </button>

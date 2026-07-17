@@ -281,7 +281,7 @@ const CategoryProducts = () => {
   return (
     <div className="bg-gray-50 min-h-screen text-slate-900 transition-colors duration-300 pb-10 font-sans">
       {/* ── Dynamic Category Header ── */}
-      <div className="sticky top-0 z-[100] bg-[#084224] text-white">
+      <div className="sticky top-0 z-[100] bg-[#6FAE4A] text-white">
         {/* Row 1: Back + Title + Actions */}
         <div className="px-4 pt-3 pb-2 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -298,14 +298,14 @@ const CategoryProducts = () => {
             <Link to="/vendor/cart" className="relative p-2 active:scale-90 transition-transform">
               <ShoppingCart size={20} strokeWidth={2} />
               {cartCount > 0 && (
-                <span className="absolute top-1 right-1 bg-red-500 text-white text-[8px] font-black min-w-[14px] h-3.5 rounded-full flex items-center justify-center border border-[#084224] shadow-sm">{cartCount}</span>
+                <span className="absolute top-1 right-1 bg-red-500 text-white text-[8px] font-black min-w-[14px] h-3.5 rounded-full flex items-center justify-center border border-[#6FAE4A] shadow-sm">{cartCount}</span>
               )}
             </Link>
           </div>
         </div>
 
         {/* Row 2: Sort & Filter Bar (Compact) */}
-        <div className="flex items-center border-t border-white/10 bg-[#084224]">
+        <div className="flex items-center border-t border-white/10 bg-[#6FAE4A]">
           <button 
             onClick={() => setShowSortModal(true)}
             className="flex-1 flex items-center justify-center gap-2 py-3 text-[12px] font-bold uppercase tracking-wide active:bg-white/10"
@@ -329,7 +329,7 @@ const CategoryProducts = () => {
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1.5">Curated collection for you</p>
         </div>
         <div className="flex -space-x-2">
-           <div className="w-8 h-8 rounded-full border-2 border-white bg-primary-light flex items-center justify-center text-[10px] font-bold text-[#084224]">NEW</div>
+           <div className="w-8 h-8 rounded-full border-2 border-white bg-primary-light flex items-center justify-center text-[10px] font-bold text-[#6FAE4A]">NEW</div>
            <div className="w-8 h-8 rounded-full border-2 border-white bg-green-50 flex items-center justify-center text-[10px] font-bold text-[#388e3c]">SALE</div>
         </div>
       </div>
@@ -338,7 +338,7 @@ const CategoryProducts = () => {
       <div className="p-4 grid grid-cols-2 gap-4">
         {sortedProducts.slice(0, 4).map((product) => (
           <Link to="/vendor/product-detail" state={{ product }} key={product.id} className="flex flex-col group active:scale-[0.98] transition-transform">
-              <div className="relative aspect-[3/4] bg-[var(--card-border)] rounded-xl border border-transparent overflow-hidden mb-2 group-hover:border-[#084224]/30 transition-all shadow-sm">
+              <div className="relative aspect-[3/4] bg-[var(--card-border)] rounded-xl border border-transparent overflow-hidden mb-2 group-hover:border-[#6FAE4A]/30 transition-all shadow-sm">
                 <img 
                   src={product.image} 
                   alt={product.name} 
@@ -412,7 +412,7 @@ const CategoryProducts = () => {
       <div className="p-4 grid grid-cols-2 gap-4">
         {sortedProducts.slice(4).map((product) => (
           <Link to="/vendor/product-detail" state={{ product }} key={product.id} className="flex flex-col group active:scale-[0.98] transition-transform">
-              <div className="relative aspect-[3/4] bg-[var(--card-border)] rounded-xl border border-transparent overflow-hidden mb-2 group-hover:border-[#084224]/30 transition-all shadow-sm">
+              <div className="relative aspect-[3/4] bg-[var(--card-border)] rounded-xl border border-transparent overflow-hidden mb-2 group-hover:border-[#6FAE4A]/30 transition-all shadow-sm">
                 <img 
                   src={product.image} 
                   alt={product.name} 
@@ -461,9 +461,9 @@ const CategoryProducts = () => {
       {showSortModal && (
         <div className="fixed inset-0 z-[200] flex items-end">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowSortModal(false)}></div>
-          <div className="relative w-full bg-[#111111] rounded-t-2xl border-t border-[#084224]/20 p-6 animate-in slide-in-from-bottom duration-300">
+          <div className="relative w-full bg-[#111111] rounded-t-2xl border-t border-[#6FAE4A]/20 p-6 animate-in slide-in-from-bottom duration-300">
             <div className="w-12 h-1 bg-gray-800 rounded-full mx-auto mb-6"></div>
-            <h2 className="text-sm font-black text-[#084224] uppercase tracking-widest mb-6">Sort By</h2>
+            <h2 className="text-sm font-black text-[#6FAE4A] uppercase tracking-widest mb-6">Sort By</h2>
             <div className="space-y-4">
               {['Popularity', 'Price: Low to High', 'Price: High to Low', 'Customer Rating'].map((option) => (
                 <button 
@@ -475,7 +475,7 @@ const CategoryProducts = () => {
                   className={`w-full flex items-center justify-between text-sm font-bold py-2 ${activeSort === option ? 'text-white' : 'text-gray-500'}`}
                 >
                   {option}
-                  {activeSort === option && <div className="w-2 h-2 bg-[#084224] rounded-full shadow-[0_0_8px_#084224]"></div>}
+                  {activeSort === option && <div className="w-2 h-2 bg-[#6FAE4A] rounded-full shadow-[0_0_8px_#6FAE4A]"></div>}
                 </button>
               ))}
             </div>
@@ -488,7 +488,7 @@ const CategoryProducts = () => {
         <div className="fixed inset-0 z-[200] bg-black animate-in fade-in duration-200">
           <div className="h-full flex flex-col">
             <div className="p-4 border-b border-gray-900 flex justify-between items-center">
-              <h2 className="text-sm font-black text-[#084224] uppercase tracking-widest">Filters</h2>
+              <h2 className="text-sm font-black text-[#6FAE4A] uppercase tracking-widest">Filters</h2>
               <button onClick={() => setShowFilterModal(false)} className="text-white">✕</button>
             </div>
             <div className="flex-1 p-6 space-y-8">
@@ -502,7 +502,7 @@ const CategoryProducts = () => {
               <div>
                 <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-4">Availability</h3>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-5 bg-[#084224] rounded-full relative">
+                  <div className="w-10 h-5 bg-[#6FAE4A] rounded-full relative">
                     <div className="absolute right-0.5 top-0.5 w-4 h-4 bg-black rounded-full"></div>
                   </div>
                   <span className="text-sm font-bold text-white">Quick Delivery Only</span>
@@ -511,7 +511,7 @@ const CategoryProducts = () => {
             </div>
             <div className="p-4 border-t border-gray-900 flex gap-4">
               <button onClick={() => setShowFilterModal(false)} className="flex-1 py-4 text-[11px] font-black text-gray-400 uppercase tracking-widest">Clear All</button>
-              <button onClick={() => setShowFilterModal(false)} className="flex-[2] py-4 bg-[#084224] text-black text-[11px] font-black uppercase tracking-widest rounded-lg">Apply Filters</button>
+              <button onClick={() => setShowFilterModal(false)} className="flex-[2] py-4 bg-[#6FAE4A] text-black text-[11px] font-black uppercase tracking-widest rounded-lg">Apply Filters</button>
             </div>
           </div>
         </div>

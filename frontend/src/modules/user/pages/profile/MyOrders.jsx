@@ -234,22 +234,42 @@ const MyOrders = () => {
     );
   };
 
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
+  const filterBg = isMithilakFlow ? 'bg-[#faf5ff]/80' : isFreshGroceryFlow ? 'bg-[#FFFDF3]/80' : (isQuickShopFlow ? 'bg-[#fff5f7]/80' : 'bg-bg-cream/80');
+
   return (
-    <div className="bg-[#f1f2f4] min-h-screen font-nunito pb-20">
+    <div className={`min-h-screen font-nunito pb-20 relative transition-colors duration-300 ${pageBg}`}>
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+      )}
+
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-white px-4 py-4 flex items-center gap-4 shadow-sm">
-        <button onClick={() => navigate(-1)} className="p-1 -ml-1 text-slate-800 active:scale-90 transition-transform">
+      <div className={`sticky top-0 z-50 px-4 py-4 flex items-center gap-4 shadow-sm relative z-10 transition-colors duration-300 ${headerBg}`}>
+        <button onClick={() => navigate(-1)} className={`p-1 -ml-1 active:scale-90 transition-transform ${headerTextColor}`}>
           <ArrowLeft size={24} />
         </button>
-        <h1 className="text-[18px] font-bold text-slate-900 font-montserrat">My Orders</h1>
+        <h1 className={`text-[18px] font-bold font-montserrat ${headerTextColor}`}>My Orders</h1>
       </div>
 
-      <div className="w-full mx-auto">
+      <div className="w-full mx-auto relative z-10">
         {/* Working Banner Carousel - Optimized for Performance */}
         <BannerCarousel />
 
         {/* Search & Filters */}
-        <div className="px-4 pb-4 sticky top-[68px] z-40 bg-[#f1f2f4]/80 backdrop-blur-md">
+        <div className={`px-4 pb-4 sticky top-[68px] z-40 backdrop-blur-md transition-colors ${filterBg}`}>
            <div className="flex gap-3">
               <SearchInput
                 type="text" 
@@ -297,7 +317,7 @@ const MyOrders = () => {
                   </p>
                   <button 
                     onClick={() => navigate('/vendor/home')}
-                    className="mt-10 bg-[#084224] text-white px-12 py-4 rounded-2xl font-black uppercase tracking-widest text-[12px] shadow-xl shadow-blue-100 active:scale-95 transition-transform"
+                    className="mt-10 bg-[#6FAE4A] text-white px-12 py-4 rounded-2xl font-black uppercase tracking-widest text-[12px] shadow-xl shadow-blue-100 active:scale-95 transition-transform"
                   >
                     Start Shopping
                   </button>
@@ -410,7 +430,7 @@ const MyOrders = () => {
                               onClick={() => setActiveFilters(prev => ({ ...prev, status: opt }))}
                               className={`px-5 py-2.5 rounded-xl text-[13px] font-bold transition-all ${
                                 activeFilters.status === opt 
-                                ? 'bg-[#084224] text-white shadow-lg shadow-blue-100 scale-105' 
+                                ? 'bg-[#6FAE4A] text-white shadow-lg shadow-blue-100 scale-105' 
                                 : 'bg-gray-50 text-slate-600 border border-gray-100'
                               }`}
                             >
@@ -431,7 +451,7 @@ const MyOrders = () => {
                               onClick={() => setActiveFilters(prev => ({ ...prev, time: opt }))}
                               className={`px-5 py-2.5 rounded-xl text-[13px] font-bold transition-all ${
                                 activeFilters.time === opt 
-                                ? 'bg-[#084224] text-white shadow-lg shadow-blue-100 scale-105' 
+                                ? 'bg-[#6FAE4A] text-white shadow-lg shadow-blue-100 scale-105' 
                                 : 'bg-gray-50 text-slate-600 border border-gray-100'
                               }`}
                             >

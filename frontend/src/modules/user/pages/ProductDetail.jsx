@@ -29,10 +29,10 @@ const ProductDetail = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
-  const primaryText = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#084224]');
-  const primaryBg = isMithilakFlow ? 'bg-[#7c3aed]' : isFreshGroceryFlow ? 'bg-[#7A3E17]' : (isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-[#084224]');
+  const primaryText = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#6FAE4A]');
+  const primaryBg = isMithilakFlow ? 'bg-[#7c3aed]' : isFreshGroceryFlow ? 'bg-[#7A3E17]' : (isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-[#6FAE4A]');
   const primaryBgHover = isMithilakFlow ? 'hover:bg-[#6d28d9]' : isFreshGroceryFlow ? 'hover:bg-[#653313]' : (isQuickShopFlow ? 'hover:bg-[#b5125b]' : 'hover:bg-[#06331b]');
-  const primaryBorder = isMithilakFlow ? 'border-[#7c3aed]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#084224]');
+  const primaryBorder = isMithilakFlow ? 'border-[#7c3aed]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#6FAE4A]');
   const primaryLightBg = isMithilakFlow ? 'bg-purple-50' : isFreshGroceryFlow ? 'bg-[#FFF0A0]/45' : (isQuickShopFlow ? 'bg-pink-50' : 'bg-primary-light');
   const shadowColor = isMithilakFlow ? 'shadow-[0_4px_16px_rgba(124,58,237,0.22)]' : isFreshGroceryFlow ? 'shadow-[0_4px_16px_rgba(122,62,23,0.15)]' : (isQuickShopFlow ? 'shadow-[0_4px_16px_rgba(214,24,109,0.22)]' : 'shadow-[0_4px_16px_rgba(8,66,36,0.22)]');
   const shadowColorLight = isMithilakFlow ? 'shadow-[0_10px_30px_rgba(124,58,237,0.08)]' : isFreshGroceryFlow ? 'shadow-[0_10px_30px_rgba(122,62,23,0.06)]' : (isQuickShopFlow ? 'shadow-[0_10px_30px_rgba(214,24,109,0.08)]' : 'shadow-[0_10px_30px_rgba(8,66,36,0.08)]');
@@ -187,12 +187,23 @@ const ProductDetail = () => {
   }, [product, navigate]);
 
   return (
-    <div className={`min-h-screen pb-28 font-sans text-slate-800 transition-colors duration-300 ${
-      isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : 'bg-[#fbfcff]'
+    <div className={`min-h-screen pb-28 font-sans text-slate-800 transition-colors duration-300 relative ${
+      isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : 'bg-bg-cream'
     }`}>
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+      )}
+
       {/* Premium Boutique Header */}
-      <div className={`sticky top-0 z-50 px-4 py-3 flex items-center justify-between border-b border-gray-100 shadow-[0_1px_8px_rgba(0,0,0,0.01)] transition-colors duration-300 ${
-        isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-white/80 backdrop-blur-md'
+      <div className={`sticky top-0 z-50 px-4 py-3 flex items-center justify-between border-b border-gray-100 shadow-[0_1px_8px_rgba(0,0,0,0.01)] transition-colors duration-300 relative z-10 ${
+        isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-[#FCF7EE]/90 border-[#F3E3CD]/60 backdrop-blur-md'
       }`}>
         <button onClick={() => navigate(-1)} className={`p-1.5 rounded-full transition-colors active:scale-90 ${
           isFreshGroceryFlow ? 'text-black hover:bg-black/5' : 'text-slate-800 hover:bg-gray-50'
@@ -395,7 +406,7 @@ const ProductDetail = () => {
         </span>
         <div className="bg-white border border-slate-100 rounded-2xl p-3.5 space-y-3.5 shadow-[0_4px_16px_rgba(0,0,0,0.01)]">
           <div className="flex items-center gap-3">
-            <MapPin size={18} className="text-[#084224]" />
+            <MapPin size={18} className="text-[#6FAE4A]" />
             <div className="flex-1 min-w-0">
               <p className="text-[11px] font-black text-slate-800 uppercase tracking-wider leading-none">Deliver to Home</p>
               <p className="text-[12px] text-slate-500 font-medium truncate mt-1">83 Kishan Pura Mataji Mandir, Sector N...</p>
@@ -404,7 +415,7 @@ const ProductDetail = () => {
           </div>
           <div className="h-[1px] bg-slate-100" />
           <div className="flex items-center gap-3">
-            <Truck size={18} className="text-[#084224]" />
+            <Truck size={18} className="text-[#6FAE4A]" />
             <div>
               <p className="text-[12px] font-black text-slate-850">Delivery by Sat, 16 May</p>
               <p className="text-[10px] text-orange-600 font-bold mt-0.5">Order in 00h 00m 14s</p>
@@ -510,7 +521,7 @@ const ProductDetail = () => {
       <div className="mt-4 py-4 bg-white border-y border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.01)] md:max-w-6xl md:mx-auto md:w-full md:rounded-2xl md:border md:my-6 md:p-6">
         <div className="flex justify-between items-center px-4 mb-3 md:px-0">
           <h3 className="text-[13px] font-black uppercase tracking-wider text-slate-900">Similar Products</h3>
-          <span className="text-[10px] font-black text-[#084224] tracking-widest uppercase">View All</span>
+          <span className="text-[10px] font-black text-[#6FAE4A] tracking-widest uppercase">View All</span>
         </div>
         <div className="flex gap-4 px-4 overflow-x-auto no-scrollbar pb-2 md:justify-center md:gap-6 md:px-0 md:overflow-x-visible">
           {[
@@ -549,7 +560,7 @@ const ProductDetail = () => {
       <div className="mt-4 py-4 bg-white border-y border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.01)] md:max-w-6xl md:mx-auto md:w-full md:rounded-2xl md:border md:my-6 md:p-6">
         <div className="flex justify-between items-center px-4 mb-3 md:px-0">
           <h3 className="text-[13px] font-black uppercase tracking-wider text-slate-900">Bought Together</h3>
-          <span className="text-[10px] font-black text-[#084224] tracking-widest uppercase">Explore</span>
+          <span className="text-[10px] font-black text-[#6FAE4A] tracking-widest uppercase">Explore</span>
         </div>
         <div className="flex gap-4 px-4 overflow-x-auto no-scrollbar pb-2 md:justify-center md:gap-6 md:px-0 md:overflow-x-visible">
           {[
@@ -762,15 +773,15 @@ const ProductDetail = () => {
             <div className="sticky top-[53px] bg-white flex border-b border-gray-100 z-10">
               <button 
                 onClick={() => setActivePaymentTab('COD')}
-                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'COD' ? 'text-[#084224]' : 'text-gray-400'}`}
+                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'COD' ? 'text-[#6FAE4A]' : 'text-gray-400'}`}
               >
-                <IndianRupee size={22} className={activePaymentTab === 'COD' ? 'text-[#084224]' : 'text-gray-400'} />
+                <IndianRupee size={22} className={activePaymentTab === 'COD' ? 'text-[#6FAE4A]' : 'text-gray-400'} />
                 <span className="text-[13px] font-bold">COD</span>
-                {activePaymentTab === 'COD' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#084224]" />}
+                {activePaymentTab === 'COD' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#6FAE4A]" />}
               </button>
               <button 
                 onClick={() => setActivePaymentTab('UPI')}
-                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'UPI' ? 'text-[#084224]' : 'text-gray-400'}`}
+                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'UPI' ? 'text-[#6FAE4A]' : 'text-gray-400'}`}
               >
                 <div className="w-5 h-7 flex items-center justify-center">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -778,7 +789,7 @@ const ProductDetail = () => {
                   </svg>
                 </div>
                 <span className="text-[13px] font-bold">UPI</span>
-                {activePaymentTab === 'UPI' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#084224]" />}
+                {activePaymentTab === 'UPI' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#6FAE4A]" />}
               </button>
             </div>
 

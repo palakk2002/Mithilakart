@@ -42,7 +42,7 @@ const HelpCenter = () => {
       title: 'Call Us',
       subtitle: 'Mon-Sat (9am-6pm)',
       detail: '+91 1800-123-4567',
-      color: 'bg-primary-light text-[#084224]'
+      color: 'bg-primary-light text-[#6FAE4A]'
     },
     {
       icon: <Mail size={24} />,
@@ -60,18 +60,37 @@ const HelpCenter = () => {
     }
   ];
 
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
+
   return (
-    <div className="bg-white min-h-screen">
+    <div className={`min-h-screen relative transition-colors duration-300 ${pageBg}`}>
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+      )}
+
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-[#084224] px-4 py-4 shadow-md">
+      <div className={`sticky top-0 z-50 p-4 shadow-sm relative z-10 transition-colors duration-300 ${headerBg}`}>
         <div className="flex items-center gap-3 mb-4">
           <button 
             onClick={() => navigate(-1)} 
-            className="text-white active:scale-90 transition-transform"
+            className={`active:scale-90 transition-transform ${headerTextColor}`}
           >
             <ArrowLeft size={24} strokeWidth={2.5} />
           </button>
-          <h1 className="text-[18px] font-bold text-white">Help & Support</h1>
+          <h1 className={`text-[18px] font-bold ${headerTextColor}`}>Help & Support</h1>
         </div>
         
         {/* Search Bar */}
@@ -85,7 +104,7 @@ const HelpCenter = () => {
         </div>
       </div>
 
-      <div className="px-4 py-6 space-y-8 pb-24">
+      <div className="px-4 py-6 space-y-8 pb-24 relative z-10">
         {/* Contact Methods */}
         <section>
           <h2 className="text-[16px] font-bold text-slate-900 mb-4">How can we help you?</h2>
@@ -102,7 +121,7 @@ const HelpCenter = () => {
                 <div className="flex-1">
                   <h3 className="text-[14px] font-bold text-slate-900">{method.title}</h3>
                   <p className="text-[12px] text-gray-500 font-medium">{method.subtitle}</p>
-                  <p className="text-[13px] text-[#084224] font-bold mt-1">{method.detail}</p>
+                  <p className="text-[13px] text-[#6FAE4A] font-bold mt-1">{method.detail}</p>
                 </div>
                 <ChevronRight size={20} className="text-gray-300" />
               </motion.div>
@@ -124,7 +143,7 @@ const HelpCenter = () => {
                   className="w-full p-4 flex items-center justify-between text-left active:bg-gray-50 transition-colors"
                 >
                   <div className="flex items-center gap-3 flex-1">
-                    <HelpCircle size={18} className="text-[#084224] flex-shrink-0" />
+                    <HelpCircle size={18} className="text-[#6FAE4A] flex-shrink-0" />
                     <span className="text-[13px] font-bold text-slate-900">{faq.q}</span>
                   </div>
                   <ChevronRight 
@@ -152,7 +171,7 @@ const HelpCenter = () => {
         {/* Contact Us Section */}
         <section className="bg-gradient-to-br from-blue-50 to-white border border-primary-green/30 rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-4">
-            <div className="p-2 bg-[#084224] rounded-full">
+            <div className="p-2 bg-[#6FAE4A] rounded-full">
               <Send size={18} className="text-white" />
             </div>
             <h2 className="text-[16px] font-bold text-slate-900">Contact Us</h2>
@@ -166,11 +185,11 @@ const HelpCenter = () => {
             {/* Phone */}
             <div className="flex items-start gap-3">
               <div className="p-2 bg-white rounded-lg border border-gray-200">
-                <Phone size={16} className="text-[#084224]" />
+                <Phone size={16} className="text-[#6FAE4A]" />
               </div>
               <div>
                 <p className="text-[12px] font-bold text-slate-900">Phone Support</p>
-                <p className="text-[13px] text-[#084224] font-bold">+91 1800-123-4567</p>
+                <p className="text-[13px] text-[#6FAE4A] font-bold">+91 1800-123-4567</p>
                 <p className="text-[11px] text-gray-500">Mon-Sat: 9:00 AM - 6:00 PM</p>
               </div>
             </div>
@@ -178,11 +197,11 @@ const HelpCenter = () => {
             {/* Email */}
             <div className="flex items-start gap-3">
               <div className="p-2 bg-white rounded-lg border border-gray-200">
-                <Mail size={16} className="text-[#084224]" />
+                <Mail size={16} className="text-[#6FAE4A]" />
               </div>
               <div>
                 <p className="text-[12px] font-bold text-slate-900">Email Support</p>
-                <p className="text-[13px] text-[#084224] font-bold">support@mithilakart.com</p>
+                <p className="text-[13px] text-[#6FAE4A] font-bold">support@mithilakart.com</p>
                 <p className="text-[11px] text-gray-500">Response within 24 hours</p>
               </div>
             </div>
@@ -190,7 +209,7 @@ const HelpCenter = () => {
             {/* Address */}
             <div className="flex items-start gap-3">
               <div className="p-2 bg-white rounded-lg border border-gray-200">
-                <MapPin size={16} className="text-[#084224]" />
+                <MapPin size={16} className="text-[#6FAE4A]" />
               </div>
               <div>
                 <p className="text-[12px] font-bold text-slate-900">Office Address</p>
@@ -205,7 +224,7 @@ const HelpCenter = () => {
             {/* Business Hours */}
             <div className="flex items-start gap-3">
               <div className="p-2 bg-white rounded-lg border border-gray-200">
-                <Clock size={16} className="text-[#084224]" />
+                <Clock size={16} className="text-[#6FAE4A]" />
               </div>
               <div>
                 <p className="text-[12px] font-bold text-slate-900">Business Hours</p>
@@ -218,7 +237,7 @@ const HelpCenter = () => {
           {/* CTA Button */}
           <motion.button
             whileTap={{ scale: 0.98 }}
-            className="w-full mt-6 bg-[#084224] text-white py-3 rounded-xl font-bold text-[14px] shadow-md active:shadow-sm transition-all"
+            className="w-full mt-6 bg-[#6FAE4A] text-white py-3 rounded-xl font-bold text-[14px] shadow-md active:shadow-sm transition-all"
           >
             Send us a message
           </motion.button>

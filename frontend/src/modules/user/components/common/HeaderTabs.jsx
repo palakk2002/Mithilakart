@@ -44,7 +44,7 @@ const HeaderTabs = () => {
             : isFreshGroceryActive
               ? 'bg-white/35 text-[#7A3E17]/85 border-white/15 hover:bg-white/45'
               : isHeaderLight
-                ? 'bg-black/5 text-[#084224]/80 border-black/5 hover:bg-black/10'
+                ? 'bg-black/5 text-[#6FAE4A]/80 border-black/5 hover:bg-black/10'
                 : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
         }`}
       >
@@ -69,7 +69,7 @@ const HeaderTabs = () => {
             : isFreshGroceryActive
               ? 'text-[#7A3E17]/85'
               : isHeaderLight 
-                ? 'text-[#084224]/80' 
+                ? 'text-[#6FAE4A]/80' 
                 : 'text-white'
         }`}>
           {t('home.title')}
@@ -86,7 +86,7 @@ const HeaderTabs = () => {
             : isFreshGroceryActive
               ? 'bg-white/35 text-[#7A3E17]/85 border-white/15 hover:bg-white/45'
               : isMithilakartActive
-                ? 'bg-[#084224]/12 text-[#084224]/90 border-[#084224]/15 hover:bg-[#084224]/20'
+                ? 'bg-white/20 text-white border-white/10 hover:bg-white/30'
                 : isHeaderLight
                   ? 'bg-black/5 text-[#d6186d]/85 border-black/5 hover:bg-black/10'
                   : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
@@ -99,7 +99,7 @@ const HeaderTabs = () => {
               : isFreshGroceryActive
                 ? 'bg-[#7A3E17]/15 text-[#7A3E17]'
                 : isMithilakartActive
-                  ? 'bg-[#084224]/15 text-[#084224]'
+                  ? 'bg-white/30 text-white'
                   : isHeaderLight
                     ? 'bg-[#d6186d]/15 text-[#d6186d]'
                     : 'bg-white text-[#d6186d]'
@@ -114,7 +114,7 @@ const HeaderTabs = () => {
               : isFreshGroceryActive
                 ? 'text-[#7A3E17]/85'
                 : isMithilakartActive
-                  ? 'text-[#084224]/85'
+                  ? 'text-white/90'
                   : isHeaderLight 
                     ? 'text-[#d6186d]/85' 
                     : 'text-white'
@@ -134,7 +134,7 @@ const HeaderTabs = () => {
             : isFreshGroceryActive
               ? 'bg-white/35 text-[#7A3E17]/85 border-white/15 hover:bg-white/45'
               : isMithilakartActive
-                ? 'bg-[#084224]/12 text-[#084224]/90 border-[#084224]/15 hover:bg-[#084224]/20'
+                ? 'bg-white/20 text-white border-white/10 hover:bg-white/30'
                 : isHeaderLight
                   ? 'bg-black/5 text-[#7c3aed]/80 border-black/5 hover:bg-black/10'
                   : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
@@ -149,7 +149,7 @@ const HeaderTabs = () => {
                 : isFreshGroceryActive
                   ? "text-[#7A3E17]/85"
                   : isMithilakartActive
-                    ? "text-[#084224]/85"
+                    ? "text-white/90"
                     : isHeaderLight 
                       ? "text-[#7c3aed]" 
                       : "text-white"
@@ -162,7 +162,7 @@ const HeaderTabs = () => {
             : isFreshGroceryActive
               ? 'text-[#7A3E17]/85'
               : isMithilakartActive
-                ? 'text-[#084224]/85'
+                ? 'text-white/90'
                 : isHeaderLight 
                   ? 'text-[#7c3aed]/80' 
                   : 'text-white'
@@ -179,7 +179,7 @@ const HeaderTabs = () => {
           isFreshGroceryActive
             ? 'bg-white text-[#7A3E17] border-white shadow-md scale-102 z-10'
             : isMithilakartActive
-              ? 'bg-[#084224]/12 text-[#084224]/90 border-[#084224]/15 hover:bg-[#084224]/20'
+              ? 'bg-white/20 text-white border-white/10 hover:bg-white/30'
               : isHeaderLight
                 ? 'bg-black/5 text-[#7A3E17]/85 border-black/5 hover:bg-black/10'
                 : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
@@ -189,7 +189,7 @@ const HeaderTabs = () => {
           isFreshGroceryActive 
             ? 'text-[#7A3E17]' 
             : isMithilakartActive
-              ? 'text-[#084224]/85'
+              ? 'text-white/90'
               : isHeaderLight
                 ? 'text-[#7A3E17]'
                 : 'text-white'

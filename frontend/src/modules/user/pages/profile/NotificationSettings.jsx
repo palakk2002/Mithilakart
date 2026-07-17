@@ -17,23 +17,42 @@ const NotificationSettings = () => {
     setSettings(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
+
   return (
     <motion.div 
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="bg-[#fbfcff] min-h-screen text-slate-800 font-sans"
+      className={`${pageBg} min-h-screen text-slate-800 font-sans relative transition-colors duration-300`}
     >
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+      )}
+
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 p-4 flex items-center gap-4">
-        <button onClick={() => navigate(-1)} className="p-1 rounded-full hover:bg-slate-50 transition-colors text-slate-800" aria-label="Go back">
+      <div className={`sticky top-0 z-50 p-4 flex items-center gap-4 relative z-10 transition-colors duration-300 border-b ${headerBg}`}>
+        <button onClick={() => navigate(-1)} className={`p-1 rounded-full hover:bg-slate-50 transition-colors ${headerTextColor}`} aria-label="Go back">
           <ArrowLeft size={22} />
         </button>
-        <h1 className="text-[17px] font-black uppercase tracking-widest text-slate-800">Notifications</h1>
+        <h1 className={`text-[17px] font-black uppercase tracking-widest ${headerTextColor}`}>Notifications</h1>
       </div>
 
-      <div className="container mx-auto px-4 py-8 w-full space-y-8">
+      <div className="container mx-auto px-4 py-8 w-full space-y-8 relative z-10">
         <div className="bg-white border border-slate-100 shadow-sm rounded-3xl p-5 flex items-center gap-4 mb-8">
-           <div className="p-3 bg-emerald-50 rounded-2xl text-[#084224]">
+           <div className="p-3 bg-emerald-50 rounded-2xl text-[#6FAE4A]">
               <Bell size={24} className="animate-bounce" />
            </div>
            <div>
@@ -43,7 +62,7 @@ const NotificationSettings = () => {
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-[10px] font-black text-[#084224] uppercase tracking-[3px] ml-1">Push Notifications</h2>
+          <h2 className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[3px] ml-1">Push Notifications</h2>
           
           <div className="bg-white border border-slate-100 shadow-sm rounded-3xl overflow-hidden divide-y divide-slate-100">
              {[
@@ -61,7 +80,7 @@ const NotificationSettings = () => {
                   </div>
                   <button 
                     onClick={() => toggleSetting(item.id)}
-                    className={`w-12 h-6.5 rounded-full transition-all relative ${settings[item.id] ? 'bg-[#084224]' : 'bg-slate-200'}`}
+                    className={`w-12 h-6.5 rounded-full transition-all relative ${settings[item.id] ? 'bg-[#6FAE4A]' : 'bg-slate-200'}`}
                   >
                     <div className={`absolute top-1 w-4.5 h-4.5 bg-white rounded-full transition-all shadow-sm ${settings[item.id] ? 'right-1' : 'left-1'}`}></div>
                   </button>
@@ -71,7 +90,7 @@ const NotificationSettings = () => {
         </div>
 
         <div className="space-y-4">
-           <h2 className="text-[10px] font-black text-[#084224] uppercase tracking-[3px] ml-1">Email Preferences</h2>
+           <h2 className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[3px] ml-1">Email Preferences</h2>
            <div className="bg-white border border-slate-100 shadow-sm rounded-3xl p-5 flex items-center justify-between">
               <div className="flex items-center gap-4">
                  <div className="p-2.5 rounded-xl text-green-600 bg-green-50">
@@ -81,7 +100,7 @@ const NotificationSettings = () => {
               </div>
               <button 
                 onClick={() => toggleSetting('newsletter')}
-                className={`w-12 h-6.5 rounded-full transition-all relative ${settings.newsletter ? 'bg-[#084224]' : 'bg-slate-200'}`}
+                className={`w-12 h-6.5 rounded-full transition-all relative ${settings.newsletter ? 'bg-[#6FAE4A]' : 'bg-slate-200'}`}
               >
                 <div className={`absolute top-1 w-4.5 h-4.5 bg-white rounded-full transition-all shadow-sm ${settings.newsletter ? 'right-1' : 'left-1'}`}></div>
               </button>

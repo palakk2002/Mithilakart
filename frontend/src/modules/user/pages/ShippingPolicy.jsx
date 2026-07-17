@@ -9,7 +9,7 @@ const ShippingPolicy = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-[#084224] px-4 py-4 flex items-center gap-3 shadow-md">
+      <div className="sticky top-0 z-50 bg-[#6FAE4A] px-4 py-4 flex items-center gap-3 shadow-md">
         <button 
           onClick={() => navigate(-1)}
           className="text-white active:scale-90 transition-transform"
@@ -39,7 +39,7 @@ const ShippingPolicy = () => {
         {/* Quick Info Cards */}
         <div className="grid grid-cols-3 gap-2">
           <div className="bg-primary-light border border-primary-green/30 rounded-xl p-3 text-center">
-            <Truck size={20} className="text-[#084224] mx-auto mb-1" />
+            <Truck size={20} className="text-[#6FAE4A] mx-auto mb-1" />
             <p className="text-[11px] font-bold text-slate-900">Fast Delivery</p>
             <p className="text-[9px] text-gray-500">2-7 Days</p>
           </div>
@@ -58,7 +58,7 @@ const ShippingPolicy = () => {
         {/* Shipping Coverage */}
         <section>
           <div className="flex items-center gap-2 mb-3">
-            <MapPin size={20} className="text-[#084224]" />
+            <MapPin size={20} className="text-[#6FAE4A]" />
             <h2 className="text-[16px] font-bold text-slate-900">Shipping Coverage</h2>
           </div>
           <p className="text-[13px] text-gray-600 leading-relaxed mb-3">
@@ -66,7 +66,7 @@ const ShippingPolicy = () => {
             product page to check if delivery is available in your area.
           </p>
           
-          <div className="bg-primary-light border-l-4 border-[#084224] p-4 rounded-r-lg">
+          <div className="bg-primary-light border-l-4 border-[#6FAE4A] p-4 rounded-r-lg">
             <p className="text-[12px] font-bold text-slate-900 mb-2">Serviceable Areas:</p>
             <ul className="list-disc list-inside text-[12px] text-gray-600 space-y-1 ml-2">
               <li>All major cities and metro areas</li>
@@ -80,7 +80,7 @@ const ShippingPolicy = () => {
         {/* Delivery Timeline */}
         <section>
           <div className="flex items-center gap-2 mb-3">
-            <Clock size={20} className="text-[#084224]" />
+            <Clock size={20} className="text-[#6FAE4A]" />
             <h2 className="text-[16px] font-bold text-slate-900">Delivery Timeline</h2>
           </div>
 
@@ -106,7 +106,7 @@ const ShippingPolicy = () => {
             <div className="bg-white border border-gray-200 rounded-xl p-4">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-primary-green/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Truck size={20} className="text-[#084224]" />
+                  <Truck size={20} className="text-[#6FAE4A]" />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-[14px] font-bold text-slate-900 mb-1">Quick Delivery</h3>
@@ -155,7 +155,7 @@ const ShippingPolicy = () => {
         {/* Shipping Charges */}
         <section>
           <div className="flex items-center gap-2 mb-3">
-            <IndianRupee size={20} className="text-[#084224]" />
+            <IndianRupee size={20} className="text-[#6FAE4A]" />
             <h2 className="text-[16px] font-bold text-slate-900">Shipping Charges</h2>
           </div>
 
@@ -188,7 +188,7 @@ const ShippingPolicy = () => {
         {/* Order Processing */}
         <section>
           <div className="flex items-center gap-2 mb-3">
-            <Package size={20} className="text-[#084224]" />
+            <Package size={20} className="text-[#6FAE4A]" />
             <h2 className="text-[16px] font-bold text-slate-900">Order Processing</h2>
           </div>
 
@@ -216,7 +216,7 @@ const ShippingPolicy = () => {
 
           <div className="space-y-3">
             <div className="flex gap-3">
-              <div className="w-8 h-8 bg-[#084224] text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold text-[14px]">
+              <div className="w-8 h-8 bg-[#6FAE4A] text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold text-[14px]">
                 1
               </div>
               <div>
@@ -225,7 +225,7 @@ const ShippingPolicy = () => {
               </div>
             </div>
             <div className="flex gap-3">
-              <div className="w-8 h-8 bg-[#084224] text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold text-[14px]">
+              <div className="w-8 h-8 bg-[#6FAE4A] text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold text-[14px]">
                 2
               </div>
               <div>
@@ -234,7 +234,7 @@ const ShippingPolicy = () => {
               </div>
             </div>
             <div className="flex gap-3">
-              <div className="w-8 h-8 bg-[#084224] text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold text-[14px]">
+              <div className="w-8 h-8 bg-[#6FAE4A] text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold text-[14px]">
                 3
               </div>
               <div>
@@ -243,7 +243,7 @@ const ShippingPolicy = () => {
               </div>
             </div>
             <div className="flex gap-3">
-              <div className="w-8 h-8 bg-[#084224] text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold text-[14px]">
+              <div className="w-8 h-8 bg-[#6FAE4A] text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold text-[14px]">
                 4
               </div>
               <div>

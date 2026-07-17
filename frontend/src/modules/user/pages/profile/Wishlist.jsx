@@ -19,23 +19,42 @@ const Wishlist = () => {
     navigate('/vendor/cart');
   };
 
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
+
   return (
-    <div className="bg-white min-h-screen pb-24">
-      {/* Blue Header */}
-      <div className="sticky top-0 z-50 bg-[#084224] p-4 flex items-center justify-between shadow-md">
-        <button onClick={() => navigate(-1)} className="text-white active:scale-95 transition-transform">
+    <div className={`min-h-screen pb-24 relative transition-colors duration-300 ${pageBg}`}>
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+      )}
+
+      {/* Header */}
+      <div className={`sticky top-0 z-50 p-4 flex items-center justify-between shadow-sm relative z-10 transition-colors duration-300 border-b ${headerBg}`}>
+        <button onClick={() => navigate(-1)} className={`active:scale-95 transition-transform ${headerTextColor}`}>
           <ArrowLeft size={24} />
         </button>
         <div className="relative">
-          <ShoppingCart size={24} className="text-white" />
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#084224]">
+          <ShoppingCart size={24} className={headerTextColor} />
+          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#FCF7EE]">
             9
           </span>
         </div>
       </div>
 
       {/* Title Section */}
-      <div className="px-4 py-5 bg-white">
+      <div className="px-4 py-5 bg-transparent relative z-10">
         <h1 className="text-[22px] font-bold text-slate-900 tracking-tight">Wishlist</h1>
         <div className="flex items-center gap-1.5 mt-1 text-gray-500">
           <Lock size={14} />
@@ -44,10 +63,10 @@ const Wishlist = () => {
 
         {/* Share & Edit Buttons */}
         <div className="flex gap-3 mt-5">
-          <button className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-sm text-[14px] font-bold text-[#084224] active:bg-gray-50 transition-colors">
+          <button className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-sm text-[14px] font-bold text-[#6FAE4A] active:bg-gray-50 transition-colors">
             <Share2 size={16} /> Share
           </button>
-          <button className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-sm text-[14px] font-bold text-[#084224] active:bg-gray-50 transition-colors">
+          <button className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-sm text-[14px] font-bold text-[#6FAE4A] active:bg-gray-50 transition-colors">
             <Edit2 size={16} /> Edit
           </button>
           <button className="w-10 flex items-center justify-center text-gray-400">
@@ -56,7 +75,7 @@ const Wishlist = () => {
         </div>
       </div>
 
-      <div className="border-t border-gray-100">
+      <div className="border-t border-[#F3E3CD]/60 relative z-10">
         <div className="grid grid-cols-2">
           <AnimatePresence mode="popLayout">
             {wishlist.map((item, idx) => (
@@ -103,7 +122,7 @@ const Wishlist = () => {
                       {[1, 2, 3, 4].map(s => <Star key={s} size={12} fill="#16a34a" className="text-green-600" />)}
                       <Star size={12} className="text-gray-200" />
                     </div>
-                    <div className="bg-[#084224] px-1 rounded-sm flex items-center gap-0.5">
+                    <div className="bg-[#6FAE4A] px-1 rounded-sm flex items-center gap-0.5">
                       <span className="text-[9px] text-white font-black italic">f</span>
                       <span className="text-[8px] text-white font-bold">Assured</span>
                     </div>
@@ -111,7 +130,7 @@ const Wishlist = () => {
 
                   <button 
                     onClick={(e) => addToCart(item, e)}
-                    className="w-full mt-4 py-2 border border-gray-200 text-[#084224] text-[14px] font-bold rounded-sm active:bg-primary-light transition-colors"
+                    className="w-full mt-4 py-2 border border-gray-200 text-[#6FAE4A] text-[14px] font-bold rounded-sm active:bg-primary-light transition-colors"
                   >
                     Add to Cart
                   </button>
@@ -130,7 +149,7 @@ const Wishlist = () => {
             <p className="text-[14px] text-gray-400 mt-1">Add items that you like to your wishlist.</p>
             <button 
               onClick={() => navigate('/vendor/home')}
-              className="mt-6 bg-[#084224] text-white px-8 py-2.5 rounded-sm font-bold text-[14px] shadow-lg active:scale-95 transition-all"
+              className="mt-6 bg-[#6FAE4A] text-white px-8 py-2.5 rounded-sm font-bold text-[14px] shadow-lg active:scale-95 transition-all"
             >
               Continue Shopping
             </button>
