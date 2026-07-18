@@ -41,7 +41,7 @@ const ViewAllIcon = () => (
 );
 
 const CardFlowerGarland = () => (
-  <svg width="75" height="13" viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="my-1 select-none">
+  <svg viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="my-0.5 select-none w-[52px] min-[375px]:w-[62px] md:w-[75px] h-auto">
     {/* Left branch */}
     <path d="M60 12 C48 15, 34 16, 22 11" stroke="#4B6C36" strokeWidth="1.5" strokeLinecap="round" fill="none" />
     <path d="M48 13.5 C46.5 10.5, 42.5 10.5, 41 13" fill="#4B6C36" />
@@ -70,7 +70,7 @@ const CardFlowerGarland = () => (
 );
 
 const ViewStoreDivider = () => (
-  <svg width="15" height="4" viewBox="0 0 24 6" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-50 mt-0.5">
+  <svg viewBox="0 0 24 6" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-50 mt-0.5 w-[12px] md:w-[15px] h-auto">
     <path d="M2 3H9M15 3H22" stroke="#E67E22" strokeWidth="1" strokeLinecap="round" />
     <circle cx="12" cy="3" r="1.5" fill="#4B6C36" />
   </svg>
@@ -80,20 +80,20 @@ const TrendingThisWeek = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="py-2 px-3 w-full max-w-[1600px] mx-auto select-none">
-      <div className="bg-[#FCF7EE] rounded-[20px] p-3 text-slate-800 shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)] border border-[#F3E3CD]/60 font-raleway">
+    <div className="py-1 px-2.5 w-full max-w-[1600px] mx-auto select-none">
+      <div className="bg-[#FCF7EE] rounded-[16px] md:rounded-[20px] p-2 md:p-3 text-slate-800 shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)] border border-[#F3E3CD]/60 font-raleway">
         {/* Section Header */}
-        <div className="flex justify-between items-center mb-2.5 px-1">
+        <div className="flex justify-between items-center mb-2 px-1">
           <div className="flex items-center">
             <HeaderFlower />
-            <h3 className="text-[12px] md:text-sm font-black text-[#3C2415] uppercase tracking-wide font-montserrat">
+            <h3 className="text-[11px] md:text-sm font-black text-[#3C2415] uppercase tracking-wide font-montserrat">
               Trending This Week
             </h3>
             <HeaderFlower />
           </div>
           <button
             onClick={() => navigate('/categories')}
-            className="text-[9.5px] md:text-xs font-bold text-[#4B6C36] hover:text-[#385227] flex items-center transition-colors duration-200"
+            className="text-[9px] md:text-xs font-bold text-[#4B6C36] hover:text-[#385227] flex items-center transition-colors duration-200"
           >
             View All
             <ViewAllIcon />
@@ -101,20 +101,20 @@ const TrendingThisWeek = () => {
         </div>
 
         {/* Horizontal Scrollable Row of Arch Cards */}
-        <div className="flex gap-2.5 overflow-x-auto no-scrollbar pb-1">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
           {trendingItems.map((item) => (
             <div
               key={item.id}
               onClick={() => navigate(item.path)}
-              className="flex-shrink-0 w-[105px] md:w-[130px] bg-[#FCF7EE] rounded-t-[1000px] rounded-b-[15px] p-2 flex flex-col items-center cursor-pointer hover:shadow-xs hover:border-[#E5D2BA] transition-all duration-300 border border-[#F1E1CE] group"
+              className="flex-shrink-0 w-[84px] min-[375px]:w-[94px] md:w-[130px] bg-[#FCF7EE] rounded-t-[1000px] rounded-b-[12px] md:rounded-b-[15px] p-1.5 md:p-2 flex flex-col items-center cursor-pointer hover:shadow-xs hover:border-[#E5D2BA] transition-all duration-300 border border-[#F1E1CE] group"
             >
               {/* Category Title */}
-              <span className="text-[9px] md:text-xs font-black text-[#3C2415] text-center mb-1 group-hover:text-[#D35400] transition-colors duration-200 truncate w-full px-0.5">
+              <span className="text-[8px] min-[375px]:text-[9px] md:text-xs font-black text-[#3C2415] text-center mb-0.5 group-hover:text-[#D35400] transition-colors duration-200 truncate w-full px-0.5">
                 {item.name}
               </span>
 
               {/* Dotted Ellipse Container */}
-              <div className="relative w-[75px] md:w-[95px] aspect-[1/1.25] flex items-center justify-center mb-1">
+              <div className="relative w-[60px] min-[375px]:w-[70px] md:w-[95px] aspect-[1/1.25] flex items-center justify-center mb-0.5">
                 {/* Concentric Beaded/Dotted Borders */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none select-none" viewBox="0 0 100 125">
                   {/* Outer Orange Dots */}
@@ -155,7 +155,7 @@ const TrendingThisWeek = () => {
               <CardFlowerGarland />
 
               {/* View Store Action */}
-              <span className="text-[7.5px] md:text-[9px] font-black text-[#4B6C36] tracking-wider uppercase mt-0.5 group-hover:text-[#385227] transition-colors duration-200">
+              <span className="text-[6.8px] md:text-[9px] font-black text-[#4B6C36] tracking-wider uppercase mt-0.5 group-hover:text-[#385227] transition-colors duration-200">
                 VIEW STORE
               </span>
               <ViewStoreDivider />

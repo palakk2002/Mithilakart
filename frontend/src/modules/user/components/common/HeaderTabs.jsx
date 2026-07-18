@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Plane, Zap } from 'lucide-react';
+import { Plane, Zap, Truck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const HeaderTabs = () => {
@@ -33,18 +33,18 @@ const HeaderTabs = () => {
   };
 
   return (
-    <div className="px-2 pt-1.5 pb-1 md:px-4 md:pt-4 md:pb-2.5 grid grid-cols-4 gap-1.5 md:gap-3">
+    <div className="px-2 pt-1 pb-0.5 md:px-4 md:pt-4 md:pb-2.5 grid grid-cols-4 gap-1.5 md:gap-3">
       {/* ── Tab 1: Mithilakart ── */}
       <motion.div
         whileTap={{ scale: 0.95 }}
         onClick={() => handleTabClick('/home', false)}
-        className={`flex flex-col items-center justify-center py-1 md:py-1.5 rounded-lg border h-[42px] md:h-[60px] gap-0.5 md:gap-1.5 cursor-pointer transition-all duration-300 ${
+        className={`flex flex-col items-center justify-center py-1 md:py-1.5 rounded-lg border min-h-[42px] md:min-h-[60px] h-auto gap-0.5 md:gap-1.5 cursor-pointer transition-all duration-300 ${
           isMithilakartActive
-            ? 'bg-[#052b17] text-white border-[#052b17] shadow-md scale-102 z-10'
+            ? 'bg-white text-[#3E5A44] border-white shadow-md scale-102 z-10'
             : isFreshGroceryActive
               ? 'bg-white/35 text-[#7A3E17]/85 border-white/15 hover:bg-white/45'
               : isHeaderLight
-                ? 'bg-black/5 text-[#6FAE4A]/80 border-black/5 hover:bg-black/10'
+                ? 'bg-black/5 text-[#3E5A44]/80 border-black/5 hover:bg-black/10'
                 : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
         }`}
       >
@@ -54,22 +54,22 @@ const HeaderTabs = () => {
             alt="Icon"
             className={`h-full w-full object-contain transition-all duration-300 ${
               isMithilakartActive 
-                ? 'brightness-0 invert' 
+                ? 'brightness-0' 
                 : isFreshGroceryActive 
                   ? 'brightness-0' 
                   : isHeaderLight 
                     ? 'brightness-50' 
-                    : 'brightness-0 invert'
+                    : 'brightness-0'
             }`}
           />
         </div>
         <span className={`font-extrabold text-[11px] md:text-[14px] italic tracking-tight leading-none mb-0.5 transition-colors duration-300 ${
           isMithilakartActive 
-            ? 'text-white' 
+            ? 'text-[#3E5A44]' 
             : isFreshGroceryActive
               ? 'text-[#7A3E17]/85'
               : isHeaderLight 
-                ? 'text-[#6FAE4A]/80' 
+                ? 'text-[#3E5A44]/80' 
                 : 'text-white'
         }`}>
           {t('home.title')}
@@ -80,7 +80,7 @@ const HeaderTabs = () => {
       <motion.div
         whileTap={{ scale: 0.95 }}
         onClick={() => handleTabClick('/quick-shop', true)}
-        className={`flex flex-col items-center justify-center py-1 md:py-1.5 rounded-lg border h-[42px] md:h-[60px] gap-0.5 md:gap-1.5 cursor-pointer transition-all duration-300 ${
+        className={`flex flex-col items-center justify-center py-1 md:py-1.5 rounded-lg border min-h-[42px] md:min-h-[60px] h-auto gap-0.5 md:gap-1.5 cursor-pointer transition-all duration-300 ${
           isQuickShopActive
             ? 'bg-white text-[#d6186d] border-white shadow-md scale-102 z-10'
             : isFreshGroceryActive
@@ -105,10 +105,10 @@ const HeaderTabs = () => {
                     : 'bg-white text-[#d6186d]'
           }`}
         >
-          <Zap size={10} className="fill-current w-[10px] h-[10px] md:w-[13px] md:h-[13px]" />
+          <Truck size={10} className="w-[10px] h-[10px] md:w-[13px] md:h-[13px]" />
         </div>
         <span
-          className={`text-[11px] md:text-[14px] font-extrabold tracking-tight leading-none mb-0.5 whitespace-nowrap transition-colors duration-300 ${
+          className={`text-[10px] md:text-[14px] font-extrabold tracking-tight leading-none text-center px-0.5 mb-0.5 transition-colors duration-300 ${
             isQuickShopActive 
               ? 'text-[#d6186d]' 
               : isFreshGroceryActive
@@ -128,15 +128,15 @@ const HeaderTabs = () => {
       <motion.div
         whileTap={{ scale: 0.95 }}
         onClick={() => handleTabClick('/mithilak', false)}
-        className={`flex flex-col items-center justify-center py-1 md:py-1.5 rounded-lg border h-[42px] md:h-[60px] gap-0.5 md:gap-1.5 cursor-pointer transition-all duration-300 ${
+        className={`flex flex-col items-center justify-center py-1 md:py-1.5 rounded-lg border min-h-[42px] md:min-h-[60px] h-auto gap-0.5 md:gap-1.5 cursor-pointer transition-all duration-300 ${
           isMithilakActive
-            ? 'bg-white text-[#7c3aed] border-white shadow-md scale-102 z-10'
+            ? 'bg-white text-[#207C8A] border-white shadow-md scale-102 z-10'
             : isFreshGroceryActive
               ? 'bg-white/35 text-[#7A3E17]/85 border-white/15 hover:bg-white/45'
               : isMithilakartActive
                 ? 'bg-white/20 text-white border-white/10 hover:bg-white/30'
                 : isHeaderLight
-                  ? 'bg-black/5 text-[#7c3aed]/80 border-black/5 hover:bg-black/10'
+                  ? 'bg-black/5 text-[#207C8A]/80 border-black/5 hover:bg-black/10'
                   : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
         }`}
       >
@@ -145,26 +145,26 @@ const HeaderTabs = () => {
             size={22} 
             className={`w-[14px] h-[14px] md:w-[22px] md:h-[22px] transition-all duration-300 ${
               isMithilakActive 
-                ? "text-[#7c3aed] fill-[#7c3aed]/20" 
+                ? "text-[#207C8A] fill-[#207C8A]/20" 
                 : isFreshGroceryActive
                   ? "text-[#7A3E17]/85"
                   : isMithilakartActive
                     ? "text-white/90"
                     : isHeaderLight 
-                      ? "text-[#7c3aed]" 
+                      ? "text-[#207C8A]" 
                       : "text-white"
             }`} 
           />
         </div>
         <span className={`text-[11px] md:text-[14px] font-extrabold tracking-tight leading-none mb-0.5 transition-colors duration-300 ${
           isMithilakActive 
-            ? 'text-[#7c3aed]' 
+            ? 'text-[#207C8A]' 
             : isFreshGroceryActive
               ? 'text-[#7A3E17]/85'
               : isMithilakartActive
                 ? 'text-white/90'
                 : isHeaderLight 
-                  ? 'text-[#7c3aed]/80' 
+                  ? 'text-[#207C8A]/80' 
                   : 'text-white'
         }`}>
           {t('nav.mithilak')}
@@ -175,7 +175,7 @@ const HeaderTabs = () => {
       <motion.div
         whileTap={{ scale: 0.95 }}
         onClick={() => handleTabClick('/fresh-grocery', true)}
-        className={`flex flex-col items-center justify-center py-0.5 md:py-1 rounded-lg border h-[42px] md:h-[60px] cursor-pointer transition-all duration-300 ${
+        className={`flex flex-col items-center justify-center py-0.5 md:py-1 rounded-lg border min-h-[42px] md:min-h-[60px] h-auto cursor-pointer transition-all duration-300 ${
           isFreshGroceryActive
             ? 'bg-white text-[#7A3E17] border-white shadow-md scale-102 z-10'
             : isMithilakartActive

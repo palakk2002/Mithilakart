@@ -96,7 +96,7 @@ const SavedCards = () => {
           </button>
           <h1 className={`text-lg font-black uppercase tracking-widest ${headerTextColor}`}>Saved Cards</h1>
         </div>
-        <button onClick={() => setIsModalOpen(true)} className="text-[#6FAE4A]">
+        <button onClick={() => setIsModalOpen(true)} className="text-[#3E5A44]">
           <Plus size={24} />
         </button>
       </div>

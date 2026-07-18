@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import MarketRoutes from './modules/user/routes/MarketRoutes';
 import SellerRoutes from './modules/seller/routes/SellerRoutes';
 import AdminRoutes from './modules/admin/routes/AdminRoutes';
 import DeliveryRoutes from './modules/delivery/routes/DeliveryRoutes';
+import SplashScreen from './shared/components/SplashScreen';
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
   return (
     <BrowserRouter>
+      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
       <Toaster position="bottom-center" toastOptions={{
         style: {
           background: '#121212',

@@ -23,10 +23,10 @@ const Checkout = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
-  const primaryBg = isMithilakFlow ? 'bg-[#7c3aed]' : isFreshGroceryFlow ? 'bg-[#7A3E17]' : (isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-[#6FAE4A]');
-  const primaryBgHover = isMithilakFlow ? 'bg-[#7c3aed] hover:bg-[#6d28d9]' : isFreshGroceryFlow ? 'bg-[#7A3E17] hover:bg-[#653313]' : (isQuickShopFlow ? 'bg-[#d6186d] hover:bg-[#b5125b]' : 'bg-[#6FAE4A] hover:bg-[#06331b]');
-  const primaryText = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#6FAE4A]');
-  const primaryBorder = isMithilakFlow ? 'border-[#7c3aed]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#6FAE4A]');
+  const primaryBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-[#3E5A44]');
+  const primaryBgHover = isMithilakFlow ? 'bg-[#207C8A] hover:bg-[#1a6672]' : isFreshGroceryFlow ? 'bg-[#D9A21B] hover:bg-[#c49218]' : (isQuickShopFlow ? 'bg-[#d6186d] hover:bg-[#b5125b]' : 'bg-[#3E5A44] hover:bg-[#06331b]');
+  const primaryText = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#3E5A44]');
+  const primaryBorder = isMithilakFlow ? 'border-[#207C8A]' : isFreshGroceryFlow ? 'border-[#D9A21B]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#3E5A44]');
   const shopNowLink = isMithilakFlow ? '/mithilak' : isFreshGroceryFlow ? '/fresh-grocery' : (isQuickShopFlow ? '/quick-shop' : '/vendor/home');
 
   const defaultProduct = {
@@ -117,7 +117,7 @@ const Checkout = () => {
   };
 
   const renderStepper = () => (
-    <div className={`px-4 py-3.5 sticky top-14 z-40 transition-colors duration-300 ${isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-[#f0f3f6]'}`}>
+    <div className={`px-4 py-3.5 sticky top-14 z-40 transition-colors duration-300 ${isFreshGroceryFlow ? 'bg-[#FFF8EE]' : 'bg-[#f0f3f6]'}`}>
       <div className="flex items-center justify-between relative max-w-sm mx-auto">
         {/* Connecting Lines */}
         <div className="absolute top-3.5 left-[15%] right-[15%] h-[2.5px] bg-slate-200 -z-0">
@@ -125,7 +125,7 @@ const Checkout = () => {
         </div>
 
         {/* Step 1: Address */}
-        <div className={`flex flex-col items-center gap-1 z-10 px-2 transition-colors duration-300 ${isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-[#f0f3f6]'}`}>
+        <div className={`flex flex-col items-center gap-1 z-10 px-2 transition-colors duration-300 ${isFreshGroceryFlow ? 'bg-[#FFF8EE]' : 'bg-[#f0f3f6]'}`}>
           <div className={`w-7 h-7 rounded-full ${primaryBg} text-white flex items-center justify-center text-[11px] font-black shadow-xs`}>
             <CheckCircle2 size={15} />
           </div>
@@ -133,7 +133,7 @@ const Checkout = () => {
         </div>
 
         {/* Step 2: Order Summary */}
-        <div className={`flex flex-col items-center gap-1 z-10 px-2 transition-colors duration-300 ${isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-[#f0f3f6]'}`}>
+        <div className={`flex flex-col items-center gap-1 z-10 px-2 transition-colors duration-300 ${isFreshGroceryFlow ? 'bg-[#FFF8EE]' : 'bg-[#f0f3f6]'}`}>
           <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-black transition-all shadow-xs ${currentStep >= 2 ? `${primaryBg} text-white` : 'bg-white text-slate-400'}`}>
             {currentStep > 2 ? <CheckCircle2 size={15} /> : '2'}
           </div>
@@ -141,7 +141,7 @@ const Checkout = () => {
         </div>
 
         {/* Step 3: Payment */}
-        <div className={`flex flex-col items-center gap-1 z-10 px-2 transition-colors duration-300 ${isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-[#f0f3f6]'}`}>
+        <div className={`flex flex-col items-center gap-1 z-10 px-2 transition-colors duration-300 ${isFreshGroceryFlow ? 'bg-[#FFF8EE]' : 'bg-[#f0f3f6]'}`}>
           <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-black transition-all shadow-xs ${currentStep === 3 ? `${primaryBg} text-white` : 'bg-white text-slate-400'}`}>
             3
           </div>
@@ -475,12 +475,23 @@ const Checkout = () => {
   }
 
   return (
-    <div className={`min-h-screen font-sans text-slate-850 pb-28 transition-colors duration-300 ${
-      isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : 'bg-[#f0f3f6]'
+    <div className={`min-h-screen font-sans text-slate-850 pb-28 transition-colors duration-300 relative ${
+      isFreshGroceryFlow ? 'bg-[#FFF8EE]' : 'bg-[#f0f3f6]'
     }`}>
+      {/* Global Repeating Mithila Art Page Background Texture */}
+      {(isFreshGroceryFlow || !(isMithilakFlow || isQuickShopFlow)) && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+      )}
+
       {/* Header */}
-      <div className={`sticky top-0 z-50 px-4 py-3 flex items-center justify-between transition-colors duration-300 ${
-        isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-[#f0f3f6]'
+      <div className={`sticky top-0 z-50 px-4 py-3 flex items-center justify-between transition-colors duration-300 relative z-10 ${
+        isFreshGroceryFlow ? 'bg-[#D9A21B] text-white' : 'bg-[#f0f3f6]'
       }`}>
         <div className="flex items-center gap-4">
           <button 

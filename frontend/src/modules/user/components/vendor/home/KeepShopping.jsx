@@ -80,7 +80,7 @@ const KeepShopping = () => {
             <div
               key={item.id}
               onClick={() => handleCardClick(item)}
-              className="flex-shrink-0 w-[100px] md:w-[125px] bg-white border border-[#E5D5C0]/65 rounded-[20px] p-2 flex flex-col items-center justify-between cursor-pointer hover:shadow-sm hover:border-[#6FAE4A]/40 transition-all duration-300 group"
+              className="flex-shrink-0 w-[100px] md:w-[125px] bg-white border border-[#E5D5C0]/65 rounded-[20px] p-2 flex flex-col items-center justify-between cursor-pointer hover:shadow-sm hover:border-[#3E5A44]/40 transition-all duration-300 group"
             >
               {/* Category Image */}
               <div className="w-full aspect-square bg-[#FFFDFB] rounded-[15px] flex items-center justify-center p-1.5 overflow-hidden">

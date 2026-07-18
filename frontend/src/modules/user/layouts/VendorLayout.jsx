@@ -41,7 +41,7 @@ const getMithilakartHeaderBg = (category) => {
       return 'bg-[#FEF08A]'; // Soft Yellow
     case 'You Buy':
     default:
-      return 'bg-primary-green'; // Default Green (Mithilakart default brand color)
+      return 'bg-[#3E5A44]'; // Default Olive Green
   }
 };
 
@@ -116,10 +116,18 @@ const VendorLayout = () => {
     !location.pathname.includes('/fresh-grocery');
 
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-bg-cream text-primary-dark relative">
+    <div className={`min-h-screen flex flex-col transition-colors duration-300 text-primary-dark relative ${
+      (localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak'))
+        ? 'bg-[#F5F9FA]'
+        : location.pathname.includes('/fresh-grocery')
+          ? 'bg-[#FFF8EE]'
+          : location.pathname.includes('/quick-shop')
+            ? 'bg-white'
+            : 'bg-[#F6F8F3]'
+    }`}>
       {/* Global Repeating Mithila Art Page Background Texture */}
       <div 
-        className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+        className="fixed inset-0 pointer-events-none z-30 bg-repeat opacity-[0.035] select-none"
         style={{
           backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
           backgroundSize: '360px',
@@ -135,7 +143,7 @@ const VendorLayout = () => {
           (localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak'))
             ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1] text-white'
             : location.pathname.includes('/fresh-grocery')
-              ? 'bg-gradient-to-r from-[#F5B014] to-[#FFF0A0] text-slate-800'
+              ? 'bg-[#D9A21B] text-[#3F2A20]'
               : location.pathname.includes('/quick-shop')
                 ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f] text-white'
                 : `${getMithilakartHeaderBg(selectedCategory)} ${
@@ -184,16 +192,18 @@ const VendorLayout = () => {
               : '0 1px 0px rgba(0,0,0,0.02)',
           }}
           transition={{ duration: 0.22 }}
-          className={`md:hidden sticky top-0 z-50 pb-2.5 rounded-b-[24px] shadow-sm transition-colors duration-300 ${
+          className={`md:hidden sticky top-0 z-50 pb-2 rounded-b-[20px] transition-colors duration-300 ${
             (localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak'))
-              ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]'
+              ? 'bg-[#207C8A]'
               : location.pathname.includes('/fresh-grocery')
-                ? 'bg-gradient-to-r from-[#F5B014] to-[#FFF0A0]'
+                ? 'bg-[#D9A21B]'
                 : location.pathname.includes('/quick-shop')
-                  ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]'
-                  : getMithilakartHeaderBg(selectedCategory)
+                  ? 'bg-[#F26522]'
+                  : 'bg-[#3E5A44]'
           }`}
         >
+
+
           {/* Restored HeaderTabs as requested */}
           <HeaderTabs />
 
@@ -220,23 +230,33 @@ const VendorLayout = () => {
       {!hideFooter && (
         <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t px-6 py-2 flex justify-between items-center z-50 bg-[#FFF8EE] border-[#EADCC9]/55 text-[#3F2A20] shadow-[0_-2px_10px_rgba(63,42,32,0.05)]">
         <Link 
-          to="/home" 
+          to={(localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak')) ? "/mithilak" : "/home"} 
           onClick={() => {
-            localStorage.setItem('isQuickShopFlow', 'false');
-            localStorage.setItem('isMithilakFlow', 'false');
-            localStorage.setItem('isFreshGroceryFlow', 'false');
+            if (!(localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak'))) {
+              localStorage.setItem('isQuickShopFlow', 'false');
+              localStorage.setItem('isMithilakFlow', 'false');
+              localStorage.setItem('isFreshGroceryFlow', 'false');
+            }
           }}
           className={`flex flex-col items-center transition-transform active:scale-90 ${
-            location.pathname === '/home' ? 'text-[#6FAE4A]' : 'text-[#3F2A20]/80'
+            location.pathname === '/home' || location.pathname === '/quick-shop' || location.pathname === '/mithilak' || location.pathname === '/fresh-grocery'
+              ? ((localStorage.getItem('isMithilakFlow') === 'true' || location.pathname === '/mithilak') 
+                  ? 'text-[#207C8A]' 
+                  : (localStorage.getItem('isFreshGroceryFlow') === 'true' ? 'text-[#D9A21B]' : (localStorage.getItem('isQuickShopFlow') === 'true' ? 'text-[#FF5C00]' : 'text-[#3E5A44]')))
+              : 'text-[#3F2A20]/80'
           }`}
         >
           <HomeIcon size={22} strokeWidth={2.2} />
-          <span className={`text-[10px] ${location.pathname === '/home' ? 'font-black' : 'font-semibold'}`}>Home</span>
+          <span className={`text-[10px] ${location.pathname === '/home' || location.pathname === '/quick-shop' || location.pathname === '/mithilak' || location.pathname === '/fresh-grocery' ? 'font-black' : 'font-semibold'}`}>Home</span>
         </Link>
         <Link 
           to="/categories"
           className={`flex flex-col items-center transition-transform active:scale-90 ${
-            location.pathname === '/categories' ? 'text-[#6FAE4A]' : 'text-[#3F2A20]/80'
+            location.pathname === '/categories' 
+              ? ((localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak')) 
+                  ? 'text-[#207C8A]' 
+                  : (localStorage.getItem('isFreshGroceryFlow') === 'true' ? 'text-[#D9A21B]' : 'text-[#3E5A44]')) 
+              : 'text-[#3F2A20]/80'
           }`}
         >
           <LayoutGrid size={22} strokeWidth={2.2} />
@@ -245,7 +265,11 @@ const VendorLayout = () => {
         <Link 
           to="/cart" 
           className={`flex flex-col items-center transition-transform active:scale-90 ${
-            location.pathname === '/cart' ? 'text-[#6FAE4A]' : 'text-[#3F2A20]/80'
+            location.pathname === '/cart' 
+              ? ((localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak')) 
+                  ? 'text-[#207C8A]' 
+                  : (localStorage.getItem('isFreshGroceryFlow') === 'true' ? 'text-[#D9A21B]' : 'text-[#3E5A44]')) 
+              : 'text-[#3F2A20]/80'
           }`}
         >
           <div className="relative">
@@ -259,7 +283,11 @@ const VendorLayout = () => {
         <Link 
           to="/profile" 
           className={`flex flex-col items-center transition-transform active:scale-90 ${
-            location.pathname === '/profile' ? 'text-[#6FAE4A]' : 'text-[#3F2A20]/80'
+            location.pathname === '/profile' 
+              ? ((localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak')) 
+                  ? 'text-[#207C8A]' 
+                  : (localStorage.getItem('isFreshGroceryFlow') === 'true' ? 'text-[#D9A21B]' : 'text-[#3E5A44]')) 
+              : 'text-[#3F2A20]/80'
           }`}
         >
           <User size={22} strokeWidth={2.2} />
@@ -279,7 +307,7 @@ const VendorLayout = () => {
                 ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1] hover:brightness-110'
                   : localStorage.getItem('isQuickShopFlow') === 'true'
                     ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f] hover:brightness-110'
-                  : 'bg-[#6FAE4A] hover:bg-[#06331b]'
+                  : 'bg-[#3E5A44] hover:bg-[#06331b]'
           }`}
         >
           <div className="flex items-center gap-3">

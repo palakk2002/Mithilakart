@@ -138,7 +138,7 @@ const getMithilakartActiveTextColor = (category) => {
     case 'Electrical':
       return 'text-[#9B7C16]';
     default:
-      return 'text-[#6FAE4A]';
+      return 'text-[#3E5A44]';
   }
 };
 

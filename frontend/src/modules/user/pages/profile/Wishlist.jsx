@@ -63,10 +63,10 @@ const Wishlist = () => {
 
         {/* Share & Edit Buttons */}
         <div className="flex gap-3 mt-5">
-          <button className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-sm text-[14px] font-bold text-[#6FAE4A] active:bg-gray-50 transition-colors">
+          <button className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-sm text-[14px] font-bold text-[#3E5A44] active:bg-gray-50 transition-colors">
             <Share2 size={16} /> Share
           </button>
-          <button className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-sm text-[14px] font-bold text-[#6FAE4A] active:bg-gray-50 transition-colors">
+          <button className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-sm text-[14px] font-bold text-[#3E5A44] active:bg-gray-50 transition-colors">
             <Edit2 size={16} /> Edit
           </button>
           <button className="w-10 flex items-center justify-center text-gray-400">
@@ -122,7 +122,7 @@ const Wishlist = () => {
                       {[1, 2, 3, 4].map(s => <Star key={s} size={12} fill="#16a34a" className="text-green-600" />)}
                       <Star size={12} className="text-gray-200" />
                     </div>
-                    <div className="bg-[#6FAE4A] px-1 rounded-sm flex items-center gap-0.5">
+                    <div className="bg-[#3E5A44] px-1 rounded-sm flex items-center gap-0.5">
                       <span className="text-[9px] text-white font-black italic">f</span>
                       <span className="text-[8px] text-white font-bold">Assured</span>
                     </div>
@@ -130,7 +130,7 @@ const Wishlist = () => {
 
                   <button 
                     onClick={(e) => addToCart(item, e)}
-                    className="w-full mt-4 py-2 border border-gray-200 text-[#6FAE4A] text-[14px] font-bold rounded-sm active:bg-primary-light transition-colors"
+                    className="w-full mt-4 py-2 border border-gray-200 text-[#3E5A44] text-[14px] font-bold rounded-sm active:bg-primary-light transition-colors"
                   >
                     Add to Cart
                   </button>
@@ -149,7 +149,7 @@ const Wishlist = () => {
             <p className="text-[14px] text-gray-400 mt-1">Add items that you like to your wishlist.</p>
             <button 
               onClick={() => navigate('/vendor/home')}
-              className="mt-6 bg-[#6FAE4A] text-white px-8 py-2.5 rounded-sm font-bold text-[14px] shadow-lg active:scale-95 transition-all"
+              className="mt-6 bg-[#3E5A44] text-white px-8 py-2.5 rounded-sm font-bold text-[14px] shadow-lg active:scale-95 transition-all"
             >
               Continue Shopping
             </button>

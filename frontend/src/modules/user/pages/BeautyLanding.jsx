@@ -74,7 +74,7 @@ const ProductCard = React.memo(({ product, onPress }) => (
         <span className="text-[10px] font-bold text-slate-800">{product.rating}</span>
         <Star size={8} fill="currentColor" className="text-green-600" />
       </div>
-      <div className="absolute top-2 right-2 bg-[#6FAE4A] text-white text-[9px] font-black px-1.5 py-0.5 rounded-full">{product.discount}</div>
+      <div className="absolute top-2 right-2 bg-[#3E5A44] text-white text-[9px] font-black px-1.5 py-0.5 rounded-full">{product.discount}</div>
     </div>
     <div className="pt-1.5 px-0.5">
       <p className="text-[11px] font-medium text-slate-600 line-clamp-1">{product.name}</p>
@@ -125,7 +125,7 @@ const HeroBanner = ({ banners }) => {
       </div>
       <div className="flex justify-center gap-1.5 mt-2">
         {banners.map((_, i) => (
-          <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${i === idx ? 'w-4 bg-[#6FAE4A]' : 'w-1.5 bg-gray-300'}`} />
+          <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${i === idx ? 'w-4 bg-[#3E5A44]' : 'w-1.5 bg-gray-300'}`} />
         ))}
       </div>
     </div>
@@ -182,7 +182,7 @@ const BeautyLanding = () => {
           <h2 className="text-[20px] font-bold text-slate-900" style={{ lineHeight: 1.2, letterSpacing: '-0.3px' }}>
             Great Savings
           </h2>
-          <button onClick={() => navigate('/vendor/all-offers')} className="flex items-center gap-0.5 text-[12px] font-bold text-[#6FAE4A]">
+          <button onClick={() => navigate('/vendor/all-offers')} className="flex items-center gap-0.5 text-[12px] font-bold text-[#3E5A44]">
             See all <ChevronRight size={14} strokeWidth={2.5} />
           </button>
         </div>
@@ -199,7 +199,7 @@ const BeautyLanding = () => {
               </div>
               <div>
                 <p className="text-[12px] font-bold text-slate-800 truncate">{d.label}</p>
-                <span className="inline-block mt-1 bg-[#6FAE4A] text-white text-[9.5px] font-black px-2 py-0.5 rounded-full">{d.badge}</span>
+                <span className="inline-block mt-1 bg-[#3E5A44] text-white text-[9.5px] font-black px-2 py-0.5 rounded-full">{d.badge}</span>
               </div>
             </motion.div>
           ))}
@@ -230,7 +230,7 @@ const BeautyLanding = () => {
 
       {/* ── Promo banner ── */}
       <div className="px-3 mt-5">
-        <div className="bg-gradient-to-r from-[#1259c3] to-[#6FAE4A] rounded-2xl p-4 flex items-center justify-between overflow-hidden relative">
+        <div className="bg-gradient-to-r from-[#1259c3] to-[#3E5A44] rounded-2xl p-4 flex items-center justify-between overflow-hidden relative">
           <div className="absolute -right-6 -top-6 w-32 h-32 bg-white/5 rounded-full" />
           <div className="absolute -right-2 bottom-0 w-20 h-20 bg-white/5 rounded-full" />
           <div className="relative z-10">
@@ -268,7 +268,7 @@ const BeautyLanding = () => {
         </div>
         <button
           onClick={() => navigate('/vendor/cart')}
-          className="bg-[#6FAE4A] text-white px-7 py-3 rounded-xl font-black text-[13px] uppercase tracking-wider shadow-md shadow-emerald-100 active:scale-95 transition-transform"
+          className="bg-[#3E5A44] text-white px-7 py-3 rounded-xl font-black text-[13px] uppercase tracking-wider shadow-md shadow-emerald-100 active:scale-95 transition-transform"
         >
           Go to Cart
         </button>

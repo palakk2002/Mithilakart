@@ -3,7 +3,48 @@ import { Heart, CheckCircle, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { allCategoryProducts } from '../../../../data/categoryData';
 
+const CornerFlower = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[10px] h-[10px] md:w-[14px] md:h-[14px] opacity-85 select-none pointer-events-none">
+    {/* Green leaves/petals */}
+    <path d="M12 2C13 4.5 13 4.5 12 7C11 4.5 11 4.5 12 2Z" fill="#3E5A44" />
+    <path d="M12 22C13 19.5 13 19.5 12 17C11 19.5 11 19.5 12 22Z" fill="#3E5A44" />
+    <path d="M2 12C4.5 13 4.5 13 7 12C4.5 11 4.5 11 2 12Z" fill="#3E5A44" />
+    <path d="M22 12C19.5 13 19.5 13 17 12C19.5 11 19.5 11 22 12Z" fill="#3E5A44" />
+    {/* Orange petals */}
+    <circle cx="12" cy="8.5" r="2.2" fill="#E67E22" />
+    <circle cx="12" cy="15.5" r="2.2" fill="#E67E22" />
+    <circle cx="8.5" cy="12" r="2.2" fill="#E67E22" />
+    <circle cx="15.5" cy="12" r="2.2" fill="#E67E22" />
+    {/* Center core */}
+    <circle cx="12" cy="12" r="2.4" fill="#D35400" />
+    <circle cx="12" cy="12" r="0.8" fill="#FFF" />
+  </svg>
+);
+
+const CardBottomDivider = () => (
+  <div className="w-full flex items-center justify-center my-0.5 md:my-1 select-none pointer-events-none">
+    <svg viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[65px] md:w-[85px] h-auto">
+      {/* Left branch */}
+      <path d="M45 12 C35 14, 20 15, 10 12" stroke="#3E5A44" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+      <path d="M35 13 C34 11, 31 11, 30 12.5" fill="#3E5A44" />
+      <circle cx="32" cy="14.5" r="1.2" fill="#D35400" />
+      {/* Right branch */}
+      <path d="M75 12 C85 14, 100 15, 110 12" stroke="#3E5A44" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+      <path d="M85 13 C86 11, 89 11, 90 12.5" fill="#3E5A44" />
+      <circle cx="88" cy="14.5" r="1.2" fill="#D35400" />
+      {/* Central Flower */}
+      <circle cx="60" cy="12" r="3.5" fill="#E67E22" />
+      <circle cx="60" cy="5.5" r="2.2" fill="#D35400" />
+      <circle cx="60" cy="18.5" r="2.2" fill="#D35400" />
+      <circle cx="53.5" cy="12" r="2.2" fill="#D35400" />
+      <circle cx="66.5" cy="12" r="2.2" fill="#D35400" />
+    </svg>
+  </div>
+);
+
 const ProductCard = React.memo(({ product, onProductClick, onAddToCart }) => {
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
   // Use a stable pseudo-random number based on the product ID for the rating count
   const ratingCount = useMemo(() => {
     const idNum = typeof product.id === 'string' ? product.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) : product.id;
@@ -12,45 +53,75 @@ const ProductCard = React.memo(({ product, onProductClick, onAddToCart }) => {
 
   return (
     <div
-      className="flex flex-col cursor-pointer group w-full md:w-[240px] md:flex-shrink-0"
+      className="flex flex-col cursor-pointer group w-full md:w-[240px] md:flex-shrink-0 relative bg-[#FFFDF9] border border-[#EADCC9]/70 rounded-[18px] md:rounded-[24px] p-1.5 md:p-2.5 shadow-[0_2px_8px_rgba(61,35,20,0.015)] hover:shadow-[0_6px_18px_rgba(61,35,20,0.04)] hover:border-[#3E5A44]/35 transition-all duration-300 transform select-none"
       onClick={() => onProductClick(product)}
     >
-      <div className="relative aspect-square rounded-xl overflow-hidden bg-gray-50 border border-gray-100">
+      {/* Inner Decorative Dashed Border */}
+      <div className="absolute inset-0.5 md:inset-1 pointer-events-none border border-dashed border-[#D35400]/20 rounded-[15px] md:rounded-[20px]" />
+
+      {/* Corner Ornaments */}
+      <div className="absolute top-0.5 left-0.5 md:top-1 md:left-1 z-10"><CornerFlower /></div>
+      <div className="absolute top-0.5 right-0.5 md:top-1 md:right-1 z-10"><CornerFlower /></div>
+      <div className="absolute bottom-0.5 left-0.5 md:bottom-1 md:left-1 z-10"><CornerFlower /></div>
+      <div className="absolute bottom-0.5 right-0.5 md:bottom-1 md:right-1 z-10"><CornerFlower /></div>
+
+      {/* Product Image Section */}
+      <div className="relative aspect-square rounded-[14px] md:rounded-[18px] overflow-hidden bg-white/50 border border-[#EADCC9]/40 p-0.5 md:p-1">
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover rounded-[11px] md:rounded-[15px] group-hover:scale-[1.03] transition-transform duration-500"
           loading="lazy"
           width="200"
           height="200"
         />
 
+        {/* Wishlist Heart Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsWishlisted(!isWishlisted);
+          }}
+          className="absolute top-1 right-1 md:top-2 md:right-2 w-6 h-6 md:w-7.5 md:h-7.5 rounded-full bg-white/90 backdrop-blur-xs shadow-[0_2px_6px_rgba(0,0,0,0.06)] flex items-center justify-center text-slate-700 hover:text-red-500 z-10 transition-all duration-200 active:scale-85"
+        >
+          <Heart 
+            size={11} 
+            className={`transition-colors ${isWishlisted ? 'fill-red-500 stroke-red-500 text-red-500' : 'stroke-[#3F2A20] fill-none'}`} 
+          />
+        </button>
+
         {/* Rating Badge on Image */}
-        <div className="absolute bottom-2 left-2 flex items-center gap-1 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded shadow-sm border border-gray-100">
-          <span className="text-[10px] font-bold text-slate-800">{product.rating || '4.1'}</span>
-          <Star size={8} fill="currentColor" className="text-green-600" />
+        <div className="absolute bottom-1 left-1 md:bottom-2 md:left-2 flex items-center gap-0.5 md:gap-1 bg-white/95 backdrop-blur-xs px-1 py-0.2 md:px-1.5 md:py-0.5 rounded-[4px] md:rounded-[6px] shadow-xs border border-[#EADCC9]/30">
+          <span className="text-[8px] md:text-[9.5px] font-black text-slate-800">{product.rating || '4.8'}</span>
+          <Star size={7} fill="currentColor" className="text-[#3E5A44] stroke-none" />
           <div className="w-[1px] h-2 bg-gray-300 mx-0.5" />
-          <span className="text-[9px] font-medium text-gray-500">({ratingCount})</span>
+          <span className="text-[7.5px] md:text-[8.5px] font-semibold text-gray-500">({ratingCount})</span>
         </div>
       </div>
 
-      <div className="pt-2 px-0.5">
-        <h3 className="text-[12px] font-medium text-slate-700 line-clamp-1 leading-tight">
-          <span className="font-bold text-slate-900">{product.brand || 'Drasert'}</span> {product.name}
-        </h3>
+      {/* Details Section */}
+      <div className="pt-1.5 pb-0.5 px-0.5 md:pt-2.5 md:pb-1 md:px-1.5 relative z-10 flex flex-col justify-between flex-1">
+        <div>
+          <h3 className="text-[10px] md:text-[12px] font-black text-[#3F2A20] line-clamp-1 leading-tight tracking-tight">
+            <span className="font-extrabold text-[#3F2A20]">{product.brand || 'Drasert'}</span> {product.name}
+          </h3>
 
-        <div className="mt-1 flex flex-col gap-0.5">
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-[13px] font-black text-slate-900">₹{product.price}</span>
-            <span className="text-[10px] text-gray-400 line-through font-medium">MRP ₹{product.oldPrice || '1,999'}</span>
-            <span className="border border-[#e47911] text-[#e47911] text-[8px] px-1 py-0.2 rounded-full font-bold uppercase tracking-tight">
-              {Math.round(((parseInt((product.oldPrice || '1999').toString().replace(/,/g, '')) - parseInt(product.price?.toString().replace(/,/g, ''))) / parseInt((product.oldPrice || '1999').toString().replace(/,/g, ''))) * 100)}% OFF
-            </span>
+          <div className="mt-1 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1 md:gap-1.5 flex-wrap">
+              <span className="text-[11px] md:text-[13.5px] font-black text-slate-900">₹{product.price}</span>
+              <span className="text-[8.5px] md:text-[10px] text-gray-400 line-through font-semibold">MRP ₹{product.oldPrice || '1,999'}</span>
+              <span className="border border-[#F26522]/45 text-[#F26522] bg-[#F26522]/5 text-[7px] md:text-[8px] px-1 py-0.2 rounded-full font-black uppercase tracking-tight">
+                {Math.round(((parseInt((product.oldPrice || '1999').toString().replace(/,/g, '')) - parseInt(product.price?.toString().replace(/,/g, ''))) / parseInt((product.oldPrice || '1999').toString().replace(/,/g, ''))) * 100)}% OFF
+              </span>
+            </div>
+            <p className="text-[8.5px] md:text-[9.5px] font-extrabold text-[#3E5A44] tracking-tight mt-0.5">
+              ₹{Math.round(product.price * 0.9)} with UPI offer + more
+            </p>
           </div>
-          <p className="text-[10px] font-bold text-[#6FAE4A] tracking-tight">
-            ₹{Math.round(product.price * 0.9)} with UPI offer + more
-          </p>
         </div>
+
+        {/* Bottom floral divider motif */}
+        <CardBottomDivider />
       </div>
     </div>
   );

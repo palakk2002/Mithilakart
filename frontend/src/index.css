@@ -17,7 +17,7 @@
   --color-black: #000000;
   --color-black-soft: #121212;
   --color-bg-luxury: #F4F4F4;
-  --color-primary-green: #6FAE4A;
+  --color-primary-green: #3E5A44;
   --color-primary-dark: #3F2A20;
   --color-primary-light: #93C572;
   --color-accent-orange: #F26522;
@@ -189,3 +189,21 @@
 .animate-glow-pulse {
   animation: soft-pulse-glow 5s infinite ease-in-out;
 }
+
+/* --- Splash Screen Animations --- */
+@keyframes splash-zoom-video {
+  0% {
+    transform: scale(1.0);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1.03);
+  }
+}
+
+.animate-splash-zoom {
+  animation: splash-zoom-video 3.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+

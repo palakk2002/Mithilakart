@@ -162,7 +162,7 @@ const TopSelection = ({ items = [] }) => {
   }, [navigate]);
 
   return (
-    <div className="py-3 px-3 w-full max-w-[1600px] mx-auto select-none bg-[#FCF9F2]">
+    <div className="py-3 px-3 w-full max-w-[1600px] mx-auto select-none bg-transparent">
       {/* Section Header */}
       <div className="flex justify-between items-center mb-4 px-1">
         <div className="flex items-center">
@@ -174,7 +174,7 @@ const TopSelection = ({ items = [] }) => {
         </div>
         <button
           onClick={() => navigate('/all-offers')}
-          className="w-8 h-8 rounded-full border border-[#D35400]/40 border-dashed flex items-center justify-center bg-[#FAF6EE] hover:bg-[#F3E3CD]/30 active:scale-90 transition-all duration-200"
+          className="w-8 h-8 rounded-full border border-[#D35400]/40 border-dashed flex items-center justify-center bg-[#FAF6EE]/50 hover:bg-[#F3E3CD]/30 active:scale-90 transition-all duration-200"
         >
           <ChevronRight size={16} className="text-[#4E2812]" strokeWidth={2.5} />
         </button>
@@ -188,7 +188,7 @@ const TopSelection = ({ items = [] }) => {
             <div
               key={idx}
               onClick={() => handleProductClick(product)}
-              className="bg-[#FCF9F2] rounded-[20px] p-2.5 flex flex-col justify-between cursor-pointer hover:shadow-md transition-all duration-300 border border-[#EADEC9] group"
+              className="bg-transparent rounded-[20px] p-2.5 flex flex-col justify-between cursor-pointer hover:shadow-md transition-all duration-300 border border-[#EADEC9] group"
             >
               {/* Image Container with Custom Arch Aspect Ratio */}
               <div className="relative w-full aspect-[16/17] flex items-center justify-center">

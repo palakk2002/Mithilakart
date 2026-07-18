@@ -19,12 +19,12 @@ const VendorProfile = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { userProfile } = useAccountStore();
-  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+  const isAuthenticated = localStorage.getItem('isAuthenticated') !== 'false';
 
   const handleLogout = () => {
     localStorage.removeItem('userWishlist');
     localStorage.removeItem('userToken');
-    localStorage.removeItem('isAuthenticated');
+    localStorage.setItem('isAuthenticated', 'false');
     sessionStorage.clear();
     navigate('/home', { replace: true });
   };
@@ -48,8 +48,8 @@ const VendorProfile = () => {
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
   return (
-    <div className={`min-h-screen pb-6 font-sans text-slate-800 relative transition-colors duration-300 ${
-      isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : 'bg-bg-cream'
+    <div className={`min-h-screen pb-1 font-sans text-slate-800 relative transition-colors duration-300 ${
+      isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : isMithilakFlow ? 'bg-[#F5F9FA]' : 'bg-bg-cream'
     }`}>
       {/* Global Repeating Mithila Art Page Background Texture */}
       {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
@@ -64,22 +64,36 @@ const VendorProfile = () => {
 
       {/* Header Sticky */}
       <div className={`sticky top-0 z-45 border-b px-4 py-4 flex items-center gap-3 relative z-10 ${
-        isFreshGroceryFlow ? 'bg-[#FFF0A0] border-transparent' : 'bg-[#FCF7EE]/90 border-[#F3E3CD]/60 backdrop-blur-md'
+        isFreshGroceryFlow 
+          ? 'bg-[#D9A21B] border-transparent text-white' 
+          : isMithilakFlow 
+            ? 'bg-[#207C8A] border-transparent text-white' 
+            : isQuickShopFlow 
+              ? 'bg-[#F26522] border-transparent text-white' 
+              : 'bg-[#FCF7EE]/90 border-[#F3E3CD]/60 backdrop-blur-md'
       }`}>
         <motion.button
           onClick={() => navigate(-1)}
           whileTap={{ scale: 0.88 }}
-          className="p-1 rounded-full hover:bg-slate-50 transition-colors"
+          className="p-1 rounded-full hover:bg-white/10 transition-colors"
           aria-label="Go back"
         >
-          <ChevronRight size={22} className="text-slate-800 rotate-180" />
+          <ChevronRight size={22} className={`${(isMithilakFlow || isFreshGroceryFlow || isQuickShopFlow) ? 'text-white' : 'text-slate-800'} rotate-180`} />
         </motion.button>
-        <span className="text-[17px] font-black text-slate-800 tracking-tight">{t('profile.title')}</span>
+        <span className={`text-[17px] font-black tracking-tight ${(isMithilakFlow || isFreshGroceryFlow || isQuickShopFlow) ? 'text-white' : 'text-slate-800'}`}>{t('profile.title')}</span>
       </div>
 
       {/* User Card */}
       <div className="px-4 pt-5 relative z-10">
-        <div className="bg-gradient-to-br from-[#6FAE4A] to-[#042112] rounded-3xl p-6 text-white shadow-[0_8px_30px_rgba(8,66,36,0.15)] relative overflow-hidden border border-emerald-800/30">
+        <div className={`bg-gradient-to-br rounded-3xl p-6 text-white relative overflow-hidden ${
+          isMithilakFlow 
+            ? 'from-[#207C8A] to-[#144f58] shadow-[0_8px_30px_rgba(32,124,138,0.15)] border border-[#207C8A]/25'
+            : isFreshGroceryFlow
+              ? 'from-[#D9A21B] to-[#916909] shadow-[0_8px_30px_rgba(217,162,27,0.15)] border border-[#D9A21B]/25'
+              : isQuickShopFlow
+                ? 'from-[#F26522] to-[#B83D07] shadow-[0_8px_30px_rgba(242,101,34,0.15)] border border-[#F26522]/25'
+                : 'from-[#3E5A44] to-[#042112] shadow-[0_8px_30px_rgba(8,66,36,0.15)] border border-emerald-800/30'
+        }`}>
           <div className="absolute right-[-20px] bottom-[-20px] w-36 h-36 rounded-full bg-white/5 blur-2xl pointer-events-none" />
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
@@ -89,7 +103,7 @@ const VendorProfile = () => {
               <h1 className="text-[18px] font-black tracking-tight">
                 {isAuthenticated ? userProfile.name : 'Guest User'}
               </h1>
-              <p className="text-[11px] font-medium text-emerald-100/80 mt-1 leading-normal">
+              <p className="text-[11px] font-medium opacity-90 mt-1 leading-normal">
                 {isAuthenticated ? (userProfile.email || 'mithilakart.user@gmail.com') : 'Please login to access all features'}
               </p>
             </div>
@@ -97,7 +111,7 @@ const VendorProfile = () => {
           
           <div className="mt-6 pt-5 border-t border-white/15 flex items-center justify-between">
             <div>
-              <p className="text-[9px] font-black text-emerald-200/90 uppercase tracking-widest leading-none">Status</p>
+              <p className="text-[9px] font-black opacity-80 uppercase tracking-widest leading-none">Status</p>
               <p className="text-[13px] font-black text-yellow-400 mt-1 flex items-center gap-1.5">
                 {isAuthenticated ? '★ PRIME MEMBER' : 'GUEST'}
               </p>
@@ -119,23 +133,35 @@ const VendorProfile = () => {
               <div
                 key={idx}
                 onClick={() => {
-                  if (isAuthenticated) {
-                    navigate(opt.path);
-                  } else {
-                    navigate('/login', { state: { from: '/profile' } });
-                  }
+                  navigate(opt.path);
                 }}
                 className="px-5 py-4.5 flex items-center justify-between hover:bg-slate-50/50 cursor-pointer active:bg-slate-50 transition-colors group"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#6FAE4A] flex items-center justify-center transition-colors group-hover:bg-[#6FAE4A] group-hover:text-white">
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
+                    isMithilakFlow 
+                      ? 'bg-[#F5F9FA] text-[#207C8A] group-hover:bg-[#207C8A] group-hover:text-white' 
+                      : isFreshGroceryFlow
+                        ? 'bg-[#FFF8EE] text-[#D9A21B] group-hover:bg-[#D9A21B] group-hover:text-white'
+                        : isQuickShopFlow
+                          ? 'bg-[#FFF5EE] text-[#F26522] group-hover:bg-[#F26522] group-hover:text-white'
+                          : 'bg-[#EAF5EE] text-[#3E5A44] group-hover:bg-[#3E5A44] group-hover:text-white'
+                  }`}>
                     {opt.icon}
                   </div>
-                  <span className="text-[13.5px] font-black text-slate-800 transition-colors group-hover:text-[#6FAE4A]">
+                  <span className={`text-[13.5px] font-black transition-colors text-slate-800 ${
+                    isMithilakFlow 
+                      ? 'group-hover:text-[#207C8A]' 
+                      : isFreshGroceryFlow
+                        ? 'group-hover:text-[#D9A21B]'
+                        : isQuickShopFlow
+                          ? 'group-hover:text-[#F26522]'
+                          : 'group-hover:text-[#3E5A44]'
+                  }`}>
                     {opt.label}
                   </span>
                 </div>
-                <ChevronRight size={16} className="text-slate-350 transition-transform group-hover:translate-x-1" />
+                <ChevronRight size={16} className="text-slate-355 transition-transform group-hover:translate-x-1" />
               </div>
             ))}
           </div>
@@ -143,26 +169,34 @@ const VendorProfile = () => {
       </div>
 
       {/* Bottom Footer Section (FAQs, Terms, Privacy, Logout, Socials, Logo, Version) */}
-      <div className="px-6 pt-5 pb-6 flex flex-col gap-4 select-none bg-white border-t border-slate-100 mt-4">
+      <div className="px-6 pt-5 pb-3 flex flex-col gap-4 select-none bg-white border-t border-slate-100 mt-4">
         {/* Link List */}
-        <div className="flex flex-col gap-3.5 text-[14px] font-bold text-gray-500 pl-2">
-          <div onClick={() => navigate('/profile/help-center')} className="cursor-pointer active:text-[#6FAE4A] transition-colors">
+        <div className="flex flex-col gap-3.5 text-[14px] font-bold text-gray-500 pl-2 pb-4 border-b border-slate-100 mb-2">
+          <div onClick={() => navigate('/profile/help-center')} className={`cursor-pointer transition-colors ${
+            isMithilakFlow ? 'hover:text-[#207C8A] active:text-[#207C8A]' : isFreshGroceryFlow ? 'hover:text-[#D9A21B] active:text-[#D9A21B]' : isQuickShopFlow ? 'hover:text-[#F26522] active:text-[#F26522]' : 'hover:text-[#3E5A44] active:text-[#3E5A44]'
+          }`}>
             FAQs
           </div>
-          <div onClick={() => navigate('/terms')} className="cursor-pointer active:text-[#6FAE4A] transition-colors">
+          <div onClick={() => navigate('/terms')} className={`cursor-pointer transition-colors ${
+            isMithilakFlow ? 'hover:text-[#207C8A] active:text-[#207C8A]' : isFreshGroceryFlow ? 'hover:text-[#D9A21B] active:text-[#D9A21B]' : isQuickShopFlow ? 'hover:text-[#F26522] active:text-[#F26522]' : 'hover:text-[#3E5A44] active:text-[#3E5A44]'
+          }`}>
             Terms & Conditions
           </div>
-          <div onClick={() => navigate('/privacy')} className="cursor-pointer active:text-[#6FAE4A] transition-colors">
+          <div onClick={() => navigate('/privacy')} className={`cursor-pointer transition-colors ${
+            isMithilakFlow ? 'hover:text-[#207C8A] active:text-[#207C8A]' : isFreshGroceryFlow ? 'hover:text-[#D9A21B] active:text-[#D9A21B]' : isQuickShopFlow ? 'hover:text-[#F26522] active:text-[#F26522]' : 'hover:text-[#3E5A44] active:text-[#3E5A44]'
+          }`}>
             Privacy Policy
           </div>
         </div>
 
         {/* Centered Login / Logout */}
-        <div className="flex justify-center mt-1">
+        <div className="flex justify-center mt-2">
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="text-[#6FAE4A] hover:text-[#06331b] font-black text-[15px] flex items-center gap-1.5 active:scale-95 transition-transform"
+              className={`font-black text-[15px] flex items-center gap-1.5 active:scale-95 transition-transform ${
+                isMithilakFlow ? 'text-[#207C8A] hover:text-[#1a6672]' : isFreshGroceryFlow ? 'text-[#D9A21B] hover:text-[#c49218]' : isQuickShopFlow ? 'text-[#F26522] hover:text-[#d45014]' : 'text-[#3E5A44] hover:text-[#06331b]'
+              }`}
             >
               Log Out
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -174,7 +208,9 @@ const VendorProfile = () => {
           ) : (
             <button
               onClick={handleLogin}
-              className="text-[#6FAE4A] hover:text-[#06331b] font-black text-[15px] flex items-center gap-1.5 active:scale-95 transition-transform"
+              className={`font-black text-[15px] flex items-center gap-1.5 active:scale-95 transition-transform ${
+                isMithilakFlow ? 'text-[#207C8A] hover:text-[#1a6672]' : isFreshGroceryFlow ? 'text-[#D9A21B] hover:text-[#c49218]' : isQuickShopFlow ? 'text-[#F26522] hover:text-[#d45014]' : 'text-[#3E5A44] hover:text-[#06331b]'
+              }`}
             >
               Login
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -190,7 +226,7 @@ const VendorProfile = () => {
         <div className="flex items-center justify-center gap-5 mt-1">
           {/* Facebook */}
           <a
-            href="https://facebook.com"
+            href="https://www.facebook.com/mithilakart"
             target="_blank"
             rel="noopener noreferrer"
             className="w-9 h-9 rounded-full flex items-center justify-center bg-[#1877F2] transition-transform hover:scale-105 active:scale-90 shadow-2xs"
@@ -202,7 +238,7 @@ const VendorProfile = () => {
 
           {/* YouTube */}
           <a
-            href="https://youtube.com"
+            href="https://www.youtube.com/@mithilakart"
             target="_blank"
             rel="noopener noreferrer"
             className="w-9 h-9 rounded-full flex items-center justify-center bg-[#FF0000] transition-transform hover:scale-105 active:scale-90 shadow-2xs"
@@ -214,7 +250,7 @@ const VendorProfile = () => {
 
           {/* Instagram */}
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/mithilakart"
             target="_blank"
             rel="noopener noreferrer"
             className="w-9 h-9 rounded-full flex items-center justify-center transition-transform hover:scale-105 active:scale-90 shadow-2xs"
@@ -243,7 +279,7 @@ const VendorProfile = () => {
 
           {/* WhatsApp */}
           <a
-            href="https://wa.me/9118001234567"
+            href="https://wa.me/918076109547"
             target="_blank"
             rel="noopener noreferrer"
             className="w-9 h-9 rounded-full flex items-center justify-center bg-[#25D366] transition-transform hover:scale-105 active:scale-90 shadow-2xs"

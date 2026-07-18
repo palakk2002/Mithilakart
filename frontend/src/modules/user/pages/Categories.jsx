@@ -19,6 +19,16 @@ import StationeryTab from '../../../assets/products/product14.jpg';
 import prod4 from '../../../assets/products/product04.jpg';
 import ClothesImg from '../../../assets/products/product15.webp';
 
+// Isolated Mithila Assets
+import MithilaFestival from '../../../assets/mithila/product01.png';
+import MithilaParidhan from '../../../assets/mithila/product02.png';
+import MithilaCuisines from '../../../assets/mithila/product03.png';
+import MithilaBangles from '../../../assets/mithila/product04.png';
+import MithilaDecor from '../../../assets/mithila/product05.png';
+import MithilaPooja from '../../../assets/mithila/product06.png';
+import MithilaBooks from '../../../assets/mithila/product07.png';
+import MithilaAchaar from '../../../assets/mithila/product08.png';
+
 // Import premium category illustrations to repeat on this page
 import beautyCareImg from '../../../assets/categories/beauty_red_blossom.png';
 import giftsHampersImg from '../../../assets/categories/gifts_green_package.png';
@@ -140,14 +150,14 @@ const MITHILA_CATEGORIES = [
   {
     title: 'Mithila Specialities',
     items: [
-      { name: 'Mithila Festival & Cultural', img: SamsungS24 },
-      { name: 'Mithila Paridhan', img: EarbudsDeal },
-      { name: 'Mithila Special Cuisines', img: LorealShampoo },
-      { name: 'Mithila Lac Bangles', img: prod4 },
-      { name: 'Mithila Handcrafted Items', img: LipGloss },
-      { name: 'Mithila Pooja Needs', img: JewelleryImg },
-      { name: 'Mithila Books & Panchang', img: FashionHero },
-      { name: 'Mithila Achaar', img: ElectronicsHero }
+      { name: 'Mithila Festival & Cultural', img: MithilaFestival },
+      { name: 'Mithila Paridhan', img: MithilaParidhan },
+      { name: 'Mithila Special Cuisines', img: MithilaCuisines },
+      { name: 'Mithila Lac Bangles', img: MithilaBangles },
+      { name: 'Mithila Handcrafted Items', img: MithilaDecor },
+      { name: 'Mithila Pooja Needs', img: MithilaPooja },
+      { name: 'Mithila Books & Panchang', img: MithilaBooks },
+      { name: 'Mithila Achaar', img: MithilaAchaar }
     ]
   }
 ];
@@ -160,15 +170,15 @@ const Categories = () => {
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
   const sectionsList = isMithilakFlow ? MITHILA_CATEGORIES : (isQuickShopFlow ? QUICK_SHOP_CATEGORIES : SECTIONS);
-  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
-  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-gradient-to-r from-[#F5B014] to-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
-  const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
-  const textPrimary = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#6FAE4A]');
+  const pageBg = isMithilakFlow ? 'bg-[#F5F9FA]' : isFreshGroceryFlow ? 'bg-[#FFF8EE]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const headerTextColor = (isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) ? 'text-white' : 'text-[#3C2415]';
+  const textPrimary = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#3F2A20]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#3E5A44]');
 
   return (
     <div className={`${pageBg} min-h-screen pb-24 font-sans text-slate-800 relative`}>
       {/* Global Repeating Mithila Art Page Background Texture */}
-      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+      {(isFreshGroceryFlow || !(isMithilakFlow || isQuickShopFlow)) && (
         <div 
           className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
           style={{
@@ -277,7 +287,33 @@ const Categories = () => {
                     }
                   };
 
-                  if (isQuickShopFlow || isMithilakFlow) {
+                  if (isMithilakFlow) {
+                    return (
+                      <div
+                        key={idx}
+                        onClick={onClickHandler}
+                        className="flex flex-col items-center gap-3 cursor-pointer group active:scale-95 transition-transform w-[180px] mx-auto"
+                      >
+                        <div className="relative w-[100px] h-[100px] rounded-full overflow-hidden bg-white border border-[#EADCC9]/55 flex items-center justify-center group-hover:bg-slate-50 transition-colors duration-300 shadow-sm">
+                          <img
+                            src={item.img}
+                            alt={item.name}
+                            className="w-[82%] h-[82%] object-contain z-10 group-hover:scale-[1.08] transition-transform duration-500"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 rounded-full border-[8px] border-white z-20 pointer-events-none" />
+                        </div>
+                        <div className="px-1 text-center">
+                          <h3 className={`text-[13px] font-black text-[#3F2A20] leading-tight group-hover:${textPrimary} transition-colors line-clamp-2`}>
+                            {item.name.replace('Mithila ', '')}
+                          </h3>
+                          <p className="text-[11px] font-black text-[#207C8A] mt-1 uppercase tracking-wider">View Collection</p>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  if (isQuickShopFlow) {
                     return (
                       <div
                         key={idx}
@@ -309,7 +345,7 @@ const Categories = () => {
                       onClick={onClickHandler}
                       className="flex flex-col items-center cursor-pointer group active:scale-95 transition-transform w-[160px] mx-auto"
                     >
-                      <div className="w-full aspect-[1/1.12] bg-white border border-[#EADCC9]/70 rounded-t-full rounded-b-[24px] overflow-hidden flex flex-col items-center justify-between p-3 shadow-[0_4px_10px_rgba(61,35,20,0.02)] group-hover:shadow-[0_8px_20px_rgba(61,35,20,0.08)] group-hover:border-[#6FAE4A]/40 transition-all duration-300">
+                      <div className="w-full aspect-[1/1.12] bg-white border border-[#EADCC9]/70 rounded-t-full rounded-b-[24px] overflow-hidden flex flex-col items-center justify-between p-3 shadow-[0_4px_10px_rgba(61,35,20,0.02)] group-hover:shadow-[0_8px_20px_rgba(61,35,20,0.08)] group-hover:border-[#3E5A44]/40 transition-all duration-300">
                         <span className="text-[12px] md:text-sm font-black text-[#3F2A20] text-center mt-2.5 px-0.5 leading-tight tracking-tight h-[22px] flex items-center justify-center">
                           {item.name}
                         </span>

@@ -29,17 +29,17 @@ const ProductDetail = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
-  const primaryText = isMithilakFlow ? 'text-[#7c3aed]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#6FAE4A]');
-  const primaryBg = isMithilakFlow ? 'bg-[#7c3aed]' : isFreshGroceryFlow ? 'bg-[#7A3E17]' : (isQuickShopFlow ? 'bg-[#d6186d]' : 'bg-[#6FAE4A]');
-  const primaryBgHover = isMithilakFlow ? 'hover:bg-[#6d28d9]' : isFreshGroceryFlow ? 'hover:bg-[#653313]' : (isQuickShopFlow ? 'hover:bg-[#b5125b]' : 'hover:bg-[#06331b]');
-  const primaryBorder = isMithilakFlow ? 'border-[#7c3aed]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#6FAE4A]');
-  const primaryLightBg = isMithilakFlow ? 'bg-purple-50' : isFreshGroceryFlow ? 'bg-[#FFF0A0]/45' : (isQuickShopFlow ? 'bg-pink-50' : 'bg-primary-light');
-  const shadowColor = isMithilakFlow ? 'shadow-[0_4px_16px_rgba(124,58,237,0.22)]' : isFreshGroceryFlow ? 'shadow-[0_4px_16px_rgba(122,62,23,0.15)]' : (isQuickShopFlow ? 'shadow-[0_4px_16px_rgba(214,24,109,0.22)]' : 'shadow-[0_4px_16px_rgba(8,66,36,0.22)]');
-  const shadowColorLight = isMithilakFlow ? 'shadow-[0_10px_30px_rgba(124,58,237,0.08)]' : isFreshGroceryFlow ? 'shadow-[0_10px_30px_rgba(122,62,23,0.06)]' : (isQuickShopFlow ? 'shadow-[0_10px_30px_rgba(214,24,109,0.08)]' : 'shadow-[0_10px_30px_rgba(8,66,36,0.08)]');
+  const primaryText = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#3E5A44]');
+  const primaryBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-[#F26522]' : 'bg-[#3E5A44]');
+  const primaryBgHover = isMithilakFlow ? 'hover:bg-[#1a6672]' : isFreshGroceryFlow ? 'hover:bg-[#c49218]' : (isQuickShopFlow ? 'hover:bg-[#d45014]' : 'hover:bg-[#06331b]');
+  const primaryBorder = isMithilakFlow ? 'border-[#207C8A]' : isFreshGroceryFlow ? 'border-[#D9A21B]' : (isQuickShopFlow ? 'border-[#F26522]' : 'border-[#3E5A44]');
+  const primaryLightBg = isMithilakFlow ? 'bg-[#F5F9FA]' : isFreshGroceryFlow ? 'bg-[#FFF8EE]' : (isQuickShopFlow ? 'bg-[#FFF5EE]' : 'bg-primary-light');
+  const shadowColor = isMithilakFlow ? 'shadow-[0_4px_16px_rgba(32,124,138,0.22)]' : isFreshGroceryFlow ? 'shadow-[0_4px_16px_rgba(217,162,27,0.15)]' : (isQuickShopFlow ? 'shadow-[0_4px_16px_rgba(242,101,34,0.22)]' : 'shadow-[0_4px_16px_rgba(8,66,36,0.22)]');
+  const shadowColorLight = isMithilakFlow ? 'shadow-[0_10px_30px_rgba(32,124,138,0.08)]' : isFreshGroceryFlow ? 'shadow-[0_10px_30px_rgba(217,162,27,0.06)]' : (isQuickShopFlow ? 'shadow-[0_10px_30px_rgba(242,101,34,0.08)]' : 'shadow-[0_10px_30px_rgba(8,66,36,0.08)]');
   
-  const accentBg = isMithilakFlow ? 'bg-purple-500' : isFreshGroceryFlow ? 'bg-[#7A3E17]' : (isQuickShopFlow ? 'bg-pink-500' : 'bg-green-500');
-  const accentText = isMithilakFlow ? 'text-purple-500' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-pink-500' : 'text-green-500');
-  const accentBorder = isMithilakFlow ? 'border-purple-500' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-pink-500' : 'border-green-500');
+  const accentBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-orange-500' : 'bg-green-500');
+  const accentText = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-orange-500' : 'text-green-500');
+  const accentBorder = isMithilakFlow ? 'border-[#207C8A]' : isFreshGroceryFlow ? 'border-[#D9A21B]' : (isQuickShopFlow ? 'border-orange-500' : 'border-green-500');
 
   const [selectedSize, setSelectedSize] = useState('S');
   const { wishlist, addToWishlist, removeFromWishlist } = useAccountStore();
@@ -188,10 +188,10 @@ const ProductDetail = () => {
 
   return (
     <div className={`min-h-screen pb-28 font-sans text-slate-800 transition-colors duration-300 relative ${
-      isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : 'bg-bg-cream'
+      isFreshGroceryFlow ? 'bg-[#FFF8EE]' : 'bg-bg-cream'
     }`}>
       {/* Global Repeating Mithila Art Page Background Texture */}
-      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+      {(isFreshGroceryFlow || !(isMithilakFlow || isQuickShopFlow)) && (
         <div 
           className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
           style={{
@@ -203,21 +203,21 @@ const ProductDetail = () => {
 
       {/* Premium Boutique Header */}
       <div className={`sticky top-0 z-50 px-4 py-3 flex items-center justify-between border-b border-gray-100 shadow-[0_1px_8px_rgba(0,0,0,0.01)] transition-colors duration-300 relative z-10 ${
-        isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-[#FCF7EE]/90 border-[#F3E3CD]/60 backdrop-blur-md'
+        isFreshGroceryFlow ? 'bg-[#D9A21B] text-white' : 'bg-[#FCF7EE]/90 border-[#F3E3CD]/60 backdrop-blur-md'
       }`}>
         <button onClick={() => navigate(-1)} className={`p-1.5 rounded-full transition-colors active:scale-90 ${
-          isFreshGroceryFlow ? 'text-black hover:bg-black/5' : 'text-slate-800 hover:bg-gray-50'
+          isFreshGroceryFlow ? 'text-white hover:bg-white/5' : 'text-slate-800 hover:bg-gray-50'
         }`}>
           <ArrowLeft size={20} strokeWidth={2.5} />
         </button>
-        <span className={`text-[12px] font-black tracking-[0.25em] ${primaryText} uppercase pl-4`}>
+        <span className={`text-[12px] font-black tracking-[0.25em] ${isFreshGroceryFlow ? 'text-white' : primaryText} uppercase pl-4`}>
           Mithilakart
         </span>
         <div className="flex items-center gap-3">
           <button 
             onClick={() => navigate('/vendor/search')} 
             className={`p-1.5 rounded-full transition-colors active:scale-90 ${
-              isFreshGroceryFlow ? 'text-black hover:bg-black/5' : 'text-slate-800 hover:bg-gray-50'
+              isFreshGroceryFlow ? 'text-white hover:bg-white/5' : 'text-slate-800 hover:bg-gray-50'
             }`}
           >
             <Search size={20} />
@@ -225,7 +225,7 @@ const ProductDetail = () => {
           <div 
             onClick={() => navigate('/vendor/cart')} 
             className={`relative p-1.5 rounded-full transition-colors active:scale-95 cursor-pointer ${
-              isFreshGroceryFlow ? 'text-black hover:bg-black/5' : 'text-slate-800 hover:bg-gray-50'
+              isFreshGroceryFlow ? 'text-white hover:bg-white/5' : 'text-slate-800 hover:bg-gray-50'
             }`}
           >
             <ShoppingCart size={20} className="text-current" />
@@ -406,7 +406,7 @@ const ProductDetail = () => {
         </span>
         <div className="bg-white border border-slate-100 rounded-2xl p-3.5 space-y-3.5 shadow-[0_4px_16px_rgba(0,0,0,0.01)]">
           <div className="flex items-center gap-3">
-            <MapPin size={18} className="text-[#6FAE4A]" />
+            <MapPin size={18} className="text-[#3E5A44]" />
             <div className="flex-1 min-w-0">
               <p className="text-[11px] font-black text-slate-800 uppercase tracking-wider leading-none">Deliver to Home</p>
               <p className="text-[12px] text-slate-500 font-medium truncate mt-1">83 Kishan Pura Mataji Mandir, Sector N...</p>
@@ -415,7 +415,7 @@ const ProductDetail = () => {
           </div>
           <div className="h-[1px] bg-slate-100" />
           <div className="flex items-center gap-3">
-            <Truck size={18} className="text-[#6FAE4A]" />
+            <Truck size={18} className="text-[#3E5A44]" />
             <div>
               <p className="text-[12px] font-black text-slate-850">Delivery by Sat, 16 May</p>
               <p className="text-[10px] text-orange-600 font-bold mt-0.5">Order in 00h 00m 14s</p>
@@ -521,7 +521,7 @@ const ProductDetail = () => {
       <div className="mt-4 py-4 bg-white border-y border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.01)] md:max-w-6xl md:mx-auto md:w-full md:rounded-2xl md:border md:my-6 md:p-6">
         <div className="flex justify-between items-center px-4 mb-3 md:px-0">
           <h3 className="text-[13px] font-black uppercase tracking-wider text-slate-900">Similar Products</h3>
-          <span className="text-[10px] font-black text-[#6FAE4A] tracking-widest uppercase">View All</span>
+          <span className="text-[10px] font-black text-[#3E5A44] tracking-widest uppercase">View All</span>
         </div>
         <div className="flex gap-4 px-4 overflow-x-auto no-scrollbar pb-2 md:justify-center md:gap-6 md:px-0 md:overflow-x-visible">
           {[
@@ -560,7 +560,7 @@ const ProductDetail = () => {
       <div className="mt-4 py-4 bg-white border-y border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.01)] md:max-w-6xl md:mx-auto md:w-full md:rounded-2xl md:border md:my-6 md:p-6">
         <div className="flex justify-between items-center px-4 mb-3 md:px-0">
           <h3 className="text-[13px] font-black uppercase tracking-wider text-slate-900">Bought Together</h3>
-          <span className="text-[10px] font-black text-[#6FAE4A] tracking-widest uppercase">Explore</span>
+          <span className="text-[10px] font-black text-[#3E5A44] tracking-widest uppercase">Explore</span>
         </div>
         <div className="flex gap-4 px-4 overflow-x-auto no-scrollbar pb-2 md:justify-center md:gap-6 md:px-0 md:overflow-x-visible">
           {[
@@ -773,15 +773,15 @@ const ProductDetail = () => {
             <div className="sticky top-[53px] bg-white flex border-b border-gray-100 z-10">
               <button 
                 onClick={() => setActivePaymentTab('COD')}
-                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'COD' ? 'text-[#6FAE4A]' : 'text-gray-400'}`}
+                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'COD' ? 'text-[#3E5A44]' : 'text-gray-400'}`}
               >
-                <IndianRupee size={22} className={activePaymentTab === 'COD' ? 'text-[#6FAE4A]' : 'text-gray-400'} />
+                <IndianRupee size={22} className={activePaymentTab === 'COD' ? 'text-[#3E5A44]' : 'text-gray-400'} />
                 <span className="text-[13px] font-bold">COD</span>
-                {activePaymentTab === 'COD' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#6FAE4A]" />}
+                {activePaymentTab === 'COD' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#3E5A44]" />}
               </button>
               <button 
                 onClick={() => setActivePaymentTab('UPI')}
-                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'UPI' ? 'text-[#6FAE4A]' : 'text-gray-400'}`}
+                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'UPI' ? 'text-[#3E5A44]' : 'text-gray-400'}`}
               >
                 <div className="w-5 h-7 flex items-center justify-center">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -789,7 +789,7 @@ const ProductDetail = () => {
                   </svg>
                 </div>
                 <span className="text-[13px] font-bold">UPI</span>
-                {activePaymentTab === 'UPI' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#6FAE4A]" />}
+                {activePaymentTab === 'UPI' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#3E5A44]" />}
               </button>
             </div>
 
@@ -921,7 +921,7 @@ const ProductDetail = () => {
         {/* Right Side: Add to Cart Button */}
         <button 
           onClick={handleAddToCart}
-          className="bg-[#2e7d32] hover:bg-[#1b5e20] text-white font-extrabold px-6 py-2.5 rounded-[6px] active:scale-95 transition-all text-[13px] flex items-center justify-center cursor-pointer shadow-[0_2px_4px_rgba(46,125,50,0.15)]"
+          className={`${primaryBg} ${primaryBgHover} text-white font-extrabold px-6 py-2.5 rounded-[6px] active:scale-95 transition-all text-[13px] flex items-center justify-center cursor-pointer shadow-xs`}
         >
           {t('cart.addToCart') || 'Add to cart'}
         </button>

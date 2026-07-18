@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { 
   Heart, 
@@ -26,6 +26,137 @@ import BeautyJewel3 from '../../../assets/Beauty/BeautyJewel3.jpg';
 import BeautyJewel4 from '../../../assets/Beauty/BeautyJewel4.jpg';
 import BeautyJewel5 from '../../../assets/Beauty/BeautyJewel5.jpg';
 import BeautyJewel6 from '../../../assets/Beauty/BeautyJewel6.jpg';
+
+const CornerFlower = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[10px] h-[10px] md:w-[14px] md:h-[14px] opacity-85 select-none pointer-events-none">
+    {/* Green leaves/petals */}
+    <path d="M12 2C13 4.5 13 4.5 12 7C11 4.5 11 4.5 12 2Z" fill="#3E5A44" />
+    <path d="M12 22C13 19.5 13 19.5 12 17C11 19.5 11 19.5 12 22Z" fill="#3E5A44" />
+    <path d="M2 12C4.5 13 4.5 13 7 12C4.5 11 4.5 11 2 12Z" fill="#3E5A44" />
+    <path d="M22 12C19.5 13 19.5 13 17 12C19.5 11 19.5 11 22 12Z" fill="#3E5A44" />
+    {/* Orange petals */}
+    <circle cx="12" cy="8.5" r="2.2" fill="#E67E22" />
+    <circle cx="12" cy="15.5" r="2.2" fill="#E67E22" />
+    <circle cx="8.5" cy="12" r="2.2" fill="#E67E22" />
+    <circle cx="15.5" cy="12" r="2.2" fill="#E67E22" />
+    {/* Center core */}
+    <circle cx="12" cy="12" r="2.4" fill="#D35400" />
+    <circle cx="12" cy="12" r="0.8" fill="#FFF" />
+  </svg>
+);
+
+const CardBottomDivider = () => (
+  <div className="w-full flex items-center justify-center my-0.5 md:my-1 select-none pointer-events-none">
+    <svg viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[65px] md:w-[85px] h-auto">
+      {/* Left branch */}
+      <path d="M45 12 C35 14, 20 15, 10 12" stroke="#3E5A44" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+      <path d="M35 13 C34 11, 31 11, 30 12.5" fill="#3E5A44" />
+      <circle cx="32" cy="14.5" r="1.2" fill="#D35400" />
+      {/* Right branch */}
+      <path d="M75 12 C85 14, 100 15, 110 12" stroke="#3E5A44" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+      <path d="M85 13 C86 11, 89 11, 90 12.5" fill="#3E5A44" />
+      <circle cx="88" cy="14.5" r="1.2" fill="#D35400" />
+      {/* Central Flower */}
+      <circle cx="60" cy="12" r="3.5" fill="#E67E22" />
+      <circle cx="60" cy="5.5" r="2.2" fill="#D35400" />
+      <circle cx="60" cy="18.5" r="2.2" fill="#D35400" />
+      <circle cx="53.5" cy="12" r="2.2" fill="#D35400" />
+      <circle cx="66.5" cy="12" r="2.2" fill="#D35400" />
+    </svg>
+  </div>
+);
+
+const CategoryProductCard = React.memo(({ product }) => {
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  
+  // Stable pseudo-random rating count
+  const ratingCount = useMemo(() => {
+    const idNum = typeof product.id === 'string' ? product.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) : product.id;
+    return (idNum % 450) + 50;
+  }, [product.id]);
+
+  return (
+    <Link
+      to="/vendor/product-detail"
+      state={{ product }}
+      className="flex flex-col cursor-pointer group w-full relative bg-[#FFFDF9] border border-[#EADCC9]/70 rounded-[18px] md:rounded-[24px] p-1.5 md:p-2.5 shadow-[0_2px_8px_rgba(61,35,20,0.015)] hover:shadow-[0_6px_18px_rgba(61,35,20,0.04)] hover:border-[#3E5A44]/35 transition-all duration-300 transform select-none"
+    >
+      {/* Inner Decorative Dashed Border */}
+      <div className="absolute inset-0.5 md:inset-1 pointer-events-none border border-dashed border-[#D35400]/20 rounded-[15px] md:rounded-[20px]" />
+
+      {/* Corner Ornaments */}
+      <div className="absolute top-0.5 left-0.5 md:top-1 md:left-1 z-10"><CornerFlower /></div>
+      <div className="absolute top-0.5 right-0.5 md:top-1 md:right-1 z-10"><CornerFlower /></div>
+      <div className="absolute bottom-0.5 left-0.5 md:bottom-1 md:left-1 z-10"><CornerFlower /></div>
+      <div className="absolute bottom-0.5 right-0.5 md:bottom-1 md:right-1 z-10"><CornerFlower /></div>
+
+      {/* Product Image Section */}
+      <div className="relative aspect-square rounded-[14px] md:rounded-[18px] overflow-hidden bg-white/50 border border-[#EADCC9]/40 p-0.5 md:p-1">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-cover rounded-[11px] md:rounded-[15px] group-hover:scale-[1.03] transition-transform duration-500"
+          loading="lazy"
+        />
+
+        {/* Wishlist Heart Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            setIsWishlisted(!isWishlisted);
+          }}
+          className="absolute top-1 right-1 md:top-2 md:right-2 w-6 h-6 md:w-7.5 md:h-7.5 rounded-full bg-white/90 backdrop-blur-xs shadow-[0_2px_6px_rgba(0,0,0,0.06)] flex items-center justify-center text-slate-700 hover:text-red-500 z-10 transition-all duration-200 active:scale-85"
+        >
+          <Heart 
+            size={11} 
+            className={`transition-colors ${isWishlisted ? 'fill-red-500 stroke-red-500 text-red-500' : 'stroke-[#3F2A20] fill-none'}`} 
+          />
+        </button>
+
+        {/* Bestseller Tag */}
+        {product.bestseller && (
+          <div className="absolute top-0 left-0 bg-[#008c7a] text-white text-[7.5px] font-black px-1.5 py-0.5 rounded-br uppercase tracking-wider shadow-xs leading-none z-10">
+            Bestseller
+          </div>
+        )}
+
+        {/* Rating Badge on Image */}
+        <div className="absolute bottom-1 left-1 md:bottom-2 md:left-2 flex items-center gap-0.5 md:gap-1 bg-white/95 backdrop-blur-xs px-1 py-0.2 md:px-1.5 md:py-0.5 rounded-[4px] md:rounded-[6px] shadow-xs border border-[#EADCC9]/30">
+          <span className="text-[8px] md:text-[9.5px] font-black text-slate-800">{product.rating || '4.8'}</span>
+          <Star size={7} fill="currentColor" className="text-[#3E5A44] stroke-none" />
+          <div className="w-[1px] h-2 bg-gray-300 mx-0.5" />
+          <span className="text-[7.5px] md:text-[8.5px] font-semibold text-gray-500">({product.reviews || ratingCount})</span>
+        </div>
+      </div>
+
+      {/* Details Section */}
+      <div className="pt-1.5 pb-0.5 px-0.5 md:pt-2.5 md:pb-1 md:px-1.5 relative z-10 flex flex-col justify-between flex-1">
+        <div>
+          <h3 className="text-[10px] md:text-[12px] font-black text-[#3F2A20] line-clamp-1 leading-tight tracking-tight">
+            <span className="font-extrabold text-[#3F2A20]">{product.brand || 'Drasert'}</span> {product.name}
+          </h3>
+
+          <div className="mt-1 flex flex-col gap-0.5">
+            <div className="flex items-center gap-1 md:gap-1.5 flex-wrap">
+              <span className="text-[11px] md:text-[13.5px] font-black text-slate-900">₹{product.price}</span>
+              <span className="text-[8.5px] md:text-[10px] text-gray-400 line-through font-semibold">MRP ₹{product.oldPrice || '1,999'}</span>
+              <span className="border border-[#F26522]/45 text-[#F26522] bg-[#F26522]/5 text-[7px] md:text-[8px] px-1.5 py-0.2 rounded-full font-black uppercase tracking-tight">
+                {product.off || '50% OFF'}
+              </span>
+            </div>
+            <p className="text-[8.5px] md:text-[9.5px] font-extrabold text-[#3E5A44] tracking-tight mt-0.5">
+              ₹{Math.round(parseFloat(product.price.replace(/,/g, '')) * 0.9)} with UPI offer + more
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom floral divider motif */}
+        <CardBottomDivider />
+      </div>
+    </Link>
+  );
+});
 
 const CategoryProducts = () => {
   const [searchParams] = useSearchParams();
@@ -281,105 +412,63 @@ const CategoryProducts = () => {
   return (
     <div className="bg-gray-50 min-h-screen text-slate-900 transition-colors duration-300 pb-10 font-sans">
       {/* ── Dynamic Category Header ── */}
-      <div className="sticky top-0 z-[100] bg-[#6FAE4A] text-white">
+      <div className="sticky top-0 z-[100] bg-[#3E5A44] text-white shadow-xs">
         {/* Row 1: Back + Title + Actions */}
-        <div className="px-4 pt-3 pb-2 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="px-3 pt-1.5 pb-1 flex items-center justify-between">
+          <div className="flex items-center gap-2">
             <Link to="/vendor/home" className="p-1 active:scale-90 transition-transform">
-              <ArrowLeft size={22} strokeWidth={2.5} />
+              <ArrowLeft size={20} strokeWidth={2.5} />
             </Link>
-            <h1 className="text-[17px] font-bold tracking-tight">{category}</h1>
+            <h1 className="text-[15.5px] font-black tracking-tight">{category}</h1>
           </div>
           
-          <div className="flex items-center gap-1">
-            <Link to="/vendor/search" className="p-2">
-              <Search size={20} strokeWidth={2} />
+          <div className="flex items-center gap-0.5">
+            <Link to="/vendor/search" className="p-1.5">
+              <Search size={18} strokeWidth={2} />
             </Link>
-            <Link to="/vendor/cart" className="relative p-2 active:scale-90 transition-transform">
-              <ShoppingCart size={20} strokeWidth={2} />
+            <Link to="/vendor/cart" className="relative p-1.5 active:scale-90 transition-transform">
+              <ShoppingCart size={18} strokeWidth={2} />
               {cartCount > 0 && (
-                <span className="absolute top-1 right-1 bg-red-500 text-white text-[8px] font-black min-w-[14px] h-3.5 rounded-full flex items-center justify-center border border-[#6FAE4A] shadow-sm">{cartCount}</span>
+                <span className="absolute top-0.5 right-0.5 bg-red-500 text-white text-[7.5px] font-black min-w-[13px] h-3.5 rounded-full flex items-center justify-center border border-[#3E5A44] shadow-sm">{cartCount}</span>
               )}
             </Link>
           </div>
         </div>
 
         {/* Row 2: Sort & Filter Bar (Compact) */}
-        <div className="flex items-center border-t border-white/10 bg-[#6FAE4A]">
+        <div className="flex items-center border-t border-white/10 bg-[#3E5A44]">
           <button 
             onClick={() => setShowSortModal(true)}
-            className="flex-1 flex items-center justify-center gap-2 py-3 text-[12px] font-bold uppercase tracking-wide active:bg-white/10"
+            className="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-[11px] font-bold uppercase tracking-wide active:bg-white/10"
           >
-            Sort <ChevronDown size={14} strokeWidth={2.5} />
+            Sort <ChevronDown size={12} strokeWidth={2.5} />
           </button>
-          <div className="w-[1px] h-4 bg-white/20"></div>
+          <div className="w-[1px] h-3.5 bg-white/20"></div>
           <button 
             onClick={() => setShowFilterModal(true)}
-            className="flex-1 flex items-center justify-center gap-2 py-3 text-[12px] font-bold uppercase tracking-wide active:bg-white/10"
+            className="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-[11px] font-bold uppercase tracking-wide active:bg-white/10"
           >
-            <SlidersHorizontal size={14} strokeWidth={2.5} /> Filter
+            <SlidersHorizontal size={12} strokeWidth={2.5} /> Filter
           </button>
         </div>
       </div>
 
       {/* ── Category Hero Info ── */}
-      <div className="px-4 py-4 bg-white border-b border-gray-100 flex items-center justify-between shadow-sm">
+      <div className="px-3.5 py-2.5 bg-white border-b border-gray-100 flex items-center justify-between shadow-xs">
         <div>
-          <h2 className="text-[18px] font-black text-slate-800 uppercase tracking-tight leading-none">{category}</h2>
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1.5">Curated collection for you</p>
+          <h2 className="text-[16px] font-black text-slate-800 uppercase tracking-tight leading-none">{category}</h2>
+          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-1">Curated collection for you</p>
         </div>
-        <div className="flex -space-x-2">
-           <div className="w-8 h-8 rounded-full border-2 border-white bg-primary-light flex items-center justify-center text-[10px] font-bold text-[#6FAE4A]">NEW</div>
-           <div className="w-8 h-8 rounded-full border-2 border-white bg-green-50 flex items-center justify-center text-[10px] font-bold text-[#388e3c]">SALE</div>
+        <div className="flex -space-x-1.5">
+           <div className="w-7 h-7 rounded-full border-2 border-white bg-primary-light flex items-center justify-center text-[9px] font-bold text-[#3E5A44]">NEW</div>
+           <div className="w-7 h-7 rounded-full border-2 border-white bg-green-50 flex items-center justify-center text-[9px] font-bold text-[#388e3c]">SALE</div>
         </div>
       </div>
 
       {/* 🔶 Main Product Grid (Top Part) */}
       <div className="p-4 grid grid-cols-2 gap-4">
         {sortedProducts.slice(0, 4).map((product) => (
-          <Link to="/vendor/product-detail" state={{ product }} key={product.id} className="flex flex-col group active:scale-[0.98] transition-transform">
-              <div className="relative aspect-[3/4] bg-[var(--card-border)] rounded-xl border border-transparent overflow-hidden mb-2 group-hover:border-[#6FAE4A]/30 transition-all shadow-sm">
-                <img 
-                  src={product.image} 
-                  alt={product.name} 
-                  className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-100 product-img-blend`} 
-                />
-              
-              {/* Heart Icon */}
-              <button className="absolute top-3 right-3 w-8 h-8 bg-black/10 backdrop-blur-sm border border-white/10 rounded-full flex items-center justify-center text-white/80 hover:text-red-500 transition-all">
-                <Heart size={16} />
-              </button>
-
-              {/* Bestseller Tag */}
-              {product.bestseller && (
-                <div className="absolute top-0 left-0 bg-[#008c7a] text-white text-[8px] font-black px-2 py-1 rounded-br-lg uppercase tracking-wider shadow-lg">
-                  Bestseller
-                </div>
-              )}
-
-              {/* Rating Mini Tag */}
-              <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm text-black text-[9px] font-black px-1.5 py-0.5 rounded flex items-center gap-1 shadow-md">
-                {product.rating} <Star size={8} fill="currentColor" className="text-green-700" /> <span className="text-gray-400 font-bold border-l border-gray-300 pl-1">{product.reviews}</span>
-              </div>
-            </div>
-
-            {/* Product Details */}
-            <div className="px-0.5 mt-1">
-              <h3 className="text-[9px] font-bold text-slate-500 uppercase tracking-tight line-clamp-1">{product.brand}</h3>
-              <p className="text-[10px] font-medium text-slate-900 line-clamp-1 leading-tight mt-0.5">{product.name}</p>
-              
-              <div className="flex items-center gap-1.5 mt-1 flex-wrap">
-                <span className="text-[12px] font-black text-slate-900">₹{product.price}</span>
-                <span className="text-[9px] text-slate-400 line-through tracking-tighter">MRP ₹{product.oldPrice}</span>
-                <span className="border border-[#e47911] text-[#e47911] text-[8px] px-1 py-0.2 rounded-full font-bold uppercase tracking-tight">{product.off || '50% OFF'}</span>
-              </div>
-
-              <div className="mt-0.5 flex items-center gap-1">
-                <span className="text-[8px] font-medium text-slate-400">Delivery by</span>
-                <span className="text-[8px] font-bold text-slate-700 uppercase tracking-tighter">{product.delivery}</span>
-              </div>
-            </div>
-          </Link>
+          <CategoryProductCard product={product} key={product.id} />
         ))}
       </div>
 
@@ -411,49 +500,7 @@ const CategoryProducts = () => {
       </div>
       <div className="p-4 grid grid-cols-2 gap-4">
         {sortedProducts.slice(4).map((product) => (
-          <Link to="/vendor/product-detail" state={{ product }} key={product.id} className="flex flex-col group active:scale-[0.98] transition-transform">
-              <div className="relative aspect-[3/4] bg-[var(--card-border)] rounded-xl border border-transparent overflow-hidden mb-2 group-hover:border-[#6FAE4A]/30 transition-all shadow-sm">
-                <img 
-                  src={product.image} 
-                  alt={product.name} 
-                  className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-100 product-img-blend`} 
-                />
-              
-              {/* Heart Icon */}
-              <button className="absolute top-3 right-3 w-8 h-8 bg-black/10 backdrop-blur-sm border border-white/10 rounded-full flex items-center justify-center text-white/80 hover:text-red-500 transition-all">
-                <Heart size={16} />
-              </button>
-
-              {/* Bestseller Tag */}
-              {product.bestseller && (
-                <div className="absolute top-0 left-0 bg-[#008c7a] text-white text-[8px] font-black px-2 py-1 rounded-br-lg uppercase tracking-wider shadow-lg">
-                  Bestseller
-                </div>
-              )}
-
-              {/* Rating Mini Tag */}
-              <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm text-black text-[9px] font-black px-1.5 py-0.5 rounded flex items-center gap-1 shadow-md">
-                {product.rating} <Star size={8} fill="currentColor" className="text-green-700" /> <span className="text-gray-400 font-bold border-l border-gray-300 pl-1">{product.reviews}</span>
-              </div>
-            </div>
-
-            {/* Product Details */}
-            <div className="px-0.5 mt-1">
-              <h3 className="text-[9px] font-bold text-slate-500 uppercase tracking-tight line-clamp-1">{product.brand}</h3>
-              <p className="text-[10px] font-medium text-slate-900 line-clamp-1 leading-tight mt-0.5">{product.name}</p>
-              
-              <div className="flex items-center gap-1.5 mt-1 flex-wrap">
-                <span className="text-[12px] font-black text-slate-900">₹{product.price}</span>
-                <span className="text-[9px] text-slate-400 line-through tracking-tighter">MRP ₹{product.oldPrice}</span>
-                <span className="border border-[#e47911] text-[#e47911] text-[8px] px-1 py-0.2 rounded-full font-bold uppercase tracking-tight">{product.off || '50% OFF'}</span>
-              </div>
-
-              <div className="mt-0.5 flex items-center gap-1">
-                <span className="text-[8px] font-medium text-slate-400">Delivery by</span>
-                <span className="text-[8px] font-bold text-slate-700 uppercase tracking-tighter">{product.delivery}</span>
-              </div>
-            </div>
-          </Link>
+          <CategoryProductCard product={product} key={product.id} />
         ))}
       </div>
 
@@ -461,9 +508,9 @@ const CategoryProducts = () => {
       {showSortModal && (
         <div className="fixed inset-0 z-[200] flex items-end">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowSortModal(false)}></div>
-          <div className="relative w-full bg-[#111111] rounded-t-2xl border-t border-[#6FAE4A]/20 p-6 animate-in slide-in-from-bottom duration-300">
+          <div className="relative w-full bg-[#111111] rounded-t-2xl border-t border-[#3E5A44]/20 p-6 animate-in slide-in-from-bottom duration-300">
             <div className="w-12 h-1 bg-gray-800 rounded-full mx-auto mb-6"></div>
-            <h2 className="text-sm font-black text-[#6FAE4A] uppercase tracking-widest mb-6">Sort By</h2>
+            <h2 className="text-sm font-black text-[#3E5A44] uppercase tracking-widest mb-6">Sort By</h2>
             <div className="space-y-4">
               {['Popularity', 'Price: Low to High', 'Price: High to Low', 'Customer Rating'].map((option) => (
                 <button 
@@ -475,7 +522,7 @@ const CategoryProducts = () => {
                   className={`w-full flex items-center justify-between text-sm font-bold py-2 ${activeSort === option ? 'text-white' : 'text-gray-500'}`}
                 >
                   {option}
-                  {activeSort === option && <div className="w-2 h-2 bg-[#6FAE4A] rounded-full shadow-[0_0_8px_#6FAE4A]"></div>}
+                  {activeSort === option && <div className="w-2 h-2 bg-[#3E5A44] rounded-full shadow-[0_0_8px_#3E5A44]"></div>}
                 </button>
               ))}
             </div>
@@ -488,7 +535,7 @@ const CategoryProducts = () => {
         <div className="fixed inset-0 z-[200] bg-black animate-in fade-in duration-200">
           <div className="h-full flex flex-col">
             <div className="p-4 border-b border-gray-900 flex justify-between items-center">
-              <h2 className="text-sm font-black text-[#6FAE4A] uppercase tracking-widest">Filters</h2>
+              <h2 className="text-sm font-black text-[#3E5A44] uppercase tracking-widest">Filters</h2>
               <button onClick={() => setShowFilterModal(false)} className="text-white">✕</button>
             </div>
             <div className="flex-1 p-6 space-y-8">
@@ -502,7 +549,7 @@ const CategoryProducts = () => {
               <div>
                 <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-4">Availability</h3>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-5 bg-[#6FAE4A] rounded-full relative">
+                  <div className="w-10 h-5 bg-[#3E5A44] rounded-full relative">
                     <div className="absolute right-0.5 top-0.5 w-4 h-4 bg-black rounded-full"></div>
                   </div>
                   <span className="text-sm font-bold text-white">Quick Delivery Only</span>
@@ -511,7 +558,7 @@ const CategoryProducts = () => {
             </div>
             <div className="p-4 border-t border-gray-900 flex gap-4">
               <button onClick={() => setShowFilterModal(false)} className="flex-1 py-4 text-[11px] font-black text-gray-400 uppercase tracking-widest">Clear All</button>
-              <button onClick={() => setShowFilterModal(false)} className="flex-[2] py-4 bg-[#6FAE4A] text-black text-[11px] font-black uppercase tracking-widest rounded-lg">Apply Filters</button>
+              <button onClick={() => setShowFilterModal(false)} className="flex-[2] py-4 bg-[#3E5A44] text-black text-[11px] font-black uppercase tracking-widest rounded-lg">Apply Filters</button>
             </div>
           </div>
         </div>

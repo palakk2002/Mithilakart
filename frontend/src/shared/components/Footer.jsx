@@ -76,7 +76,7 @@ const Footer = () => {
       <div className="flex items-center justify-center gap-5 mb-5">
         {/* Facebook */}
         <a
-          href="https://facebook.com"
+          href="https://www.facebook.com/mithilakart"
           target="_blank"
           rel="noopener noreferrer"
           className="w-8 h-8 rounded-full flex items-center justify-center bg-[#1877F2] transition-transform hover:scale-110 active:scale-95 shadow-sm"
@@ -88,7 +88,7 @@ const Footer = () => {
 
         {/* YouTube */}
         <a
-          href="https://youtube.com"
+          href="https://www.youtube.com/@mithilakart"
           target="_blank"
           rel="noopener noreferrer"
           className="w-8 h-8 rounded-full flex items-center justify-center bg-[#FF0000] transition-transform hover:scale-110 active:scale-95 shadow-sm"
@@ -100,7 +100,7 @@ const Footer = () => {
 
         {/* Instagram */}
         <a
-          href="https://instagram.com"
+          href="https://www.instagram.com/mithilakart"
           target="_blank"
           rel="noopener noreferrer"
           className="w-8 h-8 rounded-full flex items-center justify-center transition-transform hover:scale-110 active:scale-95 shadow-sm"
@@ -129,7 +129,7 @@ const Footer = () => {
 
         {/* WhatsApp */}
         <a
-          href="https://wa.me/9118001234567"
+          href="https://wa.me/918076109547"
           target="_blank"
           rel="noopener noreferrer"
           className="w-8 h-8 rounded-full flex items-center justify-center bg-[#25D366] transition-transform hover:scale-110 active:scale-95 shadow-sm"

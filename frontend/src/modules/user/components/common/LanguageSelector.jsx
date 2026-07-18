@@ -8,11 +8,15 @@ const languages = [
   { code: 'mai', name: 'मैथिली', flag: '🇮🇳' }
 ];
 
-const LanguageSelector = ({ isDarkHeader = false }) => {
+const LanguageSelector = ({ isDarkHeader = false, variant = '', compact = false }) => {
   const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+
+  const buttonStyle = compact 
+    ? 'bg-white text-gray-900 border-none rounded-full text-[10.5px] font-bold px-3 py-1 leading-normal shadow-xs hover:bg-gray-100'
+    : 'bg-white text-gray-900 border-none rounded-full text-[11.5px] font-bold px-3.5 py-1.5 leading-normal shadow-sm hover:bg-gray-100';
 
   const handleLanguageChange = (code) => {
     i18n.changeLanguage(code);
@@ -24,13 +28,9 @@ const LanguageSelector = ({ isDarkHeader = false }) => {
     <div className="relative inline-block text-left z-[9999]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-1 px-1.5 py-1 md:px-2.5 md:py-1.5 rounded-lg border text-[10px] md:text-xs font-bold transition-all duration-300 ${
-          isDarkHeader
-            ? 'bg-white/10 text-white border-white/20 hover:bg-white/20'
-            : 'bg-white text-slate-800 border-gray-200 shadow-xs hover:bg-gray-50'
-        }`}
+        className={`flex items-center justify-center gap-1 font-bold transition-all duration-300 ${buttonStyle}`}
       >
-        <span>{currentLanguage.flag} {currentLanguage.name}</span>
+        <span>{currentLanguage.name}</span>
       </button>
 
       {isOpen && (
@@ -61,3 +61,4 @@ const LanguageSelector = ({ isDarkHeader = false }) => {
 };
 
 export default LanguageSelector;
+

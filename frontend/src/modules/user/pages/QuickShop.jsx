@@ -1,12 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { MapPin, ChevronRight, Search, Mic, Star } from 'lucide-react';
-import { formatPrice } from '../../../shared/utils/priceFormatter';
+import { useNavigate, Link } from 'react-router-dom';
+import { MapPin, ChevronDown, Search, Camera, Mic, ScanLine, Star, Home as HomeIcon, LayoutGrid, ShoppingCart, User, ChevronRight } from 'lucide-react';
 import CategoryCard from '../components/vendor/CategoryCard';
-import SearchInput from '../../../shared/components/SearchInput';
-import closedShutter from '../../../assets/closed_shutter.png';
 
-// Import Assets (aligned with categories)
+// Import Assets
 import SamsungS24 from '../../../assets/products/product01.jpg';
 import EarbudsDeal from '../../../assets/products/product02.jpg';
 import LorealShampoo from '../../../assets/products/product03.jpg';
@@ -23,44 +20,97 @@ import ToysTab from '../../../assets/products/product13.jpg';
 import StationeryTab from '../../../assets/products/product14.jpg';
 import ClothesImg from '../../../assets/products/product15.webp';
 
-const SPECIAL_DEALS_TABS = [
-  {
-    id: 'juices',
-    name: 'Juices and more',
-    img: ForYouProduct,
-    products: [
-      { id: 'sd1', name: 'Slice Mango Drink', img: ForYouProduct, discount: '16%', rating: '4.2', weight: '600 ml', oldPrice: 38, price: 32, xtraPrice: 30 },
-      { id: 'sd2', name: 'Maaza Mango Drink Original Fl...', img: ForYouProduct, discount: '6%', rating: '4.3', weight: '600 ml', oldPrice: 35, price: 33, xtraPrice: 31 },
-      { id: 'sd3', name: 'FROOTI Mango Drink', img: ForYouProduct, discount: '39%', rating: '4.3', weight: '2000 ml', oldPrice: 122, price: 75, xtraPrice: 71 }
-    ]
-  },
-  {
-    id: 'skincare',
-    name: 'Skin care and haircare',
-    img: LorealShampoo,
-    products: [
-      { id: 'sh1', name: 'L\'Oréal Hyaluron Shampoo', img: LorealShampoo, discount: '10%', rating: '4.4', weight: '200 ml', oldPrice: 230, price: 207, xtraPrice: 195 },
-      { id: 'sh2', name: 'Nivea Body Lotion Milk', img: LipGloss, discount: '15%', rating: '4.5', weight: '400 ml', oldPrice: 399, price: 339, xtraPrice: 310 }
-    ]
-  },
-  {
-    id: 'toys',
-    name: 'Toys and games',
-    img: ToysTab,
-    products: [
-      { id: 'ty1', name: 'Premium Teddy Bear Large', img: ToysTab, discount: '25%', rating: '4.6', weight: '1 Unit', oldPrice: 999, price: 749, xtraPrice: 699 }
-    ]
-  },
-  {
-    id: 'grocery',
-    name: 'Grocery',
-    img: BeautyTab,
-    products: [
-      { id: 'gr1', name: 'Fortune Basmati Rice', img: BeautyTab, discount: '20%', rating: '4.3', weight: '1 kg', oldPrice: 145, price: 115, xtraPrice: 105 }
-    ]
-  }
-];
 
+// Custom SVG Icons for Grocery Redesign
+const MithilaBannerSvg = () => (
+  <svg viewBox="0 0 200 200" className="w-full h-full max-h-[160px] md:max-h-[220px]" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="90" fill="#F6C453" fillOpacity="0.15" />
+    <circle cx="100" cy="100" r="80" stroke="#D9A21B" strokeWidth="1" strokeDasharray="4 4" />
+    <path d="M20,100 C30,90 40,110 50,100" stroke="#6FAE4A" strokeWidth="1.5" fill="none" />
+    <path d="M150,50 C160,40 170,60 180,50" stroke="#6FAE4A" strokeWidth="1.5" fill="none" strokeDasharray="2 2" />
+    <path d="M80,180 C80,140 120,140 120,180 Z" fill="#F6C453" stroke="#3F2A20" strokeWidth="2" />
+    <path d="M85,180 C95,145 105,145 115,180" stroke="#3F2A20" strokeWidth="1.5" />
+    <path d="M88,145 C80,140 75,120 85,115 C95,110 105,120 102,135 Z" fill="#E25822" stroke="#3F2A20" strokeWidth="2" />
+    <path d="M102,135 C115,125 125,110 130,135" stroke="#3F2A20" strokeWidth="2" />
+    <path d="M110,135 C110,120 150,120 150,135 C150,145 110,145 110,135 Z" fill="#D9A21B" stroke="#3F2A20" strokeWidth="2" />
+    <path d="M110,135 L150,135" stroke="#3F2A20" strokeWidth="1.5" />
+    <circle cx="120" cy="125" r="10" fill="#6FAE4A" stroke="#3F2A20" strokeWidth="1.5" />
+    <path d="M115,120 Q120,130 125,120" stroke="#3F2A20" strokeWidth="1" />
+    <circle cx="132" cy="128" r="6" fill="#E25822" stroke="#3F2A20" strokeWidth="1.5" />
+    <circle cx="142" cy="126" r="5" fill="#E25822" stroke="#3F2A20" strokeWidth="1.5" />
+    <path d="M125,122 L132,115 L135,118 Z" fill="#F6C453" stroke="#3F2A20" strokeWidth="1.5" />
+    <circle cx="95" cy="100" r="12" fill="#FFE8D6" stroke="#3F2A20" strokeWidth="2" />
+    <path d="M107,100 C115,105 120,120 122,145" stroke="#3F2A20" strokeWidth="3.5" strokeLinecap="round" />
+    <path d="M92,88 Q105,88 107,102" fill="#3F2A20" />
+    <circle cx="91" cy="100" r="1.5" fill="#3F2A20" />
+    <path d="M88,103 Q90,105 92,103" stroke="#3F2A20" strokeWidth="1" fill="none" />
+    <circle cx="88" cy="100" r="2.5" stroke="#D9A21B" strokeWidth="1" fill="none" />
+    <path d="M98,122 C96,115 90,108 92,108" stroke="#3F2A20" strokeWidth="1.5" fill="none" />
+    <circle cx="92" cy="108" r="2" fill="#E25822" />
+  </svg>
+);
+
+const FruitsVeggiesIcon = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="18" cy="28" r="9" fill="#6FAE4A" />
+    <circle cx="28" cy="26" r="9" fill="#E25822" />
+    <path d="M18,19 C18,15 22,12 24,12" stroke="#3F2A20" strokeWidth="2.5" strokeLinecap="round" />
+    <path d="M28,17 C30,13 33,13 33,13" stroke="#3F2A20" strokeWidth="2.5" strokeLinecap="round" />
+  </svg>
+);
+
+const DairyEggsIcon = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="12" y="10" width="12" height="28" rx="2" fill="#93C5FD" stroke="#3F2A20" strokeWidth="2" />
+    <circle cx="32" cy="26" r="7" fill="#FFF8EE" stroke="#3F2A20" strokeWidth="2" />
+    <circle cx="32" cy="26" r="3.5" fill="#F6C453" />
+    <line x1="18" y1="18" x2="18" y2="30" stroke="#FFF" strokeWidth="2" strokeLinecap="round" />
+  </svg>
+);
+
+const StaplesIcon = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14,12 L34,12 L31,38 L17,38 Z" fill="#D9A21B" stroke="#3F2A20" strokeWidth="2" />
+    <circle cx="24" cy="24" r="5" fill="#FFF" stroke="#3F2A20" strokeWidth="1.5" />
+    <line x1="21" y1="24" x2="27" y2="24" stroke="#3F2A20" strokeWidth="1.5" />
+  </svg>
+);
+
+const BeveragesIcon = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="18" y="8" width="12" height="32" rx="3" fill="#6FAE4A" stroke="#3F2A20" strokeWidth="2" />
+    <line x1="18" y1="18" x2="30" y2="18" stroke="#FFF" strokeWidth="2.5" />
+    <circle cx="24" cy="28" r="3" fill="#FFF" />
+  </svg>
+);
+
+const SnacksIcon = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="12" y="10" width="24" height="28" rx="4" fill="#F6C453" stroke="#3F2A20" strokeWidth="2" />
+    <circle cx="24" cy="24" r="5" fill="#E25822" />
+  </svg>
+);
+
+const MasalaOilIcon = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16,14 L32,14 L30,40 L18,40 Z" fill="#E25822" stroke="#3F2A20" strokeWidth="2" />
+    <circle cx="24" cy="27" r="4.5" fill="#F6C453" stroke="#3F2A20" strokeWidth="1.5" />
+  </svg>
+);
+
+const FrozenIcon = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="14" y="14" width="20" height="20" rx="3" fill="#93C5FD" stroke="#3F2A20" strokeWidth="2" />
+    <path d="M24,10 L24,38 M10,24 L38,24" stroke="#FFF" strokeWidth="2" />
+  </svg>
+);
+
+const HouseholdIcon = () => (
+  <svg viewBox="0 0 48 48" className="w-10 h-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18,18 L30,18 L34,38 L14,38 Z" fill="#FCA5A5" stroke="#3F2A20" strokeWidth="2" />
+    <rect x="22" y="10" width="4" height="8" fill="#D1D5DB" stroke="#3F2A20" strokeWidth="1.5" />
+  </svg>
+);
 
 const CATEGORIES_DATA = [
   {
@@ -123,798 +173,735 @@ const CATEGORIES_DATA = [
 
 const QuickShop = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = React.useState('You Buy');
 
-  const isClosed = React.useMemo(() => {
-    const force = localStorage.getItem('forceShopClosed');
-    if (force === 'true') return true;
-    if (force === 'false') return false;
-    
-    const now = new Date();
-    const hours = now.getHours();
-    return hours >= 0 && hours < 6;
-  }, []);
+  // Simulated active tab for the filters
+  const [activeFilter, setActiveFilter] = React.useState('All');
 
-  const [activeSpecialTab, setActiveSpecialTab] = React.useState('juices');
-  const [cartItems, setCartItems] = React.useState([]);
-
-  const updateCartState = () => {
-    try {
-      const cart = JSON.parse(localStorage.getItem('userCart') || '[]');
-      setCartItems(cart);
-    } catch {
-      setCartItems([]);
-    }
-  };
-
+  // Timer simulation
+  const [timeLeft, setTimeLeft] = React.useState({ h: '02', m: '45', s: '12' });
   React.useEffect(() => {
-    updateCartState();
-    window.addEventListener('cartUpdated', updateCartState);
-    return () => window.removeEventListener('cartUpdated', updateCartState);
-  }, []);
+    const timer = setInterval(() => {
+      const h = parseInt(timeLeft.h, 10);
+      const m = parseInt(timeLeft.m, 10);
+      const s = parseInt(timeLeft.s, 10);
+      
+      let nextS = s - 1;
+      let nextM = m;
+      let nextH = h;
+      
+      if (nextS < 0) {
+        nextS = 59;
+        nextM -= 1;
+      }
+      if (nextM < 0) {
+        nextM = 59;
+        nextH -= 1;
+      }
+      if (nextH < 0) {
+        nextH = 2;
+        nextM = 45;
+        nextS = 12;
+      }
 
-  const filteredSections = React.useMemo(() => {
-    const tab = activeTab.toLowerCase();
-    if (tab === 'you buy' || tab === 'more') {
-      return CATEGORIES_DATA;
-    }
-    return CATEGORIES_DATA.filter(section => {
-      const title = section.title.toLowerCase();
-      if (tab === 'fresh') {
-        return title.includes('grocery');
-      }
-      if (tab === 'grocery') {
-        return title.includes('grocery') || title.includes('snacks');
-      }
-      if (tab === 'electronics') {
-        return title.includes('electronics') || title.includes('mobile');
-      }
-      if (tab === 'beauty') {
-        return title.includes('beauty') || title.includes('personal care');
-      }
-      return true;
-    });
-  }, [activeTab]);
+      setTimeLeft({
+        h: String(nextH).padStart(2, '0'),
+        m: String(nextM).padStart(2, '0'),
+        s: String(nextS).padStart(2, '0')
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [timeLeft]);
 
   const isFreshGrocery = window.location.pathname.includes('/fresh-grocery');
-  
-  const cartTotalItems = cartItems.reduce((acc, item) => acc + (item.qty || 1), 0);
-  const cartTotalPrice = cartItems.reduce((acc, item) => {
-    const priceStr = String(item.price || '0').replace(/,/g, '');
-    return acc + (Number(priceStr) || 0) * (item.qty || 1);
-  }, 0);
+
+  if (isFreshGrocery) {
+    return (
+      <div className="min-h-screen pb-24 bg-[#FFF8EE] flex flex-col font-sans text-[#3F2A20] relative overflow-x-hidden">
+        
+        {/* Repeating Mithila Art Page Background Texture */}
+        <div 
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+          }}
+        />
+
+        <div className="relative z-10 flex flex-col">
+          {/* Banner Section */}
+          <div className="mx-4 my-4 p-5 rounded-3xl border border-[#F6C453]/35 flex items-center justify-between shadow-xs overflow-hidden relative" style={{ backgroundImage: 'linear-gradient(135deg, #FFFDF8 0%, #FFF9F2 100%)' }}>
+            <div className="flex-1 z-10 pr-2">
+              <h1 className="text-[20px] font-black text-[#3F2A20] leading-tight mb-1">Freshness You Can Trust</h1>
+              <p className="text-[12px] font-bold text-[#3F2A20]/75 mb-4">Farm Fresh Products</p>
+              <button className="bg-[#6FAE4A] text-white text-[12px] font-black px-6 py-2.5 rounded-full shadow-md active:scale-95 transition-transform hover:brightness-105">
+                Shop Now
+              </button>
+            </div>
+            <div className="w-[130px] h-[130px] flex items-center justify-center flex-shrink-0 relative">
+              <MithilaBannerSvg />
+            </div>
+          </div>
+
+          {/* Categories Grid (2 Rows, 4 Columns) */}
+          <div className="px-4 mb-6">
+            <div className="grid grid-cols-4 gap-2.5">
+              {[
+                { name: 'Fruits & Veggies', label: 'Fruits & Veggies', key: 'Fruits & Vegetables' },
+                { name: 'Dairy & eggs', label: 'Dairy & eggs', key: 'Dairy, Bread & Eggs' },
+                { name: 'Staples', label: 'Staples', key: 'Atta, Rice & Dal' },
+                { name: 'Beverages', label: 'Beverages', key: 'Drinks & Juices' },
+                { name: 'Snacks', label: 'Snacks', key: 'Chips & Namkeens' },
+                { name: 'Masala & Oil', label: 'Masala & Oil', key: 'Oil, Ghee & Masala' },
+                { name: 'Frozen', label: 'Frozen', key: 'Instant & Frozen Food' },
+                { name: 'Household', label: 'Household', key: 'Cleaning Essentials' },
+              ].map((cat, idx) => {
+                let iconComponent = <FruitsVeggiesIcon />;
+                if (cat.name === 'Dairy & eggs') iconComponent = <DairyEggsIcon />;
+                if (cat.name === 'Staples') iconComponent = <StaplesIcon />;
+                if (cat.name === 'Beverages') iconComponent = <BeveragesIcon />;
+                if (cat.name === 'Snacks') iconComponent = <SnacksIcon />;
+                if (cat.name === 'Masala & Oil') iconComponent = <MasalaOilIcon />;
+                if (cat.name === 'Frozen') iconComponent = <FrozenIcon />;
+                if (cat.name === 'Household') iconComponent = <HouseholdIcon />;
+
+                return (
+                  <div 
+                    key={idx}
+                    onClick={() => {
+                      localStorage.setItem('isFreshGroceryFlow', 'true');
+                      navigate('/fresh-grocery/category', { state: { category: cat.key } });
+                    }}
+                    className="bg-white border border-[#EADCC9]/55 rounded-2xl p-2 flex flex-col items-center justify-center text-center cursor-pointer active:scale-95 transition-all shadow-2xs hover:border-[#D9A21B]"
+                  >
+                    <div className="w-12 h-12 flex items-center justify-center mb-1.5 bg-[#FFF8EE] rounded-xl">
+                      {iconComponent}
+                    </div>
+                    <span className="text-[10px] md:text-[11px] font-black text-[#3F2A20] leading-tight">{cat.label}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Today's Best Offers */}
+          <div className="px-4 mb-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-[16px] font-black text-[#3F2A20] tracking-tight">Today's Best Offers</h2>
+              <span className="text-[#6FAE4A] text-[12.5px] font-black cursor-pointer hover:underline">View All</span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2.5">
+              {[
+                {
+                  name: 'Apple',
+                  weight: '1 kg',
+                  oldPrice: 148,
+                  price: 120,
+                  discount: '15% OFF',
+                  img: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=200&auto=format&fit=crop&q=80',
+                },
+                {
+                  name: 'Banana',
+                  weight: '1 dozen',
+                  oldPrice: 50,
+                  price: 40,
+                  discount: '20% OFF',
+                  img: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&auto=format&fit=crop&q=80',
+                },
+                {
+                  name: 'Rice',
+                  weight: '1 kg',
+                  oldPrice: 80,
+                  price: 70,
+                  discount: '10% OFF',
+                  img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&auto=format&fit=crop&q=80',
+                },
+              ].map((prod, idx) => (
+                <div 
+                  key={idx}
+                  onClick={() => navigate('/product-detail', { state: { product: prod } })}
+                  className="bg-white rounded-2xl border border-[#EADCC9]/30 p-2 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform shadow-xs"
+                >
+                  <div className="absolute top-1.5 left-1.5 bg-[#E25822] text-white text-[8px] font-black px-1.5 py-0.5 rounded shadow-2xs leading-none">
+                    {prod.discount}
+                  </div>
+
+                  <div className="h-20 flex items-center justify-center my-3">
+                    <img 
+                      src={prod.img} 
+                      alt={prod.name} 
+                      className="max-h-full max-w-full object-contain rounded-lg" 
+                    />
+                  </div>
+
+                  <div>
+                    <h3 className="text-[11.5px] font-black text-[#3F2A20] leading-tight">{prod.name}</h3>
+                    <span className="text-[#3F2A20]/50 text-[9px] font-bold">{prod.weight}</span>
+                    <div className="flex items-baseline gap-1 mt-1">
+                      <span className="text-[9.5px] text-[#3F2A20]/45 line-through">₹{prod.oldPrice}</span>
+                      <span className="text-[12.5px] font-black text-[#3F2A20]">₹{prod.price}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── HORIZONTAL FILTER TABS BAR ── */}
+          <div className="flex gap-2.5 overflow-x-auto no-scrollbar py-3.5 px-4 mb-4">
+            {['All', 'Title Sponsors', 'Intel Core', 'AI Nova', 'Boat'].map((tab) => {
+              const isActive = activeFilter === tab;
+              return (
+                <button
+                  key={tab}
+                  onClick={() => setActiveFilter(tab)}
+                  className={`flex-shrink-0 px-4 py-1.5 rounded-lg text-[12px] font-black tracking-tight transition-all duration-200 border ${
+                    isActive
+                      ? 'bg-[#D9A21B] border-[#D9A21B] text-white shadow-xs'
+                      : 'bg-white border-[#EADCC9]/55 text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  {tab}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* ── FLASH DEALS SECTION ── */}
+          <div className="bg-white rounded-[24px] p-4 mx-4 mb-4 border border-[#FFF1EB] shadow-[0_4px_20px_rgba(217,162,27,0.015)]">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-[16px] font-black text-[#3F2A20] tracking-tight">Flash Deals</h2>
+              <div className="text-slate-850 text-[12.5px] font-black flex items-center gap-1.5">
+                <span>Ends in</span>
+                <span className="font-mono bg-[#3F2A20] text-white px-1.5 py-0.5 rounded text-[11px]">{timeLeft.h}</span>
+                <span>:</span>
+                <span className="font-mono bg-[#3F2A20] text-white px-1.5 py-0.5 rounded text-[11px]">{timeLeft.m}</span>
+                <span>:</span>
+                <span className="font-mono bg-[#3F2A20] text-white px-1.5 py-0.5 rounded text-[11px]">{timeLeft.s}</span>
+              </div>
+            </div>
+
+            {/* Flash Deals Cards grid */}
+            <div className="grid grid-cols-3 gap-2.5">
+              {/* Product 1: L'Oreal Shampoo */}
+              <div 
+                onClick={() => navigate('/product-detail', { state: { product: { name: "L'Oreal Paris Hyaluron Moisture", price: 225, oldPrice: 230, rating: '4.3' } } })}
+                className="bg-white rounded-2xl border border-slate-100 p-2 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform"
+              >
+                <div className="absolute top-1.5 left-1.5 bg-[#E25822] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm shadow-2xs leading-none">
+                  12% OFF
+                </div>
+                
+                <div className="h-20 flex items-center justify-center my-3">
+                  <img 
+                    src="https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=300&auto=format&fit=crop&q=60" 
+                    alt="L'Oreal Shampoo" 
+                    className="max-h-full object-contain mix-blend-multiply" 
+                  />
+                </div>
+
+                <div>
+                  <span className="text-slate-400 text-[9px] font-bold">200 ml</span>
+                  <h3 className="text-[11px] font-black text-[#3F2A20] leading-tight mt-0.5">L'Oreal Paris</h3>
+                  <p className="text-[9.5px] text-slate-550 font-semibold leading-tight truncate">Hyaluron Moisture</p>
+                  <div className="flex items-baseline gap-1 mt-1.5">
+                    <span className="text-[10px] text-slate-400 line-through">₹230</span>
+                    <span className="text-[12px] font-black text-slate-900">₹225</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Product 2: Wellcore Creatine */}
+              <div 
+                onClick={() => navigate('/product-detail', { state: { product: { name: "Wellcore Creatine", price: 530, oldPrice: 699, rating: '4.5' } } })}
+                className="bg-white rounded-2xl border border-slate-100 p-2 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform"
+              >
+                <div className="absolute top-1.5 left-1.5 bg-[#E25822] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm shadow-2xs leading-none">
+                  12% OFF
+                </div>
+
+                <div className="h-20 flex items-center justify-center my-3">
+                  <img 
+                    src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=300&auto=format&fit=crop&q=60" 
+                    alt="Wellcore Creatine" 
+                    className="max-h-full object-contain mix-blend-multiply" 
+                  />
+                </div>
+
+                <div>
+                  <span className="text-slate-400 text-[9px] font-bold">122 g</span>
+                  <h3 className="text-[11px] font-black text-[#3F2A20] leading-tight mt-0.5">Wellcore</h3>
+                  <p className="text-[9.5px] text-slate-550 font-semibold leading-tight truncate">Creatine</p>
+                  <div className="flex items-baseline gap-1 mt-1.5">
+                    <span className="text-[10px] text-slate-400 line-through">₹699</span>
+                    <span className="text-[12px] font-black text-slate-900">₹530</span>
+                  </div>
+                  <div className="mt-1 bg-[#FFF2EB] text-[#E25822] border border-[#FFD9C7]/40 rounded-sm text-[8px] font-black text-center py-0.5 leading-none">
+                    ₹400 with UPI
+                  </div>
+                </div>
+              </div>
+
+              {/* Product 3: Pilgrim Face Serum */}
+              <div 
+                onClick={() => navigate('/product-detail', { state: { product: { name: "Pilgrim 10% Niacinamide", price: 202, oldPrice: 249, rating: '4.4' } } })}
+                className="bg-white rounded-2xl border border-slate-100 p-2 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform"
+              >
+                <div className="absolute top-1.5 left-1.5 bg-[#E25822] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm shadow-2xs leading-none">
+                  20% OFF
+                </div>
+
+                <div className="h-20 flex items-center justify-center my-3">
+                  <img 
+                    src="https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=300&auto=format&fit=crop&q=60" 
+                    alt="Pilgrim Face Serum" 
+                    className="max-h-full object-contain mix-blend-multiply" 
+                  />
+                </div>
+
+                <div>
+                  <span className="text-slate-400 text-[9px] font-bold">10 ml</span>
+                  <h3 className="text-[11px] font-black text-[#3F2A20] leading-tight mt-0.5">Pilgrim 10%</h3>
+                  <p className="text-[9.5px] text-slate-550 font-semibold leading-tight truncate">Niacinamide</p>
+                  <div className="flex items-baseline gap-1 mt-1.5">
+                    <span className="text-[10px] text-slate-400 line-through">₹249</span>
+                    <span className="text-[12px] font-black text-slate-900">₹202</span>
+                  </div>
+                  <button className="mt-1 w-full bg-white text-slate-700 border border-slate-200 rounded-full text-[8.5px] font-black py-0.5 text-center shadow-3xs active:scale-95 transition-transform">
+                    SaveExtra
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── SHARE LOCATION BANNER ── */}
+          <div className="bg-[#FFF8EE] border border-[#EADCC9]/55 rounded-[20px] p-4 mx-4 mb-4 flex items-center justify-between shadow-2xs">
+            <div className="flex flex-col gap-3 flex-1 pr-2">
+              <span className="text-[12.5px] font-extrabold text-[#3F2A20] leading-snug">
+                Share your location to access Grocery & explore offers
+              </span>
+              <button className="bg-[#D9A21B] text-white text-[11.5px] font-black px-4 py-2 rounded-xl w-fit active:scale-95 transition-transform shadow-xs">
+                Share Location
+              </button>
+            </div>
+            <ChevronDown size={20} className="text-slate-550 flex-shrink-0 cursor-pointer" />
+          </div>
+
+          {/* ── TODAY'S SPECIAL DEALS ── */}
+          <div className="bg-white rounded-[24px] p-4 mx-4 mb-6 border border-[#FFF1EB] shadow-[0_4px_20px_rgba(217,162,27,0.015)]">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-[16px] font-black text-[#3F2A20] tracking-tight">Today's Special Deals</h2>
+              <span className="text-[#6FAE4A] text-[12.5px] font-black cursor-pointer hover:underline">View All</span>
+            </div>
+
+            {/* Deals grid */}
+            <div className="grid grid-cols-3 gap-2.5">
+              {/* Potato */}
+              <div 
+                onClick={() => navigate('/product-detail', { state: { product: { name: "Potato", price: 25, oldPrice: 30 } } })}
+                className="bg-white rounded-2xl border border-slate-100 p-2 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform"
+              >
+                <div className="absolute top-1.5 left-1.5 bg-[#E25822] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm shadow-2xs leading-none">
+                  15% OFF
+                </div>
+                
+                <div className="h-20 flex items-center justify-center my-3">
+                  <img 
+                    src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=300&auto=format&fit=crop&q=60" 
+                    alt="Potato" 
+                    className="max-h-full object-contain mix-blend-multiply" 
+                  />
+                </div>
+
+                <div>
+                  <span className="text-slate-450 text-[9px] font-bold">1 kg</span>
+                  <h3 className="text-[11px] font-black text-[#3F2A20] leading-tight mt-0.5">Potato</h3>
+                  <div className="flex items-baseline gap-1 mt-1.5">
+                    <span className="text-[10px] text-slate-400 line-through">₹30</span>
+                    <span className="text-[12px] font-black text-slate-900">₹25</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tomato */}
+              <div 
+                onClick={() => navigate('/product-detail', { state: { product: { name: "Tomato", price: 22, oldPrice: 25 } } })}
+                className="bg-white rounded-2xl border border-slate-100 p-2 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform"
+              >
+                <div className="absolute top-1.5 left-1.5 bg-[#E25822] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm shadow-2xs leading-none">
+                  12% OFF
+                </div>
+                
+                <div className="h-20 flex items-center justify-center my-3">
+                  <img 
+                    src="https://images.unsplash.com/photo-1597362925123-77861d3fbac7?w=300&auto=format&fit=crop&q=60" 
+                    alt="Tomato" 
+                    className="max-h-full object-contain mix-blend-multiply" 
+                  />
+                </div>
+
+                <div>
+                  <span className="text-slate-455 text-[9px] font-bold">500 g</span>
+                  <h3 className="text-[11px] font-black text-[#3F2A20] leading-tight mt-0.5">Tomato</h3>
+                  <div className="flex items-baseline gap-1 mt-1.5">
+                    <span className="text-[10px] text-slate-400 line-through">₹25</span>
+                    <span className="text-[12px] font-black text-slate-900">₹22</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Milk */}
+              <div 
+                onClick={() => navigate('/product-detail', { state: { product: { name: "Milk", price: 48, oldPrice: 60 } } })}
+                className="bg-white rounded-2xl border border-slate-100 p-2 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform"
+              >
+                <div className="absolute top-1.5 left-1.5 bg-[#E25822] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm shadow-2xs leading-none">
+                  10% OFF
+                </div>
+                
+                <div className="h-20 flex items-center justify-center my-3">
+                  <img 
+                    src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=300&auto=format&fit=crop&q=60" 
+                    alt="Milk" 
+                    className="max-h-full object-contain mix-blend-multiply" 
+                  />
+                </div>
+
+                <div>
+                  <span className="text-slate-455 text-[9px] font-bold">1 L</span>
+                  <h3 className="text-[11px] font-black text-[#3F2A20] leading-tight mt-0.5">Milk</h3>
+                  <div className="flex items-baseline gap-1 mt-1.5">
+                    <span className="text-[10px] text-slate-400 line-through">₹60</span>
+                    <span className="text-[12px] font-black text-slate-900">₹48</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── RESTORED CATEGORY SECTIONS (Mobile View) ── */}
+          <div className="md:hidden px-4 space-y-8">
+            {CATEGORIES_DATA.map((section, sIdx) => (
+              <div key={sIdx} className="mb-6">
+                <h2 className="text-[15px] font-extrabold text-[#D9A21B] mb-3 tracking-tight pl-1">
+                  {section.title}
+                </h2>
+                <div className="grid grid-cols-4 gap-2 justify-items-center">
+                  {section.items.map((item, itemIdx) => (
+                    <CategoryCard
+                      key={itemIdx}
+                      item={item}
+                      onClick={() => {
+                        localStorage.setItem('isFreshGroceryFlow', 'true');
+                        navigate('/fresh-grocery/category', { state: { category: item.name } });
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ── RESTORED CATEGORY SECTIONS (Desktop View) ── */}
+          <div className="hidden md:block md:max-w-[1600px] md:mx-auto md:px-4 md:py-6 space-y-8">
+            {CATEGORIES_DATA.map((section, sIdx) => (
+              <div key={sIdx} className="flex flex-col">
+                {/* Header Banner */}
+                <div className="px-6 py-3.5 rounded-t-3xl flex items-center justify-between shadow-sm text-white bg-[#D9A21B]">
+                  <h2 className="text-[15px] font-black uppercase tracking-wider">
+                    {section.title}
+                  </h2>
+                </div>
+            
+                {/* White container panel containing the category cards */}
+                <div className="bg-white border-x border-b border-slate-100 rounded-b-3xl p-6 shadow-md">
+                  <div className="grid grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-x-8 gap-y-8 justify-items-center">
+                    {section.items.map((item, itemIdx) => (
+                      <div
+                        key={itemIdx}
+                        onClick={() => {
+                          localStorage.setItem('isFreshGroceryFlow', 'true');
+                          navigate('/fresh-grocery/category', { state: { category: item.name } });
+                        }}
+                        className="flex flex-col items-center gap-3.5 cursor-pointer group active:scale-95 transition-transform w-full max-w-[160px]"
+                      >
+                        {/* Image container */}
+                        <div className="relative w-full aspect-square rounded-[24px] overflow-hidden bg-slate-50 border border-slate-100/60 flex items-center justify-center p-0 group-hover:bg-slate-100/65 transition-colors duration-300">
+                          <img
+                            src={item.img}
+                            alt={item.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                          />
+                        </div>
+                        <span className="text-[13px] font-black text-center text-[#3F2A20] leading-tight tracking-tight mt-1 group-hover:text-[#D9A21B] transition-colors">
+                          {item.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className={`min-h-screen px-3 py-4 pb-24 transition-colors duration-300 ${
-      isFreshGrocery
-        ? 'bg-gradient-to-b from-[#FFF0A0]/45 via-[#FFFDF3] to-[#FFF]'
-        : 'bg-gradient-to-b from-[#ffe5ec]/60 via-[#fff5f7] to-[#eaf5ee]'
-    }`}>
-      {isClosed && (
-        <div className="relative w-full rounded-[28px] overflow-hidden bg-gradient-to-b from-[#0b0c1e] via-[#151833] to-[#251b45] p-6 text-center mb-6 shadow-2xl border border-white/5 flex flex-col items-center min-h-[480px]">
-          {/* Night Sky Background Components */}
-          {/* Glowing Radial Moon Backdrop */}
-          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-48 h-48 bg-amber-400/10 rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
-          
-          {/* Clouds Layer - Behind Moon */}
-          <div className="absolute inset-0 opacity-15 pointer-events-none overflow-hidden select-none">
-            <svg className="absolute -top-5 -left-10 w-64 h-32 text-purple-300/40 animate-cloud-slow" fill="currentColor" viewBox="0 0 100 100">
-              <path d="M10 50 C20 40, 40 40, 50 50 C60 40, 80 40, 90 50 C95 55, 95 65, 90 70 C80 80, 20 80, 10 70 C5 65, 5 55, 10 50 Z" />
-            </svg>
-            <svg className="absolute bottom-5 -right-10 w-72 h-36 text-blue-300/30 animate-cloud-slower" fill="currentColor" viewBox="0 0 100 100">
-              <path d="M10 50 C20 40, 40 40, 50 50 C60 40, 80 40, 90 50 C95 55, 95 65, 90 70 C80 80, 20 80, 10 70 C5 65, 5 55, 10 50 Z" />
-            </svg>
-          </div>
+    <div className="min-h-screen pb-6 bg-[#FFF9F5] flex flex-col font-sans text-slate-800 relative">
+      
+      {/* Repeating Mithila Art Page Background Texture */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+        style={{
+          backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+          backgroundSize: '360px',
+        }}
+      />
 
-          {/* Twinkling Stars */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {/* Small Stars */}
-            <div className="absolute top-8 left-[15%] w-1 h-1 bg-white rounded-full animate-twinkle-s1" />
-            <div className="absolute top-24 left-[80%] w-1.5 h-1.5 bg-white rounded-full animate-twinkle-s2" />
-            <div className="absolute top-44 left-[12%] w-1 h-1 bg-white rounded-full animate-twinkle-s3" />
-            <div className="absolute top-16 left-[65%] w-1 h-1 bg-white rounded-full animate-twinkle-s4" />
-            <div className="absolute top-36 left-[72%] w-1.5 h-1.5 bg-white rounded-full animate-twinkle-s5" />
-            <div className="absolute bottom-32 left-[22%] w-1 h-1 bg-white rounded-full animate-twinkle-s2" />
-            <div className="absolute bottom-40 right-[15%] w-1.5 h-1.5 bg-white rounded-full animate-twinkle-s4" />
-            <div className="absolute top-[48%] left-[48%] w-1 h-1 bg-white rounded-full animate-twinkle-s3" />
-            
-            {/* Larger 4-Point Stars */}
-            <svg className="absolute top-12 right-[25%] w-3.5 h-3.5 text-amber-100/80 animate-twinkle-s3" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
-            </svg>
-            <svg className="absolute top-40 left-[25%] w-4 h-4 text-amber-200/90 animate-twinkle-s1" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
-            </svg>
-            <svg className="absolute bottom-[40%] left-[45%] w-3 h-3 text-white/70 animate-twinkle-s5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
-            </svg>
-            <svg className="absolute top-[50%] right-[10%] w-3 h-3 text-amber-100/80 animate-twinkle-s2" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
-            </svg>
-            <svg className="absolute top-[28%] left-[8%] w-3.5 h-3.5 text-amber-150/90 animate-twinkle-s4" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4Z" />
-            </svg>
-          </div>
-
-          {/* Floating Clouds Layer - Foreground / Midground (Positioned in lower half) */}
-          <div className="absolute top-[40%] inset-x-0 h-36 pointer-events-none overflow-hidden select-none z-10 opacity-80">
-            <svg className="absolute top-0 -left-12 w-64 h-24 text-purple-900/40 blur-[1px]" fill="currentColor" viewBox="0 0 100 100">
-              <path d="M10 60 C20 45, 45 45, 55 60 C65 45, 85 45, 95 60 C100 65, 100 75, 95 85 C85 95, 15 95, 5 85 C0 75, 0 65, 5 60 Z" />
-            </svg>
-            <svg className="absolute top-4 -right-10 w-72 h-28 text-indigo-900/50 blur-[2px]" fill="currentColor" viewBox="0 0 100 100">
-              <path d="M10 60 C20 45, 45 45, 55 60 C65 45, 85 45, 95 60 C100 65, 100 75, 95 85 C85 95, 15 95, 5 85 C0 75, 0 65, 5 60 Z" />
-            </svg>
-            <svg className="absolute top-12 left-10 w-80 h-28 text-[#1c143c]/85" fill="currentColor" viewBox="0 0 100 100">
-              <path d="M10 60 C20 45, 45 45, 55 60 C65 45, 85 45, 95 60 C100 65, 100 75, 95 85 C85 95, 15 95, 5 85 C0 75, 0 65, 5 60 Z" />
-            </svg>
-          </div>
-
-          {/* Crescent Moon Container */}
-          <div className="relative z-20 flex items-center justify-center pt-4 mb-5">
-            <div className="relative">
-              {/* Moon Glow effect */}
-              <div className="absolute inset-0 bg-yellow-250/20 rounded-full blur-2xl scale-150 animate-glow-pulse" />
-              {/* Golden Symmetrical Crescent Arc Moon SVG */}
-              <svg className="w-24 h-24 relative" viewBox="0 0 100 100" fill="currentColor">
-                <defs>
-                  <linearGradient id="moonArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#fffbeb" />
-                    <stop offset="35%" stopColor="#fef08a" />
-                    <stop offset="70%" stopColor="#f59e0b" />
-                    <stop offset="100%" stopColor="#d97706" />
-                  </linearGradient>
-                  {/* Intense inner shadow/depth filter */}
-                  <filter id="moonGlowShadow">
-                    <feDropShadow dx="-1" dy="1" stdDeviation="3" floodColor="#f59e0b" floodOpacity="0.8" />
-                  </filter>
-                </defs>
-                {/* A beautifully thick, clean, tilted crescent arc path */}
-                <path 
-                  d="M 68 18 
-                     A 34 34 0 1 0 74 76 
-                     A 30 30 0 1 1 68 18 Z" 
-                  fill="url(#moonArcGrad)" 
-                  filter="url(#moonGlowShadow)"
-                  className="drop-shadow-[0_0_12px_rgba(251,191,36,0.6)]"
-                />
-              </svg>
-            </div>
-          </div>
-
-          {/* Header text exactly like reference */}
-          <div className="relative z-20 space-y-2 mb-8">
-            <h2 className="text-2xl font-bold tracking-tight text-white font-montserrat">
-              Closed for the day!
-            </h2>
-            <p className="text-[13px] font-medium text-slate-200/90 px-4">
-              Our quick shop is currently closed.
-            </p>
-            <p className="text-[13px] font-medium text-slate-200/90">
-              We'll be back at <span className="text-yellow-400 font-extrabold text-sm">6:00 AM</span>
-            </p>
-          </div>
-
-          {/* Separate Premium Dark Alarm Countdown Card at the bottom */}
-          <div className="relative z-20 w-full max-w-[340px] bg-[#0c0d21]/80 backdrop-blur-md rounded-3xl border border-white/5 p-5 shadow-2xl flex flex-col items-center gap-3.5 mt-auto">
-            <div className="w-full flex items-center justify-center gap-4 py-2 px-1">
-              {/* Sleeping/Alarm Clock Icon on the left */}
-              <div className="flex-shrink-0 text-indigo-400">
-                <svg className="w-14 h-14 drop-shadow-[0_0_8px_rgba(129,140,248,0.4)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 5.636l1.414-1.414M5.636 18.364l-1.414 1.414M20.5 12h1M2.5 12h1M12 2.5v1M12 20.5v1" />
-                </svg>
-              </div>
-
-              {/* Digital countdown timer on the right */}
-              <div className="flex flex-col items-start gap-0.5">
-                <div className="text-[11px] font-bold text-slate-400 tracking-wide">We open in</div>
-                {(() => {
-                  const [timeLeft, setTimeLeft] = React.useState({ h: '00', m: '00', s: '00' });
-                  React.useEffect(() => {
-                    const calculateTimeLeft = () => {
-                      const now = new Date();
-                      let target = new Date();
-                      target.setHours(6, 0, 0, 0);
-                      if (now.getHours() >= 6) {
-                        target.setDate(target.getDate() + 1);
-                      }
-                      const diff = target.getTime() - now.getTime();
-                      if (diff <= 0) {
-                        return { h: '00', m: '00', s: '00' };
-                      }
-                      const hrs = Math.floor(diff / (1000 * 60 * 60));
-                      const mins = Math.floor((diff / (1000 * 60)) % 60);
-                      const secs = Math.floor((diff / 1000) % 60);
-                      return {
-                        h: String(hrs).padStart(2, '0'),
-                        m: String(mins).padStart(2, '0'),
-                        s: String(secs).padStart(2, '0')
-                      };
-                    };
-                    setTimeLeft(calculateTimeLeft());
-                    const timer = setInterval(() => {
-                      setTimeLeft(calculateTimeLeft());
-                    }, 1000);
-                    return () => clearInterval(timer);
-                  }, []);
-                  return (
-                    <div className="flex flex-col items-start">
-                      <div className="font-mono text-2xl font-black text-white tracking-wide">
-                        {timeLeft.h} : {timeLeft.m} : {timeLeft.s}
-                      </div>
-                      <div className="flex items-center gap-2.5 text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-0.5">
-                        <span>Hours</span>
-                        <span>Minutes</span>
-                        <span>Seconds</span>
-                      </div>
-                    </div>
-                  );
-                })()}
-              </div>
-            </div>
-
-            {/* Thanks for your patience tagline */}
-            <div className="w-full border-t border-white/5 pt-2.5 flex items-center justify-center gap-1 text-[11px] font-semibold text-slate-400/90">
-              <span className="text-yellow-400">✦</span>
-              <span>Thanks for your patience!</span>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className={isClosed ? "filter grayscale opacity-65 pointer-events-none select-none" : ""}>
-
-      {/* Location Picker Bar */}
-      {!isFreshGrocery && (
-        <div 
-          onClick={() => navigate('/profile/addresses')}
-          className="hidden md:flex items-center justify-between gap-2 mb-4 bg-white/60 p-2.5 rounded-2xl border border-pink-100/30 cursor-pointer active:scale-98 transition-transform"
-        >
-          <div className="flex items-center gap-1.5 min-w-0">
-            <div className="w-6 h-6 rounded-full bg-slate-900 flex items-center justify-center text-white flex-shrink-0">
-              <MapPin size={11} />
-            </div>
-            <div className="text-[11.5px] font-bold text-slate-800 truncate leading-snug">
-              <span className="font-black uppercase text-[10px] tracking-tight mr-1 text-slate-555">HOME</span>
-              Sarvanad nagar, near pe...
-            </div>
-            <ChevronRight size={14} className="text-slate-400 flex-shrink-0" />
-          </div>
-          <div className="bg-[#d6186d] text-white px-2.5 py-1 rounded-xl flex items-center gap-0.5 flex-shrink-0 shadow-xs">
-            <span className="text-[13px] font-black">8</span>
-            <span className="text-[8px] font-black uppercase tracking-wider">min</span>
-          </div>
-        </div>
-      )}
-
-      {/* Search in QuickShop Input Bar */}
-      {!isFreshGrocery && (
-        <div className="hidden md:block mb-4">
-          <SearchInput
-            type="text"
-            placeholder="Search in QuickShop"
-            onFocus={() => navigate('/search')}
-            rightElement={<Mic size={16} className="text-slate-400" />}
-          />
-        </div>
-      )}
-
-      {/* Subcategory Tabs Header Horizontal Scroll */}
-      <div className="flex overflow-x-auto gap-4 pb-2 mb-4 no-scrollbar border-b border-slate-100/50">
-        {['You Buy', 'Fresh', 'Grocery', 'Electronics', 'Beauty', 'More'].map((tab, idx) => {
-          const isActive = activeTab === tab;
-          return (
-            <div 
-              key={idx} 
-              onClick={() => setActiveTab(tab)}
-              className={`flex-shrink-0 pb-1 text-[12.5px] font-black tracking-tight cursor-pointer transition-colors relative ${
-                isActive 
-                  ? (isFreshGrocery ? 'text-[#7A3E17]' : 'text-[#d6186d]') 
-                  : 'text-slate-500 hover:text-slate-800'
-              }`}
-            >
-              {tab}
-              {isActive && (
-                <div className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full ${
-                  isFreshGrocery ? 'bg-[#7A3E17]' : 'bg-[#d6186d]'
-                }`} />
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Live Deals banner card */}
-      {isFreshGrocery ? (
-        <div className="bg-gradient-to-r from-[#FFFEE5] to-[#E5F7EB] rounded-[24px] p-4 text-emerald-950 shadow-md border border-[#7A3E17]/10 mb-6 relative overflow-hidden flex items-center justify-between">
-          <div className="space-y-1.5 flex-1 pr-2">
-            <div className="flex items-center gap-1.5">
-              <span className="text-[12px] font-extrabold text-[#7A3E17] italic">✦ XtraSaver ✦</span>
-            </div>
-            <h3 className="text-[20px] font-black tracking-tight text-emerald-800 leading-tight">
-              XtraSaver
-            </h3>
-            <p className="text-[12px] font-bold text-[#7A3E17] leading-snug">
-              Shop for ₹699, <br />
-              <span className="text-emerald-700">unlock lowest prices!</span>
-            </p>
-          </div>
-          <div className="flex flex-col items-end gap-1 flex-shrink-0">
-            <div className="bg-white border border-[#7A3E17]/20 p-2 rounded-xl shadow-xs flex flex-col items-center justify-center">
-              <span className="text-[7.5px] text-slate-500 font-bold uppercase">1 KG</span>
-              <span className="text-[12px] font-black text-emerald-700">₹57</span>
-              <span className="text-[7.5px] text-slate-400 line-through">₹178</span>
-              <span className="text-[7.5px] bg-emerald-100 text-emerald-800 px-1 rounded-sm font-bold mt-0.5">Shop for ₹699</span>
-            </div>
-            <span className="text-[8px] text-[#7A3E17] font-semibold italic">Look for this price</span>
-          </div>
-        </div>
-      ) : (
-        <>
-          {/* EARLY BIRD DEALS (Mobile View) */}
-          <div className="bg-gradient-to-br from-[#ff2a5f] to-[#ff7e5f] rounded-[24px] p-4 text-white shadow-lg space-y-4 mb-6 relative overflow-hidden md:hidden">
-          {/* Background blobs for premium look */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-pink-400/30 rounded-full blur-xl pointer-events-none" />
-
-          <div className="flex justify-between items-start">
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="bg-red-500 text-[8.5px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded shadow-sm leading-none">GOAT SALE</span>
-                <span className="text-[10px] font-black text-amber-300 uppercase tracking-wider leading-none">EARLY BIRD DEALS</span>
-              </div>
-              <h3 className="text-[19px] font-black tracking-tight mt-1.5 leading-none">LIVE NOW</h3>
-            </div>
-            <button className="bg-white text-[#d6186d] text-[10px] font-black uppercase px-3 py-1.5 rounded-full shadow-xs active:scale-95 transition-transform">
-              Explore more
-            </button>
-          </div>
-
-          {/* Sponsors details */}
-          <div className="bg-white/10 rounded-xl px-3 py-2 flex items-center justify-between gap-1 text-[8px] font-black uppercase tracking-wider text-white/80">
-            <span>Title Sponsors</span>
-            <span className="bg-white/20 px-1.5 py-0.5 rounded text-white leading-none">Intel CORE</span>
-            <span className="bg-white/20 px-1.5 py-0.5 rounded text-white leading-none">AI NOVA</span>
-            <span className="bg-white/20 px-1.5 py-0.5 rounded text-white leading-none">RILMA</span>
-            <span className="bg-white/20 px-1.5 py-0.5 rounded text-white leading-none">boAt</span>
-          </div>
-
-          {/* Horizontal scrollable products row */}
-          <div className="flex overflow-x-auto gap-3 pb-1 no-scrollbar">
-            {/* Product 1 */}
-            <div 
-              onClick={() => navigate('/vendor/product-detail', { state: { product: { id: 'sd1', name: "L'Oréal Paris Hyaluron Shampoo", price: 225, oldPrice: 230, image: LorealShampoo, rating: '4.3', label: 'Assured', brand: 'L\'Oréal' } } })}
-              className="min-w-[125px] bg-white rounded-2xl p-2 flex flex-col justify-between text-slate-800 shadow-sm relative cursor-pointer active:scale-95 transition-transform"
-            >
-              <div className="absolute top-2 left-2 bg-emerald-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none">
-                ↓ 2%
-              </div>
-              <div 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  const cart = JSON.parse(localStorage.getItem('userCart') || '[]');
-                  cart.push({ name: "L'Oréal Paris Hyaluron Shampoo", price: 225, oldPrice: 230, image: LorealShampoo, cartId: Date.now(), qty: 1 });
-                  localStorage.setItem('userCart', JSON.stringify(cart));
-                  window.dispatchEvent(new Event('cartUpdated'));
-                }}
-                className="w-[20px] h-[20px] absolute top-2 right-2 border border-[#d6186d]/20 bg-pink-50 rounded-full flex items-center justify-center text-[#d6186d] text-[12px] font-black cursor-pointer active:scale-90 transition-transform z-20"
-              >
-                +
-              </div>
-              <div className="h-16 flex items-center justify-center my-3.5">
-                <img src={LorealShampoo} className="h-full object-contain mix-blend-multiply" alt="shampoo" />
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-[8.5px] bg-slate-100 text-slate-555 px-1.5 py-0.5 rounded font-bold leading-none">200 ml</span>
-                  <div className="flex items-center bg-emerald-100 text-emerald-800 px-1 rounded-sm text-[8px] font-black leading-none">
-                    4.3 <Star size={6} fill="currentColor" className="ml-0.5" />
-                  </div>
-                </div>
-                <h4 className="text-[10px] font-black leading-tight text-slate-800 line-clamp-2 h-7">L'Oréal Paris Hyaluron...</h4>
-                <div className="flex items-baseline gap-1 mt-1.5">
-                  <span className="text-[10px] text-slate-400 line-through">₹230</span>
-                  <span className="text-[12px] font-black text-slate-900">₹225</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Product 2 */}
-            <div 
-              onClick={() => navigate('/vendor/product-detail', { state: { product: { id: 'sd2', name: "Wellcore Micronised Creatine Monohydrate", price: 530, oldPrice: 699, image: PlumShampoo, rating: '4.3', label: 'Assured', brand: 'Wellcore' } } })}
-              className="min-w-[125px] bg-white rounded-2xl p-2 flex flex-col justify-between text-slate-800 shadow-sm relative cursor-pointer active:scale-95 transition-transform"
-            >
-              <div className="absolute top-2 left-2 bg-emerald-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none">
-                ↓ 24% <span className="bg-slate-800/20 px-0.5 rounded-sm">AD</span>
-              </div>
-              <div 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  const cart = JSON.parse(localStorage.getItem('userCart') || '[]');
-                  cart.push({ name: "Wellcore Micronised Creatine Monohydrate", price: 530, oldPrice: 699, image: PlumShampoo, cartId: Date.now(), qty: 1 });
-                  localStorage.setItem('userCart', JSON.stringify(cart));
-                  window.dispatchEvent(new Event('cartUpdated'));
-                }}
-                className="w-[20px] h-[20px] absolute top-2 right-2 border border-[#d6186d]/20 bg-pink-50 rounded-full flex items-center justify-center text-[#d6186d] text-[12px] font-black cursor-pointer active:scale-90 transition-transform z-20"
-              >
-                +
-              </div>
-              <div className="h-16 flex items-center justify-center my-3.5">
-                <img src={PlumShampoo} className="h-full object-contain mix-blend-multiply" alt="serum" />
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-[8.5px] bg-slate-100 text-slate-555 px-1.5 py-0.5 rounded font-bold leading-none">122 g</span>
-                  <div className="flex items-center bg-emerald-100 text-emerald-800 px-1 rounded-sm text-[8px] font-black leading-none">
-                    4.3 <Star size={6} fill="currentColor" className="ml-0.5" />
-                  </div>
-                </div>
-                <h4 className="text-[10px] font-black leading-tight text-slate-800 line-clamp-2 h-7">Wellcore Micronised ...</h4>
-                <div className="flex items-baseline gap-1 mt-1.5">
-                  <span className="text-[10px] text-slate-400 line-through">₹699</span>
-                  <span className="text-[12px] font-black text-slate-900">₹530</span>
-                </div>
-                <div className="mt-1 bg-amber-550/20 px-1 py-0.5 rounded text-[8px] font-bold text-amber-800 leading-none text-center">
-                  ₹400 with UPI offer
-                </div>
-              </div>
-            </div>
-
-            {/* Product 3 */}
-            <div 
-              onClick={() => navigate('/vendor/product-detail', { state: { product: { id: 'sd3', name: "Pilgrim 10% Vitamin C Face Serum", price: 202, oldPrice: 249, image: LipGloss, rating: '4.1', label: 'Assured', brand: 'Pilgrim' } } })}
-              className="min-w-[125px] bg-white rounded-2xl p-2 flex flex-col justify-between text-slate-800 shadow-sm relative cursor-pointer active:scale-95 transition-transform"
-            >
-              <div className="absolute top-2 left-2 bg-emerald-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none">
-                ↓ 19%
-              </div>
-              <div 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  const cart = JSON.parse(localStorage.getItem('userCart') || '[]');
-                  cart.push({ name: "Pilgrim 10% Vitamin C Face Serum", price: 202, oldPrice: 249, image: LipGloss, cartId: Date.now(), qty: 1 });
-                  localStorage.setItem('userCart', JSON.stringify(cart));
-                  window.dispatchEvent(new Event('cartUpdated'));
-                }}
-                className="w-[20px] h-[20px] absolute top-2 right-2 border border-[#d6186d]/20 bg-pink-50 rounded-full flex items-center justify-center text-[#d6186d] text-[12px] font-black cursor-pointer active:scale-90 transition-transform z-20"
-              >
-                +
-              </div>
-              <div className="h-16 flex items-center justify-center my-3.5">
-                <img src={LipGloss} className="h-full object-contain mix-blend-multiply" alt="oil" />
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-[8.5px] bg-slate-100 text-slate-555 px-1.5 py-0.5 rounded font-bold leading-none">10 ml</span>
-                  <div className="flex items-center bg-emerald-100 text-emerald-800 px-1 rounded-sm text-[8px] font-black leading-none">
-                    4.1 <Star size={6} fill="currentColor" className="ml-0.5" />
-                  </div>
-                </div>
-                <h4 className="text-[10px] font-black leading-tight text-slate-800 line-clamp-2 h-7">Pilgrim 10%...</h4>
-                <div className="flex items-baseline gap-1 mt-1.5">
-                  <span className="text-[10px] text-slate-400 line-through">₹249</span>
-                  <span className="text-[12px] font-black text-slate-900">₹202</span>
-                </div>
-                <div className="mt-1 bg-yellow-100 text-yellow-800 border border-yellow-250 px-1 py-0.5 rounded text-[8px] font-black flex justify-between items-center cursor-pointer leading-none">
-                  <span>₹191 XtraSaver</span>
-                  <span>&gt;</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* EARLY BIRD DEALS (Desktop View - copy style & structure of Best Deals on Furniture) */}
-        <div className="hidden md:block md:max-w-6xl md:mx-auto md:mb-6">
-          {/* Banner Header */}
-          <div className="bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f] text-white px-6 py-4 rounded-t-3xl flex justify-between items-center shadow-sm">
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="bg-red-500 text-[8.5px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded shadow-sm leading-none">GOAT SALE</span>
-                <span className="text-[10px] font-black text-amber-300 uppercase tracking-wider leading-none">EARLY BIRD DEALS</span>
-              </div>
-              <h3 className="text-[19px] font-black tracking-tight mt-1.5 leading-none">LIVE NOW</h3>
-            </div>
-            <button className="bg-white text-[#d6186d] text-[10px] font-black uppercase px-3 py-1.5 rounded-full shadow-xs active:scale-95 transition-transform">
-              Explore more
-            </button>
-          </div>
-
-          {/* Sponsors strip inside desktop layout */}
-          <div className="bg-gradient-to-r from-[#b5125b] to-[#c2410c] px-6 py-2.5 flex items-center gap-4 text-[10px] font-black uppercase tracking-wider text-white/80">
-            <span>Title Sponsors</span>
-            <span className="bg-white/20 px-2 py-0.5 rounded text-white leading-none">Intel CORE</span>
-            <span className="bg-white/20 px-2 py-0.5 rounded text-white leading-none">AI NOVA</span>
-            <span className="bg-white/20 px-2 py-0.5 rounded text-white leading-none">RILMA</span>
-            <span className="bg-white/20 px-2 py-0.5 rounded text-white leading-none">boAt</span>
-          </div>
-
-          {/* White container panel containing the cards */}
-          <div className="bg-white border-x border-b border-slate-100 rounded-b-3xl p-6 shadow-md">
-            <div className="grid grid-cols-3 gap-6">
-              {/* Product 1 */}
-              <div 
-                onClick={() => navigate('/vendor/product-detail', { state: { product: { id: 'sd1', name: "L'Oréal Paris Hyaluron Shampoo", price: 225, oldPrice: 230, image: LorealShampoo, rating: '4.3', label: 'Assured', brand: 'L\'Oréal' } } })}
-                className="flex flex-col gap-3.5 cursor-pointer group active:scale-95 transition-transform relative"
-              >
-                <div className="absolute top-3 left-3 z-10 bg-emerald-600 text-white text-[8.5px] font-black px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none">
-                  ↓ 2%
-                </div>
-                <div 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const cart = JSON.parse(localStorage.getItem('userCart') || '[]');
-                    cart.push({ name: "L'Oréal Paris Hyaluron Shampoo", price: 225, oldPrice: 230, image: LorealShampoo, cartId: Date.now(), qty: 1 });
-                    localStorage.setItem('userCart', JSON.stringify(cart));
-                    window.dispatchEvent(new Event('cartUpdated'));
-                  }}
-                  className="w-[28px] h-[28px] absolute top-3 right-3 z-10 border border-[#d6186d]/20 bg-pink-50 rounded-full flex items-center justify-center text-[#d6186d] text-[15px] font-black cursor-pointer active:scale-90 transition-transform"
-                >
-                  +
-                </div>
-                {/* Soft grey rounded image container box */}
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-50 border border-slate-100/60 flex items-center justify-center p-5 group-hover:bg-slate-100/60 transition-colors duration-300">
-                  <img
-                    src={LorealShampoo}
-                    alt="shampoo"
-                    className="h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                </div>
-                {/* Content placed below the image box */}
-                <div className="px-1">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-[8.5px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-bold leading-none">200 ml</span>
-                    <div className="flex items-center bg-emerald-100 text-emerald-800 px-1 rounded-sm text-[8px] font-black leading-none">
-                      4.3 <Star size={6} fill="currentColor" className="ml-0.5" />
-                    </div>
-                  </div>
-                  <h3 className="text-[13px] font-black text-slate-800 leading-snug group-hover:text-[#d6186d] transition-colors">L'Oréal Paris Hyaluron Shampoo</h3>
-                  <div className="flex items-baseline gap-1.5 mt-1.5">
-                    <span className="text-[11px] text-slate-400 line-through">₹230</span>
-                    <span className="text-[13px] font-black text-slate-900">₹225</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Product 2 */}
-              <div 
-                onClick={() => navigate('/vendor/product-detail', { state: { product: { id: 'sd2', name: "Wellcore Micronised Creatine Monohydrate", price: 530, oldPrice: 699, image: PlumShampoo, rating: '4.3', label: 'Assured', brand: 'Wellcore' } } })}
-                className="flex flex-col gap-3.5 cursor-pointer group active:scale-95 transition-transform relative"
-              >
-                <div className="absolute top-3 left-3 z-10 bg-emerald-600 text-white text-[8.5px] font-black px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none">
-                  ↓ 24% <span className="bg-slate-800/20 px-0.5 rounded-sm ml-0.5">AD</span>
-                </div>
-                <div 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const cart = JSON.parse(localStorage.getItem('userCart') || '[]');
-                    cart.push({ name: "Wellcore Micronised Creatine Monohydrate", price: 530, oldPrice: 699, image: PlumShampoo, cartId: Date.now(), qty: 1 });
-                    localStorage.setItem('userCart', JSON.stringify(cart));
-                    window.dispatchEvent(new Event('cartUpdated'));
-                  }}
-                  className="w-[28px] h-[28px] absolute top-3 right-3 z-10 border border-[#d6186d]/20 bg-pink-50 rounded-full flex items-center justify-center text-[#d6186d] text-[15px] font-black cursor-pointer active:scale-90 transition-transform"
-                >
-                  +
-                </div>
-                {/* Soft grey rounded image container box */}
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-50 border border-slate-100/60 flex items-center justify-center p-5 group-hover:bg-slate-100/60 transition-colors duration-300">
-                  <img
-                    src={PlumShampoo}
-                    alt="creatine"
-                    className="h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                </div>
-                {/* Content placed below the image box */}
-                <div className="px-1">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-[8.5px] bg-slate-100 text-slate-555 px-1.5 py-0.5 rounded font-bold leading-none">122 g</span>
-                    <div className="flex items-center bg-emerald-100 text-emerald-800 px-1 rounded-sm text-[8px] font-black leading-none">
-                      4.3 <Star size={6} fill="currentColor" className="ml-0.5" />
-                    </div>
-                  </div>
-                  <h3 className="text-[13px] font-black text-slate-800 leading-snug group-hover:text-[#d6186d] transition-colors">Wellcore Micronised Creatine</h3>
-                  <div className="flex items-baseline gap-1.5 mt-1.5">
-                    <span className="text-[11px] text-slate-400 line-through">₹699</span>
-                    <span className="text-[13px] font-black text-slate-900">₹530</span>
-                  </div>
-                  <div className="mt-2 bg-amber-550/10 px-2 py-1 rounded text-[10px] font-bold text-amber-800 w-fit">
-                    ₹400 with UPI offer
-                  </div>
-                </div>
-              </div>
-
-              {/* Product 3 */}
-              <div 
-                onClick={() => navigate('/vendor/product-detail', { state: { product: { id: 'sd3', name: "Pilgrim 10% Vitamin C Face Serum", price: 202, oldPrice: 249, image: LipGloss, rating: '4.1', label: 'Assured', brand: 'Pilgrim' } } })}
-                className="flex flex-col gap-3.5 cursor-pointer group active:scale-95 transition-transform relative"
-              >
-                <div className="absolute top-3 left-3 z-10 bg-emerald-600 text-white text-[8.5px] font-black px-1.5 py-0.5 rounded flex items-center gap-0.5 leading-none">
-                  ↓ 19%
-                </div>
-                <div 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const cart = JSON.parse(localStorage.getItem('userCart') || '[]');
-                    cart.push({ name: "Pilgrim 10% Vitamin C Face Serum", price: 202, oldPrice: 249, image: LipGloss, cartId: Date.now(), qty: 1 });
-                    localStorage.setItem('userCart', JSON.stringify(cart));
-                    window.dispatchEvent(new Event('cartUpdated'));
-                  }}
-                  className="w-[28px] h-[28px] absolute top-3 right-3 z-10 border border-[#d6186d]/20 bg-pink-50 rounded-full flex items-center justify-center text-[#d6186d] text-[15px] font-black cursor-pointer active:scale-90 transition-transform"
-                >
-                  +
-                </div>
-                {/* Soft grey rounded image container box */}
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-50 border border-slate-100/60 flex items-center justify-center p-5 group-hover:bg-slate-100/60 transition-colors duration-300">
-                  <img
-                    src={LipGloss}
-                    alt="serum"
-                    className="h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                </div>
-                {/* Content placed below the image box */}
-                <div className="px-1">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-[8.5px] bg-slate-100 text-slate-555 px-1.5 py-0.5 rounded font-bold leading-none">10 ml</span>
-                    <div className="flex items-center bg-emerald-100 text-emerald-800 px-1 rounded-sm text-[8px] font-black leading-none">
-                      4.1 <Star size={6} fill="currentColor" className="ml-0.5" />
-                    </div>
-                  </div>
-                  <h3 className="text-[13px] font-black text-slate-800 leading-snug group-hover:text-[#d6186d] transition-colors">Pilgrim 10% Face Serum</h3>
-                  <div className="flex items-baseline gap-1.5 mt-1.5">
-                    <span className="text-[11px] text-slate-400 line-through">₹249</span>
-                    <span className="text-[13px] font-black text-slate-900">₹202</span>
-                  </div>
-                  <div className="mt-2 bg-yellow-100 text-yellow-800 border border-yellow-250 px-2 py-0.5 rounded text-[10px] font-black flex justify-between items-center w-fit">
-                    <span>₹191 XtraSaver</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    )}
-
-      {/* Location reminder banner matching screenshot exactly */}
-      <div className="mb-6 bg-rose-50/40 border border-rose-100/60 rounded-xl p-3 flex justify-between items-center cursor-pointer shadow-2xs hover:bg-rose-50/70 transition-colors">
-        <span className="text-[11px] font-semibold text-rose-900 leading-snug">
-          Share your location to access QuickShop & explore offers trending in your area.
-        </span>
-        <svg className="w-4 h-4 text-rose-800 flex-shrink-0 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </div>
-
-      {/* Today's special deals section */}
-      <div className={`p-4 rounded-3xl mb-6 shadow-[0_4px_12px_rgba(0,0,0,0.015)] transition-colors duration-200 md:max-w-[1600px] md:mx-auto md:w-full md:p-6 ${
-        isFreshGrocery ? 'bg-[#FFF0A0]/40 border border-[#7A3E17]/10' : 'bg-[#fbe8f3]'
-      }`}>
-        <h2 className="text-[17px] font-black text-slate-800 mb-4 pl-1">
-          Today's special deals
-        </h2>
-
-        {/* Sub-tabs List */}
-        <div className="flex overflow-x-auto gap-4 mb-5 no-scrollbar md:justify-center md:gap-14 md:overflow-x-visible">
-          {SPECIAL_DEALS_TABS.map((tab) => {
-            const isSelected = activeSpecialTab === tab.id;
+      <div className="relative z-10 flex flex-col">
+        {/* ── HORIZONTAL FILTER TABS BAR ── */}
+        <div className="flex gap-2.5 overflow-x-auto no-scrollbar py-3.5 px-4">
+          {['All', 'Title Sponsors', 'Intel Core', 'AI Nova', 'Boat'].map((tab) => {
+            const isActive = activeFilter === tab;
             return (
-              <div 
-                key={tab.id} 
-                onClick={() => setActiveSpecialTab(tab.id)} 
-                className="flex flex-col items-center cursor-pointer flex-shrink-0 w-[72px] md:w-[110px] group"
+              <button
+                key={tab}
+                onClick={() => setActiveFilter(tab)}
+                className={`flex-shrink-0 px-4 py-1.5 rounded-lg text-[12px] font-black tracking-tight transition-all duration-200 border ${
+              isActive
+                    ? 'bg-[#F26522] border-[#F26522] text-white shadow-xs'
+                    : 'bg-white border-[#EADCC9]/55 text-slate-700 hover:bg-slate-50'
+                }`}
               >
-                <div className={`w-14 h-14 md:w-20 md:h-20 rounded-2xl md:rounded-full overflow-hidden flex items-center justify-center p-0.5 transition-all duration-300 ${
-                  isSelected 
-                    ? (isFreshGrocery ? 'bg-[#FFF0A0] shadow-xs md:ring-2 md:ring-offset-2 md:ring-[#7A3E17]' : 'bg-[#ffd3e8] shadow-sm scale-105 md:ring-2 md:ring-offset-2 md:ring-[#d6186d]')
-                    : 'bg-white hover:scale-105 shadow-xs'
-                }`}>
-                  <img src={tab.img} alt={tab.name} className="w-full h-full rounded-2xl md:rounded-full object-cover" />
-                </div>
-                <span className={`text-[9px] md:text-[12px] font-black text-center mt-2 leading-tight line-clamp-2 h-[24px] md:h-auto md:max-w-[100px] transition-colors ${
-                  isSelected 
-                    ? (isFreshGrocery ? 'text-[#7A3E17]' : 'text-[#d6186d]') 
-                    : 'text-slate-600 group-hover:text-slate-900'
-                }`}>
-                  {tab.name}
-                </span>
-                {isSelected && (
-                  <div className={`w-8 md:w-12 h-[2.5px] md:h-[3px] rounded-full mt-1.5 md:mt-2 ${
-                    isFreshGrocery ? 'bg-[#7A3E17]' : 'bg-[#d6186d]'
-                  }`} />
-                )}
-              </div>
+                {tab}
+              </button>
             );
           })}
         </div>
 
-        {/* Products Row */}
-        <div className="flex gap-3 overflow-x-auto pb-3 no-scrollbar md:grid md:grid-cols-4 lg:grid-cols-6 md:overflow-x-visible mb-4">
-          {(SPECIAL_DEALS_TABS.find(t => t.id === activeSpecialTab)?.products || []).map((prod) => (
-            <div 
-              key={prod.id} 
-              onClick={() => {
-                localStorage.setItem('isQuickShopFlow', 'true');
-                navigate('/vendor/product-detail', { state: { product: { ...prod, image: prod.img, qty: 1 } } });
-              }}
-              className="min-w-[130px] bg-white rounded-2xl p-1.5 md:p-2.5 flex flex-col justify-between relative shadow-xs cursor-pointer active:scale-[0.99] transition-transform"
-            >
-              {/* Discount Badge */}
-              <div className="absolute top-2 left-2 bg-[#008542] text-white text-[8px] font-black px-1.5 py-0.5 rounded-md flex items-center gap-0.5 leading-none">
-                ↓ {prod.discount}
-              </div>
-              
-              {/* Product Image */}
-              <div className="h-16 md:h-20 flex items-center justify-center my-2 md:my-3.5">
-                <img src={prod.img} alt={prod.name} className="max-h-full object-contain mix-blend-multiply" />
-              </div>
-              
-              {/* Rating and Add Button */}
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center bg-emerald-50 text-emerald-800 border border-emerald-100 px-1 py-0.5 rounded-md text-[8.5px] font-black leading-none">
-                  {prod.rating} <Star size={6} fill="currentColor" className="ml-0.5" />
-                </div>
-                {/* Add Button */}
-                <button 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    const cart = JSON.parse(localStorage.getItem('userCart') || '[]');
-                    cart.push({ name: prod.name, price: prod.price, oldPrice: prod.oldPrice, image: prod.img, cartId: Date.now(), qty: 1 });
-                    localStorage.setItem('userCart', JSON.stringify(cart));
-                    window.dispatchEvent(new Event('cartUpdated'));
-                  }}
-                  className={`px-3.5 py-1 border rounded-lg text-[10px] font-black tracking-wider uppercase cursor-pointer active:scale-90 transition-transform shadow-3xs hover:bg-opacity-5 bg-white ${
-                    isFreshGrocery 
-                      ? 'border-[#7A3E17] text-[#7A3E17] hover:bg-[#7A3E17]' 
-                      : 'border-[#d6186d] text-[#d6186d] hover:bg-pink-50'
-                  }`}
-                >
-                  ADD
-                </button>
-              </div>
-
-              <div>
-                <span className="text-[8.5px] bg-slate-100 text-slate-555 px-1.5 py-0.5 rounded font-bold leading-none">{prod.weight}</span>
-                <h4 className="text-[10px] font-black leading-tight text-slate-800 mt-1.5 line-clamp-2 h-7">{prod.name}</h4>
-                <div className="flex items-baseline gap-1 mt-1.5">
-                  <span className="text-[9px] text-slate-400 line-through">{formatPrice(prod.oldPrice)}</span>
-                  <span className="text-[11.5px] font-black text-slate-900">{formatPrice(prod.price)}</span>
-                </div>
-                
-                {/* XtraSaver */}
-                <div className="mt-2 bg-yellow-100 text-yellow-900 border border-yellow-200/50 px-2 py-1 rounded-lg text-[8.5px] font-black flex justify-between items-center cursor-pointer leading-none">
-                  <span>🔒 {formatPrice(prod.xtraPrice)} XtraSaver</span>
-                  <span className="text-[7px] text-yellow-755 font-bold">&gt;</span>
-                </div>
-              </div>
-            </div>
-          ))}
+      {/* ── FLASH DEALS SECTION ── */}
+      <div className="bg-white rounded-2xl p-3 mx-3 mb-3 border border-[#FFF1EB] shadow-[0_4px_20px_rgba(242,101,34,0.015)]">
+        <div className="flex justify-between items-center mb-2.5">
+          <h2 className="text-[14.5px] font-black text-slate-800 tracking-tight">Flash Deals</h2>
+          <div className="text-slate-850 text-[11px] font-black flex items-center gap-1">
+            <span>Ends in</span>
+            <span className="font-mono bg-slate-900 text-white px-1 py-0.5 rounded text-[9.5px]">{timeLeft.h}</span>
+            <span>:</span>
+            <span className="font-mono bg-slate-900 text-white px-1 py-0.5 rounded text-[9.5px]">{timeLeft.m}</span>
+            <span>:</span>
+            <span className="font-mono bg-slate-900 text-white px-1 py-0.5 rounded text-[9.5px]">{timeLeft.s}</span>
+          </div>
         </div>
 
-        {/* View More Products Button */}
-        <button 
-          onClick={() => {
-            const selectedTabObj = SPECIAL_DEALS_TABS.find(t => t.id === activeSpecialTab);
-            if (selectedTabObj) {
-              navigate(isFreshGrocery ? '/fresh-grocery/category' : '/quick-shop/category', { state: { category: selectedTabObj.name } });
-            }
-          }}
-          className={`w-full bg-white hover:bg-slate-50 text-slate-700 text-[11px] font-black py-2.5 rounded-2xl flex items-center justify-center gap-1 border active:scale-[0.99] transition-transform shadow-3xs md:max-w-xs md:mx-auto ${
-            isFreshGrocery ? 'border-[#7A3E17]/20' : 'border-pink-200/20'
-          }`}
-        >
-          View more products <ChevronRight size={14} className="text-slate-450" />
-        </button>
+        {/* Flash Deals Cards grid */}
+        <div className="grid grid-cols-3 gap-2">
+          {/* Product 1: L'Oreal Shampoo */}
+          <div 
+            onClick={() => navigate('/product-detail', { state: { product: { name: "L'Oreal Paris Hyaluron Moisture", price: 225, oldPrice: 230, rating: '4.3' } } })}
+            className="bg-white rounded-xl border border-slate-100 p-1.5 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform"
+          >
+            <div className="absolute top-1 left-1 bg-[#FF5C00] text-white text-[7.5px] font-black px-1.2 py-0.3 rounded-xs shadow-2xs leading-none z-10">
+              12% OFF
+            </div>
+            
+            <div className="h-14 flex items-center justify-center my-1.5">
+              <img 
+                src="https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=300&auto=format&fit=crop&q=60" 
+                alt="L'Oreal Shampoo" 
+                className="max-h-full object-contain mix-blend-multiply" 
+              />
+            </div>
+
+            <div>
+              <span className="text-slate-400 text-[8px] font-bold">200 ml</span>
+              <h3 className="text-[10px] font-black text-slate-850 leading-tight mt-0.5">L'Oreal Paris</h3>
+              <p className="text-[8.5px] text-slate-500 font-semibold leading-tight truncate">Hyaluron Moisture</p>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span className="text-[9px] text-slate-400 line-through">₹230</span>
+                <span className="text-[11px] font-black text-slate-900">₹225</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Product 2: Wellcore Creatine */}
+          <div 
+            onClick={() => navigate('/product-detail', { state: { product: { name: "Wellcore Creatine", price: 530, oldPrice: 699, rating: '4.5' } } })}
+            className="bg-white rounded-xl border border-slate-100 p-1.5 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform"
+          >
+            <div className="absolute top-1 left-1 bg-[#FF5C00] text-white text-[7.5px] font-black px-1.2 py-0.3 rounded-xs shadow-2xs leading-none z-10">
+              12% OFF
+            </div>
+
+            <div className="h-14 flex items-center justify-center my-1.5">
+              <img 
+                src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=300&auto=format&fit=crop&q=60" 
+                alt="Wellcore Creatine" 
+                className="max-h-full object-contain mix-blend-multiply" 
+              />
+            </div>
+
+            <div>
+              <span className="text-slate-400 text-[8px] font-bold">122 g</span>
+              <h3 className="text-[10px] font-black text-slate-850 leading-tight mt-0.5">Wellcore</h3>
+              <p className="text-[8.5px] text-slate-500 font-semibold leading-tight truncate">Creatine</p>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span className="text-[9px] text-slate-400 line-through">₹699</span>
+                <span className="text-[11px] font-black text-slate-900">₹530</span>
+              </div>
+              <div className="mt-0.5 bg-[#FFF2EB] text-[#FF5C00] border border-[#FFD9C7]/30 rounded-xs text-[7.5px] font-black text-center py-0.2 leading-none">
+                ₹400 with UPI
+              </div>
+            </div>
+          </div>
+
+          {/* Product 3: Pilgrim Face Serum */}
+          <div 
+            onClick={() => navigate('/product-detail', { state: { product: { name: "Pilgrim 10% Niacinamide", price: 202, oldPrice: 249, rating: '4.4' } } })}
+            className="bg-white rounded-xl border border-slate-100 p-1.5 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform"
+          >
+            <div className="absolute top-1 left-1 bg-[#FF5C00] text-white text-[7.5px] font-black px-1.2 py-0.3 rounded-xs shadow-2xs leading-none z-10">
+              20% OFF
+            </div>
+
+            <div className="h-14 flex items-center justify-center my-1.5">
+              <img 
+                src="https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=300&auto=format&fit=crop&q=60" 
+                alt="Pilgrim Face Serum" 
+                className="max-h-full object-contain mix-blend-multiply" 
+              />
+            </div>
+
+            <div>
+              <span className="text-slate-400 text-[8px] font-bold">10 ml</span>
+              <h3 className="text-[10px] font-black text-slate-850 leading-tight mt-0.5">Pilgrim 10%</h3>
+              <p className="text-[8.5px] text-slate-500 font-semibold leading-tight truncate">Niacinamide</p>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span className="text-[9px] text-slate-400 line-through">₹249</span>
+                <span className="text-[11px] font-black text-slate-900">₹202</span>
+              </div>
+              <button className="mt-0.5 w-full bg-white text-slate-700 border border-slate-200 rounded-full text-[8px] font-black py-0.2 text-center shadow-3xs active:scale-95 transition-transform">
+                XtraSaver
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Existing category sections (Mobile View) */}
-      <div className="md:hidden">
-        {filteredSections.map((section, sIdx) => (
-          <div key={sIdx} className="mb-8">
-            <h2 className="text-[15px] font-bold text-gray-900 mb-3 tracking-tight pl-1">
+      {/* ── SHARE LOCATION BANNER ── */}
+      <div className="bg-[#FFF5EE] border border-[#FFD9C7]/40 rounded-[20px] p-4 mx-4 mb-4 flex items-center justify-between shadow-2xs">
+        <div className="flex flex-col gap-3 flex-1 pr-2">
+          <span className="text-[12.5px] font-extrabold text-slate-800 leading-snug">
+            Share your location to access QuickShop & explore offers
+          </span>
+          <button className="bg-[#FF5C00] text-white text-[11.5px] font-black px-4 py-2 rounded-xl w-fit active:scale-95 transition-transform shadow-xs">
+            Share Location
+          </button>
+        </div>
+        <ChevronDown size={20} className="text-slate-500 flex-shrink-0 cursor-pointer" />
+      </div>
+
+      {/* ── TODAY'S SPECIAL DEALS ── */}
+      <div className="bg-white rounded-[24px] p-4 mx-4 mb-6 border border-[#FFF1EB] shadow-[0_4px_20px_rgba(242,101,34,0.015)]">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-[16px] font-black text-slate-800 tracking-tight">Today's Special Deals</h2>
+          <span className="text-[#A63A00] text-[12.5px] font-black cursor-pointer hover:underline">View All</span>
+        </div>
+
+        {/* Deals grid */}
+        <div className="grid grid-cols-3 gap-2.5">
+          {/* Potato */}
+          <div 
+            onClick={() => navigate('/product-detail', { state: { product: { name: "Potato", price: 25, oldPrice: 30 } } })}
+            className="bg-white rounded-2xl border border-slate-100 p-2 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform"
+          >
+            <div className="absolute top-1.5 left-1.5 bg-[#FF5C00] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm shadow-2xs leading-none">
+              15% OFF
+            </div>
+            
+            <div className="h-20 flex items-center justify-center my-3">
+              <img 
+                src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=300&auto=format&fit=crop&q=60" 
+                alt="Potato" 
+                className="max-h-full object-contain mix-blend-multiply" 
+              />
+            </div>
+
+            <div>
+              <span className="text-slate-400 text-[9px] font-bold">1 kg</span>
+              <h3 className="text-[11px] font-black text-slate-850 leading-tight mt-0.5">Potato</h3>
+              <div className="flex items-baseline gap-1 mt-1.5">
+                <span className="text-[10px] text-slate-400 line-through">₹30</span>
+                <span className="text-[12px] font-black text-slate-900">₹25</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Tomato */}
+          <div 
+            onClick={() => navigate('/product-detail', { state: { product: { name: "Tomato", price: 22, oldPrice: 25 } } })}
+            className="bg-white rounded-2xl border border-slate-100 p-2 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform"
+          >
+            <div className="absolute top-1.5 left-1.5 bg-[#FF5C00] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm shadow-2xs leading-none">
+              12% OFF
+            </div>
+            
+            <div className="h-20 flex items-center justify-center my-3">
+              <img 
+                src="https://images.unsplash.com/photo-1597362925123-77861d3fbac7?w=300&auto=format&fit=crop&q=60" 
+                alt="Tomato" 
+                className="max-h-full object-contain mix-blend-multiply" 
+              />
+            </div>
+
+            <div>
+              <span className="text-slate-400 text-[9px] font-bold">500 g</span>
+              <h3 className="text-[11px] font-black text-slate-850 leading-tight mt-0.5">Tomato</h3>
+              <div className="flex items-baseline gap-1 mt-1.5">
+                <span className="text-[10px] text-slate-400 line-through">₹25</span>
+                <span className="text-[12px] font-black text-slate-900">₹22</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Milk */}
+          <div 
+            onClick={() => navigate('/product-detail', { state: { product: { name: "Milk", price: 48, oldPrice: 60 } } })}
+            className="bg-white rounded-2xl border border-slate-100 p-2 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform"
+          >
+            <div className="absolute top-1.5 left-1.5 bg-[#FF5C00] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm shadow-2xs leading-none">
+              10% OFF
+            </div>
+            
+            <div className="h-20 flex items-center justify-center my-3">
+              <img 
+                src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=300&auto=format&fit=crop&q=60" 
+                alt="Milk" 
+                className="max-h-full object-contain mix-blend-multiply" 
+              />
+            </div>
+
+            <div>
+              <span className="text-slate-400 text-[9px] font-bold">1 L</span>
+              <h3 className="text-[11px] font-black text-slate-850 leading-tight mt-0.5">Milk</h3>
+              <div className="flex items-baseline gap-1 mt-1.5">
+                <span className="text-[10px] text-slate-400 line-through">₹60</span>
+                <span className="text-[12px] font-black text-slate-900">₹48</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── RESTORED CATEGORY SECTIONS (Mobile View) ── */}
+      <div className="md:hidden px-4 space-y-8">
+        {CATEGORIES_DATA.map((section, sIdx) => (
+          <div key={sIdx} className="mb-6">
+            <h2 className="text-[15px] font-extrabold text-[#F26522] mb-3 tracking-tight pl-1">
               {section.title}
             </h2>
             <div className="grid grid-cols-4 gap-2 justify-items-center">
@@ -933,14 +920,12 @@ const QuickShop = () => {
         ))}
       </div>
 
-      {/* Existing category sections (Desktop View - copy style & structure of Categories banner + white panel) */}
+      {/* ── RESTORED CATEGORY SECTIONS (Desktop View) ── */}
       <div className="hidden md:block md:max-w-[1600px] md:mx-auto md:px-4 md:py-6 space-y-8">
-        {filteredSections.map((section, sIdx) => (
+        {CATEGORIES_DATA.map((section, sIdx) => (
           <div key={sIdx} className="flex flex-col">
             {/* Header Banner */}
-            <div className={`px-6 py-3.5 rounded-t-3xl flex items-center justify-between shadow-sm text-white ${
-              isFreshGrocery ? 'bg-[#7A3E17]' : 'bg-[#d6186d]'
-            }`}>
+            <div className={`px-6 py-3.5 rounded-t-3xl flex items-center justify-between shadow-sm text-white bg-[#F26522]`}>
               <h2 className="text-[15px] font-black uppercase tracking-wider">
                 {section.title}
               </h2>
@@ -958,7 +943,7 @@ const QuickShop = () => {
                     }}
                     className="flex flex-col items-center gap-3.5 cursor-pointer group active:scale-95 transition-transform w-full max-w-[160px]"
                   >
-                    {/* Soft grey rounded image container box */}
+                    {/* Image container */}
                     <div className="relative w-full aspect-square rounded-[24px] overflow-hidden bg-slate-50 border border-slate-100/60 flex items-center justify-center p-0 group-hover:bg-slate-100/65 transition-colors duration-300">
                       <img
                         src={item.img}
@@ -967,7 +952,7 @@ const QuickShop = () => {
                         loading="lazy"
                       />
                     </div>
-                    <span className="text-[13px] font-black text-center text-slate-800 leading-tight tracking-tight mt-1 group-hover:text-[#d6186d] transition-colors">
+                    <span className="text-[13px] font-black text-center text-slate-850 leading-tight tracking-tight mt-1 group-hover:text-[#F26522] transition-colors">
                       {item.name}
                     </span>
                   </div>
@@ -977,8 +962,8 @@ const QuickShop = () => {
           </div>
         ))}
       </div>
-      </div>
 
+      </div>
     </div>
   );
 };

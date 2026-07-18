@@ -4,6 +4,13 @@ import { ArrowLeft, Search, Share2, ChevronDown, Heart } from 'lucide-react';
 import { formatPrice } from '../../../shared/utils/priceFormatter';
 import closedShutter from '../../../assets/closed_shutter.png';
 
+const FALLBACK_IMAGE = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><rect width="150" height="150" fill="%23fdfbf7" rx="12"/><text x="75" y="80" font-size="12" font-family="sans-serif" font-weight="bold" fill="%23d3a075" text-anchor="middle">Mithilakart</text></svg>`;
+
+const handleImageError = (e) => {
+  e.target.onerror = null;
+  e.target.src = FALLBACK_IMAGE;
+};
+
 
 const DYNAMIC_DATA = {
   'Fruits & Vegetables': {
@@ -289,16 +296,16 @@ const QuickShopSubcategory = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
   
-  const primaryText = isFreshGroceryFlow ? 'text-[#7A3E17]' : isMithilakFlow ? 'text-[#7c3aed]' : 'text-[#d6186d]';
-  const primaryBg = isFreshGroceryFlow ? 'bg-[#7A3E17]' : isMithilakFlow ? 'bg-[#7c3aed]' : 'bg-[#d6186d]';
-  const primaryBgHover = isFreshGroceryFlow ? 'hover:bg-[#FFF0A0] bg-white' : isMithilakFlow ? 'hover:bg-purple-55 bg-white' : 'hover:bg-pink-50 bg-white';
-  const primaryBorder = isFreshGroceryFlow ? 'border-[#7A3E17]' : isMithilakFlow ? 'border-[#7c3aed]' : 'border-[#d6186d]';
-  const primaryBorderLight = isFreshGroceryFlow ? 'border-[#7A3E17]/25' : isMithilakFlow ? 'border-[#7c3aed]/25' : 'border-[#d6186d]/25';
-  const primaryLightBg = isFreshGroceryFlow ? 'bg-[#FFF0A0]/30' : isMithilakFlow ? 'bg-purple-50/30' : 'bg-pink-50/30';
-  const primarySidebarAccent = isFreshGroceryFlow ? 'bg-[#7A3E17]' : isMithilakFlow ? 'bg-[#7c3aed]' : 'bg-[#d6186d]';
+  const primaryText = isFreshGroceryFlow ? 'text-[#D9A21B]' : isMithilakFlow ? 'text-[#207C8A]' : 'text-[#F26522]';
+  const primaryBg = isFreshGroceryFlow ? 'bg-[#D9A21B]' : isMithilakFlow ? 'bg-[#207C8A]' : 'bg-[#F26522]';
+  const primaryBgHover = isFreshGroceryFlow ? 'hover:bg-[#FFF8EE] bg-white' : isMithilakFlow ? 'hover:bg-[#F5F9FA] bg-white' : 'hover:bg-orange-50 bg-white';
+  const primaryBorder = isFreshGroceryFlow ? 'border-[#D9A21B]' : isMithilakFlow ? 'border-[#207C8A]' : 'border-[#F26522]';
+  const primaryBorderLight = isFreshGroceryFlow ? 'border-[#D9A21B]/25' : isMithilakFlow ? 'border-[#207C8A]/25' : 'border-[#F26522]/25';
+  const primaryLightBg = isFreshGroceryFlow ? 'bg-[#FFF8EE]' : isMithilakFlow ? 'bg-[#F5F9FA]' : 'bg-[#FFF5EE]';
+  const primarySidebarAccent = isFreshGroceryFlow ? 'bg-[#D9A21B]' : isMithilakFlow ? 'bg-[#207C8A]' : 'bg-[#F26522]';
   
-  const rightGridBg = isFreshGroceryFlow ? 'bg-[#FFFDF3]/35' : isMithilakFlow ? 'bg-purple-50/10' : 'bg-pink-50/15';
-  const promoBg = isFreshGroceryFlow ? 'bg-[#FFF0A0]/40 border border-[#7A3E17]/15' : isMithilakFlow ? 'bg-purple-50/60 border border-purple-100/60' : 'bg-pink-50/60 border border-pink-100/60';
+  const rightGridBg = isFreshGroceryFlow ? 'bg-[#FFF8EE]' : isMithilakFlow ? 'bg-[#F5F9FA]/20' : 'bg-orange-50/15';
+  const promoBg = isFreshGroceryFlow ? 'bg-[#FFF8EE] border border-[#D9A21B]/15' : isMithilakFlow ? 'bg-[#F5F9FA]/65 border border-[#207C8A]/15' : 'bg-[#FFF5EE] border border-[#FFD9C7]/40';
 
   // Get dynamic category structure
   const categoryData = getCategoryData(categoryName);
@@ -342,37 +349,49 @@ const QuickShopSubcategory = () => {
     ? productsList 
     : productsList.filter(p => p.category === activeSub);
 
+  const isQuickShopHeader = !isFreshGroceryFlow && !isMithilakFlow;
+
   return (
-    <div className={`min-h-screen flex flex-col font-sans select-none transition-colors duration-300 ${
-      isFreshGroceryFlow ? 'bg-[#FFFDF3]' : 'bg-white'
+    <div className={`min-h-screen flex flex-col font-sans select-none transition-colors duration-300 relative ${
+      isFreshGroceryFlow ? 'bg-[#FFF8EE]' : isMithilakFlow ? 'bg-[#F5F9FA]' : 'bg-white'
     }`}>
+      
+      {/* Repeating Mithila Art Page Background Texture */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+        style={{
+          backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+          backgroundSize: '360px',
+        }}
+      />
+
       {/* Header Bar */}
       <div className={`sticky top-0 z-50 border-b border-gray-100 px-4 py-2 flex items-center justify-between shadow-3xs transition-colors duration-300 ${
-        isFreshGroceryFlow ? 'bg-[#FFF0A0]' : 'bg-white'
+        isFreshGroceryFlow ? 'bg-[#D9A21B] text-white' : isMithilakFlow ? 'bg-white' : 'bg-[#F26522] text-white'
       }`}>
         <div className="flex items-center gap-3">
           <button 
             onClick={() => navigate(-1)}
-            className="p-1 active:scale-95 text-gray-800 transition-transform"
+            className={`p-1 active:scale-95 transition-transform ${isQuickShopHeader || isFreshGroceryFlow ? 'text-white' : 'text-gray-800'}`}
           >
             <ArrowLeft size={22} strokeWidth={2.5} />
           </button>
           <div className="flex flex-col">
-            <h1 className="text-[16px] font-bold text-gray-900 leading-tight">
+            <h1 className={`text-[16px] font-bold leading-tight ${isQuickShopHeader || isFreshGroceryFlow ? 'text-white' : 'text-gray-900'}`}>
               {categoryName}
             </h1>
-            <span className={`text-[10px] ${primaryText} font-bold flex items-center gap-0.5`}>
-              Delivering to : <span className="text-gray-500 font-medium truncate max-w-[150px]">Indrapuri Colony, Indore</span>
+            <span className={`text-[10px] font-bold flex items-center gap-0.5 ${isQuickShopHeader || isFreshGroceryFlow ? 'text-white/95' : primaryText}`}>
+              Delivering to : <span className={`font-medium truncate max-w-[150px] ${isQuickShopHeader || isFreshGroceryFlow ? 'text-white/80' : 'text-gray-500'}`}>Indrapuri Colony, Indore</span>
               <ChevronDown size={10} />
             </span>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="p-2 hover:bg-gray-50 rounded-full text-gray-700">
+          <button className={`p-2 rounded-full ${isQuickShopHeader || isFreshGroceryFlow ? 'text-white hover:bg-white/10' : 'text-gray-700 hover:bg-gray-50'}`}>
             <Search size={20} strokeWidth={2.2} />
           </button>
-          <button className="p-2 hover:bg-gray-50 rounded-full text-gray-700">
+          <button className={`p-2 rounded-full ${isQuickShopHeader || isFreshGroceryFlow ? 'text-white hover:bg-white/10' : 'text-gray-700 hover:bg-gray-50'}`}>
             <Share2 size={20} strokeWidth={2.2} />
           </button>
         </div>
@@ -578,8 +597,7 @@ const QuickShopSubcategory = () => {
                 )}
                 <div className={`w-11 h-11 rounded-full overflow-hidden flex items-center justify-center border transition-all ${
                   isActive ? `${primaryBorderLight} ${primaryLightBg}` : 'border-gray-200/50 bg-white'
-                }`}>
-                  <img src={sub.icon} alt={sub.name} className="w-8 h-8 object-contain mix-blend-multiply" />
+                }`}>                  <img src={sub.icon} alt={sub.name} className="w-8 h-8 object-contain mix-blend-multiply" onError={handleImageError} />
                 </div>
                 <span className={`text-[9.5px] text-center leading-tight font-semibold tracking-tight ${
                   isActive ? `${primaryText} font-bold` : 'text-gray-500'
@@ -608,6 +626,7 @@ const QuickShopSubcategory = () => {
               src={productsList[0]?.img || "https://images.unsplash.com/photo-1610832958506-ee5633619144?w=150&auto=format&fit=crop&q=60"} 
               alt="Promo Basket" 
               className="w-16 h-12 object-contain mix-blend-multiply absolute right-2 bottom-1"
+              onError={handleImageError}
             />
           </div>
 
@@ -615,15 +634,14 @@ const QuickShopSubcategory = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {filteredProducts.map((product) => {
               const isFav = favorites.includes(product.id);
-              return (
-                <div 
+              return (                <div 
                   key={product.id}
                   onClick={() => handleProductClick(product)}
-                  className="bg-white border border-gray-100/60 rounded-2xl p-1.5 md:p-2.5 flex flex-col relative shadow-2xs hover:shadow-xs cursor-pointer active:scale-[0.99] transition-transform"
+                  className="bg-white border border-gray-100/60 rounded-xl md:rounded-2xl p-1.5 md:p-2.5 flex flex-col relative shadow-3xs hover:shadow-2xs cursor-pointer active:scale-[0.99] transition-transform"
                 >
                   {/* Badge label like 'Season's Best' */}
                   {product.badge && (
-                    <div className="absolute top-0 left-0 bg-[#FF6F3C] text-white text-[7.5px] font-bold px-2 py-0.5 rounded-tl-2xl rounded-br-lg z-10 shadow-3xs uppercase tracking-wider">
+                    <div className="absolute top-0 left-0 bg-[#FF6F3C] text-white text-[7px] md:text-[7.5px] font-bold px-1.5 py-0.2 md:px-2 md:py-0.5 rounded-tl-xl rounded-br z-10 shadow-3xs uppercase tracking-wider leading-none">
                       {product.badge}
                     </div>
                   )}
@@ -634,47 +652,48 @@ const QuickShopSubcategory = () => {
                       e.stopPropagation();
                       toggleFavorite(product.id);
                     }}
-                    className="absolute top-2.5 right-2.5 w-6 h-6 bg-white/95 backdrop-blur-xs rounded-full flex items-center justify-center shadow-xs border border-gray-100/30 z-10 active:scale-90 transition-transform"
+                    className="absolute top-1.5 right-1.5 w-5 h-5 md:w-6 md:h-6 bg-white/95 backdrop-blur-xs rounded-full flex items-center justify-center shadow-xs border border-gray-100/30 z-10 active:scale-90 transition-transform"
                   >
                     <Heart 
-                      size={11} 
+                      size={9.5} 
                       className={`transition-colors ${isFav ? 'text-red-500 fill-red-500' : 'text-gray-400'}`} 
                     />
                   </button>
 
                   {/* Product Image Panel */}
-                  <div className="h-20 md:h-24 w-full flex items-center justify-center p-1 relative mb-1.5 md:mb-2">
+                  <div className="h-16 md:h-24 w-full flex items-center justify-center p-0.5 relative mb-1 md:mb-2">
                     <img 
                       src={product.img} 
                       alt={product.name} 
                       className="max-h-full max-w-full object-contain mix-blend-multiply"
+                      onError={handleImageError}
                     />
                     
                     {/* Carousel Dots */}
                     <div className="absolute bottom-0 left-0 flex gap-0.5">
-                      <div className="w-1.5 h-1.5 rounded-full bg-gray-600" />
-                      <div className="w-1 h-1 rounded-full bg-gray-300" />
-                      <div className="w-1 h-1 rounded-full bg-gray-300" />
+                      <div className="w-1 h-1 rounded-full bg-gray-600" />
+                      <div className="w-0.5 h-0.5 rounded-full bg-gray-300" />
+                      <div className="w-0.5 h-0.5 rounded-full bg-gray-300" />
                     </div>
                   </div>
 
                   {/* Weight Details */}
-                  <div className="flex items-center gap-1.5 mb-1.5">
-                    <span className="text-[10px] text-gray-500 font-bold border border-gray-200/60 px-1.5 py-0.5 rounded-md bg-gray-50/30">
+                  <div className="flex items-center gap-1 mb-1">
+                    <span className="text-[8.5px] md:text-[10px] text-gray-500 font-bold border border-gray-200/60 px-1 py-0.2 md:px-1.5 md:py-0.5 rounded bg-gray-50/30">
                       {product.weight}
                     </span>
                     {product.subText && (
-                      <span className="text-[9px] text-gray-400 font-semibold">{product.subText}</span>
+                      <span className="text-[8px] md:text-[9px] text-gray-400 font-semibold">{product.subText}</span>
                     )}
                   </div>
 
                   {/* Product Title */}
-                  <h3 className="text-[11.5px] font-bold text-gray-900 leading-[1.3] line-clamp-2 h-7.5 mb-1.5">
+                  <h3 className="text-[10px] md:text-[11.5px] font-bold text-gray-900 leading-[1.25] line-clamp-2 h-[26px] md:h-7.5 mb-1">
                     {product.name}
                   </h3>
 
-                  {/* Custom Tags */}
-                  <div className="flex flex-wrap gap-1 mb-2">
+                  {/* Custom Tags (Hidden on Mobile for compaction) */}
+                  <div className="hidden md:flex flex-wrap gap-1 mb-2">
                     {product.tags.map((tag, tIdx) => (
                       <span 
                         key={tIdx} 
@@ -686,13 +705,13 @@ const QuickShopSubcategory = () => {
                   </div>
 
                   {/* Price and Add CTA bar */}
-                  <div className="mt-auto pt-2 flex items-center justify-between border-t border-gray-50">
+                  <div className="mt-auto pt-1.5 flex items-center justify-between border-t border-gray-50">
                     <div className="flex flex-col">
-                      <span className="text-[14px] font-bold text-gray-955 leading-none">
+                      <span className="text-[12.5px] md:text-[14px] font-bold text-gray-955 leading-none">
                         {formatPrice(product.price)}
                       </span>
                       {product.oldPrice && (
-                        <span className="text-[10px] text-gray-405 line-through mt-0.5">
+                        <span className="text-[9px] md:text-[10px] text-gray-405 line-through mt-0.5">
                           {formatPrice(product.oldPrice)}
                         </span>
                       )}
@@ -707,14 +726,14 @@ const QuickShopSubcategory = () => {
                         localStorage.setItem('userCart', JSON.stringify(cart));
                         window.dispatchEvent(new Event('cartUpdated'));
                       }}
-                      className={`px-3.5 py-1 border ${primaryBorder} rounded-lg text-[11px] font-bold ${primaryText} ${primaryBgHover} active:scale-95 transition-all shadow-3xs uppercase`}
+                      className={`px-3 py-1 rounded-lg text-[10.5px] md:text-[11.5px] font-black text-white ${primaryBg} hover:opacity-95 active:scale-95 transition-all shadow-xs uppercase`}
                     >
                       Add
                     </button>
                   </div>
  
                   {/* ETA & Stock status strip */}
-                  <div className="flex items-center gap-2 mt-2 pt-1 border-t border-dashed border-gray-100 text-[8.5px] text-gray-400 font-semibold">
+                  <div className="flex items-center gap-1.5 mt-1.5 pt-0.5 border-t border-dashed border-gray-100 text-[8px] md:text-[8.5px] text-gray-400 font-semibold">
                     <span className={`flex items-center gap-0.5 ${primaryText}`}>
                       ⏱ {product.eta}
                     </span>

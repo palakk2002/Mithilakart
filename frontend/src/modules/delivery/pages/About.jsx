@@ -34,7 +34,7 @@ const About = () => {
              ].map((link, idx) => (
                <button key={idx} className="w-full flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-100 shadow-sm text-[15px] font-bold text-slate-700">
                  <div className="flex items-center gap-3">
-                   <link.icon size={18} className="text-[#6FAE4A]" />
+                   <link.icon size={18} className="text-[#3E5A44]" />
                    {link.label}
                  </div>
                  <span className="text-[11px] text-slate-300 font-black uppercase tracking-widest">{link.link}</span>

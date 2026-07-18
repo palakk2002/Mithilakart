@@ -317,7 +317,7 @@ const MyOrders = () => {
                   </p>
                   <button 
                     onClick={() => navigate('/vendor/home')}
-                    className="mt-10 bg-[#6FAE4A] text-white px-12 py-4 rounded-2xl font-black uppercase tracking-widest text-[12px] shadow-xl shadow-blue-100 active:scale-95 transition-transform"
+                    className="mt-10 bg-[#3E5A44] text-white px-12 py-4 rounded-2xl font-black uppercase tracking-widest text-[12px] shadow-xl shadow-blue-100 active:scale-95 transition-transform"
                   >
                     Start Shopping
                   </button>
@@ -430,7 +430,7 @@ const MyOrders = () => {
                               onClick={() => setActiveFilters(prev => ({ ...prev, status: opt }))}
                               className={`px-5 py-2.5 rounded-xl text-[13px] font-bold transition-all ${
                                 activeFilters.status === opt 
-                                ? 'bg-[#6FAE4A] text-white shadow-lg shadow-blue-100 scale-105' 
+                                ? 'bg-[#3E5A44] text-white shadow-lg shadow-blue-100 scale-105' 
                                 : 'bg-gray-50 text-slate-600 border border-gray-100'
                               }`}
                             >
@@ -451,7 +451,7 @@ const MyOrders = () => {
                               onClick={() => setActiveFilters(prev => ({ ...prev, time: opt }))}
                               className={`px-5 py-2.5 rounded-xl text-[13px] font-bold transition-all ${
                                 activeFilters.time === opt 
-                                ? 'bg-[#6FAE4A] text-white shadow-lg shadow-blue-100 scale-105' 
+                                ? 'bg-[#3E5A44] text-white shadow-lg shadow-blue-100 scale-105' 
                                 : 'bg-gray-50 text-slate-600 border border-gray-100'
                               }`}
                             >

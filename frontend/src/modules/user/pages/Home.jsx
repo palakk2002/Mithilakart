@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShoppingBag, Sparkles, Gift, Monitor, Gem, Shirt, Gamepad2, BookOpen, Zap } from 'lucide-react';
+import { ShoppingBag, Sparkles, Gift, Monitor, Gem, Shirt, Gamepad2, BookOpen, Zap, ChevronRight } from 'lucide-react';
 
 // Import Home Components
 import LazySection from '../components/vendor/home/LazySection';
@@ -48,6 +48,7 @@ import ImageBanner3 from '../../../assets/TopBanner/ImageBanner3.webp';
 import ImageBanner4 from '../../../assets/TopBanner/ImageBanner4.jpg';
 
 import useVendorStore from '../../../store/useVendorStore';
+import toast from 'react-hot-toast';
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('You Buy');
@@ -97,15 +98,15 @@ const Home = () => {
 
   // Main 9 horizontal category tabs on top (restored and compact)
   const mainCategoriesList = [
-    { label: 'You Buy', icon: <ShoppingBag size={11} className="text-[#6FAE4A]" />, path: '/home' },
-    { label: 'Fashion', icon: <Shirt size={11} className="text-[#6FAE4A]" />, path: '/category-products?category=Fashion' },
-    { label: 'Beauty', icon: <Sparkles size={11} className="text-[#6FAE4A]" />, path: '/category-products?category=Beauty' },
-    { label: 'Electronics', icon: <Monitor size={11} className="text-[#6FAE4A]" />, path: '/category-products?category=Electronics' },
-    { label: 'Jewellery', icon: <Gem size={11} className="text-[#6FAE4A]" />, path: '/category-products?category=Jewellery' },
-    { label: 'Toys', icon: <Gamepad2 size={11} className="text-[#6FAE4A]" />, path: '/toys' },
-    { label: 'Stationery', icon: <BookOpen size={11} className="text-[#6FAE4A]" />, path: '/category-products?category=Stationery' },
-    { label: 'Gifting', icon: <Gift size={11} className="text-[#6FAE4A]" />, path: '/category-products?category=Gifting' },
-    { label: 'Electrical', icon: <Zap size={11} className="text-[#6FAE4A]" />, path: '/category-products?category=Electrical' },
+    { label: 'You Buy', icon: <ShoppingBag size={18} className="text-[#3E5A44]" />, path: '/home' },
+    { label: 'Fashion', icon: <Shirt size={18} className="text-[#3E5A44]" />, path: '/category-products?category=Fashion' },
+    { label: 'Beauty', icon: <Sparkles size={18} className="text-[#3E5A44]" />, path: '/category-products?category=Beauty' },
+    { label: 'Electronics', icon: <Monitor size={18} className="text-[#3E5A44]" />, path: '/category-products?category=Electronics' },
+    { label: 'Jewellery', icon: <Gem size={18} className="text-[#3E5A44]" />, path: '/category-products?category=Jewellery' },
+    { label: 'Toys', icon: <Gamepad2 size={18} className="text-[#3E5A44]" />, path: '/toys' },
+    { label: 'Stationery', icon: <BookOpen size={18} className="text-[#3E5A44]" />, path: '/category-products?category=Stationery' },
+    { label: 'Gifting', icon: <Gift size={18} className="text-[#3E5A44]" />, path: '/category-products?category=Gifting' },
+    { label: 'Electrical', icon: <Zap size={18} className="text-[#3E5A44]" />, path: '/category-products?category=Electrical' },
   ];
 
   return (
@@ -119,27 +120,89 @@ const Home = () => {
         contain: 'layout style'
       }}
     >
-      {/* 1. TOP HORIZONTAL CATEGORY ROW (Super Compact & Scrollable with Gap-1) - Always Visible */}
-      <div className="flex items-center gap-1 overflow-x-auto no-scrollbar px-3 pt-0.5 pb-1.5">
-        {mainCategoriesList.map((cat, idx) => (
-          <div
-            key={idx}
-            onClick={() => navigate(cat.path)}
-            className="w-[56px] h-[50px] flex-shrink-0 bg-[#FFF8EE] border border-[#EADCC9]/70 rounded-lg flex flex-col items-center justify-center gap-0.5 shadow-[0_1px_3px_rgba(63,42,32,0.01)] hover:bg-white active:scale-95 transition-all duration-200 cursor-pointer"
-          >
-            <div className="w-5.5 h-5.5 rounded-full bg-[#6FAE4A]/10 flex items-center justify-center flex-shrink-0">
-              {cat.icon}
+      {/* 1. TOP HORIZONTAL CATEGORY ROW (Super Compact & Scrollable circles) - Always Visible */}
+      <div className="flex items-center gap-3 overflow-x-auto no-scrollbar px-3 pt-1 pb-3 mb-2">
+        {mainCategoriesList.map((cat, idx) => {
+          if (cat.label === 'You Buy') {
+            return (
+              <div
+                key={idx}
+                onClick={() => navigate(cat.path)}
+                className="relative flex flex-col items-center justify-center flex-shrink-0 w-[64px] h-[72px] rounded-[16px] transition-all duration-300 border border-[#EADCC9] bg-[#FFF8EE] shadow-sm cursor-pointer active:scale-95 overflow-hidden"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 2h1v1H2zm4 4h1v1H6z' fill='%23EADCC9' fill-opacity='0.15'/%3E%3C/svg%3E")`,
+                  backgroundSize: '10px 10px',
+                }}
+              >
+                {/* Dashed Circle with Shopping Bag + Flowers */}
+                <div className="relative w-[36px] h-[36px] rounded-full border border-dashed border-[#3E5A44]/75 bg-[#FFFBF7] flex items-center justify-center mt-1 shadow-3xs">
+                  
+                  {/* Shopping Bag with White Heart Cutout */}
+                  <svg viewBox="0 0 24 24" className="w-[16px] h-[16px]" fill="#3E5A44">
+                    {/* Handle */}
+                    <path d="M12 2C9.5 2 7.5 4 7.5 6.5H9c0-1.7 1.3-3 3-3s3 1.3 3 3h1.5C16.5 4 14.5 2 12 2z" />
+                    {/* Bag body */}
+                    <path d="M5 6.5h14c1.1 0 2 .9 2 2v11c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-11c0-1.1.9-2 2-2z" />
+                    {/* White heart cutout */}
+                    <path d="M12 16.8s-2.2-1.8-2.7-2.3c-.7-.7-1-1.3-1-1.8 0-1.2 1-2.2 2.2-2.2.7 0 1.3.4 1.5 1 .2-.6.8-1 1.5-1 1.2 0 2.2 1 2.2 2.2 0 .5-.3 1.1-1 1.8-.5.5-2.7 2.3-2.7 2.3z" fill="white" />
+                  </svg>
+
+                  {/* Top-Right Orange Flower Decoration */}
+                  <div className="absolute -top-[5px] -right-[5px] w-[9px] h-[9px] flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" className="w-full h-full overflow-visible">
+                      <circle cx="12" cy="12" r="5.5" fill="#E26D22" />
+                      <circle cx="12" cy="5" r="5.5" fill="#E26D22" />
+                      <circle cx="12" cy="19" r="5.5" fill="#E26D22" />
+                      <circle cx="5" cy="12" r="5.5" fill="#E26D22" />
+                      <circle cx="19" cy="12" r="5.5" fill="#E26D22" />
+                      <circle cx="12" cy="12" r="2.2" fill="#3E5A44" />
+                    </svg>
+                  </div>
+
+                  {/* Bottom-Left small flower stem decoration */}
+                  <div className="absolute -left-[5px] bottom-[3px] flex items-center gap-0.5">
+                    <span className="w-1.2 h-1.2 rounded-full bg-[#E26D22] shadow-3xs" />
+                    <span className="w-1.2 h-[1.2px] bg-[#3E5A44] rotate-12" />
+                  </div>
+
+                  {/* Bottom-Right small flower stem decoration */}
+                  <div className="absolute -right-[5px] bottom-[3px] flex items-center gap-0.5">
+                    <span className="w-1.2 h-[1.2px] bg-[#3E5A44] -rotate-12" />
+                    <span className="w-1.2 h-1.2 rounded-full bg-[#E26D22] shadow-3xs" />
+                  </div>
+                </div>
+
+                {/* Category Label at bottom */}
+                <span className="text-[9.5px] font-black text-center text-[#3E5A44] mt-1.5 leading-none">
+                  {cat.label}
+                </span>
+
+                {/* Thick bottom line indicator */}
+                <div className="w-6 h-[2px] bg-[#3E5A44] rounded-full mt-1.5" />
+              </div>
+            );
+          }
+
+          return (
+            <div
+              key={idx}
+              onClick={() => navigate(cat.path)}
+              className="flex flex-col items-center flex-shrink-0 cursor-pointer active:scale-95 transition-transform"
+            >
+              <div className="w-[50px] h-[50px] rounded-full bg-[#EADCC9]/20 border border-[#EADCC9]/55 flex items-center justify-center shadow-[0_1.5px_4px_rgba(0,0,0,0.015)] text-[#3E5A44]">
+                {cat.icon}
+              </div>
+              <span className="text-[10px] font-bold text-[#3F2A20] mt-1.5 leading-none">
+                {cat.label}
+              </span>
             </div>
-            <span className="text-[8.5px] font-black text-[#3F2A20] text-center leading-none truncate w-full px-0.5">
-              {cat.label}
-            </span>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* 2. PROMOTIONAL FASHION SALE BANNER (With Mithila Decorative Border) */}
       {(selectedCategory === 'You Buy' || selectedCategory === 'Home') && (
-        <div className="px-3 py-1">
+        <div className="px-3 mb-5 md:mb-8">
           <div 
             onClick={() => navigate('/category-products?category=Fashion')}
             className="w-full h-[185px] sm:h-[215px] md:h-[350px] rounded-2xl overflow-hidden shadow-xs cursor-pointer active:scale-99 transition-transform"
@@ -164,22 +227,90 @@ const Home = () => {
 
       {/* 3. SHOP BY CATEGORIES SECTION */}
       {(selectedCategory === 'You Buy' || selectedCategory === 'Home') && (
-        <div className="my-1">
+        <div className="mb-5 md:mb-8">
           <SubCategoryGrid />
         </div>
       )}
 
       {/* 4. TRENDING THIS WEEK SECTION */}
       {(selectedCategory === 'You Buy' || selectedCategory === 'Home') && (
-        <div className="my-1">
+        <div className="mb-5 md:mb-8">
           <TrendingThisWeek />
         </div>
       )}
 
-      {/* 4.5 KEEP SHOPPING FOR THIS SECTION */}
+      {/* 5. TODAY'S SPECIAL DEALS SECTION */}
       {(selectedCategory === 'You Buy' || selectedCategory === 'Home') && (
-        <div className="my-1">
-          <KeepShopping />
+        <div className="py-2 px-3 w-full max-w-[1600px] mx-auto select-none mb-5 md:mb-8">
+          <div className="flex justify-between items-center mb-3.5 px-1">
+            <h2 className="text-[15.5px] font-black text-[#3F2A20] tracking-tight">
+              Today's Special Deals
+            </h2>
+            <span
+              onClick={() => navigate('/deals')}
+              className="text-[11.5px] font-bold text-[#3E5A44] hover:underline cursor-pointer flex items-center gap-0.5"
+            >
+              View All <ChevronRight size={13} strokeWidth={2.5} className="inline-block" />
+            </span>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2.5">
+            {[
+              { id: 'd1', name: 'Fresh Potatoes', price: 35, oldPrice: 50, tag: 'UP TO 60% OFF', img: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=300&auto=format&fit=crop&q=80', unit: '1 kg' },
+              { id: 'd2', name: 'Healthy Salad Bowl', price: 119, oldPrice: 199, tag: 'UP TO 60% OFF', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&auto=format&fit=crop&q=80', unit: '1 Bowl' },
+              { id: 'd3', name: 'Premium Espresso Maker', price: 2499, oldPrice: 3999, tag: 'UP TO 60% OFF', img: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=300&auto=format&fit=crop&q=80', unit: '1 Unit' }
+            ].map((deal) => (
+              <div
+                key={deal.id}
+                onClick={() => navigate('/product-detail', { state: { product: { name: deal.name, price: deal.price, image: deal.img, qty: 1 } } })}
+                className="bg-white border border-[#EADCC9]/55 rounded-2xl p-2 flex flex-col justify-between relative cursor-pointer active:scale-98 transition-transform shadow-[0_2px_8px_rgba(0,0,0,0.015)]"
+              >
+                {/* Discount Tag */}
+                <div className="absolute top-2 left-2 bg-[#3E5A44] text-white text-[7.5px] font-black px-1.5 py-0.5 rounded shadow-2xs leading-none z-10">
+                  {deal.tag}
+                </div>
+
+                {/* Image Wrapper */}
+                <div className="w-full aspect-square bg-[#FAF9F5] border border-slate-100 rounded-xl overflow-hidden flex items-center justify-center p-1.5 mt-4 mb-2">
+                  <img
+                    src={deal.img}
+                    alt={deal.name}
+                    className="max-h-full max-w-full object-cover rounded-lg"
+                  />
+                </div>
+
+                {/* Details & Button */}
+                <div>
+                  <span className="text-slate-450 text-[8.5px] font-black block">{deal.unit}</span>
+                  <h3 className="text-[10px] font-black text-[#3F2A20] leading-tight mt-0.5 truncate">{deal.name}</h3>
+                  
+                  <div className="flex items-center justify-between mt-2">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-[9px] text-slate-400 line-through">₹{deal.oldPrice}</span>
+                      <span className="text-[11.5px] font-black text-slate-900">₹{deal.price}</span>
+                    </div>
+                    
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        const cart = JSON.parse(localStorage.getItem('userCart') || '[]');
+                        cart.push({ name: deal.name, price: deal.price, image: deal.img, cartId: Date.now(), qty: 1 });
+                        localStorage.setItem('userCart', JSON.stringify(cart));
+                        window.dispatchEvent(new Event('cartUpdated'));
+                        toast.success(`${deal.name} added to cart!`);
+                      }}
+                      className="p-1.5 bg-white border border-[#3E5A44]/30 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer active:scale-90"
+                    >
+                      <svg className="w-3.5 h-3.5 text-[#3F2A20]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
@@ -187,25 +318,25 @@ const Home = () => {
       {(selectedCategory === 'You Buy' || selectedCategory === 'Home') && (
         <>
 
-          <div className="mb-6 md:mb-10">
-            <LazySection height="350px">
-              <BrandsSpotlight items={homeSections.brandsSpotlight} />
-            </LazySection>
-          </div>
-
-          <div className="mb-6 md:mb-10">
+          <div className="mb-5 md:mb-8">
             <LazySection height="400px">
               <TopSelection items={homeSections.topSelection} />
             </LazySection>
           </div>
 
-          <div className="mb-6 md:mb-10">
+          <div className="mb-5 md:mb-8">
+            <LazySection height="350px">
+              <BrandsSpotlight items={homeSections.brandsSpotlight} />
+            </LazySection>
+          </div>
+
+          <div className="mb-5 md:mb-8">
             <LazySection height="500px">
               <BestQuality items={homeSections.bestQuality} />
             </LazySection>
           </div>
 
-          <div className="mb-6 md:mb-10">
+          <div className="mb-5 md:mb-8">
             <LazySection height="150px">
               <CategoryTabs
                 tabs={data.tabs}
@@ -216,7 +347,7 @@ const Home = () => {
           </div>
 
           {/* Dynamic Products Section based on Bottom Tabs */}
-          <div className="pb-20 mb-6 md:mb-10">
+          <div className="pb-20 mb-5 md:mb-8">
             <CategoryProductsSection selectedCategory={activeTab} />
           </div>
         </>

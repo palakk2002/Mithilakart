@@ -38,8 +38,8 @@ const Cart = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
-  const primaryBg = isMithilakFlow ? 'bg-[#7c3aed] hover:bg-[#6d28d9]' : (isFreshGroceryFlow ? 'bg-[#7A3E17] hover:bg-[#653313]' : (isQuickShopFlow ? 'bg-[#d6186d] hover:bg-[#b5125b]' : 'bg-[#6FAE4A] hover:bg-[#06331b]'));
-  const primaryText = isMithilakFlow ? 'text-[#7c3aed]' : (isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#6FAE4A]'));
+  const primaryBg = isMithilakFlow ? 'bg-[#207C8A] hover:bg-[#185e68]' : (isFreshGroceryFlow ? 'bg-[#D9A21B] hover:bg-[#c49218]' : (isQuickShopFlow ? 'bg-[#d6186d] hover:bg-[#b5125b]' : 'bg-[#3E5A44] hover:bg-[#06331b]'));
+  const primaryText = isMithilakFlow ? 'text-[#207C8A]' : (isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#3E5A44]'));
   const shopNowLink = isMithilakFlow ? '/mithilak' : (isFreshGroceryFlow ? '/fresh-grocery' : (isQuickShopFlow ? '/quick-shop' : '/vendor/home'));
 
   // Load cart items for all users (authenticated or not)
@@ -119,10 +119,10 @@ const Cart = () => {
 
   return (
     <div className={`min-h-screen pb-32 font-sans text-slate-800 flex flex-col transition-colors duration-300 relative ${
-      isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : 'bg-bg-cream'
+      isFreshGroceryFlow ? 'bg-[#FFF8EE]' : isMithilakFlow ? 'bg-[#F5F9FA]' : 'bg-bg-cream'
     }`}>
       {/* Global Repeating Mithila Art Page Background Texture */}
-      {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
+      {(isFreshGroceryFlow || !(isMithilakFlow || isQuickShopFlow)) && (
         <div 
           className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
           style={{
@@ -135,8 +135,10 @@ const Cart = () => {
       {/* Header */}
       <div className={`sticky top-0 z-[100] px-4 py-3 flex items-center justify-between border-b transition-colors duration-300 relative ${
         isFreshGroceryFlow 
-          ? 'bg-[#FFF0A0] border-transparent' 
-          : 'bg-[#FCF7EE] border-[#F3E3CD]/60'
+          ? 'bg-[#D9A21B] border-transparent text-white' 
+          : isMithilakFlow
+            ? 'bg-[#207C8A] border-transparent text-white'
+            : 'bg-[#FCF7EE] border-[#F3E3CD]/60'
       }`}>
         <button 
           onClick={() => navigate(-1)} 
@@ -144,7 +146,7 @@ const Cart = () => {
         >
           <ArrowLeft size={18} strokeWidth={2.5} />
         </button>
-        <h1 className="text-[17px] font-black text-slate-800 tracking-tight">{t('nav.cart')}</h1>
+        <h1 className={`text-[17px] font-black tracking-tight ${isMithilakFlow ? 'text-white' : 'text-slate-800'}`}>{t('nav.cart')}</h1>
         <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-400 border border-slate-100/50 font-bold select-none cursor-pointer">
           •••
         </div>
