@@ -33,7 +33,7 @@ import FanBlack from '../assets/products/product11.webp';
 import CoolerWhite from '../assets/products/product12.jpg';
 import CookwareHero from '../assets/products/product13.jpg';
 
-export const allCategoryProducts = {
+const rawCategoryProducts = {
   'You Buy': [
     { id: 'fy1', name: 'Premium Gifting Box', category: 'Gifting', price: 699, oldPrice: 999, discount: '30% OFF', rating: 4.8, image: GiftingImg, shortDescription: 'Assorted luxury collection' },
     { id: 'fy2', name: 'Samsung Galaxy S24', category: 'Electronics', price: 79999, oldPrice: 89999, discount: '11% OFF', rating: 4.9, image: SamsungS24, shortDescription: 'Flagship AI smartphone' },
@@ -153,3 +153,43 @@ export const allCategoryProducts = {
     { id: 'gg8', name: 'Gold Mangalsutra 1g', category: '1g Gold', price: 7200, oldPrice: 8000, discount: '10% OFF', rating: 4.9, image: JewelleryImg, shortDescription: 'Black bead design' }
   ]
 };
+
+export const allCategoryProducts = Object.keys(rawCategoryProducts).reduce((acc, category) => {
+  acc[category] = rawCategoryProducts[category].map(product => {
+    const listings = [];
+    const id = product.id;
+    
+    if (id?.startsWith('fy')) {
+      listings.push({ tab: 'mithilakart', deliveryType: 'standard', deliveryTime: '3 Days' });
+    }
+    
+    if (
+      ['Beauty', 'Gifting', 'Electronics', 'Jewellery', 'Toys', 'Stationery', 'Fashion', 'Electrical', 'Cosmetics', 'Art. Jewellery', '1g Gold'].includes(product.category) || 
+      id?.startsWith('b') || id?.startsWith('g') || id?.startsWith('e') || id?.startsWith('j') || id?.startsWith('t') || id?.startsWith('s') || id?.startsWith('f') || id?.startsWith('c') || id?.startsWith('aj') || id?.startsWith('gg')
+    ) {
+      listings.push({ tab: 'quick_shop', deliveryType: 'quick', quickDeliveryTime: 20 });
+      listings.push({ tab: 'mithilakart', deliveryType: 'standard', deliveryTime: '3 Days' });
+    } else if (
+      ['Fruits & Vegetables', 'Atta, Rice & Dal', 'Oil, Ghee & Masala', 'Dairy, Bread & Eggs', 'Chips & Namkeens', 'Ice Creams', 'Drinks & Juices', 'Sweets & Chocolates', 'Tea, Coffee & Milk Drinks', 'Bakery & Biscuits', 'Sauces & Spreads'].includes(product.category) ||
+      id?.startsWith('fv') || id?.startsWith('ard') || id?.startsWith('ogm') || id?.startsWith('dbe') || id?.startsWith('cn') || id?.startsWith('ic') || id?.startsWith('dj') || id?.startsWith('sc') || id?.startsWith('tcm') || id?.startsWith('bb') || id?.startsWith('ss')
+    ) {
+      listings.push({ tab: 'groceries_fresh', deliveryType: 'quick', quickDeliveryTime: 25 });
+    } else if (
+      ['Mithila Festival & Cultural', 'Mithila Paridhan', 'Mithila Special Cuisines', 'Mithila Lac Bangles', 'Mithila Handcrafted Items', 'Mithila Pooja Needs', 'Mithila Books & Panchang', 'Mithila Achaar'].includes(product.category) ||
+      id?.startsWith('mfc') || id?.startsWith('mp') || id?.startsWith('msc') || id?.startsWith('mlb') || id?.startsWith('mhi') || id?.startsWith('mpn') || id?.startsWith('mbp') || id?.startsWith('ma')
+    ) {
+      listings.push({ tab: 'mithilak', deliveryType: 'standard', deliveryTime: '3 Days' });
+    }
+    
+    if (listings.length === 0) {
+      listings.push({ tab: 'mithilakart', deliveryType: 'standard', deliveryTime: '5 Days' });
+    }
+
+    return {
+      ...product,
+      listings
+    };
+  });
+  return acc;
+}, {});
+

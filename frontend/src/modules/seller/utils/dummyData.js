@@ -90,6 +90,10 @@ export const products = [
     returnPolicy: '7-day return if damaged during shipping',
     shippingInfo: 'Ships within 2-3 business days. Packed with protective layer.',
     seo: { title: 'Madhubani Fish Painting | Mithila Heritage', description: 'Buy authentic Madhubani painting with fish motif. Handpainted by skilled artisans.' },
+    listings: [
+      { tab: 'mithilakart', deliveryType: 'standard', deliveryTime: '3 Days' },
+      { tab: 'mithilak', deliveryType: 'standard', deliveryTime: '2 Days' }
+    ],
     status: 'active',
     sales: 124,
     views: 3456,
@@ -127,6 +131,9 @@ export const products = [
     returnPolicy: '10-day return policy',
     shippingInfo: 'Ships within 3-5 business days',
     seo: { title: 'Sujani Cushion Cover Set', description: 'Buy Sujani embroidery cushion covers, hand-stitched by artisans.' },
+    listings: [
+      { tab: 'mithilakart', deliveryType: 'standard', deliveryTime: '3 Days' }
+    ],
     status: 'active',
     sales: 89,
     views: 2100,

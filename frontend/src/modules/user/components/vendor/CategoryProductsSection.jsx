@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Heart, CheckCircle, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { allCategoryProducts } from '../../../../data/categoryData';
+import { getCurrentMarketplaceTab, productBelongsToTab } from '../../../../shared/utils/marketplaceHelpers';
 
 const CornerFlower = () => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[10px] h-[10px] md:w-[14px] md:h-[14px] opacity-85 select-none pointer-events-none">
@@ -134,7 +135,12 @@ const CategoryProductsSection = ({ selectedCategory }) => {
   const navigate = useNavigate();
   const loaderRef = React.useRef(null);
 
-  const allProducts = useMemo(() => allCategoryProducts[selectedCategory] || [], [selectedCategory]);
+  const currentTab = useMemo(() => getCurrentMarketplaceTab(), []);
+
+  const allProducts = useMemo(() => {
+    const raw = allCategoryProducts[selectedCategory] || [];
+    return raw.filter(p => productBelongsToTab(p, currentTab));
+  }, [selectedCategory, currentTab]);
   const products = useMemo(() => allProducts.slice(0, displayCount), [allProducts, displayCount]);
 
   const handleAddToCart = useCallback((product, e) => {

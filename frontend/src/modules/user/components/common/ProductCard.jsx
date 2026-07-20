@@ -1,13 +1,64 @@
 import React from 'react';
 import { Heart } from 'lucide-react';
-
 import { useTranslation } from 'react-i18next';
+import { productBelongsToTab } from '../../../../shared/utils/marketplaceHelpers';
 
 const ProductCard = ({ product }) => {
   const { t } = useTranslation();
+
+  const getDeliveryBadge = () => {
+    if (product.listings && product.listings.length > 0) {
+      const quickListing = product.listings.find(
+        (l) => l.tab === 'quick_shop' || l.tab === 'groceries_fresh'
+      );
+      if (quickListing) {
+        return `${quickListing.quickDeliveryTime || 20} Min`;
+      }
+      const standardListing = product.listings.find(
+        (l) => l.tab === 'mithilakart' || l.tab === 'mithilak'
+      );
+      if (standardListing) {
+        return `Estimated Delivery ${standardListing.deliveryTime || '3 Days'}`;
+      }
+    }
+
+    if (product.tab === 'quick_shop' || product.tab === 'groceries_fresh') {
+      return `${product.quickDeliveryTime || 20} Min`;
+    }
+    if (product.tab === 'mithilakart' || product.tab === 'mithilak') {
+      return `Estimated Delivery ${product.deliveryTime || '3 Days'}`;
+    }
+
+    if (productBelongsToTab(product, 'groceries_fresh')) {
+      return '25 Min';
+    }
+    if (productBelongsToTab(product, 'quick_shop')) {
+      return '20 Min';
+    }
+    if (productBelongsToTab(product, 'mithilak')) {
+      return 'Estimated Delivery 3 Days';
+    }
+    if (productBelongsToTab(product, 'mithilakart')) {
+      return 'Estimated Delivery 5 Days';
+    }
+
+    return null;
+  };
+
+  const deliveryBadge = getDeliveryBadge();
+
   return (
     <div className="bg-white rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 group cursor-pointer border border-slate-100 flex flex-col h-full">
       <div className="relative aspect-square overflow-hidden bg-white p-2 md:p-4">
+        {deliveryBadge && (
+          <span className={`absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-[8px] md:text-[9px] font-bold tracking-wide shadow-sm ${
+            deliveryBadge.includes('Min') 
+              ? 'bg-green-500 text-white' 
+              : 'bg-blue-600 text-white'
+          }`}>
+            {deliveryBadge}
+          </span>
+        )}
         <img
           src={product.image || product.img || "https://via.placeholder.com/300x300"}
           alt={product.title || product.name}
@@ -41,9 +92,15 @@ const ProductCard = ({ product }) => {
               </span>
             )}
           </div>
-          <p className="text-[9px] md:text-[10px] text-slate-500 mt-0.5 md:mt-1 flex items-center gap-1">
-            <span className="text-[#e47911] font-bold">Prime</span> {t('product.deliveryTomorrow')}
-          </p>
+          {deliveryBadge ? (
+            <p className="text-[9px] md:text-[10px] text-slate-600 mt-0.5 md:mt-1 flex items-center gap-1 font-semibold">
+              <span className="text-blue-500 font-bold">✓</span> {deliveryBadge}
+            </p>
+          ) : (
+            <p className="text-[9px] md:text-[10px] text-slate-500 mt-0.5 md:mt-1 flex items-center gap-1">
+              <span className="text-[#e47911] font-bold">Prime</span> {t('product.deliveryTomorrow')}
+            </p>
+          )}
         </div>
       </div>
     </div>

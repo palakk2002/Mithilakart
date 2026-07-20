@@ -12,6 +12,7 @@ import { ImageUploader } from '../../components/common';
 import { Button } from '../../components/ui';
 import { products } from '../../utils/dummyData';
 import { CATEGORIES } from '../../constants';
+import { MARKETPLACE_TABS_LIST, TAB_CATEGORIES_MAPPING } from '../../../../shared/constants/marketplace';
 import toast from 'react-hot-toast';
 
 const AddProduct = () => {
@@ -20,26 +21,48 @@ const AddProduct = () => {
   const isEdit = !!id;
   const existingProduct = isEdit ? products.find((p) => p.id === id) : null;
 
-  const [activeSection, setActiveSection] = useState('basic');
+  const [activeSection, setActiveSection] = useState('marketplace');
   const [images, setImages] = useState([]);
   const [specifications, setSpecifications] = useState(existingProduct?.specifications || [{ key: '', value: '' }]);
 
   const { register, handleSubmit, formState: { errors }, watch } = useForm({
-    defaultValues: existingProduct || {
+    defaultValues: existingProduct ? {
+      ...existingProduct,
+      marketplaceTabs: existingProduct.listings?.map(l => l.tab) || [],
+      quickDeliveryTime: existingProduct.listings?.find(l => l.quickDeliveryTime)?.quickDeliveryTime || '',
+    } : {
       title: '', shortDescription: '', description: '', category: '', subcategory: '',
       brand: '', sku: '', price: '', discountPrice: '', gst: '', stock: '',
       weight: '', tags: '', warranty: '', returnPolicy: '', shippingInfo: '',
       seoTitle: '', seoDescription: '',
+      marketplaceTabs: [],
+      quickDeliveryTime: '',
     },
   });
 
   const sections = [
+    { id: 'marketplace', label: 'Marketplace Visibility', icon: Eye },
     { id: 'basic', label: 'Basic Info', icon: Package },
     { id: 'pricing', label: 'Pricing & Stock', icon: DollarSign },
     { id: 'media', label: 'Media', icon: Image },
     { id: 'specs', label: 'Specifications', icon: Settings },
     { id: 'seo', label: 'SEO & Shipping', icon: Globe },
   ];
+
+  const watchedTabs = watch('marketplaceTabs') || [];
+  const showQuickDelivery = watchedTabs.includes('quick_shop') || watchedTabs.includes('groceries_fresh');
+
+  const filteredCategories = React.useMemo(() => {
+    if (watchedTabs.length === 0) {
+      return CATEGORIES;
+    }
+    const allowedIds = new Set();
+    watchedTabs.forEach((tabId) => {
+      const catIds = TAB_CATEGORIES_MAPPING[tabId] || [];
+      catIds.forEach((id) => allowedIds.add(id));
+    });
+    return CATEGORIES.filter((c) => allowedIds.has(c.id));
+  }, [watchedTabs]);
 
   const onSubmit = (data) => {
     toast.success(isEdit ? 'Product updated successfully!' : 'Product created successfully!');
@@ -66,6 +89,7 @@ const AddProduct = () => {
             {sections.map((section) => (
               <button
                 key={section.id}
+                type="button"
                 onClick={() => setActiveSection(section.id)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                   activeSection === section.id ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50'
@@ -108,14 +132,14 @@ const AddProduct = () => {
                     <label className={labelClass}>Category *</label>
                     <select {...register('category', { required: 'Category is required' })} className={inputClass}>
                       <option value="">Select category</option>
-                      {CATEGORIES.map((c) => <option key={c.id} value={c.name}>{c.name}</option>)}
+                      {filteredCategories.map((c) => <option key={c.id} value={c.name}>{c.name}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className={labelClass}>Subcategory</label>
                     <select {...register('subcategory')} className={inputClass}>
                       <option value="">Select subcategory</option>
-                      {CATEGORIES.find((c) => c.name === watch('category'))?.subcategories.map((s) => (
+                      {filteredCategories.find((c) => c.name === watch('category'))?.subcategories.map((s) => (
                         <option key={s} value={s}>{s}</option>
                       ))}
                     </select>
@@ -138,6 +162,50 @@ const AddProduct = () => {
                   <label className={labelClass}>Tags</label>
                   <input {...register('tags')} placeholder="Comma-separated tags (e.g., handmade, organic)" className={inputClass} />
                 </div>
+              </motion.div>
+            )}
+
+            {/* Marketplace Visibility */}
+            {activeSection === 'marketplace' && (
+              <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} className="bg-white rounded-2xl border border-gray-100 p-6 space-y-5">
+                <h3 className="text-base font-semibold text-gray-900">Marketplace Visibility</h3>
+                <p className="text-xs text-gray-500">Select which marketplace tabs this product will be visible in.</p>
+
+                <div className="space-y-3">
+                  {MARKETPLACE_TABS_LIST.map((tab) => (
+                    <label key={tab.id} className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-gray-50 transition-colors border border-gray-50">
+                      <input
+                        type="checkbox"
+                        value={tab.id}
+                        {...register('marketplaceTabs')}
+                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      />
+                      <div>
+                        <span className="text-sm font-medium text-gray-900">{tab.label}</span>
+                        <p className="text-xs text-gray-400">Delivery: {tab.deliveryType === 'quick' ? 'Quick Delivery' : 'Standard Delivery'}</p>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+
+                {showQuickDelivery && (
+                  <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="pt-4 border-t border-gray-100 space-y-2">
+                    <label className={labelClass}>Quick Delivery Time *</label>
+                    <select
+                      {...register('quickDeliveryTime', {
+                        required: showQuickDelivery ? 'Quick delivery time is required' : false
+                      })}
+                      className={inputClass}
+                    >
+                      <option value="">Select Delivery Time</option>
+                      <option value="15">15 Minutes</option>
+                      <option value="20">20 Minutes</option>
+                      <option value="25">25 Minutes</option>
+                      <option value="30">30 Minutes</option>
+                    </select>
+                    {errors.quickDeliveryTime && <p className="text-xs text-red-500 mt-1">{errors.quickDeliveryTime.message}</p>}
+                  </motion.div>
+                )}
               </motion.div>
             )}
 

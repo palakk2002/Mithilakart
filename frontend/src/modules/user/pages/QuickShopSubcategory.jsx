@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Search, Share2, ChevronDown, Heart } from 'lucide-react';
 import { formatPrice } from '../../../shared/utils/priceFormatter';
 import closedShutter from '../../../assets/closed_shutter.png';
+import { getCurrentMarketplaceTab, productBelongsToTab } from '../../../shared/utils/marketplaceHelpers';
 
 const FALLBACK_IMAGE = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><rect width="150" height="150" fill="%23fdfbf7" rx="12"/><text x="75" y="80" font-size="12" font-family="sans-serif" font-weight="bold" fill="%23d3a075" text-anchor="middle">Mithilakart</text></svg>`;
 
@@ -345,9 +346,12 @@ const QuickShopSubcategory = () => {
     });
   };
 
-  const filteredProducts = activeSub === 'all' 
-    ? productsList 
-    : productsList.filter(p => p.category === activeSub);
+  const currentTab = React.useMemo(() => getCurrentMarketplaceTab(), []);
+
+  const filteredProducts = productsList.filter(p => {
+    if (activeSub !== 'all' && p.category !== activeSub) return false;
+    return productBelongsToTab(p, currentTab);
+  });
 
   const isQuickShopHeader = !isFreshGroceryFlow && !isMithilakFlow;
 
