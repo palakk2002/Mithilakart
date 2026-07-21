@@ -30,6 +30,8 @@ export const productBelongsToTab = (product, tab) => {
     return product.tab === tab;
   }
   
+  const idStr = product.id !== undefined && product.id !== null ? String(product.id) : '';
+  
   if (tab === 'groceries_fresh') {
     return [
       'Fruits & Vegetables', 'Atta, Rice & Dal', 'Oil, Ghee & Masala', 'Dairy, Bread & Eggs', 
@@ -38,8 +40,8 @@ export const productBelongsToTab = (product, tab) => {
       'Fruits & Vegetables', 'fruits', 'veg', 'exotics', 'atta', 'rice', 'dal', 'oil', 'ghee', 
       'spices', 'milk', 'bread', 'eggs'
     ].includes(product.category) || 
-      product.id?.startsWith('fv') || product.id?.startsWith('ard') || 
-      product.id?.startsWith('ogm') || product.id?.startsWith('dbe');
+      idStr.startsWith('fv') || idStr.startsWith('ard') || 
+      idStr.startsWith('ogm') || idStr.startsWith('dbe');
   }
   
   if (tab === 'quick_shop') {
@@ -50,10 +52,10 @@ export const productBelongsToTab = (product, tab) => {
       'Household, Stationery & Lifestyle', 'Mobiles & Electronics', 'chips', 'namkeen', 
       'tub', 'cone', 'soft', 'juice', 'choc', 'sweets', 'tea', 'coffee'
     ].includes(product.category) || 
-      product.id?.startsWith('cn') || product.id?.startsWith('ic') || 
-      product.id?.startsWith('dj') || product.id?.startsWith('sc') || 
-      product.id?.startsWith('tcm') || product.id?.startsWith('bb') || 
-      product.id?.startsWith('ss');
+      idStr.startsWith('cn') || idStr.startsWith('ic') || 
+      idStr.startsWith('dj') || idStr.startsWith('sc') || 
+      idStr.startsWith('tcm') || idStr.startsWith('bb') || 
+      idStr.startsWith('ss');
   }
   
   if (tab === 'mithilak') {
@@ -62,11 +64,12 @@ export const productBelongsToTab = (product, tab) => {
       'Mithila Lac Bangles', 'Mithila Handcrafted Items', 'Mithila Pooja Needs', 
       'Mithila Books & Panchang', 'Mithila Achaar'
     ].includes(product.category) || 
-      product.id?.startsWith('mfc') || product.id?.startsWith('mp') || 
-      product.id?.startsWith('msc') || product.id?.startsWith('mlb') || 
-      product.id?.startsWith('mhi') || product.id?.startsWith('mpn') || 
-      product.id?.startsWith('mbp') || product.id?.startsWith('ma');
+      idStr.startsWith('mfc') || idStr.startsWith('mp') || 
+      idStr.startsWith('msc') || idStr.startsWith('mlb') || 
+      idStr.startsWith('mhi') || idStr.startsWith('mpn') || 
+      idStr.startsWith('mbp') || idStr.startsWith('ma');
   }
   
   return true; // mithilakart or fallback default
 };
+

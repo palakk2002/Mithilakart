@@ -43,6 +43,9 @@ import QuestionsAnswers from '../pages/profile/QuestionsAnswers';
 import OrderDetail from '../pages/profile/OrderDetail';
 
 import ForgotPassword from '../pages/ForgotPassword';
+import NotFound from '../pages/NotFound';
+import Maintenance from '../pages/Maintenance';
+
 
 const MarketRoutes = () => {
   return (
@@ -98,8 +101,14 @@ const MarketRoutes = () => {
         <Route path="/fresh-grocery/category" element={<QuickShopSubcategory />} />
       </Route>
 
+      {/* Maintenance Page */}
+      <Route path="/maintenance" element={<Maintenance />} />
+
       {/* Redirects */}
       <Route path="/" element={<Navigate to="home" replace />} />
+      
+      {/* Catch-all 404 Route */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

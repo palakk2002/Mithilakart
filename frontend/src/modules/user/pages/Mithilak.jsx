@@ -215,7 +215,7 @@ const Mithilak = () => {
       </div>
 
       {/* Best Sellers Section */}
-      <div className="md:max-w-[1600px] md:mx-auto md:w-full">
+      <div className="md:max-w-[800px] md:mx-auto md:w-full">
         <div className="flex items-center justify-between mb-4 px-1">
           <h2 className="text-[17px] font-bold text-[#3F2A20] leading-none">Best Sellers</h2>
           <span 

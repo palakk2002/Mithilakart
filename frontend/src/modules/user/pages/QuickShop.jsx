@@ -785,7 +785,7 @@ const QuickShop = () => {
                 <span className="text-[11px] font-black text-slate-900">₹202</span>
               </div>
               <button className="mt-0.5 w-full bg-white text-slate-700 border border-slate-200 rounded-full text-[8px] font-black py-0.2 text-center shadow-3xs active:scale-95 transition-transform">
-                XtraSaver
+                SaveExtra
               </button>
             </div>
           </div>

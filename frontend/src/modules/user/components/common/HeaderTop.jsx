@@ -4,6 +4,18 @@ import { motion } from 'framer-motion';
 import { Bell, Heart, ShoppingCart } from 'lucide-react';
 
 const HeaderTop = ({ cartCount = 0 }) => {
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+
+  const badgeBg = isMithilakFlow 
+    ? 'bg-[#207C8A]' 
+    : isFreshGroceryFlow 
+      ? 'bg-[#D9A21B]' 
+      : isQuickShopFlow 
+        ? 'bg-[#F26522]' 
+        : 'bg-[#3E5A44]';
+
   return (
     <div className="px-3 py-1 flex items-center justify-between">
       {/* ── Logo ── */}
@@ -34,7 +46,7 @@ const HeaderTop = ({ cartCount = 0 }) => {
           <Link to="/vendor/cart" aria-label="Cart" className="relative p-1.5 block">
             <ShoppingCart size={20} strokeWidth={1.8} className="text-primary-dark" />
             {cartCount > 0 && (
-              <span className="absolute top-1 right-1 text-[8px] font-black min-w-[14px] h-3.5 rounded-full bg-primary-dark text-white flex items-center justify-center shadow-sm">
+              <span className={`absolute top-1 right-1 text-[8px] font-black min-w-[14px] h-3.5 rounded-full ${badgeBg} text-white flex items-center justify-center shadow-sm`}>
                 {cartCount}
               </span>
             )}

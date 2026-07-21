@@ -7,6 +7,10 @@ import { formatPrice } from '../../../shared/utils/priceFormatter';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import useAccountStore from '../../../store/useAccountStore';
 import { useTranslation } from 'react-i18next';
+import ProductNotFound from '../components/common/ProductNotFound';
+import ShippingUnavailable from '../components/common/ShippingUnavailable';
+
+
 
 // Import Assets
 import PlumShampoo from '../../../assets/products/product05.jpg';
@@ -60,6 +64,27 @@ const ProductDetail = () => {
   const [touchStart, setTouchStart] = useState(0);
   const [cartCount, setCartCount] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isDeliveryUnavailable, setIsDeliveryUnavailable] = useState(false);
+  const [pincode, setPincode] = useState('');
+  const [isPincodeChecked, setIsPincodeChecked] = useState(false);
+  const [pincodeError, setPincodeError] = useState('');
+
+  const handlePincodeCheck = () => {
+    if (pincode.length < 6) {
+      setPincodeError('Please enter a valid 6-digit pincode');
+      setIsPincodeChecked(false);
+      return;
+    }
+    setPincodeError('');
+    setIsPincodeChecked(true);
+    if (pincode === '999999' || pincode.startsWith('9')) {
+      setIsDeliveryUnavailable(true);
+    } else {
+      setIsDeliveryUnavailable(false);
+    }
+  };
+
+
 
   const handleTouchStart = (e) => setTouchStart(e.targetTouches[0].clientY);
   const handleTouchMove = (e, setExpanded, isExpanded) => {
@@ -186,38 +211,49 @@ const ProductDetail = () => {
     }
   }, [product, navigate]);
 
+  const queryParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
+  const isNotFound = useMemo(() => queryParams.get('notFound') === 'true' || location.state?.notFound, [queryParams, location.state]);
+
+  if (isNotFound) {
+    return (
+      <div className={`min-h-screen pb-28 font-sans text-slate-800 transition-colors duration-300 relative flex items-center justify-center ${
+        isMithilakFlow ? 'bg-[#F5F9FA]' : isFreshGroceryFlow ? 'bg-[#FFF8EE]' : isQuickShopFlow ? 'bg-[#FFF9F5]' : 'bg-[#F6F8F3]'
+      }`}>
+        <ProductNotFound />
+      </div>
+    );
+  }
+
   return (
     <div className={`min-h-screen pb-28 font-sans text-slate-800 transition-colors duration-300 relative ${
-      isFreshGroceryFlow ? 'bg-[#FFF8EE]' : 'bg-bg-cream'
+      isMithilakFlow ? 'bg-[#F5F9FA]' : isFreshGroceryFlow ? 'bg-[#FFF8EE]' : isQuickShopFlow ? 'bg-[#FFF9F5]' : 'bg-[#F6F8F3]'
     }`}>
-      {/* Global Repeating Mithila Art Page Background Texture */}
-      {(isFreshGroceryFlow || !(isMithilakFlow || isQuickShopFlow)) && (
-        <div 
-          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
-          style={{
-            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
-            backgroundSize: '360px',
-          }}
-        />
-      )}
 
       {/* Premium Boutique Header */}
-      <div className={`sticky top-0 z-50 px-4 py-3 flex items-center justify-between border-b border-gray-100 shadow-[0_1px_8px_rgba(0,0,0,0.01)] transition-colors duration-300 relative z-10 ${
-        isFreshGroceryFlow ? 'bg-[#D9A21B] text-white' : 'bg-[#FCF7EE]/90 border-[#F3E3CD]/60 backdrop-blur-md'
+      <div className={`sticky top-0 z-50 px-4 py-3 flex items-center justify-between border-b transition-colors duration-300 relative z-10 ${
+        isMithilakFlow
+          ? 'bg-[#207C8A] border-transparent text-white shadow-sm'
+          : isFreshGroceryFlow
+            ? 'bg-[#D9A21B] border-transparent text-white shadow-sm'
+            : isQuickShopFlow
+              ? 'bg-[#F26522] border-transparent text-white shadow-sm'
+              : 'bg-[#FCF7EE]/90 border-[#F3E3CD]/60 backdrop-blur-md text-[#3E5A44]'
       }`}>
         <button onClick={() => navigate(-1)} className={`p-1.5 rounded-full transition-colors active:scale-90 ${
-          isFreshGroceryFlow ? 'text-white hover:bg-white/5' : 'text-slate-800 hover:bg-gray-50'
+          (isMithilakFlow || isFreshGroceryFlow || isQuickShopFlow) ? 'text-white hover:bg-white/10' : 'text-slate-800 hover:bg-gray-50'
         }`}>
           <ArrowLeft size={20} strokeWidth={2.5} />
         </button>
-        <span className={`text-[12px] font-black tracking-[0.25em] ${isFreshGroceryFlow ? 'text-white' : primaryText} uppercase pl-4`}>
+        <span className={`text-[12px] font-black tracking-[0.25em] uppercase pl-4 ${
+          (isMithilakFlow || isFreshGroceryFlow || isQuickShopFlow) ? 'text-white' : primaryText
+        }`}>
           Mithilakart
         </span>
         <div className="flex items-center gap-3">
           <button 
             onClick={() => navigate('/vendor/search')} 
             className={`p-1.5 rounded-full transition-colors active:scale-90 ${
-              isFreshGroceryFlow ? 'text-white hover:bg-white/5' : 'text-slate-800 hover:bg-gray-50'
+              (isMithilakFlow || isFreshGroceryFlow || isQuickShopFlow) ? 'text-white hover:bg-white/10' : 'text-slate-800 hover:bg-gray-50'
             }`}
           >
             <Search size={20} />
@@ -225,7 +261,7 @@ const ProductDetail = () => {
           <div 
             onClick={() => navigate('/vendor/cart')} 
             className={`relative p-1.5 rounded-full transition-colors active:scale-95 cursor-pointer ${
-              isFreshGroceryFlow ? 'text-white hover:bg-white/5' : 'text-slate-800 hover:bg-gray-50'
+              (isMithilakFlow || isFreshGroceryFlow || isQuickShopFlow) ? 'text-white hover:bg-white/10' : 'text-slate-800 hover:bg-gray-50'
             }`}
           >
             <ShoppingCart size={20} className="text-current" />
@@ -308,13 +344,13 @@ const ProductDetail = () => {
         {/* Strike Prices / Coupon Layout */}
         <div className="mt-2.5">
           <div className="flex items-center gap-3 flex-wrap">
-            <div className="bg-[#FFD633] text-slate-900 text-[20px] font-black px-3 py-1.5 rounded-[4px] relative flex items-center shadow-[0_1px_3px_rgba(0,0,0,0.05)] select-none">
+            <div className="bg-[#FFD633] text-slate-900 text-[20px] font-black px-5 py-0.5 rounded-[4px] relative flex items-center shadow-[0_1px_3px_rgba(0,0,0,0.05)] select-none">
               {/* Coupon style side cutouts */}
               <div className="absolute left-[-4px] top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full border-r border-slate-100"></div>
               <div className="absolute right-[-4px] top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full border-l border-slate-100"></div>
               {formatPrice(product.price)}
             </div>
-            <span className="text-[14px] text-gray-400 font-medium line-through">
+            <span className="text-[14px] text-gray-400 font-semibold line-through">
               MRP {formatPrice(product.oldPrice)}
             </span>
           </div>
@@ -405,22 +441,73 @@ const ProductDetail = () => {
           Delivery Details
         </span>
         <div className="bg-white border border-slate-100 rounded-2xl p-3.5 space-y-3.5 shadow-[0_4px_16px_rgba(0,0,0,0.01)]">
-          <div className="flex items-center gap-3">
-            <MapPin size={18} className="text-[#3E5A44]" />
-            <div className="flex-1 min-w-0">
-              <p className="text-[11px] font-black text-slate-800 uppercase tracking-wider leading-none">Deliver to Home</p>
-              <p className="text-[12px] text-slate-500 font-medium truncate mt-1">83 Kishan Pura Mataji Mandir, Sector N...</p>
+          <div className="flex flex-col gap-1.5">
+            <div className="flex gap-2">
+              <input 
+                type="text" 
+                maxLength={6}
+                value={pincode}
+                onChange={(e) => {
+                  const val = e.target.value.replace(/\D/g, '');
+                  setPincode(val);
+                  setIsPincodeChecked(false);
+                  setPincodeError('');
+                }}
+                placeholder="Enter Pincode (e.g. 999999)" 
+                className={`border rounded-lg px-3 py-2 text-xs font-bold flex-1 focus:outline-none focus:ring-1 focus:ring-opacity-50 transition-colors ${
+                  pincodeError ? 'border-red-500 focus:ring-red-500' : `${primaryBorder} focus:ring-slate-500`
+                }`}
+              />
+              <button
+                type="button"
+                onClick={handlePincodeCheck}
+                className={`px-5 py-2 ${primaryBg} ${primaryBgHover} text-white font-black uppercase tracking-widest text-[10px] rounded-lg active:scale-95 transition-all shadow-xs`}
+              >
+                Check
+              </button>
             </div>
-            <ChevronRight size={16} className="text-gray-400" />
+            {pincodeError && (
+              <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider pl-1">{pincodeError}</p>
+            )}
           </div>
-          <div className="h-[1px] bg-slate-100" />
-          <div className="flex items-center gap-3">
-            <Truck size={18} className="text-[#3E5A44]" />
-            <div>
-              <p className="text-[12px] font-black text-slate-850">Delivery by Sat, 16 May</p>
-              <p className="text-[10px] text-orange-600 font-bold mt-0.5">Order in 00h 00m 14s</p>
+
+          {isPincodeChecked && (
+            isDeliveryUnavailable ? (
+              <ShippingUnavailable onChangeLocation={() => {
+                setIsDeliveryUnavailable(false);
+                setIsPincodeChecked(false);
+                setPincode('');
+              }} />
+            ) : (
+              <>
+                <div className="flex items-center gap-3 bg-emerald-50/30 p-2.5 rounded-xl border border-emerald-100/50 animate-in fade-in duration-200">
+                  <MapPin size={18} className="text-emerald-700" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[11px] font-black text-emerald-800 uppercase tracking-wider leading-none">Deliverable to {pincode}</p>
+                    <p className="text-[11px] text-emerald-600 font-bold mt-1">Standard Delivery Available</p>
+                  </div>
+                </div>
+                <div className="h-[1px] bg-slate-100" />
+                <div className="flex items-center gap-3">
+                  <Truck size={18} className={primaryText} />
+                  <div>
+                    <p className="text-[12px] font-black text-slate-850">Delivery by Sat, 16 May</p>
+                    <p className="text-[10px] text-orange-600 font-bold mt-0.5">Order in 00h 00m 14s</p>
+                  </div>
+                </div>
+              </>
+            )
+          )}
+
+          {!isPincodeChecked && (
+            <div className="flex items-center gap-3">
+              <MapPin size={18} className="text-slate-400" />
+              <div className="flex-1 min-w-0">
+                <p className="text-[11px] font-black text-slate-400 uppercase tracking-wider leading-none">Deliver to Home</p>
+                <p className="text-[12px] text-slate-450 font-medium truncate mt-1">Please enter pincode to verify delivery availability</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -904,12 +991,12 @@ const ProductDetail = () => {
             {product.pack || '1 unit'}
           </span>
           <div className="flex items-center gap-1.5">
-            <div className="bg-[#FFD633] text-slate-900 text-[14px] font-black px-2 py-0.5 rounded-[3px] relative flex items-center shadow-3xs">
+            <div className="bg-[#FFD633] text-slate-900 text-[14px] font-black px-3.5 py-0 rounded-[3px] relative flex items-center shadow-3xs">
               <div className="absolute left-[-2px] top-1/2 -translate-y-1/2 w-1 h-1 bg-white rounded-full"></div>
               <div className="absolute right-[-2px] top-1/2 -translate-y-1/2 w-1 h-1 bg-white rounded-full"></div>
               {formatPrice(product.price)}
             </div>
-            <span className="text-[11px] text-slate-400 font-bold line-through leading-none">
+            <span className="text-[11px] text-slate-400 font-semibold line-through leading-none">
               MRP {formatPrice(product.oldPrice)}
             </span>
           </div>

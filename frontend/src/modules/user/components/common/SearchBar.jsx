@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Camera, Mic, ScanLine, MapPin, ChevronDown, Zap, X, Star } from 'lucide-react';
+import { Search, Camera, Mic, ScanLine, MapPin, ChevronDown, Zap, X, Star, Clock } from 'lucide-react';
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from 'react-i18next';
 import SearchInput from '../../../../shared/components/SearchInput';
@@ -143,7 +143,7 @@ const SearchBar = ({ selectedAddress }) => {
     : '83 Kishan Pura Mataji Mandir, Indore';
 
   return (
-    <div className="px-3 pb-2 flex flex-col gap-1.5 md:px-4 md:pb-3 md:flex-col md:gap-3">
+    <div className="px-3 pb-2.5 flex flex-col gap-2.5 md:px-4 md:pb-3 md:flex-col md:gap-3">
       {/* Hidden file input for camera upload */}
       <input 
         type="file" 
@@ -154,63 +154,67 @@ const SearchBar = ({ selectedAddress }) => {
       />
 
 
-      <div className="flex items-center justify-between py-0.5 md:py-2">
+      <div className="flex items-center justify-between py-1.5 md:py-2.5">
         {isFreshGroceryActive ? (
           <Link
             to="/profile/addresses"
-            className="flex items-center gap-1 min-w-0 text-white hover:text-white/95"
+            className="flex items-center gap-1.5 min-w-0 text-white hover:text-white/95"
           >
-            <MapPin size={13} strokeWidth={2.5} className="w-[13px] h-[13px] flex-shrink-0 text-white" />
-            <span className="text-[10px] md:text-[11px] font-bold truncate max-w-[170px] md:max-w-[220px]">
+            <MapPin size={15} strokeWidth={2.5} className="w-[15px] h-[15px] flex-shrink-0 text-white" />
+            <span className="text-[12px] md:text-[13px] font-bold truncate max-w-[170px] md:max-w-[220px]">
               {displayAddress}
             </span>
-            <ChevronDown size={11} strokeWidth={3} className="w-[11px] h-[11px] flex-shrink-0 text-white" />
+            <ChevronDown size={13} strokeWidth={3} className="w-[13px] h-[13px] flex-shrink-0 text-white" />
           </Link>
         ) : isMithilakActive ? (
           <Link
             to="/profile/addresses"
-            className="flex items-center gap-1 min-w-0 text-white/95 hover:text-white"
+            className="flex items-center gap-1.5 min-w-0 text-white/95 hover:text-white"
           >
-            <MapPin size={13} strokeWidth={2.5} className="w-[13px] h-[13px] md:w-[14px] md:h-[14px] flex-shrink-0" />
-            <span className="text-[11.5px] font-bold truncate max-w-[180px] md:max-w-[220px]">
+            <MapPin size={15} strokeWidth={2.5} className="w-[15px] h-[15px] md:w-[16px] md:h-[16px] flex-shrink-0" />
+            <span className="text-[13px] font-bold truncate max-w-[180px] md:max-w-[220px]">
               {displayAddress}
             </span>
-            <ChevronDown size={11} strokeWidth={3} className="w-[11px] h-[11px] md:w-[12px] md:h-[12px] flex-shrink-0" />
+            <ChevronDown size={13} strokeWidth={3} className="w-[13px] h-[13px] md:w-[14px] md:h-[14px] flex-shrink-0" />
           </Link>
         ) : (
           <Link
             to="/profile/addresses"
             className="flex items-center gap-1.5 min-w-0 text-white/95 hover:opacity-85 transition-opacity"
           >
-            <MapPin size={13} strokeWidth={2.5} className="w-[13px] h-[13px] md:w-[14px] md:h-[14px] flex-shrink-0" />
-            <span className="text-[10px] md:text-[11px] font-bold truncate max-w-[170px] md:max-w-[220px]">
+            <MapPin size={15} strokeWidth={2.5} className="w-[15px] h-[15px] md:w-[16px] md:h-[16px] flex-shrink-0" />
+            <span className="text-[12px] md:text-[13px] font-bold truncate max-w-[170px] md:max-w-[220px]">
               {displayAddress}
             </span>
-            <ChevronDown size={11} strokeWidth={3} className="w-[11px] h-[11px] md:w-[12px] md:h-[12px] flex-shrink-0" />
+            <ChevronDown size={13} strokeWidth={3} className="w-[13px] h-[13px] md:w-[14px] md:h-[14px] flex-shrink-0" />
           </Link>
         )}
 
         {/* Language Pill + Coin/Star Badge */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5 ml-3 flex-shrink-0">
           {/* Functional language selector button */}
           <LanguageSelector isDarkHeader={false} variant={isMithilakActive ? "mithila" : ""} compact={true} />
           
-          {/* Custom Coins/Stars Badge */}
+          {/* Custom Coins/Stars or Delivery Time Badge */}
           {isFreshGroceryActive ? (
-            <div className="flex items-center gap-0.5 px-2 py-0.5 bg-white/20 border border-white/10 rounded-full text-white font-bold text-[10.5px] shadow-xs">
-              <span className="flex items-center gap-0.5">✦ 3</span>
+            <div className="flex items-center gap-1 px-2.5 py-1 bg-white/20 border border-white/10 rounded-full text-white font-bold text-[11px] shadow-xs whitespace-nowrap flex-shrink-0">
+              <Clock size={13} className="text-white" />
+              <span>15 Mins</span>
             </div>
           ) : isMithilakActive ? (
-            <div className="flex items-center gap-0.5 px-2 py-0.5 bg-[#207C8A] border border-white/20 rounded-full text-white font-extrabold text-[11px] shadow-xs">
-              <Star size={11} className="text-yellow-300 fill-yellow-300" />
+            <div className="flex items-center gap-0.5 px-3 py-1 bg-[#207C8A] border border-white/20 rounded-full text-white font-extrabold text-[12px] shadow-xs whitespace-nowrap flex-shrink-0">
+              <Star size={13} className="text-yellow-300 fill-yellow-300" />
               <span>3</span>
             </div>
+          ) : isQuickShopActive ? (
+            <div className="flex items-center gap-1 px-2.5 py-1 bg-[#D45014] border border-white/20 rounded-full text-white font-extrabold text-[11px] shadow-xs whitespace-nowrap flex-shrink-0">
+              <Clock size={13} className="text-white" />
+              <span>15 Mins</span>
+            </div>
           ) : (
-            <div className={`flex items-center gap-0.5 px-2 py-0.5 rounded-full text-white border border-[#FFF8EE]/20 shadow-xs ${
-              isQuickShopActive ? 'bg-[#D45014]' : 'bg-[#3E5A44]'
-            }`}>
-              <Star size={11} className="text-yellow-300 fill-yellow-300" />
-              <span className="text-[11px] font-extrabold">3</span>
+            <div className="flex items-center gap-0.5 px-3 py-1 rounded-full text-white border border-[#FFF8EE]/20 shadow-xs bg-[#3E5A44] whitespace-nowrap flex-shrink-0">
+              <Star size={13} className="text-yellow-300 fill-yellow-300" />
+              <span className="text-[12px] font-extrabold">3</span>
             </div>
           )}
         </div>
@@ -237,14 +241,14 @@ const SearchBar = ({ selectedAddress }) => {
               <div className="flex items-center gap-2.5 md:gap-4 pr-1 text-[#3F2A20]/60">
                 {!isFreshGroceryActive && (
                   <Camera 
-                    size={16} 
+                    size={18} 
                     strokeWidth={2.2} 
                     onClick={handleCameraClick}
                     className="cursor-pointer hover:text-[#3F2A20] transition-colors" 
                   />
                 )}
                 <Mic 
-                  size={16} 
+                  size={18} 
                   strokeWidth={2.2} 
                   onClick={handleVoiceSearch}
                   className={`cursor-pointer hover:text-[#3F2A20] transition-colors ${

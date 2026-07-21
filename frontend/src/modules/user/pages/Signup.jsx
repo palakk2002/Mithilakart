@@ -175,7 +175,7 @@ const Signup = () => {
   const backgroundPattern = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><path d="M10 20c2-3 5-5 8-5s6 2 8 5-2 8-5 8-6-2-8-5zm30 20c2-3 5-5 8-5s6 2 8 5-2 8-5 8-6-2-8-5zM25 45c1-2 3-3 5-3s4 1 5 3-1 4-3 4-4-1-5-3zM45 15c1-2 3-3 5-3s4 1 5 3-1 4-3 4-4-1-5-3z" fill="%23ffffff" fill-opacity="0.12" fill-rule="evenodd"/></svg>`;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between p-4 md:p-6 bg-[#f7f4eb] relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-between p-2.5 py-3 md:p-6 bg-[#f7f4eb] relative overflow-hidden">
       {/* Background Image with lower opacity */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25 pointer-events-none"
@@ -194,8 +194,8 @@ const Signup = () => {
       </div>
 
       {/* Main card */}
-      <div className="w-full max-w-[420px] bg-[#FFF9F3]/95 rounded-[36px] p-2.5 shadow-2xl border border-[#F26522]/20 backdrop-blur-md z-10 my-6 relative overflow-hidden">
-        <div className="border border-dashed border-[#F26522]/40 rounded-[28px] px-6 py-8 relative">
+      <div className="w-full max-w-[420px] bg-[#FFF9F3]/95 rounded-[36px] p-2.5 shadow-2xl border border-[#F26522]/20 backdrop-blur-md z-10 my-2.5 md:my-6 relative overflow-hidden">
+        <div className="border border-dashed border-[#F26522]/40 rounded-[28px] px-5 py-5 md:px-6 md:py-8 relative">
           
           {/* Faint mandala background watermark */}
           <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none overflow-hidden">
@@ -219,14 +219,14 @@ const Signup = () => {
           <div className="absolute bottom-2.5 left-2.5"><FlowerIcon className="w-4 h-4" /></div>
           <div className="absolute bottom-2.5 right-2.5"><FlowerIcon className="w-4 h-4" /></div>
 
-          <div className="text-center mb-6 z-10 relative">
-            <h2 className="text-3xl font-extrabold font-serif text-[#321c13] flex items-center justify-center gap-2">
+          <div className="text-center mb-4 md:mb-6 z-10 relative">
+            <h2 className="text-2xl md:text-3xl font-extrabold font-serif text-[#321c13] flex items-center justify-center gap-2">
               <FlowerIcon className="w-5 h-5" />
               <span>Create account</span>
               <FlowerIcon className="w-5 h-5" />
             </h2>
             {/* Divider */}
-            <div className="flex items-center justify-center gap-2 my-2.5">
+            <div className="flex items-center justify-center gap-2 my-2 md:my-2.5">
               <div className="w-16 border-t border-dashed border-[#F26522]/40"></div>
               <FlowerIcon className="w-3.5 h-3.5" />
               <div className="w-16 border-t border-dashed border-[#F26522]/40"></div>
@@ -237,7 +237,7 @@ const Signup = () => {
           </div>
 
           {/* Authentication Toggle */}
-          <div className="flex gap-1.5 bg-[#FFF5EE] border border-[#F26522]/25 p-1 rounded-2xl mb-5 z-10 relative">
+          <div className="flex gap-1.5 bg-[#FFF5EE] border border-[#F26522]/25 p-1 rounded-2xl mb-4 md:mb-5 z-10 relative">
             <button
               type="button"
               disabled={isSendingOtp || isVerifyingOtp}
@@ -449,13 +449,13 @@ const Signup = () => {
       </div>
 
       {/* Footer Logo & Styling */}
-      <div className="flex flex-col items-center gap-1 my-3 z-10">
+      <div className="flex flex-col items-center gap-1 my-1 md:my-3 z-10">
         <img 
           src="/mthibg.png" 
           alt="Mithilakart" 
-          className="h-16 w-auto object-contain"
+          className="h-10 md:h-16 w-auto object-contain"
         />
-        <div className="flex items-center text-[14px] font-bold text-black tracking-wide italic">
+        <div className="flex items-center text-[13px] md:text-[14px] font-bold text-black tracking-wide italic">
           Mithilakart<span className="text-[10px] align-super ml-0.5">™</span>
         </div>
       </div>

@@ -19,7 +19,7 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
               >
                 {/* Rounded Square Card exactly like the mockup image */}
                 <div 
-                  className={`w-full aspect-[1/1.18] rounded-[20px] overflow-hidden flex flex-col items-center justify-between p-1.5 transition-all duration-300 border relative ${
+                  className={`w-full h-[96px] sm:h-[112px] rounded-[20px] overflow-hidden flex flex-col items-center justify-between p-1.5 transition-all duration-300 border relative ${
                     isActive 
                       ? 'bg-[#FFF8EE] border-2 border-[#3E5A44] shadow-[0_4px_12px_rgba(62,90,68,0.15)] scale-[1.01]' 
                       : 'bg-[#FFFBF7]/90 border border-[#EADCC9]/60 shadow-[0_3px_8px_rgba(61,35,20,0.015)] hover:border-[#3E5A44]/40 hover:shadow-[0_6px_15px_rgba(61,35,20,0.04)]'
@@ -97,7 +97,7 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
             >
               {/* Rounded Square Card containing both text (top) and image (bottom) */}
               <div 
-                className={`w-full aspect-[1/1.18] rounded-[20px] overflow-hidden flex flex-col items-center justify-between p-1.5 transition-all duration-300 ${
+                className={`w-full h-[96px] sm:h-[112px] rounded-[20px] overflow-hidden flex flex-col items-center justify-between p-1.5 transition-all duration-300 ${
                   isActive 
                     ? 'bg-white border-2 border-[#3E5A44] shadow-[0_4px_12px_rgba(62,90,68,0.1)]' 
                     : 'bg-white border border-[#EADCC9]/60 shadow-[0_3px_8px_rgba(61,35,20,0.015)] hover:border-[#3E5A44]/40 hover:shadow-[0_6px_15px_rgba(61,35,20,0.04)]'

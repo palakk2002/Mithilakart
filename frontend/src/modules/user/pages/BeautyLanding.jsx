@@ -177,7 +177,7 @@ const BeautyLanding = () => {
       <HeroBanner banners={banners} />
 
       {/* ── Deal cards ── */}
-      <div className="px-3 mt-2">
+      <div className="px-3 mt-2 md:max-w-[900px] md:mx-auto w-full">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-[20px] font-bold text-slate-900" style={{ lineHeight: 1.2, letterSpacing: '-0.3px' }}>
             Great Savings
@@ -186,7 +186,7 @@ const BeautyLanding = () => {
             See all <ChevronRight size={14} strokeWidth={2.5} />
           </button>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
           {deals.map((d, i) => (
             <motion.div
               key={i}
@@ -207,7 +207,7 @@ const BeautyLanding = () => {
       </div>
 
       {/* ── Trending items ── */}
-      <div className="px-3 mt-5">
+      <div className="px-3 mt-5 md:max-w-[900px] md:mx-auto w-full">
         <h2 className="text-[20px] font-bold text-slate-900 mb-3" style={{ lineHeight: 1.2, letterSpacing: '-0.3px' }}>
           Trending Now
         </h2>
@@ -229,7 +229,7 @@ const BeautyLanding = () => {
       </div>
 
       {/* ── Promo banner ── */}
-      <div className="px-3 mt-5">
+      <div className="px-3 mt-5 md:max-w-[900px] md:mx-auto w-full">
         <div className="bg-gradient-to-r from-[#1259c3] to-[#3E5A44] rounded-2xl p-4 flex items-center justify-between overflow-hidden relative">
           <div className="absolute -right-6 -top-6 w-32 h-32 bg-white/5 rounded-full" />
           <div className="absolute -right-2 bottom-0 w-20 h-20 bg-white/5 rounded-full" />
@@ -249,11 +249,11 @@ const BeautyLanding = () => {
       </div>
 
       {/* ── Recommended products grid ── */}
-      <div className="px-3 mt-5">
+      <div className="px-3 mt-5 md:max-w-[900px] md:mx-auto w-full">
         <h2 className="text-[20px] font-bold text-slate-900 mb-3" style={{ lineHeight: 1.2, letterSpacing: '-0.3px' }}>
           Recommended for You
         </h2>
-        <div className="grid grid-cols-2 gap-x-3 gap-y-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-5 md:gap-6">
           {products.map(p => (
             <ProductCard key={p.id} product={p} onPress={handleProductClick} />
           ))}

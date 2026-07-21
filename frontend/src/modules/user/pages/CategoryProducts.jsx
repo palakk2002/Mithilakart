@@ -466,14 +466,14 @@ const CategoryProducts = () => {
       </div>
 
       {/* 🔶 Main Product Grid (Top Part) */}
-      <div className="p-4 grid grid-cols-2 gap-4">
+      <div className="p-4 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 md:max-w-[1000px] md:mx-auto w-full">
         {sortedProducts.slice(0, 4).map((product) => (
           <CategoryProductCard product={product} key={product.id} />
         ))}
       </div>
 
       {/* 🔶 Horizontal Trends Section (Slider as requested) */}
-      <div className="my-2 py-4 bg-[var(--card-border)]/30 border-y border-[var(--card-border)]">
+      <div className="my-2 py-4 bg-[var(--card-border)]/30 border-y border-[var(--card-border)] md:max-w-[1000px] md:mx-auto md:w-full md:rounded-2xl">
         <div className="px-4 flex items-center gap-2 mb-3">
           <span className="bg-[#008c7a] text-white text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider">Trending</span>
           <h2 className="text-[13px] font-black text-[var(--card-text)] uppercase tracking-tight">Hot and latest for you</h2>
@@ -495,10 +495,10 @@ const CategoryProducts = () => {
       </div>
 
       {/* 🔶 Main Product Grid (Bottom Part) */}
-      <div className="px-4 py-2 mt-4">
+      <div className="px-4 py-2 mt-4 md:max-w-[1000px] md:mx-auto w-full">
         <h2 className="text-[13px] font-black text-[var(--card-text)] uppercase tracking-tight">For You</h2>
       </div>
-      <div className="p-4 grid grid-cols-2 gap-4">
+      <div className="p-4 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 md:max-w-[1000px] md:mx-auto w-full">
         {sortedProducts.slice(4).map((product) => (
           <CategoryProductCard product={product} key={product.id} />
         ))}

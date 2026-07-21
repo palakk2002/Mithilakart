@@ -4,6 +4,8 @@ import { Search as SearchIcon, Filter, ArrowLeft, LayoutGrid, List, Mic } from '
 import ProductCard from '../components/common/ProductCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import SearchInput from '../../../shared/components/SearchInput';
+import NoSearchResults from '../components/common/NoSearchResults';
+
 
 // Import local assets for search page
 import SamsungImg from '../../../assets/products/product01.jpg';
@@ -65,9 +67,9 @@ const Search = () => {
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
   const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#e0f2f1]/60 via-[#f2faf9] to-[#ffffff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-[#eaf5ee]');
-  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#207C8A] to-[#144f58]' : isFreshGroceryFlow ? 'bg-gradient-to-r from-[#F5B014] to-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#3E5A44]');
-  const textPrimary = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#3E5A44]');
-  const borderPrimary = isMithilakFlow ? 'border-[#207C8A]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#d6186d]' : 'border-[#3E5A44]');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#207C8A] to-[#144f58]' : isFreshGroceryFlow ? 'bg-gradient-to-r from-[#F5B014] to-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#3E5A44]');
+  const textPrimary = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#7A3E17]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#3E5A44]');
+  const borderPrimary = isMithilakFlow ? 'border-[#207C8A]' : isFreshGroceryFlow ? 'border-[#7A3E17]' : (isQuickShopFlow ? 'border-[#F26522]' : 'border-[#3E5A44]');
 
   const allProducts = [
     { id: 1, name: 'Apple iPhone 15 (Blue, 128 GB)', price: '69,999', oldPrice: '79,900', rating: '4.6', reviews: '2,450', image: SamsungImg, brand: 'APPLE' },
@@ -177,17 +179,14 @@ const Search = () => {
         </div>
 
         {filteredProducts.length === 0 && (
-          <div className="text-center py-16 bg-white rounded-3xl border border-slate-100 shadow-sm mt-8">
-             <SearchIcon size={40} className="mx-auto text-slate-300 mb-3 opacity-50" />
-             <h3 className={`text-base font-black uppercase tracking-widest ${textPrimary}`}>No results found</h3>
-             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-2 max-w-xs mx-auto">Try checking your spelling or use more general keywords</p>
-             <button 
-               onClick={() => navigate('/home')}
-               className={`mt-5 px-6 py-2.5 ${headerBg} ${isFreshGroceryFlow ? 'text-black' : 'text-white'} rounded-xl font-black uppercase tracking-widest text-[9px] shadow-md`}
-             >
-                Go Back Home
-             </button>
-          </div>
+          <NoSearchResults 
+            query={query}
+            onClearSearch={() => {
+              setSearchValue('');
+              navigate('/search?q=');
+            }}
+            onContinueShopping={() => navigate('/home')}
+          />
         )}
       </div>
     </motion.div>

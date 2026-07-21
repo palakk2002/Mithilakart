@@ -72,14 +72,14 @@ const ToysLanding = () => {
       </div>
 
       {/* Section: Great Savings Start Here */}
-      <div className="px-4 py-6">
+      <div className="px-4 py-6 md:max-w-[900px] md:mx-auto w-full">
          <div className="flex items-center gap-4 mb-6">
             <div className="h-[1px] flex-1 bg-gray-100" />
             <h2 className="text-[18px] font-black text-slate-800 tracking-tight">Great savings start here</h2>
             <div className="h-[1px] flex-1 bg-gray-100" />
          </div>
 
-         <div className="grid grid-cols-2 gap-4">
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {savingsCards.map((card, idx) => (
                <div key={idx} className="flex flex-col gap-3 group">
                   <div className="aspect-square bg-[#fff0f5] rounded-[32px] overflow-hidden relative flex items-center justify-center p-4 transition-transform group-active:scale-95">

@@ -111,7 +111,7 @@ const Home = () => {
 
   return (
     <div
-      className="min-h-screen pb-20 overflow-x-hidden bg-transparent text-primary-dark"
+      className="min-h-screen pb-2 overflow-x-hidden bg-transparent text-primary-dark"
       style={{
         WebkitBackfaceVisibility: 'hidden',
         backfaceVisibility: 'hidden',
@@ -121,7 +121,7 @@ const Home = () => {
       }}
     >
       {/* 1. TOP HORIZONTAL CATEGORY ROW (Super Compact & Scrollable circles) - Always Visible */}
-      <div className="flex items-center gap-3 overflow-x-auto no-scrollbar px-3 pt-1 pb-3 mb-2">
+      <div className="flex items-center gap-3 overflow-x-auto no-scrollbar px-3 pt-5.5 pb-3 mb-6">
         {mainCategoriesList.map((cat, idx) => {
           if (cat.label === 'You Buy') {
             return (
@@ -347,7 +347,7 @@ const Home = () => {
           </div>
 
           {/* Dynamic Products Section based on Bottom Tabs */}
-          <div className="pb-20 mb-5 md:mb-8">
+          <div className="mb-6 md:mb-10">
             <CategoryProductsSection selectedCategory={activeTab} />
           </div>
         </>

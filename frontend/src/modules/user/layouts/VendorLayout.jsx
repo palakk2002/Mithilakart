@@ -41,7 +41,7 @@ const getMithilakartHeaderBg = (category) => {
       return 'bg-[#FEF08A]'; // Soft Yellow
     case 'You Buy':
     default:
-      return 'bg-[#3E5A44]'; // Default Olive Green
+      return 'bg-[#6FAE4A]'; // Default Brand Green
   }
 };
 
@@ -49,13 +49,34 @@ const VendorLayout = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+
+  const badgeBg = isMithilakFlow 
+    ? 'bg-[#207C8A]' 
+    : isFreshGroceryFlow 
+      ? 'bg-[#D9A21B]' 
+      : isQuickShopFlow 
+        ? 'bg-[#F26522]' 
+        : 'bg-[#3E5A44]';
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
   const [cartCount, setCartCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
   const [scrolled, setScrolled] = useState(false);
   const { savedAddresses, selectedAddressId, isDarkMode } = useAccountStore();
   const { selectedCategory, setSelectedCategory } = useVendorStore();
   const selectedAddress = savedAddresses.find(a => a.id === selectedAddressId) || savedAddresses[0];
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   /* ── Cart listener ── */
   useEffect(() => {
@@ -126,57 +147,88 @@ const VendorLayout = () => {
             : 'bg-[#F6F8F3]'
     }`}>
       {/* Global Repeating Mithila Art Page Background Texture */}
-      <div 
-        className="fixed inset-0 pointer-events-none z-30 bg-repeat opacity-[0.035] select-none"
-        style={{
-          backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
-          backgroundSize: '360px',
-        }}
-      />
+      {!location.pathname.includes('/product-detail') && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-30 bg-repeat select-none"
+          style={{
+            backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
+            backgroundSize: '360px',
+            opacity: location.pathname.includes('/profile') ? 0.008 : 0.035
+          }}
+        />
+      )}
 
       {/* Drawer Sidebar */}
       <MainSidebar isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
 
       {/* Desktop Header */}
       {!hideHeader && (
-        <div className={`hidden md:flex items-center justify-between px-8 py-2.5 border-b border-gray-200/80 sticky top-0 z-50 shadow-sm transition-colors duration-300 ${
+        <div className={`hidden md:flex items-center justify-between px-4 lg:px-8 py-2.5 border-b border-gray-200/80 sticky top-0 z-50 shadow-sm transition-colors duration-300 ${
           (localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak'))
-            ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1] text-white'
+            ? 'bg-[#207C8A] text-white'
             : location.pathname.includes('/fresh-grocery')
               ? 'bg-[#D9A21B] text-[#3F2A20]'
               : location.pathname.includes('/quick-shop')
-                ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f] text-white'
+                ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00] text-white'
                 : `${getMithilakartHeaderBg(selectedCategory)} ${
                     selectedCategory === 'You Buy' || selectedCategory === 'Home' || !selectedCategory
                       ? 'text-white'
                       : 'text-slate-800'
                   }`
         }`}>
-          <div className="flex items-center gap-8 max-w-[1600px] mx-auto w-full">
-            <Link to="/home" className="flex items-center gap-2 flex-shrink-0">
-              <span className="text-2xl font-black tracking-tight">Mithilakart</span>
+          <div className="flex items-center gap-3 lg:gap-8 max-w-[1600px] mx-auto w-full">
+            <Link to="/home" className="flex items-center gap-2 flex-shrink-0 text-current">
+              <span className="text-xl lg:text-2xl font-black tracking-tight">Mithilakart</span>
             </Link>
 
+            {/* Desktop Search Bar */}
+            <form onSubmit={handleSearchSubmit} className="flex-1 max-w-[280px] xl:max-w-[360px] mx-2 hidden md:block">
+              <div className="relative flex items-center w-full">
+                <span className="absolute left-3.5 text-gray-400">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={t('nav.searchPlaceholder') || "Search for products..."}
+                  className="w-full h-[36px] pl-10 pr-4 text-xs font-semibold bg-white/90 border border-transparent rounded-full outline-none transition-all duration-200 text-slate-800 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-white/20"
+                />
+              </div>
+            </form>
+
             {/* Desktop Header Flow Tabs */}
-            <div className="w-[360px] flex-shrink-0 scale-95 origin-left">
+            <div className="w-[340px] xl:w-[400px] flex-shrink-0 hidden xl:block">
               <HeaderTabs />
             </div>
 
-            <nav className="flex items-center gap-3 ml-4">
-              <Link to="/home" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 hover:bg-black/5 text-[#3F2A20]`}>{t('nav.home')}</Link>
-              <Link to="/categories" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 hover:bg-black/5 text-[#3F2A20]`}>{t('nav.categories')}</Link>
-              <Link to="/cart" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 flex items-center gap-2 hover:bg-black/5 text-[#3F2A20]`}>
+            <nav className="flex items-center gap-1.5 lg:gap-3 ml-1 lg:ml-4 flex-shrink-0">
+              <Link to="/home" className={`text-[13px] lg:text-[14px] font-black px-2.5 lg:px-3.5 py-1.5 rounded-xl transition-all duration-200 hover:bg-black/5 text-current`}>{t('nav.home')}</Link>
+              <Link to="/categories" className={`text-[13px] lg:text-[14px] font-black px-2.5 lg:px-3.5 py-1.5 rounded-xl transition-all duration-200 hover:bg-black/5 text-current`}>{t('nav.categories')}</Link>
+              <Link to="/cart" className={`text-[13px] lg:text-[14px] font-black px-2.5 lg:px-3.5 py-1.5 rounded-xl transition-all duration-200 flex items-center gap-1.5 hover:bg-black/5 text-current`}>
                 <span>{t('nav.cart')}</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full font-black bg-[#F26522] text-white">{cartCount}</span>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-black transition-colors duration-300 ${
+                  (localStorage.getItem('isMithilakFlow') === 'true' || location.pathname.includes('/mithilak'))
+                    ? 'bg-white text-[#207C8A]'
+                    : location.pathname.includes('/fresh-grocery')
+                      ? 'bg-[#3F2A20] text-white'
+                      : location.pathname.includes('/quick-shop')
+                        ? 'bg-white text-[#F26522]'
+                        : (selectedCategory === 'You Buy' || selectedCategory === 'Home' || !selectedCategory)
+                          ? 'bg-white text-[#6FAE4A]'
+                          : 'bg-[#3E5A44] text-white'
+                }`}>{cartCount}</span>
               </Link>
-              <Link to="/profile" className={`text-[14px] font-black px-3.5 py-1.5 rounded-xl transition-all duration-200 hover:bg-black/5 text-[#3F2A20]`}>Profile</Link>
+              <Link to="/profile" className={`text-[13px] lg:text-[14px] font-black px-2.5 lg:px-3.5 py-1.5 rounded-xl transition-all duration-200 hover:bg-black/5 text-current`}>Profile</Link>
             </nav>
 
-            <div className="ml-auto flex items-center gap-6">
+            <div className="ml-auto flex items-center gap-3 lg:gap-6 flex-shrink-0">
               <LanguageSelector isDarkHeader={isDarkHeader} />
-              <div className="text-sm font-semibold flex items-center gap-1 opacity-90">
+              <div className="text-sm font-semibold flex items-center gap-1 opacity-90 hidden lg:flex">
                 <span>📍 {t('nav.deliverTo')}</span>
-                <span className="font-bold truncate max-w-[200px]">{selectedAddress?.name || 'Indrapuri Colony, Indore'}</span>
+                <span className="font-bold truncate max-w-[120px] xl:max-w-[200px]">{selectedAddress?.name || 'Indrapuri Colony, Indore'}</span>
               </div>
             </div>
           </div>
@@ -199,7 +251,7 @@ const VendorLayout = () => {
                 ? 'bg-[#D9A21B]'
                 : location.pathname.includes('/quick-shop')
                   ? 'bg-[#F26522]'
-                  : 'bg-[#3E5A44]'
+                  : getMithilakartHeaderBg(selectedCategory)
           }`}
         >
 
@@ -218,12 +270,12 @@ const VendorLayout = () => {
       <div className="flex-1 flex flex-col bg-transparent relative z-10">
         <div className="flex-1 flex">
           <div className="w-full max-w-[1600px] mx-auto px-0 md:px-8 xl:px-12 flex h-full">
-            <main className="flex-1 min-w-0 pb-16">
+            <main className="flex-1 min-w-0 pb-4">
               <Outlet />
             </main>
           </div>
         </div>
-        {!location.pathname.includes('/profile') && <Footer />}
+        {location.pathname !== '/profile' && <Footer />}
       </div>
 
       {/* Mobile-First Bottom Navbar (Fixed) */}
@@ -274,7 +326,7 @@ const VendorLayout = () => {
         >
           <div className="relative">
             <ShoppingCart size={22} strokeWidth={2.2} />
-            <span className="absolute -top-1.5 -right-2 text-[8px] font-black px-1 py-0.5 rounded-full bg-[#F26522] text-white border border-[#FFF8EE]">
+            <span className={`absolute -top-1.5 -right-2 text-[8px] font-black px-1 py-0.5 rounded-full ${badgeBg} text-white border border-[#FFF8EE]`}>
               {cartCount}
             </span>
           </div>
@@ -291,7 +343,7 @@ const VendorLayout = () => {
           }`}
         >
           <User size={22} strokeWidth={2.2} />
-          <span className={`text-[10px] ${location.pathname === '/profile' ? 'font-black' : 'font-semibold'}`}>You</span>
+          <span className={`text-[10px] ${location.pathname === '/profile' ? 'font-black' : 'font-semibold'}`}>Account</span>
         </Link>
       </nav>
       )}
@@ -302,12 +354,12 @@ const VendorLayout = () => {
           onClick={() => navigate('/vendor/cart')}
           className={`fixed bottom-[76px] left-4 right-4 md:bottom-8 md:right-8 md:left-auto md:w-[380px] md:px-6 md:py-4 md:rounded-2xl z-[1000] rounded-2xl px-5 py-3.5 flex items-center justify-between shadow-[0_8px_30px_rgba(0,0,0,0.15)] text-white cursor-pointer active:scale-[0.98] transition-all duration-300 animate-in slide-in-from-bottom-6 ${
             localStorage.getItem('isFreshGroceryFlow') === 'true'
-              ? 'bg-gradient-to-r from-[#7A3E17] to-[#b45309] hover:brightness-110'
+              ? 'bg-[#D9A21B] hover:bg-[#c08f16]'
               : localStorage.getItem('isMithilakFlow') === 'true'
-                ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1] hover:brightness-110'
+                ? 'bg-[#207C8A] hover:bg-[#1b6975]'
                   : localStorage.getItem('isQuickShopFlow') === 'true'
-                    ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f] hover:brightness-110'
-                  : 'bg-[#3E5A44] hover:bg-[#06331b]'
+                    ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00] hover:brightness-110'
+                  : 'bg-[#6FAE4A] hover:bg-[#5b953d]'
           }`}
         >
           <div className="flex items-center gap-3">
@@ -327,7 +379,7 @@ const VendorLayout = () => {
           </div>
           <div className={`flex items-center gap-1 px-3.5 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider transition-colors duration-300 ${
             localStorage.getItem('isQuickShopFlow') === 'true'
-              ? 'bg-white text-[#d6186d]'
+              ? 'bg-white text-[#F26522]'
               : 'bg-white/20 text-white'
           }`}>
             <span>{t('nav.viewCart')}</span>

@@ -6,11 +6,17 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { parsePrice, formatPrice } from '../../../shared/utils/priceFormatter';
+import useAccountStore from '../../../store/useAccountStore';
 
 const Cart = () => {
   const { t } = useTranslation();
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
+
+  // Wishlist and confirmation states
+  const { wishlist, addToWishlist } = useAccountStore();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [itemToConfirm, setItemToConfirm] = useState(null);
 
   // Authentication and address flow states
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('isAuthenticated') === 'true');
@@ -38,9 +44,10 @@ const Cart = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
-  const primaryBg = isMithilakFlow ? 'bg-[#207C8A] hover:bg-[#185e68]' : (isFreshGroceryFlow ? 'bg-[#D9A21B] hover:bg-[#c49218]' : (isQuickShopFlow ? 'bg-[#d6186d] hover:bg-[#b5125b]' : 'bg-[#3E5A44] hover:bg-[#06331b]'));
-  const primaryText = isMithilakFlow ? 'text-[#207C8A]' : (isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#3E5A44]'));
+  const primaryBg = isMithilakFlow ? 'bg-[#207C8A] hover:bg-[#185e68]' : (isFreshGroceryFlow ? 'bg-[#D9A21B] hover:bg-[#c49218]' : (isQuickShopFlow ? 'bg-[#F26522] hover:bg-[#d9561b]' : 'bg-[#3E5A44] hover:bg-[#06331b]'));
+  const primaryText = isMithilakFlow ? 'text-[#207C8A]' : (isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#3E5A44]'));
   const shopNowLink = isMithilakFlow ? '/mithilak' : (isFreshGroceryFlow ? '/fresh-grocery' : (isQuickShopFlow ? '/quick-shop' : '/vendor/home'));
+  const btnShadow = isMithilakFlow ? 'shadow-[0_4px_16px_rgba(32,124,138,0.22)]' : isFreshGroceryFlow ? 'shadow-[0_4px_16px_rgba(217,162,27,0.15)]' : (isQuickShopFlow ? 'shadow-[0_4px_16px_rgba(242,101,34,0.22)]' : 'shadow-[0_4px_16px_rgba(8,66,36,0.22)]');
 
   // Load cart items for all users (authenticated or not)
   useEffect(() => {
@@ -86,11 +93,46 @@ const Cart = () => {
     };
   }, []);
 
-  const handleRemove = (cartId) => {
-    const updated = cartItems.filter(item => item.cartId !== cartId);
+  const handleRemoveClick = (item) => {
+    setItemToConfirm(item);
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!itemToConfirm) return;
+    const updated = cartItems.filter(item => item.cartId !== itemToConfirm.cartId);
     setCartItems(updated);
     localStorage.setItem('userCart', JSON.stringify(updated));
     window.dispatchEvent(new Event('cartUpdated'));
+    setShowConfirmModal(false);
+    setItemToConfirm(null);
+  };
+
+  const handleMoveToWishlist = () => {
+    if (!itemToConfirm) return;
+    // Add to wishlist using Zustand store (avoid duplicates)
+    if (!wishlist.some(wish => wish.id === itemToConfirm.id)) {
+      addToWishlist({
+        id: itemToConfirm.id || Date.now(),
+        name: itemToConfirm.name,
+        price: itemToConfirm.price,
+        oldPrice: itemToConfirm.oldPrice,
+        discount: itemToConfirm.discount,
+        image: itemToConfirm.image,
+        brand: itemToConfirm.brand,
+        rating: itemToConfirm.rating,
+        reviews: itemToConfirm.reviews
+      });
+    }
+
+    // Remove from cart
+    const updated = cartItems.filter(item => item.cartId !== itemToConfirm.cartId);
+    setCartItems(updated);
+    localStorage.setItem('userCart', JSON.stringify(updated));
+    window.dispatchEvent(new Event('cartUpdated'));
+
+    setShowConfirmModal(false);
+    setItemToConfirm(null);
   };
 
   const updateQuantity = (cartId, delta) => {
@@ -119,7 +161,7 @@ const Cart = () => {
 
   return (
     <div className={`min-h-screen pb-32 font-sans text-slate-800 flex flex-col transition-colors duration-300 relative ${
-      isFreshGroceryFlow ? 'bg-[#FFF8EE]' : isMithilakFlow ? 'bg-[#F5F9FA]' : 'bg-bg-cream'
+      isMithilakFlow ? 'bg-[#F5F9FA]' : isFreshGroceryFlow ? 'bg-[#FFF8EE]' : isQuickShopFlow ? 'bg-[#FFF9F5]' : 'bg-[#F6F8F3]'
     }`}>
       {/* Global Repeating Mithila Art Page Background Texture */}
       {(isFreshGroceryFlow || !(isMithilakFlow || isQuickShopFlow)) && (
@@ -134,11 +176,13 @@ const Cart = () => {
 
       {/* Header */}
       <div className={`sticky top-0 z-[100] px-4 py-3 flex items-center justify-between border-b transition-colors duration-300 relative ${
-        isFreshGroceryFlow 
-          ? 'bg-[#D9A21B] border-transparent text-white' 
-          : isMithilakFlow
-            ? 'bg-[#207C8A] border-transparent text-white'
-            : 'bg-[#FCF7EE] border-[#F3E3CD]/60'
+        isMithilakFlow
+          ? 'bg-[#207C8A] border-transparent text-white shadow-sm'
+          : isFreshGroceryFlow
+            ? 'bg-[#D9A21B] border-transparent text-white shadow-sm'
+            : isQuickShopFlow
+              ? 'bg-[#F26522] border-transparent text-white shadow-sm'
+              : 'bg-[#FCF7EE] border-[#F3E3CD]/60 text-[#3E5A44]'
       }`}>
         <button 
           onClick={() => navigate(-1)} 
@@ -146,7 +190,9 @@ const Cart = () => {
         >
           <ArrowLeft size={18} strokeWidth={2.5} />
         </button>
-        <h1 className={`text-[17px] font-black tracking-tight ${isMithilakFlow ? 'text-white' : 'text-slate-800'}`}>{t('nav.cart')}</h1>
+        <h1 className={`text-[17px] font-black tracking-tight ${
+          (isMithilakFlow || isFreshGroceryFlow || isQuickShopFlow) ? 'text-white' : 'text-slate-800'
+        }`}>{t('nav.cart')}</h1>
         <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-400 border border-slate-100/50 font-bold select-none cursor-pointer">
           •••
         </div>
@@ -279,8 +325,16 @@ const Cart = () => {
 
                       {/* Delete Action */}
                       <button 
-                        onClick={() => handleRemove(item.cartId)}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 text-rose-600 hover:text-rose-800 p-2 rounded-full hover:bg-rose-50/50 active:scale-90 transition-transform"
+                        onClick={() => handleRemoveClick(item)}
+                        className={`absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full active:scale-90 transition-transform ${
+                          isMithilakFlow 
+                            ? 'text-[#207C8A] hover:bg-[#207C8A]/5' 
+                            : isFreshGroceryFlow 
+                              ? 'text-[#D9A21B] hover:bg-[#D9A21B]/5' 
+                              : isQuickShopFlow 
+                                ? 'text-[#F26522] hover:bg-[#F26522]/5' 
+                                : 'text-rose-600 hover:text-rose-800 hover:bg-rose-50/50'
+                        }`}
                       >
                         <Trash2 size={16} />
                       </button>
@@ -288,6 +342,54 @@ const Cart = () => {
                   </div>
                 ))}
               </div>
+
+              {/* Wishlist Items Section */}
+              {wishlist && wishlist.length > 0 && (
+                <div className="bg-white rounded-[28px] p-5 shadow-[0_4px_20px_rgba(0,0,0,0.01)] border border-slate-100/50 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-[14px] font-black text-slate-800 tracking-tight uppercase flex items-center gap-1.5">
+                      <Heart size={16} className="text-rose-500 fill-rose-500" />
+                      From Your Wishlist
+                    </h3>
+                    <Link to="/profile/wishlist" className={`${primaryText} text-[11px] font-black uppercase tracking-wider hover:underline`}>
+                      View All
+                    </Link>
+                  </div>
+                  
+                  <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-200">
+                    {wishlist.map((item) => (
+                      <div 
+                        key={item.id} 
+                        className="w-[140px] flex-shrink-0 flex flex-col bg-slate-50/50 rounded-2xl p-3 border border-slate-100 relative group cursor-pointer"
+                        onClick={() => navigate('/vendor/product-detail', { state: { product: item } })}
+                      >
+                        <div className="w-full aspect-square bg-white rounded-xl flex items-center justify-center p-2 mb-2 border border-slate-100">
+                          <img src={item.image} alt={item.name} className="w-full h-full object-contain mix-blend-multiply" />
+                        </div>
+                        <h4 className="text-[11.5px] font-bold text-slate-700 truncate leading-snug">{item.name}</h4>
+                        <p className="text-[13px] font-black text-slate-900 mt-1">{formatPrice(item.price)}</p>
+                        
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            // Add item to cart
+                            const cart = JSON.parse(localStorage.getItem('userCart') || '[]');
+                            if (!cart.some(cartItem => cartItem.id === item.id)) {
+                              cart.push({ ...item, cartId: Date.now(), qty: 1 });
+                              localStorage.setItem('userCart', JSON.stringify(cart));
+                              setCartItems(cart);
+                              window.dispatchEvent(new Event('cartUpdated'));
+                            }
+                          }}
+                          className={`w-full mt-2 py-1.5 ${primaryBg} text-white text-[10px] font-black rounded-lg uppercase tracking-wider text-center active:scale-95 transition-transform`}
+                        >
+                          Add to Cart
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Right Column (Summary & Desktop Action) */}
@@ -351,21 +453,21 @@ const Cart = () => {
           {!isAuthenticated ? (
             <button 
               onClick={() => navigate('/login', { state: { from: '/cart' } })}
-              className={`${primaryBg} text-white rounded-full px-6 py-3.5 font-black uppercase text-[11px] tracking-wider shadow-[0_4px_16px_rgba(8,66,36,0.22)] active:scale-95 transition-transform`}
+              className={`${primaryBg} text-white rounded-full px-6 py-3.5 font-black uppercase text-[11px] tracking-wider ${btnShadow} active:scale-95 transition-transform`}
             >
               Login to Proceed
             </button>
           ) : !address ? (
             <button 
               onClick={() => setShowAddressModal(true)}
-              className={`${primaryBg} text-white rounded-full px-6 py-3.5 font-black uppercase text-[11px] tracking-wider shadow-[0_4px_16px_rgba(8,66,36,0.22)] active:scale-95 transition-transform`}
+              className={`${primaryBg} text-white rounded-full px-6 py-3.5 font-black uppercase text-[11px] tracking-wider ${btnShadow} active:scale-95 transition-transform`}
             >
               Add Address
             </button>
           ) : (
             <button 
               onClick={() => navigate('/vendor/checkout', { state: { product: cartItems[0] } })}
-              className={`${primaryBg} text-white rounded-full px-6 py-3.5 font-black uppercase text-[11px] tracking-wider shadow-[0_4px_16px_rgba(8,66,36,0.22)] active:scale-95 transition-transform`}
+              className={`${primaryBg} text-white rounded-full px-6 py-3.5 font-black uppercase text-[11px] tracking-wider ${btnShadow} active:scale-95 transition-transform`}
             >
               Proceed to Checkout
             </button>
@@ -433,6 +535,58 @@ const Cart = () => {
                 Save & Continue
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Move to Wishlist / Delete Confirmation Modal */}
+      {showConfirmModal && itemToConfirm && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1000] flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-[32px] w-full max-w-[360px] p-6 shadow-2xl border border-slate-100/50 relative transform animate-in zoom-in-95 duration-200 text-center">
+            <button 
+              onClick={() => {
+                setShowConfirmModal(false);
+                setItemToConfirm(null);
+              }}
+              className="absolute right-6 top-6 text-slate-400 hover:text-slate-700 p-1.5 rounded-full hover:bg-slate-100 transition-colors"
+            >
+              <X size={18} />
+            </button>
+            
+            <div className="w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center text-rose-500 mx-auto mb-4 mt-2">
+              <Trash2 size={24} />
+            </div>
+
+            <h3 className="text-[17px] font-black text-slate-800 tracking-tight mb-2">
+              Remove Item?
+            </h3>
+            <p className="text-[13px] text-slate-500 font-medium mb-6 px-2">
+              Are you sure you want to remove <strong>{itemToConfirm.name}</strong>? You can move it to your wishlist to buy it later.
+            </p>
+
+            <div className="space-y-2.5">
+              <button 
+                onClick={handleMoveToWishlist}
+                className={`w-full py-3.5 ${primaryBg} text-white font-black rounded-2xl text-[12px] uppercase tracking-wider shadow-sm hover:shadow transition-all active:scale-[0.98] cursor-pointer`}
+              >
+                Move to Wishlist
+              </button>
+              <button 
+                onClick={handleConfirmDelete}
+                className="w-full py-3.5 bg-rose-50 hover:bg-rose-100 text-rose-600 font-black rounded-2xl text-[12px] uppercase tracking-wider transition-all active:scale-[0.98] cursor-pointer"
+              >
+                Delete permanently
+              </button>
+              <button 
+                onClick={() => {
+                  setShowConfirmModal(false);
+                  setItemToConfirm(null);
+                }}
+                className="w-full py-3.5 bg-slate-50 hover:bg-slate-100 text-slate-500 font-bold rounded-2xl text-[12px] uppercase tracking-wider transition-all active:scale-[0.98] cursor-pointer"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}

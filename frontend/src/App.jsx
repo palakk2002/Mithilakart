@@ -8,11 +8,20 @@ import DeliveryRoutes from './modules/delivery/routes/DeliveryRoutes';
 import SplashScreen from './shared/components/SplashScreen';
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(() => {
+    return !sessionStorage.getItem('splashShown');
+  });
 
   return (
     <BrowserRouter>
-      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
+      {showSplash && (
+        <SplashScreen
+          onComplete={() => {
+            sessionStorage.setItem('splashShown', 'true');
+            setShowSplash(false);
+          }}
+        />
+      )}
       <Toaster position="bottom-center" toastOptions={{
         style: {
           background: '#121212',

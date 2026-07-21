@@ -171,12 +171,14 @@ const Categories = () => {
 
   const sectionsList = isMithilakFlow ? MITHILA_CATEGORIES : (isQuickShopFlow ? QUICK_SHOP_CATEGORIES : SECTIONS);
   const pageBg = isMithilakFlow ? 'bg-[#F5F9FA]' : isFreshGroceryFlow ? 'bg-[#FFF8EE]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
-  const headerBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#ff2a5f] to-[#ff7e5f]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const headerBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
   const headerTextColor = (isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) ? 'text-white' : 'text-[#3C2415]';
-  const textPrimary = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#3F2A20]' : (isQuickShopFlow ? 'text-[#d6186d]' : 'text-[#3E5A44]');
+  const textPrimary = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#3F2A20]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#3E5A44]');
+
+  const [activeSectionIndex, setActiveSectionIndex] = React.useState(0);
 
   return (
-    <div className={`${pageBg} min-h-screen pb-24 font-sans text-slate-800 relative`}>
+    <div className={`${pageBg} min-h-screen flex flex-col font-sans text-slate-800 relative`}>
       {/* Global Repeating Mithila Art Page Background Texture */}
       {(isFreshGroceryFlow || !(isMithilakFlow || isQuickShopFlow)) && (
         <div 
@@ -201,57 +203,127 @@ const Categories = () => {
         </button>
       </div>
 
-      {/* Sections and Grid (Mobile View) */}
-      <div className="px-4 py-3 space-y-6 md:hidden relative z-10">
-        {sectionsList.map((section, sIdx) => (
-          <div key={sIdx} className="flex flex-col">
-            <h2 className="text-[15px] font-black text-[#3F2A20] mb-3 tracking-tight pl-1">
-              {section.title}
-            </h2>
-            <div className="flex overflow-x-auto no-scrollbar gap-3.5 pb-1">
-              {section.items.map((item, idx) => {
-                if (isQuickShopFlow || isMithilakFlow) {
-                  return (
-                    <CategoryCard
-                      key={idx}
-                      item={item}
-                      onClick={() => {
-                        if (isMithilakFlow) {
-                          localStorage.setItem('isMithilakFlow', 'true');
-                          localStorage.setItem('isQuickShopFlow', 'false');
-                          navigate('/mithilak/category', { state: { category: item.name } });
-                        } else {
-                          localStorage.setItem('isQuickShopFlow', 'true');
-                          localStorage.setItem('isMithilakFlow', 'false');
-                          navigate(isFreshGroceryFlow ? '/fresh-grocery/category' : '/quick-shop/category', { state: { category: item.name } });
-                        }
-                      }}
-                    />
-                  );
-                }
-                // Standard user flow: Arched cards matching home page style
-                return (
-                  <div
-                    key={idx}
-                    onClick={() => navigate(item.path)}
-                    className="flex-shrink-0 w-[92px] h-[108px] bg-white border border-[#EADCC9]/70 rounded-t-full rounded-b-[18px] overflow-hidden flex flex-col items-center justify-between pt-1 pb-1.5 px-1 shadow-[0_2px_6px_rgba(61,35,20,0.02)] cursor-pointer active:scale-95 transition-transform"
-                  >
-                    <span className="px-0.5 text-[9.5px] font-black text-[#3F2A20] text-center mt-1.5 leading-tight tracking-tight h-[20px] flex items-center justify-center">
-                      {item.name}
-                    </span>
-                    <div className="w-[78px] h-[66px] rounded-[12px] overflow-hidden bg-[#FFFDFB] border border-slate-100 flex items-center justify-center p-0.5 mb-0.5">
-                      <img
-                        src={item.img}
-                        alt={item.name}
-                        className="w-full h-full object-cover rounded-lg"
-                      />
-                    </div>
+      {/* Split-pane Layout (Mobile View) */}
+      <div className="flex md:hidden relative z-10 flex-1 h-[calc(100vh-60px)] overflow-hidden">
+        {/* Left Sidebar */}
+        <div className="w-[95px] flex-shrink-0 bg-slate-50 border-r border-slate-200/80 overflow-y-auto no-scrollbar pb-24">
+          {sectionsList.map((section, sIdx) => {
+            const isActive = activeSectionIndex === sIdx;
+            const sectionImg = section.items[0]?.img;
+            return (
+              <button
+                key={sIdx}
+                onClick={() => setActiveSectionIndex(sIdx)}
+                className={`w-full py-4 px-1.5 flex flex-col items-center gap-1.5 border-b border-slate-100 relative transition-all duration-200 ${
+                  isActive 
+                    ? 'bg-white font-black' 
+                    : 'opacity-70 hover:opacity-100'
+                }`}
+              >
+                {/* Active Indicator Bar on the left */}
+                {isActive && (
+                  <div className={`absolute left-0 top-0 bottom-0 w-[4px] rounded-r ${
+                    isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : isQuickShopFlow ? 'bg-[#F26522]' : 'bg-[#3E5A44]'
+                  }`} />
+                )}
+                
+                {/* Category Thumbnail */}
+                {sectionImg && (
+                  <div className="w-11 h-11 rounded-full bg-slate-100 overflow-hidden flex items-center justify-center border border-slate-200/50 p-0.5 shadow-sm">
+                    <img src={sectionImg} alt={section.title} className="w-full h-full object-cover rounded-full" />
                   </div>
-                );
-              })}
+                )}
+                
+                <span className={`text-[9.5px] text-center leading-tight tracking-tight break-words w-full ${
+                  isActive 
+                    ? (isMithilakFlow ? 'text-[#207C8A] font-extrabold' : isFreshGroceryFlow ? 'text-[#3F2A20] font-extrabold' : isQuickShopFlow ? 'text-[#F26522] font-extrabold' : 'text-[#3E5A44] font-extrabold') 
+                    : 'text-slate-600 font-medium'
+                }`}>
+                  {section.title}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Right Content Area */}
+        <div className="flex-1 bg-white overflow-y-auto pb-24 p-4">
+          {sectionsList[activeSectionIndex] && (
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-[13px] font-black text-slate-800 tracking-tight mb-4 uppercase">
+                  {sectionsList[activeSectionIndex].title}
+                </h2>
+                
+                {/* 3-Column Grid of Subcategories */}
+                <div className="grid grid-cols-3 gap-x-2 gap-y-4">
+                  {sectionsList[activeSectionIndex].items.map((item, idx) => {
+                    const onClickHandler = () => {
+                      if (isMithilakFlow) {
+                        localStorage.setItem('isMithilakFlow', 'true');
+                        localStorage.setItem('isQuickShopFlow', 'false');
+                        navigate('/mithilak/category', { state: { category: item.name } });
+                      } else if (isQuickShopFlow) {
+                        localStorage.setItem('isQuickShopFlow', 'true');
+                        localStorage.setItem('isMithilakFlow', 'false');
+                        navigate(isFreshGroceryFlow ? '/fresh-grocery/category' : '/quick-shop/category', { state: { category: item.name } });
+                      } else {
+                        navigate(item.path);
+                      }
+                    };
+
+                    return (
+                      <div 
+                        key={idx}
+                        onClick={onClickHandler}
+                        className="flex flex-col items-center gap-1.5 cursor-pointer active:scale-95 transition-transform"
+                      >
+                        <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center p-1 relative shadow-[0_2px_6px_rgba(0,0,0,0.03)]">
+                          <img 
+                            src={item.img} 
+                            alt={item.name} 
+                            className="w-full h-full object-cover rounded-xl"
+                          />
+                        </div>
+                        <span className="text-[9.5px] font-bold text-slate-700 text-center leading-tight tracking-tight line-clamp-2">
+                          {item.name.replace('Mithila ', '')}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Extra banner or explore section for premium look */}
+              <div className="mt-8 pt-4 border-t border-slate-100">
+                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-wider mb-3">Explore More</h3>
+                <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-3 border border-amber-100/50 flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <p className="text-[11px] font-black text-amber-900">Trending in {sectionsList[activeSectionIndex].title}</p>
+                    <p className="text-[9px] text-amber-700/80">Check out the newest arrivals</p>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      const firstItem = sectionsList[activeSectionIndex].items[0];
+                      if (firstItem) {
+                        if (isMithilakFlow) {
+                          navigate('/mithilak/category', { state: { category: firstItem.name } });
+                        } else if (isQuickShopFlow) {
+                          navigate(isFreshGroceryFlow ? '/fresh-grocery/category' : '/quick-shop/category', { state: { category: firstItem.name } });
+                        } else {
+                          navigate(firstItem.path);
+                        }
+                      }
+                    }}
+                    className="px-2.5 py-1 text-[9px] font-black bg-amber-600 text-white rounded-lg shadow-sm active:scale-95 transition-transform"
+                  >
+                    View All
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          )}
+        </div>
       </div>
 
       {/* Desktop view (Copying the banner + white panel structure) */}

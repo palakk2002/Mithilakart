@@ -13,8 +13,8 @@ const Footer = () => {
           className="w-full h-full object-cover"
         />
       </div>
-      {/* 4-Column Desktop Footer Link Grid (Hidden on Mobile) */}
-      <div className="hidden md:grid grid-cols-4 gap-12 w-full max-w-[1200px] px-6 mb-8 pb-8 border-b border-gray-100">
+      {/* Responsive Footer Link Grid (Hidden on Mobile) */}
+      <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 w-full max-w-[1200px] px-6 mb-8 pb-8 border-b border-gray-100">
         {/* Column 1: About */}
         <div className="space-y-4">
           <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">About Mithilakart</h3>

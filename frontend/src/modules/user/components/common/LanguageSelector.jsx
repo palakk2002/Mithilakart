@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Check } from 'lucide-react';
+import { Check, Globe } from 'lucide-react';
 
 const languages = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -15,8 +15,8 @@ const LanguageSelector = ({ isDarkHeader = false, variant = '', compact = false 
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
 
   const buttonStyle = compact 
-    ? 'bg-white text-gray-900 border-none rounded-full text-[10.5px] font-bold px-3 py-1 leading-normal shadow-xs hover:bg-gray-100'
-    : 'bg-white text-gray-900 border-none rounded-full text-[11.5px] font-bold px-3.5 py-1.5 leading-normal shadow-sm hover:bg-gray-100';
+    ? 'bg-white text-gray-900 border-none rounded-full text-[12px] font-bold px-3.5 py-1.5 leading-normal shadow-xs hover:bg-gray-100'
+    : 'bg-white text-gray-900 border-none rounded-full text-[13px] font-bold px-4 py-2 leading-normal shadow-sm hover:bg-gray-100';
 
   const handleLanguageChange = (code) => {
     i18n.changeLanguage(code);
@@ -28,8 +28,9 @@ const LanguageSelector = ({ isDarkHeader = false, variant = '', compact = false 
     <div className="relative inline-block text-left z-[9999]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-center gap-1 font-bold transition-all duration-300 ${buttonStyle}`}
+        className={`flex items-center justify-center gap-1.5 font-bold transition-all duration-300 ${buttonStyle}`}
       >
+        <Globe size={15} className="text-current opacity-80" />
         <span>{currentLanguage.name}</span>
       </button>
 
