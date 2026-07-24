@@ -57,9 +57,16 @@ const SavedAddresses = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
-  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
-  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#e0f2f1]/60 via-[#f2faf9] to-[#ffffff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#207C8A] to-[#144f58]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
   const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
+
+  const primaryBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-[#F26522]' : 'bg-[#6FAE4A]');
+  const primaryText = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#6FAE4A]');
+  const primaryBorder = isMithilakFlow ? 'border-[#207C8A]' : isFreshGroceryFlow ? 'border-[#D9A21B]' : (isQuickShopFlow ? 'border-[#F26522]' : 'border-[#6FAE4A]');
+  const primaryLightBg = isMithilakFlow ? 'bg-[#e0f2f1]/40' : isFreshGroceryFlow ? 'bg-[#FFF8EE]' : (isQuickShopFlow ? 'bg-[#FFF5EE]' : 'bg-primary-light');
+  const focusBorder = isMithilakFlow ? 'focus:border-[#207C8A]' : isFreshGroceryFlow ? 'focus:border-[#D9A21B]' : (isQuickShopFlow ? 'focus:border-[#F26522]' : 'focus:border-[#6FAE4A]');
+  const shadowAccent = isMithilakFlow ? 'shadow-[0_4px_16px_rgba(32,124,138,0.22)]' : isFreshGroceryFlow ? 'shadow-[0_4px_16px_rgba(217,162,27,0.15)]' : (isQuickShopFlow ? 'shadow-[0_4px_16px_rgba(242,101,34,0.22)]' : 'shadow-md shadow-emerald-100');
 
   return (
     <motion.div
@@ -70,7 +77,7 @@ const SavedAddresses = () => {
       {/* Global Repeating Mithila Art Page Background Texture */}
       {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
         <div 
-          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.018] select-none"
           style={{
             backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
             backgroundSize: '360px',
@@ -95,7 +102,7 @@ const SavedAddresses = () => {
           className="p-1.5 rounded-full hover:bg-primary-light transition-colors"
           aria-label="Add address"
         >
-          <Plus size={22} strokeWidth={2} className="text-[#3E5A44]" />
+          <Plus size={22} strokeWidth={2} className={primaryText} />
         </button>
       </div>
 
@@ -104,14 +111,14 @@ const SavedAddresses = () => {
         {/* ── Add Button ── */}
         <button
           onClick={() => handleOpenModal()}
-          className="w-full bg-[#3E5A44] text-white py-3.5 rounded-2xl font-black uppercase tracking-widest text-[13px] shadow-md shadow-emerald-100 flex items-center justify-center gap-2 active:scale-95 transition-transform"
+          className={`w-full ${primaryBg} text-white py-3.5 rounded-2xl font-black uppercase tracking-widest text-[13px] ${shadowAccent} flex items-center justify-center gap-2 active:scale-95 transition-transform`}
         >
           <Plus size={18} strokeWidth={2.5} /> Add New Address
         </button>
 
         {/* ── Section label ── */}
         <div className="flex items-center justify-between px-1">
-          <span className="text-[10px] font-black text-[#3E5A44] uppercase tracking-[3px]">Your Addresses</span>
+          <span className={`text-[10px] font-black ${primaryText} uppercase tracking-[3px]`}>Your Addresses</span>
           <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Tap to select primary</span>
         </div>
 
@@ -132,17 +139,17 @@ const SavedAddresses = () => {
                 }}
                 className={`bg-white rounded-2xl p-4 border cursor-pointer transition-all duration-200 ${
                   isSelected
-                    ? 'border-[#3E5A44] shadow-md shadow-blue-100 scale-[1.01]'
+                    ? `${primaryBorder} shadow-md scale-[1.01]`
                     : 'border-gray-100 shadow-sm hover:border-blue-200'
                 }`}
               >
                 {/* Top row */}
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <div className={`p-1.5 rounded-lg ${isSelected ? 'bg-[#3E5A44] text-white' : 'bg-primary-light text-[#3E5A44]'}`}>
+                    <div className={`p-1.5 rounded-lg ${isSelected ? `${primaryBg} text-white` : `${primaryLightBg} ${primaryText}`}`}>
                       {addr.type === 'HOME' ? <Home size={13} strokeWidth={2} /> : <Building2 size={13} strokeWidth={2} />}
                     </div>
-                    <span className={`text-[11px] font-black uppercase tracking-widest ${isSelected ? 'text-[#3E5A44]' : 'text-gray-600'}`}>
+                    <span className={`text-[11px] font-black uppercase tracking-widest ${isSelected ? primaryText : 'text-gray-600'}`}>
                       {addr.type}
                     </span>
                     {isSelected && (
@@ -158,7 +165,7 @@ const SavedAddresses = () => {
                 </div>
 
                 {/* Address info */}
-                <h3 className={`text-[13px] font-black mb-1 ${isSelected ? 'text-[#3E5A44]' : 'text-gray-800'}`}>
+                <h3 className={`text-[13px] font-black mb-1 ${isSelected ? primaryText : 'text-gray-800'}`}>
                   {addr.name}
                 </h3>
                 <p className="text-[12px] text-gray-500 font-medium leading-relaxed">{addr.address}</p>
@@ -168,7 +175,7 @@ const SavedAddresses = () => {
                 <div className="flex gap-4 pt-3 mt-3 border-t border-gray-100">
                   <button
                     onClick={(e) => { e.stopPropagation(); handleOpenModal(addr); }}
-                    className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-[#3E5A44] hover:opacity-70 transition-opacity"
+                    className={`flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest ${primaryText} hover:opacity-70 transition-opacity`}
                   >
                     <Edit2 size={12} /> Edit
                   </button>
@@ -227,7 +234,7 @@ const SavedAddresses = () => {
               <div className="space-y-4">
                 {/* Name */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-[#3E5A44] uppercase tracking-[2px] ml-1">Receiver Name</label>
+                  <label className={`text-[10px] font-black ${primaryText} uppercase tracking-[2px] ml-1`}>Receiver Name</label>
                   <div className="relative">
                     <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
@@ -235,14 +242,14 @@ const SavedAddresses = () => {
                       placeholder="Enter full name"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-[13px] font-medium focus:outline-none focus:border-[#3E5A44] transition-colors"
+                      className={`w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-[13px] font-medium focus:outline-none ${focusBorder} transition-colors`}
                     />
                   </div>
                 </div>
 
                 {/* Phone */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-[#3E5A44] uppercase tracking-[2px] ml-1">Phone Number</label>
+                  <label className={`text-[10px] font-black ${primaryText} uppercase tracking-[2px] ml-1`}>Phone Number</label>
                   <div className="relative">
                     <Phone size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
@@ -250,14 +257,14 @@ const SavedAddresses = () => {
                       placeholder="Enter 10-digit number"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-[13px] font-medium focus:outline-none focus:border-[#3E5A44] transition-colors"
+                      className={`w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-[13px] font-medium focus:outline-none ${focusBorder} transition-colors`}
                     />
                   </div>
                 </div>
 
                 {/* Address */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-[#3E5A44] uppercase tracking-[2px] ml-1">Complete Address</label>
+                  <label className={`text-[10px] font-black ${primaryText} uppercase tracking-[2px] ml-1`}>Complete Address</label>
                   <div className="relative">
                     <MapPin size={16} className="absolute left-3.5 top-3.5 text-gray-400" />
                     <textarea
@@ -265,14 +272,14 @@ const SavedAddresses = () => {
                       rows="3"
                       value={formData.address}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                      className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-[13px] font-medium focus:outline-none focus:border-[#3E5A44] transition-colors resize-none"
+                      className={`w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-[13px] font-medium focus:outline-none ${focusBorder} transition-colors resize-none`}
                     />
                   </div>
                 </div>
 
                 {/* Type */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-black text-[#3E5A44] uppercase tracking-[2px] ml-1">Address Type</label>
+                  <label className={`text-[10px] font-black ${primaryText} uppercase tracking-[2px] ml-1`}>Address Type</label>
                   <div className="flex gap-3">
                     {['HOME', 'WORK'].map((type) => (
                       <button
@@ -280,7 +287,7 @@ const SavedAddresses = () => {
                         onClick={() => setFormData({ ...formData, type })}
                         className={`flex-1 py-2.5 rounded-xl border font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all ${
                           formData.type === type
-                            ? 'bg-[#3E5A44] text-white border-[#3E5A44] shadow-md shadow-emerald-100'
+                            ? `${primaryBg} text-white ${primaryBorder} ${shadowAccent}`
                             : 'bg-white border-gray-200 text-gray-500 hover:border-blue-300'
                         }`}
                       >
@@ -295,7 +302,7 @@ const SavedAddresses = () => {
                 <div className="pt-2 pb-6">
                   <button
                     onClick={handleSave}
-                    className="w-full bg-[#3E5A44] text-white py-3.5 rounded-2xl font-black uppercase tracking-widest text-[13px] shadow-md shadow-emerald-100 active:scale-95 transition-transform"
+                    className={`w-full ${primaryBg} text-white py-3.5 rounded-2xl font-black uppercase tracking-widest text-[13px] ${shadowAccent} active:scale-95 transition-transform`}
                   >
                     {editingAddress ? 'Update Address' : 'Save Address'}
                   </button>

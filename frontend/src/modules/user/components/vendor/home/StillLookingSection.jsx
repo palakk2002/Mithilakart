@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { handleImageError, getProductImage } from '../../../../../shared/utils/imageUtils';
 
 const StillLookingSection = ({ items }) => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const StillLookingSection = ({ items }) => {
 
   return (
     <div className="px-2 mt-1.5 mb-1">
-      <div className="bg-[#3E5A44] rounded-xl p-2 md:p-6 shadow-sm relative overflow-hidden md:max-w-[1600px] md:mx-auto">
+      <div className="bg-[#6FAE4A] rounded-xl p-2 md:p-6 shadow-sm relative overflow-hidden md:max-w-[1600px] md:mx-auto">
         {/* Diagonal Stripe Pattern */}
         <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{
           backgroundImage: 'linear-gradient(135deg, #fff 25%, transparent 25%, transparent 50%, #fff 50%, #fff 75%, transparent 75%, transparent)',
@@ -55,19 +56,16 @@ const StillLookingSection = ({ items }) => {
             >
               <div className="aspect-square rounded-md overflow-hidden bg-white flex items-center justify-center p-1 border border-gray-50">
                 <img
-                  src={item.img}
+                  src={getProductImage(item.img || item.image)}
                   alt={item.label}
                   className="w-full h-full object-contain mix-blend-multiply"
                   loading="lazy"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-[8px]">No Image</div>';
-                  }}
+                  onError={handleImageError}
                 />
               </div>
               <div className="px-0.5">
                 <p className="text-[9px] md:text-[11px] font-bold text-gray-600 leading-tight truncate">{item.label}</p>
-                <p className="text-[8px] md:text-[9.5px] font-black text-[#3E5A44] uppercase tracking-tighter mt-0.5">VIEW STORE</p>
+                <p className="text-[8px] md:text-[9.5px] font-black text-[#6FAE4A] uppercase tracking-tighter mt-0.5">VIEW STORE</p>
               </div>
             </div>
           ))}

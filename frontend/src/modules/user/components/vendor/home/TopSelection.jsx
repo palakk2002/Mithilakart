@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { handleImageError, getProductImage } from '../../../../../shared/utils/imageUtils';
 import { useTranslation } from 'react-i18next';
 
 // Custom header flower matching Mithila art
@@ -165,9 +166,9 @@ const TopSelection = ({ items = [] }) => {
     <div className="py-3 px-3 w-full max-w-[1600px] mx-auto select-none bg-transparent">
       {/* Section Header */}
       <div className="flex justify-between items-center mb-4 px-1">
-        <div className="flex items-center">
+        <div className="flex items-center min-w-0 pr-2">
           <HeaderFlower />
-          <h2 className="text-[16px] md:text-[22px] font-black text-[#4E2812] uppercase tracking-[0.08em] font-serif">
+          <h2 className="text-[13px] sm:text-[16px] md:text-[22px] font-black text-[#4E2812] uppercase tracking-normal sm:tracking-[0.08em] font-serif whitespace-nowrap truncate">
             {t('home.topSelection')}
           </h2>
           <HeaderFlower />
@@ -198,14 +199,11 @@ const TopSelection = ({ items = [] }) => {
                   style={{ backgroundColor: archBg }}
                 >
                   <img
-                    src={product.img}
+                    src={getProductImage(product.img || product.image)}
                     alt={product.name}
                     className="h-full w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.parentElement.innerHTML = '<div class="text-[#4E2812]/50 text-xs">No Image</div>';
-                    }}
+                    onError={handleImageError}
                   />
                 </div>
 

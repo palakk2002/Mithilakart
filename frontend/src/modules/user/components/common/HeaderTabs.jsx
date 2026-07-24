@@ -40,11 +40,11 @@ const HeaderTabs = () => {
         onClick={() => handleTabClick('/home', false)}
         className={`flex flex-col items-center justify-center py-1 md:py-1 rounded-lg border h-[48px] md:h-[46px] gap-0.5 md:gap-1 cursor-pointer transition-all duration-300 ${
           isMithilakartActive
-            ? 'bg-white text-[#3E5A44] border-white shadow-md scale-102 z-10'
+            ? 'bg-white text-[#6FAE4A] border-white shadow-md scale-102 z-10'
             : isFreshGroceryActive
               ? 'bg-white/35 text-[#7A3E17]/85 border-white/15 hover:bg-white/45'
               : isHeaderLight
-                ? 'bg-black/5 text-[#3E5A44]/80 border-black/5 hover:bg-black/10'
+                ? 'bg-black/5 text-[#6FAE4A]/80 border-black/5 hover:bg-black/10'
                 : 'bg-white/15 text-white/90 border-white/10 hover:bg-white/25'
         }`}
       >
@@ -65,11 +65,11 @@ const HeaderTabs = () => {
         </div>
         <span className={`font-extrabold text-[12px] md:text-[12.5px] italic tracking-tight leading-none mb-0.5 transition-colors duration-300 ${
           isMithilakartActive 
-            ? 'text-[#3E5A44]' 
+            ? 'text-[#6FAE4A]' 
             : isFreshGroceryActive
               ? 'text-[#7A3E17]/85'
               : isHeaderLight 
-                ? 'text-[#3E5A44]/80' 
+                ? 'text-[#6FAE4A]/80' 
                 : 'text-white'
         }`}>
           {t('home.title')}

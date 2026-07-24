@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { handleImageError, getProductImage } from '../../../../../shared/utils/imageUtils';
 
 // Import category images matching the mockup
 import beautyCareImg from '../../../../../assets/categories/beauty_red_blossom.png';
@@ -80,19 +81,16 @@ const KeepShopping = () => {
             <div
               key={item.id}
               onClick={() => handleCardClick(item)}
-              className="flex-shrink-0 w-[100px] md:w-[125px] bg-white border border-[#E5D5C0]/65 rounded-[20px] p-2 flex flex-col items-center justify-between cursor-pointer hover:shadow-sm hover:border-[#3E5A44]/40 transition-all duration-300 group"
+              className="flex-shrink-0 w-[100px] md:w-[125px] bg-white border border-[#E5D5C0]/65 rounded-[20px] p-2 flex flex-col items-center justify-between cursor-pointer hover:shadow-sm hover:border-[#6FAE4A]/40 transition-all duration-300 group"
             >
               {/* Category Image */}
               <div className="w-full aspect-square bg-[#FFFDFB] rounded-[15px] flex items-center justify-center p-1.5 overflow-hidden">
                 <img
-                  src={item.img}
+                  src={getProductImage(item.img || item.image)}
                   alt={item.name}
                   className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect fill="%23f3f4f6" width="100" height="100"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="10" fill="%239ca3af"%3ENo Image%3C/text%3E%3C/svg%3E';
-                  }}
+                  onError={handleImageError}
                 />
               </div>
 

@@ -37,7 +37,7 @@ const SubCategoryGrid = () => {
         </h2>
         <span
           onClick={() => navigate('/categories')}
-          className="text-xs font-bold text-[#3E5A44] hover:text-[#2d4232] cursor-pointer hover:underline transition-colors"
+          className="text-xs font-bold text-[#6FAE4A] hover:text-[#2d4232] cursor-pointer hover:underline transition-colors"
         >
           View All
         </span>
@@ -52,7 +52,7 @@ const SubCategoryGrid = () => {
             className="w-full flex flex-col items-center cursor-pointer group"
           >
             {/* Rounded Square Card containing both text (top) and image (bottom) (Compact version) */}
-            <div className="w-full aspect-[1/1.18] bg-white border border-[#EADCC9]/60 rounded-[20px] overflow-hidden flex flex-col items-center justify-between p-1.5 md:p-3 shadow-[0_3px_8px_rgba(61,35,20,0.015)] group-hover:shadow-[0_6px_15px_rgba(61,35,20,0.05)] group-hover:border-[#3E5A44]/40 transition-all duration-300 transform">
+            <div className="w-full aspect-[1/1.18] bg-white border border-[#EADCC9]/60 rounded-[20px] overflow-hidden flex flex-col items-center justify-between p-1.5 md:p-3 shadow-[0_3px_8px_rgba(61,35,20,0.015)] group-hover:shadow-[0_6px_15px_rgba(61,35,20,0.05)] group-hover:border-[#6FAE4A]/40 transition-all duration-300 transform">
               {/* Category Label at top */}
               <span className="text-[9.2px] sm:text-xs md:text-sm font-black text-[#3F2A20] text-center mt-2 px-0.5 leading-tight tracking-tight h-[20px] flex items-center justify-center">
                 {item.name}
@@ -77,7 +77,7 @@ const SubCategoryGrid = () => {
           <div
             key={item.id}
             onClick={() => navigate(item.path)}
-            className="w-full bg-[#FFF8EE] border border-[#EADCC9]/50 rounded-xl py-1.5 px-0.5 text-center cursor-pointer hover:border-[#3E5A44]/40 hover:bg-white active:scale-98 transition-all duration-200"
+            className="w-full bg-[#FFF8EE] border border-[#EADCC9]/50 rounded-xl py-1.5 px-0.5 text-center cursor-pointer hover:border-[#6FAE4A]/40 hover:bg-white active:scale-98 transition-all duration-200"
           >
             <span className="text-[8.5px] min-[375px]:text-[9.5px] sm:text-xs md:text-sm font-black text-[#3F2A20]/90 leading-tight whitespace-nowrap block">
               {item.name}

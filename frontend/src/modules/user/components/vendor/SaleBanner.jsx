@@ -56,7 +56,7 @@ const SaleBanner = () => {
           animate={{ height: isVisible ? 'auto' : 0, opacity: isVisible ? 1 : 0 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="bg-[#3E5A44] rounded-xl mx-3 my-2 shadow-sm overflow-hidden z-40 sticky top-[184px]"
+          className="bg-[#6FAE4A] rounded-xl mx-3 my-2 shadow-sm overflow-hidden z-40 sticky top-[184px]"
         >
           <div className="mx-2 bg-transparent border-b border-white/10 overflow-hidden relative min-h-[140px] flex items-center justify-between px-2">
             
@@ -82,7 +82,7 @@ const SaleBanner = () => {
               </div>
               
               <button className="mt-3 bg-white rounded-full w-14 h-7 flex items-center justify-center shadow-lg active:scale-95 transition-transform">
-                <ChevronRight size={20} strokeWidth={3} className="text-[#3E5A44]" />
+                <ChevronRight size={20} strokeWidth={3} className="text-[#6FAE4A]" />
               </button>
             </div>
 

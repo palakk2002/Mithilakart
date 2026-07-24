@@ -13,20 +13,20 @@ const Footer = () => {
           className="w-full h-full object-cover"
         />
       </div>
-      {/* Responsive Footer Link Grid (Hidden on Mobile) */}
-      <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 w-full max-w-[1200px] px-6 mb-8 pb-8 border-b border-gray-100">
+      {/* Responsive Footer Link Grid (Hidden on mobile, 2 columns on tablet, 4 columns on desktop) */}
+      <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12 w-full max-w-[1200px] px-5 sm:px-6 mb-8 pb-8 border-b border-gray-100">
         {/* Column 1: About */}
-        <div className="space-y-4">
-          <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">About Mithilakart</h3>
-          <p className="text-xs text-gray-500 leading-relaxed font-semibold">
+        <div className="col-span-2 md:col-span-1 space-y-3 md:space-y-4">
+          <h3 className="text-xs md:text-sm font-black text-slate-900 uppercase tracking-wider">About Mithilakart</h3>
+          <p className="text-[11px] md:text-xs text-gray-500 leading-relaxed font-semibold">
             Discover unique, high-quality handcrafted items and fresh goods directly from local artisans. We bridge the gap between traditional craftsmanship and modern convenience.
           </p>
         </div>
 
         {/* Column 2: Customer Care */}
-        <div className="space-y-4">
-          <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">Customer Care</h3>
-          <ul className="space-y-2 text-xs font-bold text-gray-500">
+        <div className="space-y-3 md:space-y-4">
+          <h3 className="text-xs md:text-sm font-black text-slate-900 uppercase tracking-wider">Customer Care</h3>
+          <ul className="space-y-2 text-[11px] md:text-xs font-bold text-gray-500">
             <li>
               <Link to="/profile/help-center" className="hover:text-primary-green transition-colors">Help Center</Link>
             </li>
@@ -43,9 +43,9 @@ const Footer = () => {
         </div>
 
         {/* Column 3: Useful Links */}
-        <div className="space-y-4">
-          <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">Useful Links</h3>
-          <ul className="space-y-2 text-xs font-bold text-gray-500">
+        <div className="space-y-3 md:space-y-4">
+          <h3 className="text-xs md:text-sm font-black text-slate-900 uppercase tracking-wider">Useful Links</h3>
+          <ul className="space-y-2 text-[11px] md:text-xs font-bold text-gray-500">
             <li>
               <Link to="/terms" className="hover:text-primary-green transition-colors">Terms of Use</Link>
             </li>
@@ -62,9 +62,9 @@ const Footer = () => {
         </div>
 
         {/* Column 4: Contact Us */}
-        <div className="space-y-4">
-          <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">Contact Us</h3>
-          <ul className="space-y-2 text-xs font-semibold text-gray-500">
+        <div className="col-span-2 md:col-span-1 space-y-3 md:space-y-4">
+          <h3 className="text-xs md:text-sm font-black text-slate-900 uppercase tracking-wider">Contact Us</h3>
+          <ul className="space-y-2 text-[11px] md:text-xs font-semibold text-gray-500">
             <li><strong>Email:</strong> support@mithilakart.com</li>
             <li><strong>Phone:</strong> +91 1800-123-4567</li>
             <li><strong>Address:</strong> Mithilakart Pvt Ltd, Mumbai, India</li>

@@ -6,6 +6,7 @@ import SellerRoutes from './modules/seller/routes/SellerRoutes';
 import AdminRoutes from './modules/admin/routes/AdminRoutes';
 import DeliveryRoutes from './modules/delivery/routes/DeliveryRoutes';
 import SplashScreen from './shared/components/SplashScreen';
+import ErrorBoundary from './shared/components/ErrorBoundary';
 
 function App() {
   const [showSplash, setShowSplash] = useState(() => {
@@ -13,7 +14,8 @@ function App() {
   });
 
   return (
-    <BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
       {showSplash && (
         <SplashScreen
           onComplete={() => {
@@ -48,6 +50,7 @@ function App() {
         <Route path="/*" element={<MarketRoutes />} />
       </Routes>
     </BrowserRouter>
+  </ErrorBoundary>
   );
 }
 

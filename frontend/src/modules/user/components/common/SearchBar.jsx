@@ -212,7 +212,7 @@ const SearchBar = ({ selectedAddress }) => {
               <span>15 Mins</span>
             </div>
           ) : (
-            <div className="flex items-center gap-0.5 px-3 py-1 rounded-full text-white border border-[#FFF8EE]/20 shadow-xs bg-[#3E5A44] whitespace-nowrap flex-shrink-0">
+            <div className="flex items-center gap-0.5 px-3 py-1 rounded-full text-white border border-[#FFF8EE]/20 shadow-xs bg-[#6FAE4A] whitespace-nowrap flex-shrink-0">
               <Star size={13} className="text-yellow-300 fill-yellow-300" />
               <span className="text-[12px] font-extrabold">3</span>
             </div>

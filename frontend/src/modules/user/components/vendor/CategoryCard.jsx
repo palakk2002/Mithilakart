@@ -1,4 +1,5 @@
 import React from 'react';
+import { handleImageError, getProductImage } from '../../../../shared/utils/imageUtils';
 
 const CategoryCard = ({ item, onClick }) => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
@@ -16,8 +17,9 @@ const CategoryCard = ({ item, onClick }) => {
         {/* Category Image Wrapper - White circle with masking ring */}
         <div className="w-[66px] h-[66px] rounded-full bg-white border border-[#EADCC9]/55 flex items-center justify-center shadow-[0_2px_6px_rgba(0,0,0,0.03)] overflow-hidden relative">
           <img
-            src={item.img}
+            src={getProductImage(item.img || item.image)}
             alt={item.name}
+            onError={handleImageError}
             className="w-[82%] h-[82%] object-contain z-10"
             loading="lazy"
           />
@@ -41,8 +43,9 @@ const CategoryCard = ({ item, onClick }) => {
       {/* Category Image Wrapper with soft background */}
       <div className={`w-16 h-16 rounded-[22px] ${cardBg} overflow-hidden flex items-center justify-center p-2.5`}>
         <img
-          src={item.img}
+          src={getProductImage(item.img || item.image)}
           alt={item.name}
+          onError={handleImageError}
           className="w-full h-full object-contain mix-blend-multiply"
           loading="lazy"
         />

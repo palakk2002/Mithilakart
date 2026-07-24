@@ -3,6 +3,7 @@ import { ArrowLeft, ShoppingCart, Lock, Share2, Edit2, MoreVertical, Star, Shopp
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import useAccountStore from '../../../../store/useAccountStore';
+import { getProductImage, handleImageError } from '../../../../shared/utils/imageUtils';
 
 const Wishlist = () => {
   const navigate = useNavigate();
@@ -23,8 +24,8 @@ const Wishlist = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
-  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
-  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#e0f2f1]/60 via-[#f2faf9] to-[#ffffff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#207C8A] to-[#144f58]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
   const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
 
   return (
@@ -32,7 +33,7 @@ const Wishlist = () => {
       {/* Global Repeating Mithila Art Page Background Texture */}
       {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
         <div 
-          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.018] select-none"
           style={{
             backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
             backgroundSize: '360px',
@@ -63,10 +64,10 @@ const Wishlist = () => {
 
         {/* Share & Edit Buttons */}
         <div className="flex gap-3 mt-5">
-          <button className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-sm text-[14px] font-bold text-[#3E5A44] active:bg-gray-50 transition-colors">
+          <button className={`flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-sm text-[14px] font-bold ${isMithilakFlow ? 'text-[#207C8A]' : 'text-[#6FAE4A]'} active:bg-gray-50 transition-colors`}>
             <Share2 size={16} /> Share
           </button>
-          <button className="flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-sm text-[14px] font-bold text-[#3E5A44] active:bg-gray-50 transition-colors">
+          <button className={`flex-1 flex items-center justify-center gap-2 py-2 border border-gray-200 rounded-sm text-[14px] font-bold ${isMithilakFlow ? 'text-[#207C8A]' : 'text-[#6FAE4A]'} active:bg-gray-50 transition-colors`}>
             <Edit2 size={16} /> Edit
           </button>
           <button className="w-10 flex items-center justify-center text-gray-400">
@@ -90,7 +91,7 @@ const Wishlist = () => {
               >
                 {/* Product Image Area */}
                 <div className="relative aspect-square p-4 bg-white group">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
+                  <img src={getProductImage(item.image || item.img)} alt={item.name} onError={handleImageError} className="w-full h-full object-contain" />
                   <button 
                     onClick={(e) => {
                       e.stopPropagation();
@@ -122,7 +123,7 @@ const Wishlist = () => {
                       {[1, 2, 3, 4].map(s => <Star key={s} size={12} fill="#16a34a" className="text-green-600" />)}
                       <Star size={12} className="text-gray-200" />
                     </div>
-                    <div className="bg-[#3E5A44] px-1 rounded-sm flex items-center gap-0.5">
+                    <div className={`${isMithilakFlow ? 'bg-[#207C8A]' : 'bg-[#6FAE4A]'} px-1 rounded-sm flex items-center gap-0.5`}>
                       <span className="text-[9px] text-white font-black italic">f</span>
                       <span className="text-[8px] text-white font-bold">Assured</span>
                     </div>
@@ -130,7 +131,7 @@ const Wishlist = () => {
 
                   <button 
                     onClick={(e) => addToCart(item, e)}
-                    className="w-full mt-4 py-2 border border-gray-200 text-[#3E5A44] text-[14px] font-bold rounded-sm active:bg-primary-light transition-colors"
+                    className={`w-full mt-4 py-2 border border-gray-200 ${isMithilakFlow ? 'text-[#207C8A]' : 'text-[#6FAE4A]'} text-[14px] font-bold rounded-sm active:bg-primary-light transition-colors`}
                   >
                     Add to Cart
                   </button>
@@ -149,7 +150,7 @@ const Wishlist = () => {
             <p className="text-[14px] text-gray-400 mt-1">Add items that you like to your wishlist.</p>
             <button 
               onClick={() => navigate('/vendor/home')}
-              className="mt-6 bg-[#3E5A44] text-white px-8 py-2.5 rounded-sm font-bold text-[14px] shadow-lg active:scale-95 transition-all"
+              className={`mt-6 ${isMithilakFlow ? 'bg-[#207C8A]' : 'bg-[#6FAE4A]'} text-white px-8 py-2.5 rounded-sm font-bold text-[14px] shadow-lg active:scale-95 transition-all`}
             >
               Continue Shopping
             </button>

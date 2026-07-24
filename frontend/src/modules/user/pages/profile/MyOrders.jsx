@@ -20,29 +20,29 @@ const BannerCarousel = () => {
   const [isBannerLoaded, setIsBannerLoaded] = useState(false);
 
   const banners = [
-    { 
-      image: ImageBanner1, 
-      title: "Super Saver Days", 
-      desc: "Up to 80% Off on Electronics", 
-      label: "SALE"
+    {
+      image: '/Gemini_Generated_Image_pxcb6vpxcb6vpxcb.png',
+      title: "Mithila Splendor",
+      desc: "Beautiful Handcrafted Products",
+      label: "SPECIAL"
     },
-    { 
-      image: ImageBanner2, 
-      title: "Fashion Carnival", 
-      desc: "Extra 20% Off for Plus Members", 
-      label: "OFFER"
+    {
+      image: '/Gemini_Generated_Image_rhy76srhy76srhy7.png',
+      title: "Cultural Heritage",
+      desc: "Authentic Masterpieces",
+      label: "HERITAGE"
     },
-    { 
-      image: ImageBanner3, 
-      title: "Tech Spotlight", 
-      desc: "Latest Gadgets at Best Prices", 
-      label: "NEW"
+    {
+      image: '/Gemini_Generated_Image_unwuxnunwuxnunwu.png',
+      title: "Festive Handlooms",
+      desc: "Premium Traditional Attire",
+      label: "FESTIVE"
     },
-    { 
-      image: ImageBanner4, 
-      title: "Grocery Offers", 
-      desc: "Best Quality Groceries", 
-      label: "SALE"
+    {
+      image: '/Gemini_Generated_Image_xaqtwqxaqtwqxaqt.png',
+      title: "Exclusive Masterpieces",
+      desc: "Directly from Local Vendors",
+      label: "EXCLUSIVE"
     }
   ];
 
@@ -50,7 +50,7 @@ const BannerCarousel = () => {
     const timer = setInterval(() => {
       setIsBannerLoaded(false);
       setCurrentBanner((prev) => (prev + 1) % banners.length);
-    }, 5000);
+    }, 2500);
     return () => clearInterval(timer);
   }, [banners.length]);
 
@@ -238,17 +238,17 @@ const MyOrders = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
-  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
-  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#e0f2f1]/60 via-[#f2faf9] to-[#ffffff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#207C8A] to-[#144f58]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
   const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
-  const filterBg = isMithilakFlow ? 'bg-[#faf5ff]/80' : isFreshGroceryFlow ? 'bg-[#FFFDF3]/80' : (isQuickShopFlow ? 'bg-[#fff5f7]/80' : 'bg-bg-cream/80');
+  const filterBg = isMithilakFlow ? 'bg-[#e0f2f1]/80' : isFreshGroceryFlow ? 'bg-[#FFFDF3]/80' : (isQuickShopFlow ? 'bg-[#fff5f7]/80' : 'bg-bg-cream/80');
 
   return (
     <div className={`min-h-screen font-nunito pb-20 relative transition-colors duration-300 ${pageBg}`}>
       {/* Global Repeating Mithila Art Page Background Texture */}
       {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
         <div 
-          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.018] select-none"
           style={{
             backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
             backgroundSize: '360px',
@@ -317,7 +317,7 @@ const MyOrders = () => {
                   </p>
                   <button 
                     onClick={() => navigate('/vendor/home')}
-                    className="mt-10 bg-[#3E5A44] text-white px-12 py-4 rounded-2xl font-black uppercase tracking-widest text-[12px] shadow-xl shadow-blue-100 active:scale-95 transition-transform"
+                    className="mt-10 bg-[#6FAE4A] text-white px-12 py-4 rounded-2xl font-black uppercase tracking-widest text-[12px] shadow-xl shadow-blue-100 active:scale-95 transition-transform"
                   >
                     Start Shopping
                   </button>
@@ -430,7 +430,7 @@ const MyOrders = () => {
                               onClick={() => setActiveFilters(prev => ({ ...prev, status: opt }))}
                               className={`px-5 py-2.5 rounded-xl text-[13px] font-bold transition-all ${
                                 activeFilters.status === opt 
-                                ? 'bg-[#3E5A44] text-white shadow-lg shadow-blue-100 scale-105' 
+                                ? 'bg-[#6FAE4A] text-white shadow-lg shadow-blue-100 scale-105' 
                                 : 'bg-gray-50 text-slate-600 border border-gray-100'
                               }`}
                             >
@@ -451,7 +451,7 @@ const MyOrders = () => {
                               onClick={() => setActiveFilters(prev => ({ ...prev, time: opt }))}
                               className={`px-5 py-2.5 rounded-xl text-[13px] font-bold transition-all ${
                                 activeFilters.time === opt 
-                                ? 'bg-[#3E5A44] text-white shadow-lg shadow-blue-100 scale-105' 
+                                ? 'bg-[#6FAE4A] text-white shadow-lg shadow-blue-100 scale-105' 
                                 : 'bg-gray-50 text-slate-600 border border-gray-100'
                               }`}
                             >

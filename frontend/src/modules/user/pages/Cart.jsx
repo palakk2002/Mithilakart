@@ -44,8 +44,8 @@ const Cart = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
-  const primaryBg = isMithilakFlow ? 'bg-[#207C8A] hover:bg-[#185e68]' : (isFreshGroceryFlow ? 'bg-[#D9A21B] hover:bg-[#c49218]' : (isQuickShopFlow ? 'bg-[#F26522] hover:bg-[#d9561b]' : 'bg-[#3E5A44] hover:bg-[#06331b]'));
-  const primaryText = isMithilakFlow ? 'text-[#207C8A]' : (isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#3E5A44]'));
+  const primaryBg = isMithilakFlow ? 'bg-[#207C8A] hover:bg-[#1a6874]' : (isFreshGroceryFlow ? 'bg-[#D9A21B] hover:bg-[#c49218]' : (isQuickShopFlow ? 'bg-[#F26522] hover:bg-[#d9561b]' : 'bg-[#6FAE4A] hover:bg-[#5b953d]'));
+  const primaryText = isMithilakFlow ? 'text-[#207C8A]' : (isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#6FAE4A]'));
   const shopNowLink = isMithilakFlow ? '/mithilak' : (isFreshGroceryFlow ? '/fresh-grocery' : (isQuickShopFlow ? '/quick-shop' : '/vendor/home'));
   const btnShadow = isMithilakFlow ? 'shadow-[0_4px_16px_rgba(32,124,138,0.22)]' : isFreshGroceryFlow ? 'shadow-[0_4px_16px_rgba(217,162,27,0.15)]' : (isQuickShopFlow ? 'shadow-[0_4px_16px_rgba(242,101,34,0.22)]' : 'shadow-[0_4px_16px_rgba(8,66,36,0.22)]');
 
@@ -182,7 +182,7 @@ const Cart = () => {
             ? 'bg-[#D9A21B] border-transparent text-white shadow-sm'
             : isQuickShopFlow
               ? 'bg-[#F26522] border-transparent text-white shadow-sm'
-              : 'bg-[#FCF7EE] border-[#F3E3CD]/60 text-[#3E5A44]'
+              : 'bg-[#FCF7EE] border-[#F3E3CD]/60 text-[#6FAE4A]'
       }`}>
         <button 
           onClick={() => navigate(-1)} 
@@ -328,7 +328,7 @@ const Cart = () => {
                         onClick={() => handleRemoveClick(item)}
                         className={`absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full active:scale-90 transition-transform ${
                           isMithilakFlow 
-                            ? 'text-[#207C8A] hover:bg-[#207C8A]/5' 
+                            ? 'text-[#6FAE4A] hover:bg-[#6FAE4A]/5' 
                             : isFreshGroceryFlow 
                               ? 'text-[#D9A21B] hover:bg-[#D9A21B]/5' 
                               : isQuickShopFlow 

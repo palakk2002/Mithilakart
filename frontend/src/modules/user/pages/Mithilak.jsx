@@ -116,7 +116,7 @@ const Mithilak = () => {
   };
 
   return (
-    <div className="bg-[#F5F9FA] min-h-screen px-4 py-5 select-none pb-24">
+    <div className="bg-transparent min-h-screen px-4 py-5 select-none pb-24">
       {/* Page Title Header */}
       <div className="mb-4 px-1">
         <h2 className="text-[19px] font-bold text-[#3F2A20] tracking-tight leading-none mb-1">
@@ -128,7 +128,7 @@ const Mithilak = () => {
       </div>
 
       {/* Promotional Banner */}
-      <div className="mb-6 bg-gradient-to-r from-[#207C8A] to-[#5DB6C3] rounded-2xl p-4 text-white relative overflow-hidden shadow-sm flex items-center justify-between h-[165px]">
+      <div className="mb-6 bg-gradient-to-r from-[#207C8A] to-[#144f58] rounded-2xl p-4 text-white relative overflow-hidden shadow-sm flex items-center justify-between h-[165px]">
         <div className="z-10 flex-1 max-w-[65%] flex flex-col justify-center h-full">
           <span className="bg-white/20 text-white text-[9px] font-bold px-2 py-0.5 rounded-full w-max uppercase tracking-wider">
             MITHILA UTSAV
@@ -150,7 +150,7 @@ const Mithilak = () => {
       </div>
 
       {/* Category Grid (Mobile View) */}
-      <div className="grid grid-cols-4 gap-y-5 gap-x-2.5 mb-8 md:hidden">
+      <div className="grid grid-cols-4 gap-y-5 gap-x-3 mb-7 md:hidden">
         {MITHILA_CATEGORIES.map((item, idx) => (
           <div
             key={idx}
@@ -162,7 +162,7 @@ const Mithilak = () => {
             className="flex flex-col items-center cursor-pointer active:scale-95 transition-transform"
           >
             {/* Category Image Wrapper - White circle with light thin border */}
-            <div className="w-[66px] h-[66px] rounded-full bg-white border border-[#EADCC9]/55 flex items-center justify-center shadow-[0_2px_6px_rgba(0,0,0,0.03)] overflow-hidden relative">
+            <div className="w-[68px] h-[68px] rounded-full bg-white border border-[#EADCC9]/55 flex items-center justify-center shadow-[0_2px_6px_rgba(0,0,0,0.03)] overflow-hidden relative">
               <img
                 src={item.img}
                 alt={item.name}
@@ -173,7 +173,7 @@ const Mithilak = () => {
               <div className="absolute inset-0 rounded-full border-[5.5px] border-white z-20 pointer-events-none" />
             </div>
             
-            {/* Category label text */}
+            {/* Category label text - strictly 6px (mt-1.5) to 8px (mt-2) top spacing */}
             <span className="text-[11.5px] font-semibold text-center text-gray-800 mt-2 leading-snug tracking-tight line-clamp-2 h-[34px] w-full flex items-start justify-center">
               {getDisplayName(item.name)}
             </span>
@@ -216,7 +216,7 @@ const Mithilak = () => {
 
       {/* Best Sellers Section */}
       <div className="md:max-w-[800px] md:mx-auto md:w-full">
-        <div className="flex items-center justify-between mb-4 px-1">
+        <div className="flex items-center justify-between mb-3.5 px-1">
           <h2 className="text-[17px] font-bold text-[#3F2A20] leading-none">Best Sellers</h2>
           <span 
             onClick={() => {

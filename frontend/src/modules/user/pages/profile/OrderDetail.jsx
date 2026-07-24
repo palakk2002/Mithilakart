@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import useAccountStore from '../../../../store/useAccountStore';
 import { parsePrice, formatPrice } from '../../../../shared/utils/priceFormatter';
 import { useTranslation } from 'react-i18next';
+import { getProductImage, handleImageError } from '../../../../shared/utils/imageUtils';
 
 const OrderDetail = () => {
   const { t } = useTranslation();
@@ -49,25 +50,25 @@ const OrderDetail = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
-  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
-  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#e0f2f1]/60 via-[#f2faf9] to-[#ffffff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#207C8A] to-[#144f58]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
   const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
 
-  const primaryText = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#3E5A44]');
-  const primaryBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-[#F26522]' : 'bg-[#3E5A44]');
-  const primaryBorder = isMithilakFlow ? 'border-[#207C8A]' : isFreshGroceryFlow ? 'border-[#D9A21B]' : (isQuickShopFlow ? 'border-[#F26522]' : 'border-[#3E5A44]');
+  const primaryText = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#6FAE4A]');
+  const primaryBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-[#F26522]' : 'bg-[#6FAE4A]');
+  const primaryBorder = isMithilakFlow ? 'border-[#207C8A]' : isFreshGroceryFlow ? 'border-[#D9A21B]' : (isQuickShopFlow ? 'border-[#F26522]' : 'border-[#6FAE4A]');
   const primaryLightBg = isMithilakFlow ? 'bg-[#207C8A]/5' : isFreshGroceryFlow ? 'bg-[#D9A21B]/5' : (isQuickShopFlow ? 'bg-[#F26522]/5' : 'bg-emerald-50');
 
   const statusCardBg = isMithilakFlow 
-    ? 'bg-gradient-to-br from-[#207C8A] to-[#11434a]' 
+    ? 'bg-gradient-to-br from-[#207C8A] to-[#144f58]' 
     : isFreshGroceryFlow 
       ? 'bg-gradient-to-br from-[#D9A21B] to-[#735308]' 
       : isQuickShopFlow 
         ? 'bg-gradient-to-br from-[#F26522] to-[#8C3005]' 
-        : 'bg-gradient-to-br from-[#3E5A44] to-[#042112]';
+        : 'bg-gradient-to-br from-[#6FAE4A] to-[#5b953d]';
 
   const statusCardBorder = isMithilakFlow 
-    ? 'border-[#207C8A]/30' 
+    ? 'border-[#6FAE4A]/30' 
     : isFreshGroceryFlow 
       ? 'border-[#D9A21B]/30' 
       : isQuickShopFlow 
@@ -184,7 +185,7 @@ const OrderDetail = () => {
             {order.items.map((item, idx) => (
               <div key={idx} className="p-5 flex gap-4">
                 <div className="w-16 h-16 bg-slate-50 rounded-xl overflow-hidden flex-shrink-0 p-1.5 border border-slate-100/80">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-contain mix-blend-multiply" />
+                  <img src={getProductImage(item.image || item.img)} alt={item.name} onError={handleImageError} className="w-full h-full object-contain mix-blend-multiply" />
                 </div>
                 <div className="flex-1 py-0.5">
                   <h4 className="text-[13px] font-black text-slate-850 leading-snug line-clamp-2">{item.name}</h4>

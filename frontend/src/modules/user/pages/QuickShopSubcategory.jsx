@@ -3,14 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Search, Share2, ChevronDown, Heart } from 'lucide-react';
 import { formatPrice } from '../../../shared/utils/priceFormatter';
 import closedShutter from '../../../assets/closed_shutter.png';
-import { getCurrentMarketplaceTab, productBelongsToTab } from '../../../shared/utils/marketplaceHelpers';
-
-const FALLBACK_IMAGE = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><rect width="150" height="150" fill="%23fdfbf7" rx="12"/><text x="75" y="80" font-size="12" font-family="sans-serif" font-weight="bold" fill="%23d3a075" text-anchor="middle">Mithilakart</text></svg>`;
-
-const handleImageError = (e) => {
-  e.target.onerror = null;
-  e.target.src = FALLBACK_IMAGE;
-};
+import { handleImageError, getProductImage, DEFAULT_PRODUCT_IMAGE as FALLBACK_IMAGE } from '../../../shared/utils/imageUtils';
 
 
 const DYNAMIC_DATA = {
@@ -299,14 +292,14 @@ const QuickShopSubcategory = () => {
   
   const primaryText = isFreshGroceryFlow ? 'text-[#D9A21B]' : isMithilakFlow ? 'text-[#207C8A]' : 'text-[#F26522]';
   const primaryBg = isFreshGroceryFlow ? 'bg-[#D9A21B]' : isMithilakFlow ? 'bg-[#207C8A]' : 'bg-[#F26522]';
-  const primaryBgHover = isFreshGroceryFlow ? 'hover:bg-[#FFF8EE] bg-white' : isMithilakFlow ? 'hover:bg-[#F5F9FA] bg-white' : 'hover:bg-orange-50 bg-white';
+  const primaryBgHover = isFreshGroceryFlow ? 'hover:bg-[#FFF8EE] bg-white' : isMithilakFlow ? 'hover:bg-[#e0f2f1] bg-white' : 'hover:bg-orange-50 bg-white';
   const primaryBorder = isFreshGroceryFlow ? 'border-[#D9A21B]' : isMithilakFlow ? 'border-[#207C8A]' : 'border-[#F26522]';
   const primaryBorderLight = isFreshGroceryFlow ? 'border-[#D9A21B]/25' : isMithilakFlow ? 'border-[#207C8A]/25' : 'border-[#F26522]/25';
-  const primaryLightBg = isFreshGroceryFlow ? 'bg-[#FFF8EE]' : isMithilakFlow ? 'bg-[#F5F9FA]' : 'bg-[#FFF5EE]';
+  const primaryLightBg = isFreshGroceryFlow ? 'bg-[#FFF8EE]' : isMithilakFlow ? 'bg-[#e0f2f1]/40' : 'bg-[#FFF5EE]';
   const primarySidebarAccent = isFreshGroceryFlow ? 'bg-[#D9A21B]' : isMithilakFlow ? 'bg-[#207C8A]' : 'bg-[#F26522]';
   
-  const rightGridBg = isFreshGroceryFlow ? 'bg-[#FFF8EE]' : isMithilakFlow ? 'bg-[#F5F9FA]/20' : 'bg-orange-50/15';
-  const promoBg = isFreshGroceryFlow ? 'bg-[#FFF8EE] border border-[#D9A21B]/15' : isMithilakFlow ? 'bg-[#F5F9FA]/65 border border-[#207C8A]/15' : 'bg-[#FFF5EE] border border-[#FFD9C7]/40';
+  const rightGridBg = isFreshGroceryFlow ? 'bg-[#FFF8EE]' : isMithilakFlow ? 'bg-[#e0f2f1]/10' : 'bg-orange-50/15';
+  const promoBg = isFreshGroceryFlow ? 'bg-[#FFF8EE] border border-[#D9A21B]/15' : isMithilakFlow ? 'bg-[#e0f2f1]/40 border border-[#207C8A]/15' : 'bg-[#FFF5EE] border border-[#FFD9C7]/40';
 
   // Get dynamic category structure
   const categoryData = getCategoryData(categoryName);

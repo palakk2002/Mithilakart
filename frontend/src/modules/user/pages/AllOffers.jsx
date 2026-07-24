@@ -51,7 +51,7 @@ const AllOffers = () => {
   return (
     <div className="bg-[#f4faf6] min-h-screen pb-24 font-sans text-slate-805">
       {/* Sticky Header - Emerald Theme */}
-      <div className="sticky top-0 z-50 bg-[#3E5A44] text-white px-4 py-3 flex items-center justify-between shadow-md">
+      <div className="sticky top-0 z-50 bg-[#6FAE4A] text-white px-4 py-3 flex items-center justify-between shadow-md">
         <div className="flex items-center gap-4 flex-1">
           {!isSearchVisible ? (
             <>
@@ -99,7 +99,7 @@ const AllOffers = () => {
             >
               <ShoppingCart size={20} className="text-white" />
               {cartCount > 0 && (
-                <span className="absolute top-0 right-0 bg-[#e2a750] text-slate-900 text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-[#3E5A44]">
+                <span className="absolute top-0 right-0 bg-[#e2a750] text-slate-900 text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-[#6FAE4A]">
                   {cartCount}
                 </span>
               )}
@@ -134,7 +134,7 @@ const AllOffers = () => {
             {/* Details */}
             <div className="text-center w-full space-y-1">
               <h3 className="text-[11.5px] font-black text-slate-800 line-clamp-1 leading-tight uppercase tracking-tight">{offer.title}</h3>
-              <div className="text-[9px] font-black text-[#3E5A44] bg-emerald-50 px-2 py-0.5 rounded-full w-fit mx-auto mt-0.5">
+              <div className="text-[9px] font-black text-[#6FAE4A] bg-emerald-50 px-2 py-0.5 rounded-full w-fit mx-auto mt-0.5">
                 {offer.desc}
               </div>
               <div className="flex items-baseline gap-1 justify-center pt-1.5">
@@ -149,7 +149,7 @@ const AllOffers = () => {
       {/* Trust Badges Footer */}
       <div className="mt-8 px-6 py-6 flex flex-col items-center gap-3 text-slate-400/80">
         <div className="flex items-center gap-2">
-          <ShieldCheck size={18} className="text-[#3E5A44]/70" />
+          <ShieldCheck size={18} className="text-[#6FAE4A]/70" />
           <span className="text-[11px] font-black uppercase tracking-wider">100% Authentic Products</span>
         </div>
         <p className="text-[10px] text-center leading-relaxed font-bold">

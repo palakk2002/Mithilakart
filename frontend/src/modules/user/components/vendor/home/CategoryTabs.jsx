@@ -21,8 +21,8 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
                 <div 
                   className={`w-full h-[96px] sm:h-[112px] rounded-[20px] overflow-hidden flex flex-col items-center justify-between p-1.5 transition-all duration-300 border relative ${
                     isActive 
-                      ? 'bg-[#FFF8EE] border-2 border-[#3E5A44] shadow-[0_4px_12px_rgba(62,90,68,0.15)] scale-[1.01]' 
-                      : 'bg-[#FFFBF7]/90 border border-[#EADCC9]/60 shadow-[0_3px_8px_rgba(61,35,20,0.015)] hover:border-[#3E5A44]/40 hover:shadow-[0_6px_15px_rgba(61,35,20,0.04)]'
+                      ? 'bg-[#FFF8EE] border-2 border-[#6FAE4A] shadow-[0_4px_12px_rgba(62,90,68,0.15)] scale-[1.01]' 
+                      : 'bg-[#FFFBF7]/90 border border-[#EADCC9]/60 shadow-[0_3px_8px_rgba(61,35,20,0.015)] hover:border-[#6FAE4A]/40 hover:shadow-[0_6px_15px_rgba(61,35,20,0.04)]'
                   }`}
                   style={{
                     backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 2h1v1H2zm4 4h1v1H6z' fill='%23EADCC9' fill-opacity='0.15'/%3E%3C/svg%3E")`,
@@ -30,10 +30,10 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
                   }}
                 >
                   {/* Dashed Circle with Shopping Bag + Flowers */}
-                  <div className="relative w-[40px] h-[40px] sm:w-[48px] sm:h-[48px] rounded-full border border-dashed border-[#3E5A44]/75 bg-[#FFFBF7] flex items-center justify-center mt-3 shadow-3xs">
+                  <div className="relative w-[40px] h-[40px] sm:w-[48px] sm:h-[48px] rounded-full border border-dashed border-[#6FAE4A]/75 bg-[#FFFBF7] flex items-center justify-center mt-3 shadow-3xs">
                     
                     {/* Shopping Bag with White Heart Cutout */}
-                    <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] sm:w-[22px] sm:h-[22px]" fill="#3E5A44">
+                    <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] sm:w-[22px] sm:h-[22px]" fill="#6FAE4A">
                       {/* Handle */}
                       <path d="M12 2C9.5 2 7.5 4 7.5 6.5H9c0-1.7 1.3-3 3-3s3 1.3 3 3h1.5C16.5 4 14.5 2 12 2z" />
                       {/* Bag body */}
@@ -50,19 +50,19 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
                         <circle cx="12" cy="19" r="5.5" fill="#E26D22" />
                         <circle cx="5" cy="12" r="5.5" fill="#E26D22" />
                         <circle cx="19" cy="12" r="5.5" fill="#E26D22" />
-                        <circle cx="12" cy="12" r="2.2" fill="#3E5A44" />
+                        <circle cx="12" cy="12" r="2.2" fill="#6FAE4A" />
                       </svg>
                     </div>
 
                     {/* Bottom-Left small flower stem decoration */}
                     <div className="absolute -left-[6px] bottom-[4px] flex items-center gap-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#E26D22] shadow-3xs" />
-                      <span className="w-1.5 h-[1.5px] bg-[#3E5A44] rotate-12" />
+                      <span className="w-1.5 h-[1.5px] bg-[#6FAE4A] rotate-12" />
                     </div>
 
                     {/* Bottom-Right small flower stem decoration */}
                     <div className="absolute -right-[6px] bottom-[4px] flex items-center gap-0.5">
-                      <span className="w-1.5 h-[1.5px] bg-[#3E5A44] -rotate-12" />
+                      <span className="w-1.5 h-[1.5px] bg-[#6FAE4A] -rotate-12" />
                       <span className="w-1.5 h-1.5 rounded-full bg-[#E26D22] shadow-3xs" />
                     </div>
                   </div>
@@ -71,7 +71,7 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
                   <div className="flex flex-col items-center mt-2.5 mb-1.5 w-full">
                     <span 
                       className={`text-[9.5px] sm:text-[10.5px] font-black text-center px-0.5 leading-tight tracking-tight flex items-center justify-center transition-colors ${
-                        isActive ? 'text-[#3E5A44]' : 'text-[#3F2A20]'
+                        isActive ? 'text-[#6FAE4A]' : 'text-[#3F2A20]'
                       }`}
                     >
                       {tab.label}
@@ -79,7 +79,7 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
 
                     {/* Thick bottom line indicator */}
                     <div 
-                      className={`w-6 h-[2px] sm:w-8 sm:h-[3px] bg-[#3E5A44] rounded-full mt-1.5 transition-opacity duration-300 ${
+                      className={`w-6 h-[2px] sm:w-8 sm:h-[3px] bg-[#6FAE4A] rounded-full mt-1.5 transition-opacity duration-300 ${
                         isActive ? 'opacity-100' : 'opacity-0'
                       }`} 
                     />
@@ -99,14 +99,14 @@ const CategoryTabs = ({ tabs, activeTab, onTabClick }) => {
               <div 
                 className={`w-full h-[96px] sm:h-[112px] rounded-[20px] overflow-hidden flex flex-col items-center justify-between p-1.5 transition-all duration-300 ${
                   isActive 
-                    ? 'bg-white border-2 border-[#3E5A44] shadow-[0_4px_12px_rgba(62,90,68,0.1)]' 
-                    : 'bg-white border border-[#EADCC9]/60 shadow-[0_3px_8px_rgba(61,35,20,0.015)] hover:border-[#3E5A44]/40 hover:shadow-[0_6px_15px_rgba(61,35,20,0.04)]'
+                    ? 'bg-white border-2 border-[#6FAE4A] shadow-[0_4px_12px_rgba(62,90,68,0.1)]' 
+                    : 'bg-white border border-[#EADCC9]/60 shadow-[0_3px_8px_rgba(61,35,20,0.015)] hover:border-[#6FAE4A]/40 hover:shadow-[0_6px_15px_rgba(61,35,20,0.04)]'
                 }`}
               >
                 {/* Category Label at top */}
                 <span 
                   className={`text-[9.5px] sm:text-[10.5px] font-black text-center mt-2 px-0.5 leading-tight tracking-tight h-[20px] flex items-center justify-center transition-colors ${
-                    isActive ? 'text-[#3E5A44]' : 'text-[#3F2A20]'
+                    isActive ? 'text-[#6FAE4A]' : 'text-[#3F2A20]'
                   }`}
                 >
                   {tab.label}

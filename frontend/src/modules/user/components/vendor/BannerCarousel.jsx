@@ -29,16 +29,16 @@ const BannerCarousel = ({ banners = [] }) => {
 
   useEffect(() => {
     if (banners.length <= 1 || !isVisible) return;
-    const interval = setInterval(nextSlide, 4000);
+    const interval = setInterval(nextSlide, 2500);
     return () => clearInterval(interval);
   }, [nextSlide, banners.length, isVisible]);
 
   if (!banners || banners.length === 0) return null;
 
   return (
-    <div ref={containerRef} className="relative w-full px-3 py-2">
+    <div ref={containerRef} className="relative w-full p-0">
       {/* Mobile view - Single Banner (Untouched layout, only hidden on desktop) */}
-      <div className="md:hidden relative aspect-[21/9] w-full overflow-hidden rounded-xl shadow-lg border border-gray-100 bg-gray-50">
+      <div className="md:hidden relative aspect-[16/9] w-full overflow-hidden rounded-xl shadow-lg bg-gray-50">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={banners[currentIndex]?.id || currentIndex}
@@ -59,12 +59,22 @@ const BannerCarousel = ({ banners = [] }) => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
           </motion.div>
         </AnimatePresence>
+
+        {/* Pagination Dots (Mobile only, overlaid on image) */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex justify-center gap-1.5 z-10">
+          {banners.map((_, idx) => (
+            <div
+              key={idx}
+              className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentIndex ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Desktop view - Premium Hero Section (Carousel + Sidebar Stack) */}
       <div className="hidden md:grid md:grid-cols-10 md:gap-6 md:max-w-[1600px] md:mx-auto">
         {/* Main Banner Carousel (70% width) */}
-        <div className="md:col-span-7 relative aspect-[21/9] w-full overflow-hidden rounded-2xl shadow-lg border border-gray-150 bg-gray-50 group">
+        <div className="md:col-span-7 relative aspect-[16/9] w-full overflow-hidden rounded-2xl shadow-lg bg-gray-50 group">
           <AnimatePresence mode="popLayout">
             <motion.div
               key={banners[currentIndex]?.id || currentIndex}
@@ -138,7 +148,7 @@ const BannerCarousel = ({ banners = [] }) => {
               <div 
                 key={offset} 
                 onClick={() => setCurrentIndex(idx)}
-                className="relative flex-1 aspect-[16/7] w-full overflow-hidden rounded-2xl shadow-md border border-gray-150 bg-gray-50 cursor-pointer group hover:shadow-lg transition-all duration-300"
+                className="relative flex-1 aspect-[16/7] w-full overflow-hidden rounded-2xl shadow-md bg-gray-50 cursor-pointer group hover:shadow-lg transition-all duration-300"
               >
                 <img
                   src={banner.image}
@@ -167,18 +177,7 @@ const BannerCarousel = ({ banners = [] }) => {
         ))}
       </div>
 
-      {/* Pagination Dots (Mobile only) */}
-      <div className="mt-2 flex justify-center gap-1.5 md:hidden">
-        {banners.map((_, idx) => (
-          <div
-            key={idx}
-            className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentIndex ? 'w-4 bg-[#3E5A44]' : 'w-1.5 bg-gray-300'
-              }`}
-          />
-        ))}
-      </div>
     </div>
-
   );
 };
 

@@ -101,15 +101,15 @@ const TrendingThisWeek = () => {
         </div>
 
         {/* Horizontal Scrollable Row of Arch Cards */}
-        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+        <div className="flex gap-2.5 overflow-x-auto no-scrollbar pb-1">
           {trendingItems.map((item) => (
             <div
               key={item.id}
               onClick={() => navigate(item.path)}
-              className="flex-shrink-0 w-[84px] min-[375px]:w-[94px] md:w-[130px] bg-[#FCF7EE] rounded-t-[1000px] rounded-b-[12px] md:rounded-b-[15px] p-1.5 md:p-2 flex flex-col items-center cursor-pointer hover:shadow-xs hover:border-[#E5D2BA] transition-all duration-300 border border-[#F1E1CE] group"
+              className="flex-shrink-0 w-[88px] min-[375px]:w-[98px] md:w-[135px] bg-[#FCF7EE] rounded-t-[1000px] rounded-b-[12px] md:rounded-b-[15px] p-1.5 md:p-2 flex flex-col items-center cursor-pointer hover:shadow-xs hover:border-[#E5D2BA] transition-all duration-300 border border-[#F1E1CE] group"
             >
               {/* Category Title */}
-              <span className="text-[8px] min-[375px]:text-[9px] md:text-xs font-black text-[#3C2415] text-center mb-0.5 group-hover:text-[#D35400] transition-colors duration-200 truncate w-full px-0.5">
+              <span className="text-[8.5px] min-[375px]:text-[10px] md:text-sm font-black text-[#3C2415] text-center mb-1 group-hover:text-[#D35400] transition-colors duration-200 w-full px-0.5 leading-tight break-words min-h-[24px] flex items-center justify-center">
                 {item.name}
               </span>
 

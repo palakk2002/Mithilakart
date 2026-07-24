@@ -8,28 +8,28 @@ const NoSearchResults = ({ query, onClearSearch, onContinueShopping }) => {
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
   const textPrimary = isMithilakFlow 
-    ? 'text-[#207C8A]' 
+    ? 'text-[#6FAE4A]' 
     : isFreshGroceryFlow 
       ? 'text-[#7A3E17]' 
       : isQuickShopFlow 
         ? 'text-[#F26522]' 
-        : 'text-[#3E5A44]';
+        : 'text-[#6FAE4A]';
 
   const buttonBg = isMithilakFlow 
-    ? 'bg-[#207C8A] hover:bg-[#1a6672]' 
+    ? 'bg-[#6FAE4A] hover:bg-[#5b953d]' 
     : isFreshGroceryFlow 
       ? 'bg-[#D9A21B] hover:bg-[#c49218] text-[#7A3E17]' 
       : isQuickShopFlow 
         ? 'bg-[#F26522] hover:bg-[#d9561b]' 
-        : 'bg-[#3E5A44] hover:bg-[#2d4332]';
+        : 'bg-[#6FAE4A] hover:bg-[#2d4332]';
 
   const borderPrimary = isMithilakFlow 
-    ? 'border-[#207C8A] text-[#207C8A] hover:bg-[#207C8A]/5' 
+    ? 'border-[#6FAE4A] text-[#6FAE4A] hover:bg-[#6FAE4A]/5' 
     : isFreshGroceryFlow 
       ? 'border-[#D9A21B] text-[#7A3E17] hover:bg-[#D9A21B]/5' 
       : isQuickShopFlow 
         ? 'border-[#F26522] text-[#F26522] hover:bg-[#F26522]/5' 
-        : 'border-[#3E5A44] text-[#3E5A44] hover:bg-[#3E5A44]/5';
+        : 'border-[#6FAE4A] text-[#6FAE4A] hover:bg-[#6FAE4A]/5';
 
   return (
     <motion.div 

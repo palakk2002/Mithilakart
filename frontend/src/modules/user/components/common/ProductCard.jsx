@@ -2,6 +2,7 @@ import React from 'react';
 import { Heart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { productBelongsToTab } from '../../../../shared/utils/marketplaceHelpers';
+import { getProductImage, handleImageError } from '../../../../shared/utils/imageUtils';
 
 const ProductCard = ({ product }) => {
   const { t } = useTranslation();
@@ -47,10 +48,12 @@ const ProductCard = ({ product }) => {
 
   const deliveryBadge = getDeliveryBadge();
 
+  const isOutOfStock = product.stock === 0 || product.isOutOfStock === true || product.status === 'Out of Stock' || product.outOfStock === true;
+
   return (
     <div className="bg-white rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 group cursor-pointer border border-slate-100 flex flex-col h-full">
       <div className="relative aspect-square overflow-hidden bg-white p-2 md:p-4">
-        {deliveryBadge && (
+        {deliveryBadge && !isOutOfStock && (
           <span className={`absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-[8px] md:text-[9px] font-bold tracking-wide shadow-sm ${
             deliveryBadge.includes('Min') 
               ? 'bg-green-500 text-white' 
@@ -59,9 +62,15 @@ const ProductCard = ({ product }) => {
             {deliveryBadge}
           </span>
         )}
+        {isOutOfStock && (
+          <span className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-[8px] md:text-[9px] font-bold tracking-wide shadow-sm bg-red-600 text-white uppercase">
+            Out of Stock
+          </span>
+        )}
         <img
-          src={product.image || product.img || "https://via.placeholder.com/300x300"}
+          src={getProductImage(product.image || product.img)}
           alt={product.title || product.name}
+          onError={handleImageError}
           className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
         />
         <button className="absolute top-2 right-2 p-1.5 md:top-3 md:right-3 md:p-2 bg-white/80 backdrop-blur-sm rounded-full text-slate-300 hover:text-red-500 transition-colors shadow-sm">

@@ -45,6 +45,7 @@ import OrderDetail from '../pages/profile/OrderDetail';
 import ForgotPassword from '../pages/ForgotPassword';
 import NotFound from '../pages/NotFound';
 import Maintenance from '../pages/Maintenance';
+import ErrorPage from '../pages/ErrorPage';
 
 
 const MarketRoutes = () => {
@@ -101,8 +102,10 @@ const MarketRoutes = () => {
         <Route path="/fresh-grocery/category" element={<QuickShopSubcategory />} />
       </Route>
 
-      {/* Maintenance Page */}
+      {/* Maintenance & Error Pages */}
       <Route path="/maintenance" element={<Maintenance />} />
+      <Route path="/error" element={<ErrorPage />} />
+      <Route path="/500" element={<ErrorPage />} />
 
       {/* Redirects */}
       <Route path="/" element={<Navigate to="home" replace />} />

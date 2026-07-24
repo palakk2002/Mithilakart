@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { 
   ArrowLeft, Search, ShoppingCart, Star, Heart, Send,
-  Share2, ChevronRight, X, MapPin, Truck, RotateCcw, IndianRupee
+  Share2, ChevronRight, X, MapPin, Truck, RotateCcw, IndianRupee, AlertCircle
 } from 'lucide-react';
 import { formatPrice } from '../../../shared/utils/priceFormatter';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
@@ -9,6 +9,7 @@ import useAccountStore from '../../../store/useAccountStore';
 import { useTranslation } from 'react-i18next';
 import ProductNotFound from '../components/common/ProductNotFound';
 import ShippingUnavailable from '../components/common/ShippingUnavailable';
+import { getProductImage, handleImageError } from '../../../shared/utils/imageUtils';
 
 
 
@@ -33,10 +34,10 @@ const ProductDetail = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
-  const primaryText = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#3E5A44]');
-  const primaryBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-[#F26522]' : 'bg-[#3E5A44]');
-  const primaryBgHover = isMithilakFlow ? 'hover:bg-[#1a6672]' : isFreshGroceryFlow ? 'hover:bg-[#c49218]' : (isQuickShopFlow ? 'hover:bg-[#d45014]' : 'hover:bg-[#06331b]');
-  const primaryBorder = isMithilakFlow ? 'border-[#207C8A]' : isFreshGroceryFlow ? 'border-[#D9A21B]' : (isQuickShopFlow ? 'border-[#F26522]' : 'border-[#3E5A44]');
+  const primaryText = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#D9A21B]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#6FAE4A]');
+  const primaryBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-[#F26522]' : 'bg-[#6FAE4A]');
+  const primaryBgHover = isMithilakFlow ? 'hover:bg-[#1a6874]' : isFreshGroceryFlow ? 'hover:bg-[#c49218]' : (isQuickShopFlow ? 'hover:bg-[#d45014]' : 'hover:bg-[#5b953d]');
+  const primaryBorder = isMithilakFlow ? 'border-[#207C8A]' : isFreshGroceryFlow ? 'border-[#D9A21B]' : (isQuickShopFlow ? 'border-[#F26522]' : 'border-[#6FAE4A]');
   const primaryLightBg = isMithilakFlow ? 'bg-[#F5F9FA]' : isFreshGroceryFlow ? 'bg-[#FFF8EE]' : (isQuickShopFlow ? 'bg-[#FFF5EE]' : 'bg-primary-light');
   const shadowColor = isMithilakFlow ? 'shadow-[0_4px_16px_rgba(32,124,138,0.22)]' : isFreshGroceryFlow ? 'shadow-[0_4px_16px_rgba(217,162,27,0.15)]' : (isQuickShopFlow ? 'shadow-[0_4px_16px_rgba(242,101,34,0.22)]' : 'shadow-[0_4px_16px_rgba(8,66,36,0.22)]');
   const shadowColorLight = isMithilakFlow ? 'shadow-[0_10px_30px_rgba(32,124,138,0.08)]' : isFreshGroceryFlow ? 'shadow-[0_10px_30px_rgba(217,162,27,0.06)]' : (isQuickShopFlow ? 'shadow-[0_10px_30px_rgba(242,101,34,0.08)]' : 'shadow-[0_10px_30px_rgba(8,66,36,0.08)]');
@@ -110,6 +111,10 @@ const ProductDetail = () => {
     category: 'Fashion'
   }, [location.state]);
 
+  const isOutOfStock = useMemo(() => {
+    return product.stock === 0 || product.isOutOfStock === true || product.status === 'Out of Stock' || product.outOfStock === true;
+  }, [product]);
+
   const detailsData = useMemo(() => ({
     highlights: [
       { label: 'Pack of', value: product.pack || '1' },
@@ -129,7 +134,13 @@ const ProductDetail = () => {
     ]
   }), [product]);
 
-  const images = [product.image, product.image, product.image];
+  const images = useMemo(() => {
+    const mainImg = getProductImage(product.image || product.img || (product.images && product.images[0]));
+    if (product.images && Array.isArray(product.images) && product.images.length > 0) {
+      return product.images.map(img => getProductImage(img));
+    }
+    return [mainImg, mainImg];
+  }, [product]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -237,7 +248,7 @@ const ProductDetail = () => {
             ? 'bg-[#D9A21B] border-transparent text-white shadow-sm'
             : isQuickShopFlow
               ? 'bg-[#F26522] border-transparent text-white shadow-sm'
-              : 'bg-[#FCF7EE]/90 border-[#F3E3CD]/60 backdrop-blur-md text-[#3E5A44]'
+              : 'bg-[#FCF7EE]/90 border-[#F3E3CD]/60 backdrop-blur-md text-[#6FAE4A]'
       }`}>
         <button onClick={() => navigate(-1)} className={`p-1.5 rounded-full transition-colors active:scale-90 ${
           (isMithilakFlow || isFreshGroceryFlow || isQuickShopFlow) ? 'text-white hover:bg-white/10' : 'text-slate-800 hover:bg-gray-50'
@@ -283,6 +294,7 @@ const ProductDetail = () => {
               <img 
                 src={images[currentSlide]} 
                 alt={product.name} 
+                onError={handleImageError}
                 className="w-full h-full object-cover transition-all duration-500 ease-out" 
               />
 
@@ -323,7 +335,7 @@ const ProductDetail = () => {
                       : 'border-transparent opacity-60'
                   }`}
                 >
-                  <img src={img} className="w-full h-full object-cover" alt={`preview-${idx}`} />
+                  <img src={img} onError={handleImageError} className="w-full h-full object-cover" alt={`preview-${idx}`} />
                 </button>
               ))}
             </div>
@@ -353,11 +365,39 @@ const ProductDetail = () => {
             <span className="text-[14px] text-gray-400 font-semibold line-through">
               MRP {formatPrice(product.oldPrice)}
             </span>
+            {isOutOfStock && (
+              <span className="bg-red-100 text-red-600 border border-red-200 text-[10px] md:text-xs font-black px-2.5 py-0.5 rounded-md uppercase tracking-wider flex items-center gap-1">
+                <AlertCircle size={12} /> Out of Stock
+              </span>
+            )}
           </div>
           <div className="text-[12px] font-extrabold text-[#2b6cb0] mt-1.5 pl-0.5">
             {product.discount || 'Special Offer'}
           </div>
         </div>
+
+        {/* Out of Stock Banner */}
+        {isOutOfStock && (
+          <div className="mt-3 p-3 bg-red-50/90 border border-red-200/80 rounded-2xl flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-2 text-red-700">
+              <AlertCircle size={18} className="flex-shrink-0" />
+              <div>
+                <p className="text-xs font-bold leading-tight">Currently Out of Stock</p>
+                <p className="text-[10px] text-red-500 font-semibold mt-0.5">We will restock this item soon!</p>
+              </div>
+            </div>
+            <button 
+              onClick={() => {
+                setToastMessage('We will notify you when back in stock!');
+                setShowToast(true);
+                setTimeout(() => setShowToast(false), 2000);
+              }}
+              className="text-[10px] font-black uppercase tracking-wider bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-xl shadow-xs active:scale-95 transition-all flex-shrink-0"
+            >
+              Notify Me
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Variant Selector (Premium Circles) */}
@@ -608,7 +648,7 @@ const ProductDetail = () => {
       <div className="mt-4 py-4 bg-white border-y border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.01)] md:max-w-6xl md:mx-auto md:w-full md:rounded-2xl md:border md:my-6 md:p-6">
         <div className="flex justify-between items-center px-4 mb-3 md:px-0">
           <h3 className="text-[13px] font-black uppercase tracking-wider text-slate-900">Similar Products</h3>
-          <span className="text-[10px] font-black text-[#3E5A44] tracking-widest uppercase">View All</span>
+          <span className={`text-[10px] font-black ${primaryText} tracking-widest uppercase`}>View All</span>
         </div>
         <div className="flex gap-4 px-4 overflow-x-auto no-scrollbar pb-2 md:justify-center md:gap-6 md:px-0 md:overflow-x-visible">
           {[
@@ -647,7 +687,7 @@ const ProductDetail = () => {
       <div className="mt-4 py-4 bg-white border-y border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.01)] md:max-w-6xl md:mx-auto md:w-full md:rounded-2xl md:border md:my-6 md:p-6">
         <div className="flex justify-between items-center px-4 mb-3 md:px-0">
           <h3 className="text-[13px] font-black uppercase tracking-wider text-slate-900">Bought Together</h3>
-          <span className="text-[10px] font-black text-[#3E5A44] tracking-widest uppercase">Explore</span>
+          <span className={`text-[10px] font-black ${primaryText} tracking-widest uppercase`}>Explore</span>
         </div>
         <div className="flex gap-4 px-4 overflow-x-auto no-scrollbar pb-2 md:justify-center md:gap-6 md:px-0 md:overflow-x-visible">
           {[
@@ -860,15 +900,15 @@ const ProductDetail = () => {
             <div className="sticky top-[53px] bg-white flex border-b border-gray-100 z-10">
               <button 
                 onClick={() => setActivePaymentTab('COD')}
-                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'COD' ? 'text-[#3E5A44]' : 'text-gray-400'}`}
+                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'COD' ? primaryText : 'text-gray-400'}`}
               >
-                <IndianRupee size={22} className={activePaymentTab === 'COD' ? 'text-[#3E5A44]' : 'text-gray-400'} />
+                <IndianRupee size={22} className={activePaymentTab === 'COD' ? primaryText : 'text-gray-400'} />
                 <span className="text-[13px] font-bold">COD</span>
-                {activePaymentTab === 'COD' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#3E5A44]" />}
+                {activePaymentTab === 'COD' && <div className={`absolute bottom-0 left-0 right-0 h-[2.5px] ${primaryBg}`} />}
               </button>
               <button 
                 onClick={() => setActivePaymentTab('UPI')}
-                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'UPI' ? 'text-[#3E5A44]' : 'text-gray-400'}`}
+                className={`flex-1 flex flex-col items-center py-4 gap-1 relative transition-colors ${activePaymentTab === 'UPI' ? primaryText : 'text-gray-400'}`}
               >
                 <div className="w-5 h-7 flex items-center justify-center">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -876,7 +916,7 @@ const ProductDetail = () => {
                   </svg>
                 </div>
                 <span className="text-[13px] font-bold">UPI</span>
-                {activePaymentTab === 'UPI' && <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#3E5A44]" />}
+                {activePaymentTab === 'UPI' && <div className={`absolute bottom-0 left-0 right-0 h-[2.5px] ${primaryBg}`} />}
               </button>
             </div>
 
@@ -1005,13 +1045,22 @@ const ProductDetail = () => {
           </span>
         </div>
 
-        {/* Right Side: Add to Cart Button */}
-        <button 
-          onClick={handleAddToCart}
-          className={`${primaryBg} ${primaryBgHover} text-white font-extrabold px-6 py-2.5 rounded-[6px] active:scale-95 transition-all text-[13px] flex items-center justify-center cursor-pointer shadow-xs`}
-        >
-          {t('cart.addToCart') || 'Add to cart'}
-        </button>
+        {/* Right Side: Add to Cart / Out of Stock Button */}
+        {isOutOfStock ? (
+          <button 
+            disabled
+            className="bg-slate-200 text-slate-400 font-extrabold px-6 py-2.5 rounded-[6px] text-[13px] flex items-center justify-center cursor-not-allowed border border-slate-300 select-none opacity-80"
+          >
+            Out of Stock
+          </button>
+        ) : (
+          <button 
+            onClick={handleAddToCart}
+            className={`${primaryBg} ${primaryBgHover} text-white font-extrabold px-6 py-2.5 rounded-[6px] active:scale-95 transition-all text-[13px] flex items-center justify-center cursor-pointer shadow-xs`}
+          >
+            {t('cart.addToCart') || 'Add to cart'}
+          </button>
+        )}
       </div>
 
       {/* Toast Notification */}

@@ -67,8 +67,8 @@ const SavedCards = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
-  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
-  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#e0f2f1]/60 via-[#f2faf9] to-[#ffffff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#207C8A] to-[#144f58]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
   const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
 
   return (
@@ -80,7 +80,7 @@ const SavedCards = () => {
       {/* Global Repeating Mithila Art Page Background Texture */}
       {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
         <div 
-          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.018] select-none"
           style={{
             backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
             backgroundSize: '360px',
@@ -96,7 +96,7 @@ const SavedCards = () => {
           </button>
           <h1 className={`text-lg font-black uppercase tracking-widest ${headerTextColor}`}>Saved Cards</h1>
         </div>
-        <button onClick={() => setIsModalOpen(true)} className="text-[#3E5A44]">
+        <button onClick={() => setIsModalOpen(true)} className={`text-current ${isMithilakFlow ? 'text-[#207C8A]' : 'text-[#6FAE4A]'}`}>
           <Plus size={24} />
         </button>
       </div>

@@ -14,7 +14,7 @@ const HeaderTop = ({ cartCount = 0 }) => {
       ? 'bg-[#D9A21B]' 
       : isQuickShopFlow 
         ? 'bg-[#F26522]' 
-        : 'bg-[#3E5A44]';
+        : 'bg-[#6FAE4A]';
 
   return (
     <div className="px-3 py-1 flex items-center justify-between">

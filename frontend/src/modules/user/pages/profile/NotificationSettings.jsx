@@ -21,8 +21,8 @@ const NotificationSettings = () => {
   const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
   const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
 
-  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#f3e8ff]/60 via-[#faf5ff] to-[#f5f3ff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
-  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#8b5cf6] to-[#6366f1]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const pageBg = isMithilakFlow ? 'bg-gradient-to-b from-[#e0f2f1]/60 via-[#f2faf9] to-[#ffffff]' : isFreshGroceryFlow ? 'bg-gradient-to-b from-[#FFF0A0]/25 via-[#FFFDF3] to-[#FFF]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
+  const headerBg = isMithilakFlow ? 'bg-gradient-to-r from-[#207C8A] to-[#144f58]' : isFreshGroceryFlow ? 'bg-[#FFF0A0]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
   const headerTextColor = (isMithilakFlow || isQuickShopFlow) ? 'text-white' : (isFreshGroceryFlow ? 'text-black' : 'text-[#3C2415]');
 
   return (
@@ -34,7 +34,7 @@ const NotificationSettings = () => {
       {/* Global Repeating Mithila Art Page Background Texture */}
       {!(isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) && (
         <div 
-          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.03] select-none"
+          className="fixed inset-0 pointer-events-none z-0 bg-repeat opacity-[0.018] select-none"
           style={{
             backgroundImage: "url('/Screenshot 2026-07-17 130906.png')",
             backgroundSize: '360px',
@@ -52,7 +52,7 @@ const NotificationSettings = () => {
 
       <div className="container mx-auto px-4 py-8 w-full space-y-8 relative z-10">
         <div className="bg-white border border-slate-100 shadow-sm rounded-3xl p-5 flex items-center gap-4 mb-8">
-           <div className="p-3 bg-emerald-50 rounded-2xl text-[#3E5A44]">
+           <div className="p-3 bg-emerald-50 rounded-2xl text-[#6FAE4A]">
               <Bell size={24} className="animate-bounce" />
            </div>
            <div>
@@ -62,7 +62,7 @@ const NotificationSettings = () => {
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-[10px] font-black text-[#3E5A44] uppercase tracking-[3px] ml-1">Push Notifications</h2>
+          <h2 className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[3px] ml-1">Push Notifications</h2>
           
           <div className="bg-white border border-slate-100 shadow-sm rounded-3xl overflow-hidden divide-y divide-slate-100">
              {[
@@ -80,7 +80,7 @@ const NotificationSettings = () => {
                   </div>
                   <button 
                     onClick={() => toggleSetting(item.id)}
-                    className={`w-12 h-6.5 rounded-full transition-all relative ${settings[item.id] ? 'bg-[#3E5A44]' : 'bg-slate-200'}`}
+                    className={`w-12 h-6.5 rounded-full transition-all relative ${settings[item.id] ? 'bg-[#6FAE4A]' : 'bg-slate-200'}`}
                   >
                     <div className={`absolute top-1 w-4.5 h-4.5 bg-white rounded-full transition-all shadow-sm ${settings[item.id] ? 'right-1' : 'left-1'}`}></div>
                   </button>
@@ -90,7 +90,7 @@ const NotificationSettings = () => {
         </div>
 
         <div className="space-y-4">
-           <h2 className="text-[10px] font-black text-[#3E5A44] uppercase tracking-[3px] ml-1">Email Preferences</h2>
+           <h2 className="text-[10px] font-black text-[#6FAE4A] uppercase tracking-[3px] ml-1">Email Preferences</h2>
            <div className="bg-white border border-slate-100 shadow-sm rounded-3xl p-5 flex items-center justify-between">
               <div className="flex items-center gap-4">
                  <div className="p-2.5 rounded-xl text-green-600 bg-green-50">
@@ -100,7 +100,7 @@ const NotificationSettings = () => {
               </div>
               <button 
                 onClick={() => toggleSetting('newsletter')}
-                className={`w-12 h-6.5 rounded-full transition-all relative ${settings.newsletter ? 'bg-[#3E5A44]' : 'bg-slate-200'}`}
+                className={`w-12 h-6.5 rounded-full transition-all relative ${settings.newsletter ? 'bg-[#6FAE4A]' : 'bg-slate-200'}`}
               >
                 <div className={`absolute top-1 w-4.5 h-4.5 bg-white rounded-full transition-all shadow-sm ${settings.newsletter ? 'right-1' : 'left-1'}`}></div>
               </button>

@@ -171,9 +171,9 @@ const Categories = () => {
 
   const sectionsList = isMithilakFlow ? MITHILA_CATEGORIES : (isQuickShopFlow ? QUICK_SHOP_CATEGORIES : SECTIONS);
   const pageBg = isMithilakFlow ? 'bg-[#F5F9FA]' : isFreshGroceryFlow ? 'bg-[#FFF8EE]' : (isQuickShopFlow ? 'bg-[#fff5f7]' : 'bg-bg-cream');
-  const headerBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
+  const headerBg = isMithilakFlow ? 'bg-[#6FAE4A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-gradient-to-r from-[#F26522] to-[#FF8C00]' : 'bg-[#FCF7EE] border-b border-[#F3E3CD]/60');
   const headerTextColor = (isMithilakFlow || isQuickShopFlow || isFreshGroceryFlow) ? 'text-white' : 'text-[#3C2415]';
-  const textPrimary = isMithilakFlow ? 'text-[#207C8A]' : isFreshGroceryFlow ? 'text-[#3F2A20]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#3E5A44]');
+  const textPrimary = isMithilakFlow ? 'text-[#6FAE4A]' : isFreshGroceryFlow ? 'text-[#3F2A20]' : (isQuickShopFlow ? 'text-[#F26522]' : 'text-[#6FAE4A]');
 
   const [activeSectionIndex, setActiveSectionIndex] = React.useState(0);
 
@@ -223,7 +223,7 @@ const Categories = () => {
                 {/* Active Indicator Bar on the left */}
                 {isActive && (
                   <div className={`absolute left-0 top-0 bottom-0 w-[4px] rounded-r ${
-                    isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : isQuickShopFlow ? 'bg-[#F26522]' : 'bg-[#3E5A44]'
+                    isMithilakFlow ? 'bg-[#6FAE4A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : isQuickShopFlow ? 'bg-[#F26522]' : 'bg-[#6FAE4A]'
                   }`} />
                 )}
                 
@@ -236,7 +236,7 @@ const Categories = () => {
                 
                 <span className={`text-[9.5px] text-center leading-tight tracking-tight break-words w-full ${
                   isActive 
-                    ? (isMithilakFlow ? 'text-[#207C8A] font-extrabold' : isFreshGroceryFlow ? 'text-[#3F2A20] font-extrabold' : isQuickShopFlow ? 'text-[#F26522] font-extrabold' : 'text-[#3E5A44] font-extrabold') 
+                    ? (isMithilakFlow ? 'text-[#6FAE4A] font-extrabold' : isFreshGroceryFlow ? 'text-[#3F2A20] font-extrabold' : isQuickShopFlow ? 'text-[#F26522] font-extrabold' : 'text-[#6FAE4A] font-extrabold') 
                     : 'text-slate-600 font-medium'
                 }`}>
                   {section.title}
@@ -379,7 +379,7 @@ const Categories = () => {
                           <h3 className={`text-[13px] font-black text-[#3F2A20] leading-tight group-hover:${textPrimary} transition-colors line-clamp-2`}>
                             {item.name.replace('Mithila ', '')}
                           </h3>
-                          <p className="text-[11px] font-black text-[#207C8A] mt-1 uppercase tracking-wider">View Collection</p>
+                          <p className="text-[11px] font-black text-[#6FAE4A] mt-1 uppercase tracking-wider">View Collection</p>
                         </div>
                       </div>
                     );
@@ -417,7 +417,7 @@ const Categories = () => {
                       onClick={onClickHandler}
                       className="flex flex-col items-center cursor-pointer group active:scale-95 transition-transform w-[160px] mx-auto"
                     >
-                      <div className="w-full aspect-[1/1.12] bg-white border border-[#EADCC9]/70 rounded-t-full rounded-b-[24px] overflow-hidden flex flex-col items-center justify-between p-3 shadow-[0_4px_10px_rgba(61,35,20,0.02)] group-hover:shadow-[0_8px_20px_rgba(61,35,20,0.08)] group-hover:border-[#3E5A44]/40 transition-all duration-300">
+                      <div className="w-full aspect-[1/1.12] bg-white border border-[#EADCC9]/70 rounded-t-full rounded-b-[24px] overflow-hidden flex flex-col items-center justify-between p-3 shadow-[0_4px_10px_rgba(61,35,20,0.02)] group-hover:shadow-[0_8px_20px_rgba(61,35,20,0.08)] group-hover:border-[#6FAE4A]/40 transition-all duration-300">
                         <span className="text-[12px] md:text-sm font-black text-[#3F2A20] text-center mt-2.5 px-0.5 leading-tight tracking-tight h-[22px] flex items-center justify-center">
                           {item.name}
                         </span>

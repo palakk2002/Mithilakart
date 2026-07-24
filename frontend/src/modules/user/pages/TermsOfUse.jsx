@@ -6,11 +6,15 @@ import Footer from '../../../shared/components/Footer';
 
 const TermsOfUse = () => {
   const navigate = useNavigate();
+  const isMithilakFlow = localStorage.getItem('isMithilakFlow') === 'true';
+  const isQuickShopFlow = localStorage.getItem('isQuickShopFlow') === 'true';
+  const isFreshGroceryFlow = localStorage.getItem('isFreshGroceryFlow') === 'true';
+  const primaryBg = isMithilakFlow ? 'bg-[#207C8A]' : isFreshGroceryFlow ? 'bg-[#D9A21B]' : (isQuickShopFlow ? 'bg-[#F26522]' : 'bg-[#6FAE4A]');
 
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-[#3E5A44] px-4 py-4 flex items-center gap-3 shadow-md">
+      <div className={`sticky top-0 z-50 ${primaryBg} px-4 py-4 flex items-center gap-3 shadow-md`}>
         <button 
           onClick={() => navigate(-1)}
           className="text-white active:scale-90 transition-transform"
